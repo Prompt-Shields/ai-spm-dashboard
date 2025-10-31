@@ -1,6 +1,7 @@
-import { Shield, Bell, Download, Settings } from "lucide-react"
+import { Bell, Download, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Image from "next/image"
 
 export function DashboardHeader() {
   return (
@@ -9,8 +10,13 @@ export function DashboardHeader() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-[#00ABBD]/10 rounded-lg">
-                <Shield className="h-8 w-8 text-[#00ABBD]" />
+              <div className="relative h-10 w-10">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo%20icon-4RfIBiQHygOHhOOA6a7WIu3XjbYUMj.png"
+                  alt="Prompt Shields Logo"
+                  fill
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-[#2A2A2A]">Prompt Shields</h1>
