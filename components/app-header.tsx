@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { Shield, Database } from "lucide-react"
+import { Shield, Database, Brain } from "lucide-react"
 
 export function AppHeader() {
   const pathname = usePathname()
@@ -12,6 +12,7 @@ export function AppHeader() {
     { href: "/", label: "Overview", icon: null },
     { href: "/ai-spm", label: "AI-SPM (Security)", icon: Shield },
     { href: "/asset-management", label: "AI Asset Management", icon: Database },
+    { href: "/model-risk", label: "Model Risk Context", icon: Brain },
   ]
 
   return (
