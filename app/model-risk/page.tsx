@@ -149,6 +149,28 @@ export default function ModelRiskContextPage() {
                     {selectedModel.status}
                   </Badge>
                 </div>
+
+                <div className="pt-4 border-t">
+                  <p className="text-sm font-semibold mb-2">Strengths:</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    {selectedModel.strengths.map((strength, idx) => (
+                      <li key={idx} className="text-sm text-muted-foreground">
+                        {strength}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-4 border-t">
+                  <p className="text-sm font-semibold mb-2">Key Risks:</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    {selectedModel.keyRisks.map((risk, idx) => (
+                      <li key={idx} className="text-sm text-muted-foreground">
+                        {risk}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </CardContent>
             </Card>
 
@@ -227,6 +249,32 @@ export default function ModelRiskContextPage() {
                       {getRiskLevel(selectedModel.privacyRisk)}
                     </Badge>
                   </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium">Security:</span>
+                      <span className="text-sm font-bold">{selectedModel.securityRisk}/100</span>
+                    </div>
+                    <Progress value={selectedModel.securityRisk} className="h-2" />
+                    <Badge
+                      variant="secondary"
+                      className={`mt-1 ${getRiskColor(selectedModel.securityRisk)} text-white text-xs`}
+                    >
+                      {getRiskLevel(selectedModel.securityRisk)}
+                    </Badge>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium">Compliance:</span>
+                      <span className="text-sm font-bold">{selectedModel.complianceRisk}/100</span>
+                    </div>
+                    <Progress value={selectedModel.complianceRisk} className="h-2" />
+                    <Badge
+                      variant="secondary"
+                      className={`mt-1 ${getRiskColor(selectedModel.complianceRisk)} text-white text-xs`}
+                    >
+                      {getRiskLevel(selectedModel.complianceRisk)}
+                    </Badge>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -249,6 +297,22 @@ export default function ModelRiskContextPage() {
                     </div>
                   ))}
                 </div>
+
+                {selectedModel.warnings && selectedModel.warnings.length > 0 && (
+                  <div className="mt-6 pt-4 border-t">
+                    <div className="flex items-center gap-2 mb-3">
+                      <AlertTriangle className="h-4 w-4 text-orange-500" />
+                      <p className="text-sm font-semibold">Warnings & Caveats:</p>
+                    </div>
+                    <ul className="list-disc list-inside space-y-2">
+                      {selectedModel.warnings.map((warning, idx) => (
+                        <li key={idx} className="text-sm text-muted-foreground">
+                          {warning}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
