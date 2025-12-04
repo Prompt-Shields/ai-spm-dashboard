@@ -2,8 +2,6 @@ d# AI Governance Control Centre
 
 Combined AI Security Posture Management (AI-SPM) and AI Asset Management Dashboard
 
-![Hero Banner](https://via.placeholder.com/1400x300?text=AI+Governance+Control+Centre)
-
 A unified dashboard providing **AI Security Posture Management (AI-SPM)** and **AI Asset Management** within a single codebase.
 Designed for CISOs and AI platform leaders requiring visibility into **risk, compliance, operational health, and governance posture**.
 
@@ -78,8 +76,7 @@ Below is an architecture diagram illustrating how the dashboards, data layers, a
 ## Dashboard Views
 
 ### Overview Dashboard
-
-![Overview Dashboard](https://via.placeholder.com/1200x500?text=Overview+Dashboard)
+<img width="1092" height="1174" alt="Screenshot 2025-12-04 at 15 20 16" src="https://github.com/user-attachments/assets/38e43eaa-26c3-41ab-88dd-cf54e2802d2b" />
 
 Displays a combined summary of:
 
@@ -94,7 +91,7 @@ Displays a combined summary of:
 
 ### AI Security Posture Management (AI-SPM)
 
-![Security Dashboard](https://via.placeholder.com/1200x500?text=AI-SPM+Security+Dashboard)
+<img width="1089" height="1179" alt="Screenshot 2025-12-04 at 15 20 22" src="https://github.com/user-attachments/assets/eee72cee-0ecb-4f29-b317-38dd485ae6b8" />
 
 #### Key Features
 
@@ -111,7 +108,7 @@ Displays a combined summary of:
 
 ### AI Asset Management
 
-![Asset Management Dashboard](https://via.placeholder.com/1200x500?text=AI+Asset+Management+Dashboard)
+<img width="1096" height="1097" alt="Screenshot 2025-12-04 at 15 20 37" src="https://github.com/user-attachments/assets/6137cb7d-1e52-4bb3-ad85-886f5de61e85" />
 
 #### Key Features
 
@@ -125,29 +122,13 @@ Displays a combined summary of:
 
 ---
 
-## Feature Screenshots
+### Model Context Risk
 
-Replace these placeholders with real screenshots once generated.
 
-### Risk Heatmap
 
-![Risk Heatmap](https://via.placeholder.com/900x400?text=Risk+Heatmap)
+<img width="1096" height="1083" alt="Screenshot 2025-12-04 at 15 20 43" src="https://github.com/user-attachments/assets/97e48c53-24ee-4b8f-aa96-b628ff20e19c" />
+<img width="327" height="344" alt="Screenshot 2025-12-04 at 15 20 49" src="https://github.com/user-attachments/assets/56546d31-9888-412d-8294-bb532a63cd3d" />
 
-### Incident Timeline
-
-![Incident Timeline](https://via.placeholder.com/900x300?text=Incident+Timeline)
-
-### Compliance Overview
-
-![Compliance Overview](https://via.placeholder.com/900x300?text=Compliance+Panel)
-
-### Asset Catalogue
-
-![Asset Catalogue](https://via.placeholder.com/900x400?text=Asset+Catalogue)
-
-### Performance Trends
-
-![Performance Trends](https://via.placeholder.com/900x400?text=Performance+Trends)
 
 ---
 
