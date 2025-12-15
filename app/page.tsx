@@ -8,20 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { aiSpmMetrics, aiSpmAssets } from "@/lib/mock-data"
 import { insuranceAiRiskRegister } from "@/lib/storebrand-insurance-data"
-import {
-  Shield,
-  ArrowRight,
-  Brain,
-  AlertTriangle,
-  Info,
-  TrendingDown,
-  HelpCircle,
-  Network,
-  FileCheck,
-} from "lucide-react"
+import { Shield, ArrowRight, Brain, AlertTriangle, TrendingDown, Eye } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts"
 import Link from "next/link"
-import { Tooltip as UITooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 const riskChartConfig: ChartConfig = {
   risk: {
@@ -63,82 +53,35 @@ export default function OverviewPage() {
       <div className="min-h-screen bg-background">
         <AppHeader />
         <main className="container mx-auto px-8 py-10 space-y-10 max-w-[1600px]">
-          {/* Board-Level Summary Card */}
           <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-background to-accent/30">
             <CardHeader className="pb-4">
               <div className="flex items-start justify-between">
                 <div>
                   <CardTitle className="text-3xl font-bold flex items-center gap-3">
                     <Shield className="h-8 w-8 text-primary" />
-                    Board-Level AI Risk Summary
+                    AI Risk Summary
                   </CardTitle>
-                  <CardDescription className="text-base mt-2 max-w-3xl">
-                    Executive overview of AI risk exposure for Storebrand leadership. Navigate to specialised dashboards
-                    for detailed analysis and management actions.
+                  <CardDescription className="text-base mt-2">
+                    Executive overview of AI risk for Storebrand.
                   </CardDescription>
                 </div>
                 <Badge variant="outline" className="text-xs">
-                  Last updated: {new Date().toLocaleDateString("en-GB")}
+                  Updated: {new Date().toLocaleDateString("en-GB")}
                 </Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Key insight message */}
-              <div className="p-4 bg-muted/50 rounded-lg border-l-4 border-l-primary">
-                <div className="flex items-start gap-3">
-                  <Info className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-sm mb-1">Key Insight for Leadership</p>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      AI risk is not a single vulnerability but a systemic exposure created by autonomy, scale, and
-                      trust. This dashboard provides visibility into emerging risks specific to Storebrand&apos;s
-                      insurance operations.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-4 pt-2">
+              <div className="grid gap-4 md:grid-cols-4">
                 <div className="p-4 bg-card rounded-lg border">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm text-muted-foreground">Critical Risks</p>
-                    <UITooltip>
-                      <TooltipTrigger>
-                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>Risks requiring immediate attention to prevent severe business impact.</p>
-                      </TooltipContent>
-                    </UITooltip>
-                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">Critical</p>
                   <p className="text-3xl font-bold text-destructive">{criticalRisks}</p>
                 </div>
                 <div className="p-4 bg-card rounded-lg border">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm text-muted-foreground">High Priority</p>
-                    <UITooltip>
-                      <TooltipTrigger>
-                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>Risks to address within the current quarter.</p>
-                      </TooltipContent>
-                    </UITooltip>
-                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">High</p>
                   <p className="text-3xl font-bold text-orange-600">{highRisks}</p>
                 </div>
                 <div className="p-4 bg-card rounded-lg border">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm text-muted-foreground">Overall Risk Score</p>
-                    <UITooltip>
-                      <TooltipTrigger>
-                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>Aggregate risk score from 0-100. Lower is better.</p>
-                      </TooltipContent>
-                    </UITooltip>
-                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">Risk Score</p>
                   <div className="flex items-baseline gap-2">
                     <p className="text-3xl font-bold">{aiSpmMetrics.overallRiskScore}</p>
                     <span className="text-sm text-muted-foreground">/100</span>
@@ -149,17 +92,7 @@ export default function OverviewPage() {
                   </div>
                 </div>
                 <div className="p-4 bg-card rounded-lg border">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm text-muted-foreground">Compliance</p>
-                    <UITooltip>
-                      <TooltipTrigger>
-                        <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>AI systems meeting GDPR, EU AI Act, and internal requirements.</p>
-                      </TooltipContent>
-                    </UITooltip>
-                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">Compliance</p>
                   <p className="text-3xl font-bold text-primary">{aiSpmMetrics.complianceScore}%</p>
                 </div>
               </div>
@@ -167,21 +100,14 @@ export default function OverviewPage() {
           </Card>
 
           <section>
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold">Risk Overview</h2>
-              <p className="text-sm text-muted-foreground mt-1">High-level risk status across AI systems</p>
-            </div>
+            <h2 className="text-xl font-semibold mb-4">Risk Overview</h2>
             <div className="grid gap-6 lg:grid-cols-2">
-              {/* Risk Summary Card */}
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <AlertTriangle className="h-5 w-5 text-primary" />
-                    AI Risk Categories
+                    Risk Categories
                   </CardTitle>
-                  <CardDescription>
-                    {totalRisks} risk categories identified across insurance AI operations
-                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-3 gap-4 text-center">
@@ -200,21 +126,19 @@ export default function OverviewPage() {
                   </div>
                   <Link href="/ai-governance">
                     <Button variant="outline" className="w-full bg-transparent">
-                      View All Risk Categories
+                      View Details
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                 </CardContent>
               </Card>
 
-              {/* Top 5 Risk Assets Chart */}
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Brain className="h-5 w-5 text-primary" />
-                    Top 5 Risk Assets
+                    Top Risk Assets
                   </CardTitle>
-                  <CardDescription>AI systems with highest combined risk scores</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="h-[180px]">
@@ -233,47 +157,21 @@ export default function OverviewPage() {
             </div>
           </section>
 
-          {/* Dashboard Navigation Cards */}
           <section>
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold">Dashboard Views</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Navigate to specialised dashboards for detailed analysis
-              </p>
-            </div>
-            <div className="grid gap-6 lg:grid-cols-2">
+            <h2 className="text-xl font-semibold mb-4">Dashboards</h2>
+            <div className="grid gap-6 lg:grid-cols-3">
               <Card className="border-2 hover:border-primary/50 transition-colors">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="h-5 w-5 text-primary" />
                     AI Governance
                   </CardTitle>
-                  <CardDescription className="mt-2">
-                    Comprehensive framework for managing AI risk, compliance, and security across Storebrand.
-                  </CardDescription>
+                  <CardDescription>Risk register, compliance, and network topology.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 gap-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <AlertTriangle className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span>Risk Register</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Network className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span>Network Topology</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <FileCheck className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span>Compliance</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Brain className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span>Asset Inventory</span>
-                    </div>
-                  </div>
                   <Link href="/ai-governance">
                     <Button className="w-full">
-                      Open AI Governance
+                      Open
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
@@ -284,34 +182,32 @@ export default function OverviewPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Brain className="h-5 w-5 text-primary" />
-                    Model Risk Context
+                    Model Risk
                   </CardTitle>
-                  <CardDescription className="mt-2">
-                    Detailed AI model behaviour analysis for hallucination, bias, toxicity, and privacy risks.
-                  </CardDescription>
+                  <CardDescription>Model behaviour analysis and risk scores.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 gap-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Brain className="h-4 w-4 text-primary" />
-                      <span>8 Models Assessed</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <AlertTriangle className="h-4 w-4 text-primary" />
-                      <span>Risk Scores</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <FileCheck className="h-4 w-4 text-primary flex-shrink-0" />
-                      <span>Use Cases</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Shield className="h-4 w-4 text-primary" />
-                      <span>Mitigations</span>
-                    </div>
-                  </div>
                   <Link href="/model-risk">
                     <Button className="w-full">
-                      Open Model Risk Context
+                      Open
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 hover:border-primary/50 transition-colors">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Eye className="h-5 w-5 text-primary" />
+                    AI Visibility
+                  </CardTitle>
+                  <CardDescription>Models, data, prompts, infra, and vendors.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Link href="/ai-visibility">
+                    <Button className="w-full">
+                      Open
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>

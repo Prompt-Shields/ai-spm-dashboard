@@ -13,18 +13,7 @@ import {
   vendorAIInventory,
   getVisibilitySummary,
 } from "@/lib/ai-visibility-data"
-import {
-  Eye,
-  Brain,
-  Database,
-  FileText,
-  Server,
-  Building2,
-  CheckCircle,
-  AlertTriangle,
-  Shield,
-  Lock,
-} from "lucide-react"
+import { Eye, Brain, Database, FileText, Server, Building2 } from "lucide-react"
 
 export default function AIVisibilityPage() {
   const [activeTab, setActiveTab] = useState("models")
@@ -62,122 +51,88 @@ export default function AIVisibilityPage() {
     <div className="min-h-screen bg-background">
       <AppHeader />
       <main className="container mx-auto px-8 py-10 max-w-[1600px] space-y-8">
-        {/* Header */}
         <div>
           <h1 className="text-3xl font-bold flex items-center gap-3">
             <Eye className="h-8 w-8 text-primary" />
-            AI Visibility Dashboard
+            AI Visibility
           </h1>
-          <p className="text-muted-foreground mt-1">
-            End-to-end visibility across models, data, prompts, infrastructure, and vendors
-          </p>
+          <p className="text-muted-foreground mt-1">Models, data, prompts, infrastructure, and vendors</p>
         </div>
 
-        {/* Summary Stats */}
         <div className="grid gap-4 md:grid-cols-5">
           <Card className="cursor-pointer hover:border-primary/50" onClick={() => setActiveTab("models")}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Brain className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{summary.totalModels}</p>
-                  <p className="text-xs text-muted-foreground">AI Models</p>
-                </div>
+            <CardContent className="p-4 flex items-center gap-3">
+              <Brain className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-2xl font-bold">{summary.totalModels}</p>
+                <p className="text-xs text-muted-foreground">Models</p>
               </div>
             </CardContent>
           </Card>
           <Card className="cursor-pointer hover:border-primary/50" onClick={() => setActiveTab("data")}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-500/10 rounded-lg">
-                  <Database className="h-5 w-5 text-blue-500" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{summary.totalDataSources}</p>
-                  <p className="text-xs text-muted-foreground">Data Sources</p>
-                </div>
+            <CardContent className="p-4 flex items-center gap-3">
+              <Database className="h-5 w-5 text-blue-500" />
+              <div>
+                <p className="text-2xl font-bold">{summary.totalDataSources}</p>
+                <p className="text-xs text-muted-foreground">Data</p>
               </div>
             </CardContent>
           </Card>
           <Card className="cursor-pointer hover:border-primary/50" onClick={() => setActiveTab("prompts")}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-500/10 rounded-lg">
-                  <FileText className="h-5 w-5 text-purple-500" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{summary.totalPrompts}</p>
-                  <p className="text-xs text-muted-foreground">Prompts</p>
-                </div>
+            <CardContent className="p-4 flex items-center gap-3">
+              <FileText className="h-5 w-5 text-purple-500" />
+              <div>
+                <p className="text-2xl font-bold">{summary.totalPrompts}</p>
+                <p className="text-xs text-muted-foreground">Prompts</p>
               </div>
             </CardContent>
           </Card>
           <Card className="cursor-pointer hover:border-primary/50" onClick={() => setActiveTab("infrastructure")}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-500/10 rounded-lg">
-                  <Server className="h-5 w-5 text-green-500" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{summary.totalInfrastructure}</p>
-                  <p className="text-xs text-muted-foreground">Infrastructure</p>
-                </div>
+            <CardContent className="p-4 flex items-center gap-3">
+              <Server className="h-5 w-5 text-green-500" />
+              <div>
+                <p className="text-2xl font-bold">{summary.totalInfrastructure}</p>
+                <p className="text-xs text-muted-foreground">Infra</p>
               </div>
             </CardContent>
           </Card>
           <Card className="cursor-pointer hover:border-primary/50" onClick={() => setActiveTab("vendors")}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-orange-500/10 rounded-lg">
-                  <Building2 className="h-5 w-5 text-orange-500" />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold">{summary.totalVendors}</p>
-                  <p className="text-xs text-muted-foreground">Vendors</p>
-                </div>
+            <CardContent className="p-4 flex items-center gap-3">
+              <Building2 className="h-5 w-5 text-orange-500" />
+              <div>
+                <p className="text-2xl font-bold">{summary.totalVendors}</p>
+                <p className="text-xs text-muted-foreground">Vendors</p>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Tabbed Content */}
+        {/* Tabbed Content - simplified labels */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList>
             <TabsTrigger value="models">Models</TabsTrigger>
             <TabsTrigger value="data">Data</TabsTrigger>
             <TabsTrigger value="prompts">Prompts</TabsTrigger>
-            <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
+            <TabsTrigger value="infrastructure">Infra</TabsTrigger>
             <TabsTrigger value="vendors">Vendors</TabsTrigger>
           </TabsList>
 
           <TabsContent value="models" className="mt-4">
-            <div className="grid gap-4">
+            <div className="grid gap-3">
               {aiModelsInventory.map((model) => (
                 <Card key={model.id}>
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                          <Brain className="h-5 w-5 text-primary" />
-                        </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Brain className="h-5 w-5 text-primary" />
                         <div>
-                          <h3 className="font-semibold">{model.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {model.provider} | {model.version}
+                          <h3 className="font-medium">{model.name}</h3>
+                          <p className="text-xs text-muted-foreground">
+                            {model.provider} | {model.monthlyInferences.toLocaleString()}/mo | {model.costPerMonth}
                           </p>
-                          <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                            <span>{model.monthlyInferences.toLocaleString()} inferences/mo</span>
-                            <span>P95: {model.latencyP95}</span>
-                            <span>{model.costPerMonth}</span>
-                          </div>
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Badge variant={getStatusBadge(model.status)}>{model.status}</Badge>
-                        <Badge variant={getStatusBadge(model.complianceStatus)}>{model.complianceStatus}</Badge>
-                      </div>
+                      <Badge variant={getStatusBadge(model.status)}>{model.status}</Badge>
                     </div>
                   </CardContent>
                 </Card>
@@ -186,34 +141,23 @@ export default function AIVisibilityPage() {
           </TabsContent>
 
           <TabsContent value="data" className="mt-4">
-            <div className="grid gap-4">
+            <div className="grid gap-3">
               {dataSourcesInventory.map((source) => (
                 <Card key={source.id}>
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className="p-2 bg-blue-500/10 rounded-lg">
-                          <Database className="h-5 w-5 text-blue-500" />
-                        </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Database className="h-5 w-5 text-blue-500" />
                         <div>
-                          <h3 className="font-semibold">{source.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {source.type} | {source.location}
+                          <h3 className="font-medium">{source.name}</h3>
+                          <p className="text-xs text-muted-foreground">
+                            {source.type} | {source.recordCount} | {source.dataOwner}
                           </p>
-                          <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                            <span>{source.recordCount}</span>
-                            <span>Owner: {source.dataOwner}</span>
-                          </div>
                         </div>
                       </div>
                       <div className="flex gap-2">
                         <Badge variant={getClassificationBadge(source.classification)}>{source.classification}</Badge>
-                        {source.gdprCompliant && (
-                          <Badge variant="success">
-                            <CheckCircle className="h-3 w-3 mr-1" />
-                            GDPR
-                          </Badge>
-                        )}
+                        {source.gdprCompliant && <Badge variant="success">GDPR</Badge>}
                       </div>
                     </div>
                   </CardContent>
@@ -223,25 +167,18 @@ export default function AIVisibilityPage() {
           </TabsContent>
 
           <TabsContent value="prompts" className="mt-4">
-            <div className="grid gap-4">
+            <div className="grid gap-3">
               {promptsInventory.map((prompt) => (
                 <Card key={prompt.id}>
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className="p-2 bg-purple-500/10 rounded-lg">
-                          <FileText className="h-5 w-5 text-purple-500" />
-                        </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <FileText className="h-5 w-5 text-purple-500" />
                         <div>
-                          <h3 className="font-semibold">{prompt.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {prompt.model} | {prompt.category}
+                          <h3 className="font-medium">{prompt.name}</h3>
+                          <p className="text-xs text-muted-foreground">
+                            {prompt.model} | {prompt.category} | ~{prompt.avgTokens} tokens
                           </p>
-                          <p className="text-xs text-muted-foreground mt-1">{prompt.description}</p>
-                          <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                            <span>~{prompt.avgTokens} tokens</span>
-                            <span>Review: {prompt.humanReview}</span>
-                          </div>
                         </div>
                       </div>
                       <div className="flex gap-2">
@@ -266,34 +203,21 @@ export default function AIVisibilityPage() {
           </TabsContent>
 
           <TabsContent value="infrastructure" className="mt-4">
-            <div className="grid gap-4">
+            <div className="grid gap-3">
               {infrastructureInventory.map((infra) => (
                 <Card key={infra.id}>
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className="p-2 bg-green-500/10 rounded-lg">
-                          <Server className="h-5 w-5 text-green-500" />
-                        </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Server className="h-5 w-5 text-green-500" />
                         <div>
-                          <h3 className="font-semibold">{infra.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {infra.type} | {infra.provider}
+                          <h3 className="font-medium">{infra.name}</h3>
+                          <p className="text-xs text-muted-foreground">
+                            {infra.provider} | {infra.region} | {infra.uptime}% uptime | {infra.costPerMonth}
                           </p>
-                          <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                            <span>Uptime: {infra.uptime}%</span>
-                            <span>{infra.region}</span>
-                            <span>{infra.costPerMonth}</span>
-                          </div>
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Badge variant="success">{infra.status}</Badge>
-                        <Badge variant="outline">
-                          <Lock className="h-3 w-3 mr-1" />
-                          {infra.networkIsolation}
-                        </Badge>
-                      </div>
+                      <Badge variant="success">{infra.status}</Badge>
                     </div>
                   </CardContent>
                 </Card>
@@ -302,37 +226,26 @@ export default function AIVisibilityPage() {
           </TabsContent>
 
           <TabsContent value="vendors" className="mt-4">
-            <div className="grid gap-4">
+            <div className="grid gap-3">
               {vendorAIInventory.map((vendor) => (
                 <Card key={vendor.id}>
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className="p-2 bg-orange-500/10 rounded-lg">
-                          <Building2 className="h-5 w-5 text-orange-500" />
-                        </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Building2 className="h-5 w-5 text-orange-500" />
                         <div>
-                          <h3 className="font-semibold">{vendor.name}</h3>
-                          <p className="text-sm text-muted-foreground">{vendor.service}</p>
-                          <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                            <span>{vendor.annualSpend}/year</span>
-                            <span>SLA: {vendor.actualUptime}%</span>
-                            <span>Expires: {vendor.contractExpiry}</span>
-                          </div>
+                          <h3 className="font-medium">{vendor.name}</h3>
+                          <p className="text-xs text-muted-foreground">
+                            {vendor.service} | {vendor.annualSpend}/yr | Expires: {vendor.contractExpiry}
+                          </p>
                         </div>
                       </div>
                       <div className="flex gap-2">
                         <Badge variant={getStatusBadge(vendor.contractStatus)}>{vendor.contractStatus}</Badge>
                         {vendor.aiActCompliant === true ? (
-                          <Badge variant="success">
-                            <Shield className="h-3 w-3 mr-1" />
-                            EU AI Act
-                          </Badge>
+                          <Badge variant="success">EU AI Act</Badge>
                         ) : (
-                          <Badge variant="warning">
-                            <AlertTriangle className="h-3 w-3 mr-1" />
-                            Pending
-                          </Badge>
+                          <Badge variant="warning">Pending</Badge>
                         )}
                       </div>
                     </div>
