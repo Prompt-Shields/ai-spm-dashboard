@@ -334,25 +334,25 @@ export default function ModelRiskContextPage() {
                 {[
                   {
                     label: "Hallucination Risk",
-                    value: selectedModel.riskScores.hallucination,
+                    value: selectedModel.hallucinationRisk,
                     icon: Brain,
                     desc: "Likelihood of generating false information",
                   },
                   {
                     label: "Bias Risk",
-                    value: selectedModel.riskScores.bias,
+                    value: selectedModel.biasRisk,
                     icon: Activity,
                     desc: "Potential for unfair or discriminatory outputs",
                   },
                   {
                     label: "Toxicity Risk",
-                    value: selectedModel.riskScores.toxicity,
+                    value: selectedModel.toxicityRisk,
                     icon: AlertTriangle,
                     desc: "Risk of harmful or offensive content",
                   },
                   {
                     label: "Privacy Risk",
-                    value: selectedModel.riskScores.privacy,
+                    value: selectedModel.privacyRisk,
                     icon: Shield,
                     desc: "Data leakage and privacy concerns",
                   },
