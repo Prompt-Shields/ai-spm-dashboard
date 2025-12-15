@@ -5,23 +5,7 @@ import { AppHeader } from "@/components/app-header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
-import {
-  Brain,
-  Database,
-  MessageSquare,
-  Server,
-  Building2,
-  Eye,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  Shield,
-  FileText,
-  Zap,
-  Lock,
-  HardDrive,
-} from "lucide-react"
+import { Brain, Database, MessageSquare, Server, Building2, Eye, AlertTriangle, CheckCircle2 } from "lucide-react"
 
 // End-to-end AI visibility data
 const aiModelsInventory = [
@@ -62,7 +46,6 @@ const aiModelsInventory = [
     name: "Underwriting Risk Engine",
     provider: "Internal (Custom ML)",
     version: "v3.1.0",
-    type: "Risk Scoring Model",
     status: "production",
     lastUpdated: "2024-11-01",
     dataInputs: ["Application data", "Health records", "Financial history"],
@@ -479,6 +462,257 @@ const visibilitySummary = {
   },
 }
 
+// Simplified sample data
+const modelsData = [
+  {
+    id: 1,
+    name: "ChatGPT-5o",
+    provider: "OpenAI",
+    version: "5.0",
+    type: "LLM",
+    status: "Production",
+    riskScore: 72,
+    dataInputs: ["Customer queries", "Policy docs"],
+    dataOutputs: ["Responses", "Summaries"],
+  },
+  {
+    id: 2,
+    name: "Claude Sonnet",
+    provider: "Anthropic",
+    version: "4.5",
+    type: "LLM",
+    status: "Production",
+    riskScore: 65,
+    dataInputs: ["Claims data", "Contracts"],
+    dataOutputs: ["Analysis", "Reports"],
+  },
+  {
+    id: 3,
+    name: "DeepSeek R1",
+    provider: "DeepSeek",
+    version: "3.2",
+    type: "LLM",
+    status: "Pilot",
+    riskScore: 78,
+    dataInputs: ["Code", "Docs"],
+    dataOutputs: ["Code", "Analysis"],
+  },
+  {
+    id: 4,
+    name: "Gemini 2.0",
+    provider: "Google",
+    version: "2.0",
+    type: "Multimodal",
+    status: "Testing",
+    riskScore: 68,
+    dataInputs: ["Images", "Text"],
+    dataOutputs: ["Analysis", "Summaries"],
+  },
+  {
+    id: 5,
+    name: "Whisper v3",
+    provider: "OpenAI",
+    version: "3.0",
+    type: "Speech",
+    status: "Production",
+    riskScore: 45,
+    dataInputs: ["Audio"],
+    dataOutputs: ["Transcripts"],
+  },
+]
+
+const dataSourcesData = [
+  {
+    id: 1,
+    name: "Customer Database",
+    type: "PostgreSQL",
+    classification: "Confidential",
+    encryption: "AES-256",
+    accessControl: "RBAC",
+    gdprCompliant: true,
+  },
+  {
+    id: 2,
+    name: "Claims Repository",
+    type: "MongoDB",
+    classification: "Restricted",
+    encryption: "AES-256",
+    accessControl: "RBAC",
+    gdprCompliant: true,
+  },
+  {
+    id: 3,
+    name: "Policy Documents",
+    type: "S3",
+    classification: "Internal",
+    encryption: "AES-256",
+    accessControl: "IAM",
+    gdprCompliant: true,
+  },
+  {
+    id: 4,
+    name: "Analytics Lake",
+    type: "Snowflake",
+    classification: "Internal",
+    encryption: "AES-256",
+    accessControl: "RBAC",
+    gdprCompliant: true,
+  },
+  {
+    id: 5,
+    name: "External APIs",
+    type: "REST",
+    classification: "Public",
+    encryption: "TLS 1.3",
+    accessControl: "API Keys",
+    gdprCompliant: true,
+  },
+]
+
+const promptsData = [
+  {
+    id: 1,
+    name: "Customer Support",
+    version: "2.1",
+    riskLevel: "Low",
+    injectionProtection: true,
+    humanReview: false,
+    usageCount: 45000,
+  },
+  {
+    id: 2,
+    name: "Claims Analysis",
+    version: "1.8",
+    riskLevel: "Medium",
+    injectionProtection: true,
+    humanReview: true,
+    usageCount: 12000,
+  },
+  {
+    id: 3,
+    name: "Underwriting Assistant",
+    version: "3.0",
+    riskLevel: "High",
+    injectionProtection: true,
+    humanReview: true,
+    usageCount: 8500,
+  },
+  {
+    id: 4,
+    name: "Document Summariser",
+    version: "1.5",
+    riskLevel: "Low",
+    injectionProtection: true,
+    humanReview: false,
+    usageCount: 22000,
+  },
+  {
+    id: 5,
+    name: "Fraud Detection",
+    version: "2.3",
+    riskLevel: "High",
+    injectionProtection: true,
+    humanReview: true,
+    usageCount: 6200,
+  },
+]
+
+const infrastructureData = [
+  {
+    id: 1,
+    name: "Azure OpenAI",
+    type: "Cloud API",
+    status: "Healthy",
+    uptime: 99.9,
+    monthlyCost: 45000,
+    certifications: ["SOC 2", "ISO 27001"],
+  },
+  {
+    id: 2,
+    name: "AWS Bedrock",
+    type: "Cloud API",
+    status: "Healthy",
+    uptime: 99.8,
+    monthlyCost: 32000,
+    certifications: ["SOC 2", "HIPAA"],
+  },
+  {
+    id: 3,
+    name: "GPU Cluster",
+    type: "On-premise",
+    status: "Healthy",
+    uptime: 99.5,
+    monthlyCost: 28000,
+    certifications: ["ISO 27001"],
+  },
+  {
+    id: 4,
+    name: "Vector DB",
+    type: "Managed",
+    status: "Healthy",
+    uptime: 99.7,
+    monthlyCost: 8500,
+    certifications: ["SOC 2"],
+  },
+  {
+    id: 5,
+    name: "ML Platform",
+    type: "Hybrid",
+    status: "Maintenance",
+    uptime: 98.2,
+    monthlyCost: 15000,
+    certifications: ["SOC 2", "ISO 27001"],
+  },
+]
+
+const vendorsData = [
+  {
+    id: 1,
+    name: "OpenAI",
+    contractEnd: "2025-12-31",
+    slaUptime: 99.9,
+    euAiActCompliant: "Partial",
+    dataResidency: "US/EU",
+    exitStrategy: "Documented",
+  },
+  {
+    id: 2,
+    name: "Anthropic",
+    contractEnd: "2025-09-30",
+    slaUptime: 99.5,
+    euAiActCompliant: "Yes",
+    dataResidency: "US",
+    exitStrategy: "Documented",
+  },
+  {
+    id: 3,
+    name: "Google Cloud",
+    contractEnd: "2026-03-31",
+    slaUptime: 99.9,
+    euAiActCompliant: "Yes",
+    dataResidency: "EU",
+    exitStrategy: "Documented",
+  },
+  {
+    id: 4,
+    name: "Microsoft Azure",
+    contractEnd: "2026-06-30",
+    slaUptime: 99.95,
+    euAiActCompliant: "Yes",
+    dataResidency: "Norway",
+    exitStrategy: "Documented",
+  },
+  {
+    id: 5,
+    name: "DeepSeek",
+    contractEnd: "2025-06-30",
+    slaUptime: 99.0,
+    euAiActCompliant: "No",
+    dataResidency: "China",
+    exitStrategy: "In Progress",
+  },
+]
+
 export default function AIVisibilityPage() {
   const [selectedTab, setSelectedTab] = useState("models")
 
@@ -536,200 +770,119 @@ export default function AIVisibilityPage() {
 
       <main className="container mx-auto px-8 py-8 max-w-[1600px]">
         {/* Page Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <Eye className="h-8 w-8 text-primary" />
-            <h1 className="text-3xl font-bold">AI Visibility Dashboard</h1>
-          </div>
-          <p className="text-muted-foreground max-w-3xl">
-            End-to-end visibility across Storebrand&apos;s AI ecosystem. Track models, data sources, prompts,
-            infrastructure, and vendor relationships from a single unified view.
+        <div>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <Eye className="h-6 w-6 text-primary" />
+            AI Visibility
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            End-to-end visibility across models, data, prompts, infrastructure, and vendors
           </p>
         </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-          <Card className="border-l-4 border-l-primary">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Brain className="h-4 w-4" />
-                <span className="text-xs font-medium">AI Models</span>
-              </div>
-              <p className="text-2xl font-bold">{visibilitySummary.totalModels}</p>
-              <p className="text-xs text-muted-foreground">{visibilitySummary.modelsInProduction} in production</p>
-            </CardContent>
+        {/* Simplified summary cards */}
+        <div className="grid grid-cols-5 gap-4">
+          <Card className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Brain className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium">Models</span>
+            </div>
+            <p className="text-2xl font-bold">{modelsData.length}</p>
           </Card>
-
-          <Card className="border-l-4 border-l-blue-500">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Database className="h-4 w-4" />
-                <span className="text-xs font-medium">Data Sources</span>
-              </div>
-              <p className="text-2xl font-bold">{visibilitySummary.totalDataSources}</p>
-              <p className="text-xs text-muted-foreground">
-                {visibilitySummary.dataClassificationBreakdown.restricted} restricted
-              </p>
-            </CardContent>
+          <Card className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Database className="h-4 w-4 text-blue-500" />
+              <span className="text-sm font-medium">Data Sources</span>
+            </div>
+            <p className="text-2xl font-bold">{dataSourcesData.length}</p>
           </Card>
-
-          <Card className="border-l-4 border-l-purple-500">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <MessageSquare className="h-4 w-4" />
-                <span className="text-xs font-medium">Prompts</span>
-              </div>
-              <p className="text-2xl font-bold">{visibilitySummary.totalPrompts}</p>
-              <p className="text-xs text-muted-foreground">{visibilitySummary.promptsApproved} approved</p>
-            </CardContent>
+          <Card className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <MessageSquare className="h-4 w-4 text-purple-500" />
+              <span className="text-sm font-medium">Prompts</span>
+            </div>
+            <p className="text-2xl font-bold">{promptsData.length}</p>
           </Card>
-
-          <Card className="border-l-4 border-l-teal-500">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Server className="h-4 w-4" />
-                <span className="text-xs font-medium">Infrastructure</span>
-              </div>
-              <p className="text-2xl font-bold">{visibilitySummary.totalInfrastructure}</p>
-              <p className="text-xs text-muted-foreground">All healthy</p>
-            </CardContent>
+          <Card className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Server className="h-4 w-4 text-teal-500" />
+              <span className="text-sm font-medium">Infrastructure</span>
+            </div>
+            <p className="text-2xl font-bold">{infrastructureData.length}</p>
           </Card>
-
-          <Card className="border-l-4 border-l-orange-500">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Building2 className="h-4 w-4" />
-                <span className="text-xs font-medium">Vendors</span>
-              </div>
-              <p className="text-2xl font-bold">{visibilitySummary.totalVendors}</p>
-              <p className="text-xs text-muted-foreground">{visibilitySummary.vendorsCompliant} AI Act compliant</p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-l-4 border-l-green-500">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Zap className="h-4 w-4" />
-                <span className="text-xs font-medium">Monthly Inferences</span>
-              </div>
-              <p className="text-2xl font-bold">{(visibilitySummary.totalMonthlyInferences / 1000).toFixed(0)}K</p>
-              <p className="text-xs text-muted-foreground">{visibilitySummary.totalMonthlyCost} cost</p>
-            </CardContent>
+          <Card className="p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Building2 className="h-4 w-4 text-orange-500" />
+              <span className="text-sm font-medium">Vendors</span>
+            </div>
+            <p className="text-2xl font-bold">{vendorsData.length}</p>
           </Card>
         </div>
 
         {/* Tabs Content */}
-        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-          <TabsList className="grid grid-cols-5 w-full max-w-2xl">
-            <TabsTrigger value="models" className="flex items-center gap-2">
-              <Brain className="h-4 w-4" />
-              Models
-            </TabsTrigger>
-            <TabsTrigger value="data" className="flex items-center gap-2">
-              <Database className="h-4 w-4" />
-              Data
-            </TabsTrigger>
-            <TabsTrigger value="prompts" className="flex items-center gap-2">
-              <MessageSquare className="h-4 w-4" />
-              Prompts
-            </TabsTrigger>
-            <TabsTrigger value="infrastructure" className="flex items-center gap-2">
-              <Server className="h-4 w-4" />
-              Infra
-            </TabsTrigger>
-            <TabsTrigger value="vendors" className="flex items-center gap-2">
-              <Building2 className="h-4 w-4" />
-              Vendors
-            </TabsTrigger>
+        <Tabs defaultValue="models" className="space-y-4">
+          <TabsList>
+            <TabsTrigger value="models">Models</TabsTrigger>
+            <TabsTrigger value="data">Data</TabsTrigger>
+            <TabsTrigger value="prompts">Prompts</TabsTrigger>
+            <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
+            <TabsTrigger value="vendors">Vendors</TabsTrigger>
           </TabsList>
 
           {/* Models Tab */}
-          <TabsContent value="models" className="space-y-4">
+          <TabsContent value="models">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
                   <Brain className="h-5 w-5 text-primary" />
-                  AI Models Inventory
+                  AI Models
                 </CardTitle>
-                <CardDescription>
-                  Complete inventory of AI models deployed across Storebrand, including version tracking, performance
-                  metrics, and compliance status.
-                </CardDescription>
+                <CardDescription>Deployed models with risk scores and data flows</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {aiModelsInventory.map((model) => (
-                    <Card key={model.id} className="border bg-muted/30">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold text-lg">{model.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {model.provider} | {model.version}
-                            </p>
-                          </div>
-                          <div className="flex gap-2">
-                            {getStatusBadge(model.status)}
-                            {getStatusBadge(model.complianceStatus)}
+                <div className="space-y-3">
+                  {modelsData.map((model) => (
+                    <div key={model.id} className="p-4 border rounded-lg">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h3 className="font-medium">{model.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {model.provider} · {model.type} · v{model.version}
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <Badge variant={model.status === "Production" ? "default" : "secondary"}>
+                            {model.status}
+                          </Badge>
+                          <Badge variant={model.riskScore > 70 ? "destructive" : "outline"}>
+                            Risk: {model.riskScore}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <p className="text-muted-foreground mb-1">Data Inputs</p>
+                          <div className="flex flex-wrap gap-1">
+                            {model.dataInputs.map((input, i) => (
+                              <Badge key={i} variant="outline" className="text-xs">
+                                {input}
+                              </Badge>
+                            ))}
                           </div>
                         </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                          <div>
-                            <p className="text-muted-foreground">Type</p>
-                            <p className="font-medium">{model.type}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Monthly Inferences</p>
-                            <p className="font-medium">{model.monthlyInferences.toLocaleString()}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Latency (P95)</p>
-                            <p className="font-medium">{model.latencyP95}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Monthly Cost</p>
-                            <p className="font-medium">{model.costPerMonth}</p>
+                        <div>
+                          <p className="text-muted-foreground mb-1">Data Outputs</p>
+                          <div className="flex flex-wrap gap-1">
+                            {model.dataOutputs.map((output, i) => (
+                              <Badge key={i} variant="outline" className="text-xs">
+                                {output}
+                              </Badge>
+                            ))}
                           </div>
                         </div>
-
-                        <div className="mt-4 pt-4 border-t">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <p className="text-muted-foreground mb-1">Data Inputs</p>
-                              <div className="flex flex-wrap gap-1">
-                                {model.dataInputs.map((input) => (
-                                  <Badge key={input} variant="outline" className="text-xs">
-                                    {input}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground mb-1">Data Outputs</p>
-                              <div className="flex flex-wrap gap-1">
-                                {model.dataOutputs.map((output) => (
-                                  <Badge key={output} variant="outline" className="text-xs">
-                                    {output}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <FileText className="h-3 w-3" />
-                            {model.promptTemplates} prompt templates
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            Updated {model.lastUpdated}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </CardContent>
@@ -737,248 +890,164 @@ export default function AIVisibilityPage() {
           </TabsContent>
 
           {/* Data Tab */}
-          <TabsContent value="data" className="space-y-4">
+          <TabsContent value="data">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
                   <Database className="h-5 w-5 text-blue-500" />
-                  Data Sources Inventory
+                  Data Sources
                 </CardTitle>
-                <CardDescription>
-                  All data sources feeding into AI systems, with classification levels, access controls, and compliance
-                  status.
-                </CardDescription>
+                <CardDescription>Data sources with classification and security controls</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {dataSourcesInventory.map((source) => (
-                    <Card key={source.id} className="border bg-muted/30">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold text-lg">{source.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {source.type} | {source.location}
-                            </p>
-                          </div>
-                          <div className="flex gap-2">
-                            {getClassificationBadge(source.classification)}
-                            {source.gdprCompliant && (
-                              <Badge className="bg-green-100 text-green-800 border-green-200">GDPR Compliant</Badge>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2">Name</th>
+                        <th className="text-left p-2">Type</th>
+                        <th className="text-left p-2">Classification</th>
+                        <th className="text-left p-2">Encryption</th>
+                        <th className="text-left p-2">Access</th>
+                        <th className="text-left p-2">GDPR</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dataSourcesData.map((source) => (
+                        <tr key={source.id} className="border-b hover:bg-muted/50">
+                          <td className="p-2 font-medium">{source.name}</td>
+                          <td className="p-2 text-muted-foreground">{source.type}</td>
+                          <td className="p-2">
+                            <Badge
+                              variant={
+                                source.classification === "Restricted"
+                                  ? "destructive"
+                                  : source.classification === "Confidential"
+                                    ? "default"
+                                    : "secondary"
+                              }
+                            >
+                              {source.classification}
+                            </Badge>
+                          </td>
+                          <td className="p-2">{source.encryption}</td>
+                          <td className="p-2">{source.accessControl}</td>
+                          <td className="p-2">
+                            {source.gdprCompliant ? (
+                              <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            ) : (
+                              <AlertTriangle className="h-4 w-4 text-destructive" />
                             )}
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                          <div>
-                            <p className="text-muted-foreground">Records</p>
-                            <p className="font-medium">{source.recordCount}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Refresh</p>
-                            <p className="font-medium">{source.refreshFrequency}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Retention</p>
-                            <p className="font-medium">{source.retentionPeriod}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Owner</p>
-                            <p className="font-medium">{source.dataOwner}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 pt-4 border-t grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                          <div>
-                            <p className="text-muted-foreground mb-1 flex items-center gap-1">
-                              <Lock className="h-3 w-3" /> Encryption
-                            </p>
-                            <p className="font-medium">{source.encryptionStatus}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground mb-1 flex items-center gap-1">
-                              <Shield className="h-3 w-3" /> Access Controls
-                            </p>
-                            <p className="font-medium">{source.accessControls}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Brain className="h-3 w-3" />
-                            {source.connectedModels.length} connected models
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            Last audit {source.lastAudit}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
           {/* Prompts Tab */}
-          <TabsContent value="prompts" className="space-y-4">
+          <TabsContent value="prompts">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-purple-500" />
-                  Prompt Templates Inventory
+                  Prompt Templates
                 </CardTitle>
-                <CardDescription>
-                  Governance and visibility over all prompt templates, including version control, risk classification,
-                  and security controls.
-                </CardDescription>
+                <CardDescription>Prompt governance with risk levels and controls</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {promptsInventory.map((prompt) => (
-                    <Card key={prompt.id} className="border bg-muted/30">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold text-lg">{prompt.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {prompt.model} | {prompt.version}
-                            </p>
-                          </div>
-                          <div className="flex gap-2">
-                            {getStatusBadge(prompt.status)}
-                            {getRiskBadge(prompt.riskLevel)}
-                          </div>
-                        </div>
-
-                        <p className="text-sm text-muted-foreground mb-4">{prompt.description}</p>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                          <div>
-                            <p className="text-muted-foreground">Category</p>
-                            <p className="font-medium">{prompt.category}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Avg Tokens</p>
-                            <p className="font-medium">{prompt.avgTokens.toLocaleString()}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Human Review</p>
-                            <p className="font-medium">{prompt.humanReview}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Last Modified</p>
-                            <p className="font-medium">{prompt.lastModified}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 pt-4 border-t flex items-center gap-4">
-                          <div className="flex items-center gap-2">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2">Template</th>
+                        <th className="text-left p-2">Version</th>
+                        <th className="text-left p-2">Risk</th>
+                        <th className="text-left p-2">Injection Protection</th>
+                        <th className="text-left p-2">Human Review</th>
+                        <th className="text-left p-2">Usage/mo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {promptsData.map((prompt) => (
+                        <tr key={prompt.id} className="border-b hover:bg-muted/50">
+                          <td className="p-2 font-medium">{prompt.name}</td>
+                          <td className="p-2 text-muted-foreground">v{prompt.version}</td>
+                          <td className="p-2">
+                            <Badge
+                              variant={
+                                prompt.riskLevel === "High"
+                                  ? "destructive"
+                                  : prompt.riskLevel === "Medium"
+                                    ? "default"
+                                    : "secondary"
+                              }
+                            >
+                              {prompt.riskLevel}
+                            </Badge>
+                          </td>
+                          <td className="p-2">
                             {prompt.injectionProtection ? (
-                              <CheckCircle2 className="h-4 w-4 text-green-600" />
+                              <CheckCircle2 className="h-4 w-4 text-green-500" />
                             ) : (
-                              <AlertTriangle className="h-4 w-4 text-amber-600" />
+                              <AlertTriangle className="h-4 w-4 text-destructive" />
                             )}
-                            <span className="text-sm">Injection Protection</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            {prompt.outputValidation ? (
-                              <CheckCircle2 className="h-4 w-4 text-green-600" />
+                          </td>
+                          <td className="p-2">
+                            {prompt.humanReview ? (
+                              <CheckCircle2 className="h-4 w-4 text-green-500" />
                             ) : (
-                              <AlertTriangle className="h-4 w-4 text-amber-600" />
+                              <span className="text-muted-foreground">-</span>
                             )}
-                            <span className="text-sm">Output Validation</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                          </td>
+                          <td className="p-2">{prompt.usageCount.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
           {/* Infrastructure Tab */}
-          <TabsContent value="infrastructure" className="space-y-4">
+          <TabsContent value="infrastructure">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
                   <Server className="h-5 w-5 text-teal-500" />
-                  AI Infrastructure Inventory
+                  Infrastructure
                 </CardTitle>
-                <CardDescription>
-                  Compute, storage, and platform services supporting AI workloads, including health status, costs, and
-                  security posture.
-                </CardDescription>
+                <CardDescription>Compute and platform services</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {infrastructureInventory.map((infra) => (
-                    <Card key={infra.id} className="border bg-muted/30">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold text-lg">{infra.name}</h4>
-                            <p className="text-sm text-muted-foreground">
-                              {infra.provider} | {infra.region}
-                            </p>
-                          </div>
-                          <div className="flex gap-2">
-                            {getStatusBadge(infra.status)}
-                            <Badge variant="outline">{infra.type}</Badge>
-                          </div>
+                <div className="space-y-3">
+                  {infrastructureData.map((infra) => (
+                    <div key={infra.id} className="p-4 border rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 className="font-medium">{infra.name}</h3>
+                          <p className="text-sm text-muted-foreground">{infra.type}</p>
                         </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
-                          <div>
-                            <p className="text-muted-foreground">Uptime</p>
-                            <p className="font-medium">{infra.uptime}%</p>
-                            <Progress value={infra.uptime} className="h-1 mt-1" />
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Monthly Cost</p>
-                            <p className="font-medium">{infra.costPerMonth}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Last Incident</p>
-                            <p className="font-medium">{infra.lastIncident}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Scaling</p>
-                            <p className="font-medium">{infra.scalingPolicy}</p>
-                          </div>
+                        <div className="flex gap-2">
+                          <Badge variant={infra.status === "Healthy" ? "default" : "secondary"}>{infra.status}</Badge>
+                          <Badge variant="outline">{infra.uptime}% uptime</Badge>
                         </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                          <div>
-                            <p className="text-muted-foreground mb-1">Security Certifications</p>
-                            <div className="flex flex-wrap gap-1">
-                              {infra.securityCertifications.map((cert) => (
-                                <Badge key={cert} variant="outline" className="text-xs">
-                                  {cert}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground mb-1">Network Isolation</p>
-                            <p className="font-medium">{infra.networkIsolation}</p>
-                          </div>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="flex gap-1">
+                          {infra.certifications.map((cert, i) => (
+                            <Badge key={i} variant="outline" className="text-xs">
+                              {cert}
+                            </Badge>
+                          ))}
                         </div>
-
-                        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Brain className="h-3 w-3" />
-                            {infra.connectedModels.length} connected models
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <HardDrive className="h-3 w-3" />
-                            {infra.backupStrategy}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        <span className="text-muted-foreground">NOK {infra.monthlyCost.toLocaleString()}/mo</span>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </CardContent>
@@ -986,98 +1055,57 @@ export default function AIVisibilityPage() {
           </TabsContent>
 
           {/* Vendors Tab */}
-          <TabsContent value="vendors" className="space-y-4">
+          <TabsContent value="vendors">
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
                   <Building2 className="h-5 w-5 text-orange-500" />
-                  AI Vendor Inventory
+                  AI Vendors
                 </CardTitle>
-                <CardDescription>
-                  Third-party AI service providers, contract status, compliance posture, and exit strategies for vendor
-                  risk management.
-                </CardDescription>
+                <CardDescription>Third-party providers with compliance status</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {vendorAIInventory.map((vendor) => (
-                    <Card key={vendor.id} className="border bg-muted/30">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-semibold text-lg">{vendor.name}</h4>
-                            <p className="text-sm text-muted-foreground">{vendor.service}</p>
-                          </div>
-                          <div className="flex gap-2">
-                            {getStatusBadge(vendor.contractStatus)}
-                            {getRiskBadge(vendor.riskRating)}
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
-                          <div>
-                            <p className="text-muted-foreground">Annual Spend</p>
-                            <p className="font-medium">{vendor.annualSpend}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Contract Expiry</p>
-                            <p className="font-medium">{vendor.contractExpiry}</p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">SLA Uptime</p>
-                            <p className="font-medium">
-                              {vendor.slaUptime}% (actual: {vendor.actualUptime}%)
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground">Data Location</p>
-                            <p className="font-medium">{vendor.dataProcessingLocation}</p>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
-                          <div>
-                            <p className="text-muted-foreground mb-1">Use Cases</p>
-                            <div className="flex flex-wrap gap-1">
-                              {vendor.useCases.map((useCase) => (
-                                <Badge key={useCase} variant="outline" className="text-xs">
-                                  {useCase}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-muted-foreground mb-1">Exit Strategy</p>
-                            <p className="font-medium text-sm">{vendor.exitStrategy}</p>
-                          </div>
-                        </div>
-
-                        <div className="pt-4 border-t flex items-center gap-4">
-                          <div className="flex items-center gap-2">
-                            {vendor.gdprDpa ? (
-                              <CheckCircle2 className="h-4 w-4 text-green-600" />
-                            ) : (
-                              <AlertTriangle className="h-4 w-4 text-amber-600" />
-                            )}
-                            <span className="text-sm">GDPR DPA</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            {vendor.aiActCompliant === true ? (
-                              <CheckCircle2 className="h-4 w-4 text-green-600" />
-                            ) : vendor.aiActCompliant === "pending" ? (
-                              <Clock className="h-4 w-4 text-amber-600" />
-                            ) : (
-                              <AlertTriangle className="h-4 w-4 text-red-600" />
-                            )}
-                            <span className="text-sm">EU AI Act</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span>Last audit: {vendor.securityAudit}</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2">Vendor</th>
+                        <th className="text-left p-2">Contract End</th>
+                        <th className="text-left p-2">SLA</th>
+                        <th className="text-left p-2">EU AI Act</th>
+                        <th className="text-left p-2">Data Residency</th>
+                        <th className="text-left p-2">Exit Strategy</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {vendorsData.map((vendor) => (
+                        <tr key={vendor.id} className="border-b hover:bg-muted/50">
+                          <td className="p-2 font-medium">{vendor.name}</td>
+                          <td className="p-2 text-muted-foreground">{vendor.contractEnd}</td>
+                          <td className="p-2">{vendor.slaUptime}%</td>
+                          <td className="p-2">
+                            <Badge
+                              variant={
+                                vendor.euAiActCompliant === "Yes"
+                                  ? "default"
+                                  : vendor.euAiActCompliant === "Partial"
+                                    ? "secondary"
+                                    : "destructive"
+                              }
+                            >
+                              {vendor.euAiActCompliant}
+                            </Badge>
+                          </td>
+                          <td className="p-2">{vendor.dataResidency}</td>
+                          <td className="p-2">
+                            <Badge variant={vendor.exitStrategy === "Documented" ? "outline" : "secondary"}>
+                              {vendor.exitStrategy}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
