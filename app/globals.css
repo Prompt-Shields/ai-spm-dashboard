@@ -21,8 +21,11 @@
   --accent-foreground: 350 70% 36%;
   --destructive: 0 65% 51%;
   --destructive-foreground: 0 0% 100%;
+  /* Added success and warning colors with foreground variants */
   --success: 142 51% 45%;
+  --success-foreground: 0 0% 100%;
   --warning: 38 95% 55%;
+  --warning-foreground: 0 0% 17%;
   --border: 0 0% 91%;
   --input: 0 0% 91%;
   --ring: 350 70% 36%;
@@ -68,6 +71,11 @@
   --accent-foreground: 350 60% 80%;
   --destructive: 0 65% 51%;
   --destructive-foreground: 0 0% 100%;
+  /* Added dark mode success and warning colors */
+  --success: 142 55% 50%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 95% 60%;
+  --warning-foreground: 0 0% 17%;
   --border: 0 0% 25%;
   --input: 0 0% 25%;
   --ring: 350 60% 55%;
@@ -114,8 +122,11 @@
   --color-accent-foreground: hsl(var(--accent-foreground));
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
+  /* Added success and warning color mappings with foregrounds */
   --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
   --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
