@@ -27,7 +27,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 const riskChartConfig: ChartConfig = {
   risk: {
     label: "Risk Score",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(201 65% 48%)", // Teal blue for better visibility
   },
 }
 
