@@ -488,3 +488,16 @@ export const storebrandNetworkTopology: StorebrandNetworkNode[] = [
     description: "Automated submissions to Finanstilsynet for compliance reporting",
   },
 ]
+
+export const insuranceAiRiskRegister = storebrandAIRisks.map((risk) => ({
+  id: risk.id,
+  name: risk.name,
+  description: risk.description,
+  severity: risk.severity,
+  likelihood: risk.likelihood,
+  businessImpact: risk.insuranceImpact,
+  detectionChallenges: risk.detectionChallenges,
+  recommendedControls: risk.recommendedControls,
+}))
+
+export const insuranceNetworkTopology = storebrandNetworkTopology

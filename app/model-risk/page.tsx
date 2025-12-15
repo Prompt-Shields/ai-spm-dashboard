@@ -7,9 +7,20 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { AlertTriangle, CheckCircle2, RefreshCw, AlertCircle, Shield, Brain, Activity } from "lucide-react"
+import {
+  AlertTriangle,
+  CheckCircle2,
+  RefreshCw,
+  AlertCircle,
+  Shield,
+  Brain,
+  Activity,
+  Info,
+  HelpCircle,
+} from "lucide-react"
 import { modelRiskProfiles, getModelRiskStatistics, getRiskLevel, getRiskColor } from "@/lib/model-risk-data"
 import { AppHeader } from "@/components/app-header"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function ModelRiskContextPage() {
   const [selectedModelId, setSelectedModelId] = useState<string>(modelRiskProfiles[0].modelId)
@@ -18,19 +29,25 @@ export default function ModelRiskContextPage() {
   const stats = getModelRiskStatistics()
 
   return (
-    <>
+    <TooltipProvider>
       <AppHeader />
-      <div className="min-h-screen bg-muted/30">
+      <div className="min-h-screen bg-background">
         <div className="container py-8 px-8 max-w-[1600px] mx-auto space-y-8">
-          {/* Header Section */}
           <div className="flex items-start justify-between">
-            <div className="space-y-1">
-              <h1 className="text-4xl font-bold tracking-tight">Model Risk Context</h1>
-              <p className="text-muted-foreground text-lg">Assess model behaviour and context</p>
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+                <Brain className="h-8 w-8 text-primary" />
+                Model Risk Context
+              </h1>
+              <p className="text-muted-foreground max-w-2xl">
+                Assess individual AI model behaviour, safety characteristics, and risk profiles. This view helps you
+                make informed decisions about which models are appropriate for specific insurance use cases at
+                Storebrand.
+              </p>
             </div>
             <div className="flex items-center gap-3">
               <Select value={selectedModelId} onValueChange={setSelectedModelId}>
-                <SelectTrigger className="w-[300px] h-11">
+                <SelectTrigger className="w-[280px] h-11">
                   <SelectValue placeholder="Select a model" />
                 </SelectTrigger>
                 <SelectContent>
@@ -48,54 +65,104 @@ export default function ModelRiskContextPage() {
             </div>
           </div>
 
+          <Card className="border-primary/20 bg-gradient-to-r from-primary/5 to-transparent">
+            <CardContent className="p-4">
+              <div className="flex items-start gap-3">
+                <Info className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-sm mb-1">Understanding Model Risk Scores</p>
+                  <p className="text-sm text-muted-foreground">
+                    Each model is assessed across six dimensions: hallucination (generating false information), bias
+                    (unfair treatment of groups), toxicity (harmful content generation), privacy (data leakage risk),
+                    security (vulnerability to attacks), and compliance (regulatory alignment). Scores range from 0-100
+                    where higher scores indicate greater risk. For insurance operations, we recommend models with
+                    overall risk below 60 for customer-facing applications.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* KPI Cards */}
-          <div className="grid gap-6 md:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-4">
             <Card className="border-l-4 border-l-primary">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Brain className="h-4 w-4" />
-                  Total Models
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold">{stats.totalModels}</div>
-                <p className="text-xs text-muted-foreground mt-2">Models under assessment</p>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <Brain className="h-4 w-4" />
+                    Total Models
+                  </p>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Number of AI models evaluated for use at Storebrand</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <p className="text-3xl font-bold">{stats.totalModels}</p>
+                <p className="text-xs text-muted-foreground mt-1">Models under assessment</p>
               </CardContent>
             </Card>
             <Card className="border-l-4 border-l-yellow-500">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                  Hallucination Alerts
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold text-yellow-600">{stats.modelsWithHallucinationAlerts}</div>
-                <p className="text-xs text-muted-foreground mt-2">Models with hallucination issues</p>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                    Hallucination Alerts
+                  </p>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Models that may generate plausible but incorrect information</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <p className="text-3xl font-bold text-yellow-600">{stats.modelsWithHallucinationAlerts}</p>
+                <p className="text-xs text-muted-foreground mt-1">May generate false information</p>
               </CardContent>
             </Card>
             <Card className="border-l-4 border-l-blue-500">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4 text-blue-500" />
-                  Bias Alerts
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold text-blue-600">{stats.modelsWithBiasAlerts}</div>
-                <p className="text-xs text-muted-foreground mt-2">Models with bias issues</p>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 text-blue-500" />
+                    Bias Alerts
+                  </p>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Models with potential for unfair treatment of demographic groups</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <p className="text-3xl font-bold text-blue-600">{stats.modelsWithBiasAlerts}</p>
+                <p className="text-xs text-muted-foreground mt-1">Potential fairness issues</p>
               </CardContent>
             </Card>
             <Card className="border-l-4 border-l-orange-500">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-orange-500" />
-                  Toxicity Alerts
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-4xl font-bold text-orange-600">{stats.modelsWithToxicityAlerts}</div>
-                <p className="text-xs text-muted-foreground mt-2">Models with toxicity issues</p>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <Activity className="h-4 w-4 text-orange-500" />
+                    Toxicity Alerts
+                  </p>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Models that may generate harmful or inappropriate content</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <p className="text-3xl font-bold text-orange-600">{stats.modelsWithToxicityAlerts}</p>
+                <p className="text-xs text-muted-foreground mt-1">Content safety concerns</p>
               </CardContent>
             </Card>
           </div>
@@ -112,91 +179,71 @@ export default function ModelRiskContextPage() {
             <TabsContent value="overview" className="space-y-6">
               <div className="grid gap-6 lg:grid-cols-2">
                 {/* Model Details Card */}
-                <Card className="lg:col-span-1">
-                  <CardHeader className="border-b bg-muted/50">
+                <Card>
+                  <CardHeader className="border-b bg-muted/30">
                     <CardTitle className="flex items-center gap-2">
                       <Shield className="h-5 w-5 text-primary" />
                       Model Details
                     </CardTitle>
                     <CardDescription>Information about the selected model</CardDescription>
                   </CardHeader>
-                  <CardContent className="pt-6 space-y-6">
-                    {/* Name and Provider */}
-                    <div className="grid grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">Name:</p>
-                        <p className="text-2xl font-bold">{selectedModel.name}</p>
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Name</p>
+                        <p className="text-lg font-bold">{selectedModel.name}</p>
                       </div>
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">Provider:</p>
-                        <p className="text-2xl font-bold">{selectedModel.provider}</p>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Provider</p>
+                        <p className="text-lg font-bold">{selectedModel.provider}</p>
                       </div>
-                    </div>
-
-                    {/* Version and Type */}
-                    <div className="grid grid-cols-2 gap-6 pt-4 border-t">
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">Version:</p>
-                        <p className="text-lg font-semibold">{selectedModel.version}</p>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Version</p>
+                        <p className="font-semibold">{selectedModel.version}</p>
                       </div>
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">Type:</p>
-                        <p className="text-lg font-semibold">
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Type</p>
+                        <p className="font-semibold">
                           {selectedModel.category === "LLM" ? "Large Language Model" : selectedModel.category}
                         </p>
                       </div>
-                    </div>
-
-                    {/* Parameters and Last Evaluated */}
-                    <div className="grid grid-cols-2 gap-6 pt-4 border-t">
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">Parameters:</p>
-                        <p className="text-lg font-semibold">{selectedModel.parameters}</p>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Parameters</p>
+                        <p className="font-semibold">{selectedModel.parameters}</p>
                       </div>
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-muted-foreground">Last Evaluated:</p>
-                        <p className="text-lg font-semibold">{selectedModel.lastEvaluated}</p>
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Status</p>
+                        <Badge variant={selectedModel.status === "Production" ? "default" : "secondary"}>
+                          {selectedModel.status}
+                        </Badge>
                       </div>
                     </div>
 
-                    {/* Status */}
-                    <div className="pt-4 border-t">
-                      <p className="text-sm font-medium text-muted-foreground mb-2">Status:</p>
-                      <Badge
-                        variant={selectedModel.status === "Production" ? "default" : "secondary"}
-                        className="text-sm px-3 py-1"
-                      >
-                        {selectedModel.status}
-                      </Badge>
-                    </div>
-
-                    {/* Strengths */}
                     <div className="pt-4 border-t">
                       <div className="flex items-center gap-2 mb-3">
-                        <CheckCircle2 className="h-4 w-4 text-green-500" />
-                        <p className="text-sm font-semibold">Strengths:</p>
+                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        <p className="text-sm font-semibold">Model Strengths</p>
                       </div>
-                      <ul className="space-y-2">
+                      <ul className="space-y-1">
                         {selectedModel.strengths.map((strength, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm">
-                            <span className="text-green-500 mt-0.5">•</span>
-                            <span className="text-muted-foreground">{strength}</span>
+                          <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <span className="text-green-600 mt-0.5">•</span>
+                            <span>{strength}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* Key Risks */}
                     <div className="pt-4 border-t">
                       <div className="flex items-center gap-2 mb-3">
                         <AlertTriangle className="h-4 w-4 text-orange-500" />
-                        <p className="text-sm font-semibold">Key Risks:</p>
+                        <p className="text-sm font-semibold">Key Risks to Consider</p>
                       </div>
-                      <ul className="space-y-2">
+                      <ul className="space-y-1">
                         {selectedModel.keyRisks.map((risk, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm">
+                          <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
                             <span className="text-orange-500 mt-0.5">•</span>
-                            <span className="text-muted-foreground">{risk}</span>
+                            <span>{risk}</span>
                           </li>
                         ))}
                       </ul>
@@ -205,160 +252,91 @@ export default function ModelRiskContextPage() {
                 </Card>
 
                 {/* Risk Assessment Card */}
-                <Card className="lg:col-span-1">
-                  <CardHeader className="border-b bg-muted/50">
+                <Card>
+                  <CardHeader className="border-b bg-muted/30">
                     <CardTitle className="flex items-center gap-2">
                       <Activity className="h-5 w-5 text-primary" />
                       Risk Assessment
                     </CardTitle>
-                    <CardDescription>Risk scores for the selected model</CardDescription>
+                    <CardDescription>Risk scores for the selected model (0-100, lower is better)</CardDescription>
                   </CardHeader>
-                  <CardContent className="pt-6 space-y-6">
-                    {/* Overall Risk - Prominent */}
-                    <div className="p-4 bg-muted/50 rounded-lg border-2 border-border">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-base font-semibold">Overall Risk:</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl font-bold">{selectedModel.overallRisk}/100</span>
+                  <CardContent className="pt-6 space-y-4">
+                    {/* Overall Risk */}
+                    <div className="p-4 bg-muted/30 rounded-lg border">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-semibold">Overall Risk</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-bold">{selectedModel.overallRisk}/100</span>
                           <Badge
                             variant="secondary"
-                            className={`${getRiskColor(selectedModel.overallRisk)} text-white text-sm px-3 py-1`}
+                            className={`${getRiskColor(selectedModel.overallRisk)} text-white`}
                           >
                             {getRiskLevel(selectedModel.overallRisk)}
                           </Badge>
                         </div>
                       </div>
-                      <Progress value={selectedModel.overallRisk} className="h-4" />
+                      <Progress value={selectedModel.overallRisk} className="h-3" />
                     </div>
 
-                    {/* Individual Risk Metrics in Grid */}
-                    <div className="grid grid-cols-2 gap-4">
-                      {/* Hallucination */}
-                      <div className="p-3 border rounded-lg bg-card space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Hallucination:</span>
-                          <span className="text-lg font-bold">{selectedModel.hallucinationRisk}/100</span>
+                    {/* Individual Metrics */}
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { label: "Hallucination", value: selectedModel.hallucinationRisk },
+                        { label: "Bias", value: selectedModel.biasRisk },
+                        { label: "Toxicity", value: selectedModel.toxicityRisk },
+                        { label: "Privacy", value: selectedModel.privacyRisk },
+                        { label: "Security", value: selectedModel.securityRisk },
+                        { label: "Compliance", value: selectedModel.complianceRisk },
+                      ].map((metric) => (
+                        <div key={metric.label} className="p-3 border rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium">{metric.label}</span>
+                            <span className="font-bold">{metric.value}/100</span>
+                          </div>
+                          <Progress value={metric.value} className="h-2" />
+                          <Badge
+                            variant="secondary"
+                            className={`${getRiskColor(metric.value)} text-white text-xs mt-2 w-full justify-center`}
+                          >
+                            {getRiskLevel(metric.value)}
+                          </Badge>
                         </div>
-                        <Progress value={selectedModel.hallucinationRisk} className="h-2" />
-                        <Badge
-                          variant="secondary"
-                          className={`${getRiskColor(selectedModel.hallucinationRisk)} text-white text-xs w-full justify-center`}
-                        >
-                          {getRiskLevel(selectedModel.hallucinationRisk)}
-                        </Badge>
-                      </div>
-
-                      {/* Bias */}
-                      <div className="p-3 border rounded-lg bg-card space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Bias:</span>
-                          <span className="text-lg font-bold">{selectedModel.biasRisk}/100</span>
-                        </div>
-                        <Progress value={selectedModel.biasRisk} className="h-2" />
-                        <Badge
-                          variant="secondary"
-                          className={`${getRiskColor(selectedModel.biasRisk)} text-white text-xs w-full justify-center`}
-                        >
-                          {getRiskLevel(selectedModel.biasRisk)}
-                        </Badge>
-                      </div>
-
-                      {/* Toxicity */}
-                      <div className="p-3 border rounded-lg bg-card space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Toxicity:</span>
-                          <span className="text-lg font-bold">{selectedModel.toxicityRisk}/100</span>
-                        </div>
-                        <Progress value={selectedModel.toxicityRisk} className="h-2" />
-                        <Badge
-                          variant="secondary"
-                          className={`${getRiskColor(selectedModel.toxicityRisk)} text-white text-xs w-full justify-center`}
-                        >
-                          {getRiskLevel(selectedModel.toxicityRisk)}
-                        </Badge>
-                      </div>
-
-                      {/* Privacy */}
-                      <div className="p-3 border rounded-lg bg-card space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Privacy:</span>
-                          <span className="text-lg font-bold">{selectedModel.privacyRisk}/100</span>
-                        </div>
-                        <Progress value={selectedModel.privacyRisk} className="h-2" />
-                        <Badge
-                          variant="secondary"
-                          className={`${getRiskColor(selectedModel.privacyRisk)} text-white text-xs w-full justify-center`}
-                        >
-                          {getRiskLevel(selectedModel.privacyRisk)}
-                        </Badge>
-                      </div>
-
-                      {/* Security */}
-                      <div className="p-3 border rounded-lg bg-card space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Security:</span>
-                          <span className="text-lg font-bold">{selectedModel.securityRisk}/100</span>
-                        </div>
-                        <Progress value={selectedModel.securityRisk} className="h-2" />
-                        <Badge
-                          variant="secondary"
-                          className={`${getRiskColor(selectedModel.securityRisk)} text-white text-xs w-full justify-center`}
-                        >
-                          {getRiskLevel(selectedModel.securityRisk)}
-                        </Badge>
-                      </div>
-
-                      {/* Compliance */}
-                      <div className="p-3 border rounded-lg bg-card space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">Compliance:</span>
-                          <span className="text-lg font-bold">{selectedModel.complianceRisk}/100</span>
-                        </div>
-                        <Progress value={selectedModel.complianceRisk} className="h-2" />
-                        <Badge
-                          variant="secondary"
-                          className={`${getRiskColor(selectedModel.complianceRisk)} text-white text-xs w-full justify-center`}
-                        >
-                          {getRiskLevel(selectedModel.complianceRisk)}
-                        </Badge>
-                      </div>
+                      ))}
                     </div>
                   </CardContent>
                 </Card>
               </div>
 
-              {/* Bottom Section - Use Cases and Alerts */}
+              {/* Use Cases and Alerts */}
               <div className="grid gap-6 lg:grid-cols-2">
-                {/* Use Cases */}
                 <Card>
-                  <CardHeader className="border-b bg-muted/50">
-                    <CardTitle>Use Cases</CardTitle>
-                    <CardDescription>Approved use cases for this model</CardDescription>
+                  <CardHeader className="border-b bg-muted/30">
+                    <CardTitle>Approved Use Cases</CardTitle>
+                    <CardDescription>Safe applications for this model at Storebrand</CardDescription>
                   </CardHeader>
                   <CardContent className="pt-6">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       {selectedModel.approvedUseCases.map((useCase, index) => (
-                        <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border">
-                          <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span className="text-sm font-medium">{useCase}</span>
+                        <div
+                          key={index}
+                          className="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-200"
+                        >
+                          <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+                          <span className="text-sm font-medium text-green-900">{useCase}</span>
                         </div>
                       ))}
                     </div>
 
                     {selectedModel.warnings && selectedModel.warnings.length > 0 && (
-                      <div className="mt-6 pt-6 border-t">
-                        <div className="flex items-center gap-2 mb-4">
-                          <AlertTriangle className="h-5 w-5 text-orange-500" />
-                          <p className="text-sm font-semibold">Warnings & Caveats:</p>
-                        </div>
+                      <div className="mt-6 pt-4 border-t">
+                        <p className="text-sm font-semibold mb-3 flex items-center gap-2">
+                          <AlertTriangle className="h-4 w-4 text-orange-500" />
+                          Important Warnings
+                        </p>
                         <div className="space-y-2">
                           {selectedModel.warnings.map((warning, idx) => (
-                            <div
-                              key={idx}
-                              className="flex items-start gap-2 p-3 rounded-lg bg-orange-50 border border-orange-200"
-                            >
-                              <span className="text-orange-500 mt-0.5">⚠</span>
-                              <span className="text-sm text-orange-900">{warning}</span>
+                            <div key={idx} className="p-3 rounded-lg bg-orange-50 border border-orange-200">
+                              <p className="text-sm text-orange-900">{warning}</p>
                             </div>
                           ))}
                         </div>
@@ -367,42 +345,34 @@ export default function ModelRiskContextPage() {
                   </CardContent>
                 </Card>
 
-                {/* Risk Alerts */}
                 <Card>
-                  <CardHeader className="border-b bg-muted/50">
-                    <CardTitle>Risk Alerts</CardTitle>
-                    <CardDescription>Detected issues with this model</CardDescription>
+                  <CardHeader className="border-b bg-muted/30">
+                    <CardTitle>Active Risk Alerts</CardTitle>
+                    <CardDescription>Current issues detected with this model</CardDescription>
                   </CardHeader>
                   <CardContent className="pt-6">
                     <div className="space-y-4">
                       {selectedModel.alerts.map((alert) => (
-                        <div
-                          key={alert.id}
-                          className="border-l-4 border-l-yellow-500 rounded-lg p-4 bg-yellow-50 space-y-3"
-                        >
-                          <div className="flex items-start justify-between">
+                        <div key={alert.id} className="border-l-4 border-l-yellow-500 rounded-lg p-4 bg-yellow-50">
+                          <div className="flex items-start justify-between mb-2">
                             <div className="flex items-center gap-2">
-                              <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0" />
+                              <AlertTriangle className="h-4 w-4 text-yellow-600" />
                               <h4 className="font-semibold text-sm text-yellow-900">{alert.type} Alert</h4>
                             </div>
                             <Badge
                               variant="secondary"
-                              className={`${
-                                alert.severity === "High" || alert.severity === "Critical"
-                                  ? "bg-orange-500"
-                                  : "bg-yellow-500"
-                              } text-white text-xs`}
+                              className={`${alert.severity === "High" || alert.severity === "Critical" ? "bg-orange-500" : "bg-yellow-500"} text-white text-xs`}
                             >
                               {alert.severity}
                             </Badge>
                           </div>
-                          <p className="text-sm text-yellow-900">{alert.description}</p>
+                          <p className="text-sm text-yellow-900 mb-2">{alert.description}</p>
                           <div>
-                            <p className="text-xs font-semibold text-yellow-900 mb-2">Examples:</p>
+                            <p className="text-xs font-semibold text-yellow-900 mb-1">Examples:</p>
                             <ul className="space-y-1">
                               {alert.examples.map((example, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-xs text-yellow-800">
-                                  <span className="mt-1">•</span>
+                                <li key={idx} className="text-xs text-yellow-800 flex items-start gap-1">
+                                  <span>•</span>
                                   <span>{example}</span>
                                 </li>
                               ))}
@@ -418,23 +388,25 @@ export default function ModelRiskContextPage() {
 
             <TabsContent value="inventory" className="space-y-6">
               <Card>
-                <CardHeader className="border-b bg-muted/50">
+                <CardHeader className="border-b bg-muted/30">
                   <CardTitle>Model Inventory</CardTitle>
-                  <CardDescription>Complete list of all models under assessment</CardDescription>
+                  <CardDescription>
+                    All models evaluated for use at Storebrand. Click any model to view detailed assessment.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <div className="space-y-3">
                     {modelRiskProfiles.map((model) => (
                       <div
                         key={model.modelId}
-                        className={`flex items-center justify-between p-4 border-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-all ${
+                        className={`flex items-center justify-between p-4 border-2 rounded-lg hover:bg-muted/30 cursor-pointer transition-all ${
                           selectedModelId === model.modelId ? "border-primary bg-primary/5" : "border-border"
                         }`}
                         onClick={() => setSelectedModelId(model.modelId)}
                       >
-                        <div className="space-y-2 flex-1">
-                          <div className="flex items-center gap-3 flex-wrap">
-                            <h4 className="font-semibold text-lg">{model.name}</h4>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-semibold">{model.name}</h4>
                             <Badge variant="outline" className="text-xs">
                               {model.provider}
                             </Badge>
@@ -449,15 +421,13 @@ export default function ModelRiskContextPage() {
                             {model.category} • Version {model.version} • {model.parameters}
                           </p>
                         </div>
-                        <div className="flex items-center gap-6 ml-4">
-                          <div className="text-right">
-                            <p className="text-xs font-medium text-muted-foreground mb-1">Overall Risk</p>
-                            <div className="flex items-center gap-2">
-                              <span className="text-2xl font-bold">{model.overallRisk}/100</span>
-                              <Badge variant="secondary" className={`${getRiskColor(model.overallRisk)} text-white`}>
-                                {getRiskLevel(model.overallRisk)}
-                              </Badge>
-                            </div>
+                        <div className="text-right">
+                          <p className="text-xs text-muted-foreground mb-1">Overall Risk</p>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xl font-bold">{model.overallRisk}/100</span>
+                            <Badge variant="secondary" className={`${getRiskColor(model.overallRisk)} text-white`}>
+                              {getRiskLevel(model.overallRisk)}
+                            </Badge>
                           </div>
                         </div>
                       </div>
@@ -469,38 +439,34 @@ export default function ModelRiskContextPage() {
 
             <TabsContent value="alerts" className="space-y-6">
               <Card>
-                <CardHeader className="border-b bg-muted/50">
+                <CardHeader className="border-b bg-muted/30">
                   <CardTitle>All Risk Alerts</CardTitle>
-                  <CardDescription>Comprehensive view of all detected risks across models</CardDescription>
+                  <CardDescription>
+                    Comprehensive view of all detected risks across all evaluated models
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {modelRiskProfiles.flatMap((model) =>
                       model.alerts.map((alert) => (
                         <div
                           key={`${model.modelId}-${alert.id}`}
-                          className="border rounded-lg p-4 space-y-3 hover:bg-muted/30 transition-colors"
+                          className="flex items-start justify-between p-4 border rounded-lg hover:bg-muted/30"
                         >
-                          <div className="flex items-start justify-between">
-                            <div className="space-y-1">
-                              <div className="flex items-center gap-2">
-                                <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                                <h4 className="font-semibold text-sm">{alert.type} Alert</h4>
-                                <span className="text-xs text-muted-foreground">• {model.name}</span>
-                              </div>
-                              <p className="text-sm text-muted-foreground">{alert.description}</p>
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                              <span className="font-semibold text-sm">{alert.type} Alert</span>
+                              <span className="text-xs text-muted-foreground">• {model.name}</span>
                             </div>
-                            <Badge
-                              variant="secondary"
-                              className={`${
-                                alert.severity === "High" || alert.severity === "Critical"
-                                  ? "bg-orange-500"
-                                  : "bg-yellow-500"
-                              } text-white text-xs flex-shrink-0`}
-                            >
-                              {alert.severity}
-                            </Badge>
+                            <p className="text-sm text-muted-foreground">{alert.description}</p>
                           </div>
+                          <Badge
+                            variant="secondary"
+                            className={`${alert.severity === "High" || alert.severity === "Critical" ? "bg-orange-500" : "bg-yellow-500"} text-white text-xs`}
+                          >
+                            {alert.severity}
+                          </Badge>
                         </div>
                       )),
                     )}
@@ -511,40 +477,46 @@ export default function ModelRiskContextPage() {
 
             <TabsContent value="mitigations" className="space-y-6">
               <Card>
-                <CardHeader className="border-b bg-muted/50">
+                <CardHeader className="border-b bg-muted/30">
                   <CardTitle>Risk Mitigations</CardTitle>
-                  <CardDescription>Recommended actions to reduce model risks</CardDescription>
+                  <CardDescription>
+                    Recommended actions to reduce AI model risks in insurance operations
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <div className="space-y-4">
-                    <div className="border-l-4 border-l-primary rounded-lg p-4 bg-muted/30">
-                      <h4 className="font-semibold mb-2">Implement Guardrails</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Deploy input/output filtering and content moderation systems to detect and prevent harmful
-                        responses.
-                      </p>
-                    </div>
-                    <div className="border-l-4 border-l-primary rounded-lg p-4 bg-muted/30">
-                      <h4 className="font-semibold mb-2">Regular Testing & Evaluation</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Conduct ongoing bias testing, hallucination detection, and safety evaluations using standardised
-                        benchmarks.
-                      </p>
-                    </div>
-                    <div className="border-l-4 border-l-primary rounded-lg p-4 bg-muted/30">
-                      <h4 className="font-semibold mb-2">Human-in-the-Loop Review</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Implement human oversight for high-risk decisions and sensitive use cases to catch edge cases
-                        and errors.
-                      </p>
-                    </div>
-                    <div className="border-l-4 border-l-primary rounded-lg p-4 bg-muted/30">
-                      <h4 className="font-semibold mb-2">Access Controls & Monitoring</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Enforce strict authentication, audit logging, and real-time monitoring to track usage patterns
-                        and detect anomalies.
-                      </p>
-                    </div>
+                    {[
+                      {
+                        title: "Implement Guardrails",
+                        description:
+                          "Deploy input/output filtering and content moderation systems to detect and prevent harmful responses. Essential for customer-facing chatbots and claims processing.",
+                      },
+                      {
+                        title: "Regular Testing & Evaluation",
+                        description:
+                          "Conduct ongoing bias testing, hallucination detection, and safety evaluations. For insurance, focus on underwriting fairness and claims accuracy.",
+                      },
+                      {
+                        title: "Human-in-the-Loop Review",
+                        description:
+                          "Implement human oversight for high-risk decisions such as claim denials, coverage recommendations, and premium calculations.",
+                      },
+                      {
+                        title: "Access Controls & Monitoring",
+                        description:
+                          "Enforce strict authentication, audit logging, and real-time monitoring. Track all AI decisions for regulatory compliance and customer disputes.",
+                      },
+                      {
+                        title: "Data Governance",
+                        description:
+                          "Ensure training data and prompts do not contain sensitive customer information. Implement data minimisation principles for all AI interactions.",
+                      },
+                    ].map((mitigation, index) => (
+                      <div key={index} className="border-l-4 border-l-primary rounded-lg p-4 bg-muted/30">
+                        <h4 className="font-semibold mb-2">{mitigation.title}</h4>
+                        <p className="text-sm text-muted-foreground">{mitigation.description}</p>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -552,6 +524,6 @@ export default function ModelRiskContextPage() {
           </Tabs>
         </div>
       </div>
-    </>
+    </TooltipProvider>
   )
 }
