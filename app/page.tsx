@@ -1,5 +1,7 @@
 "use client"
 
+import type { ChartConfig } from "@/components/ui/chart"
+
 import { AppHeader } from "@/components/app-header"
 import { KpiCard } from "@/components/kpi-card"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -19,10 +21,9 @@ import {
   AlertCircle,
   HelpCircle,
 } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts"
 import Link from "next/link"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip as UITooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 const riskChartConfig: ChartConfig = {
   risk: {
@@ -41,6 +42,23 @@ export default function OverviewPage() {
     name: asset.modelName.length > 12 ? asset.modelName.substring(0, 12) + "..." : asset.modelName,
     risk: asset.riskScore,
   }))
+
+  const CustomBarTooltip = ({
+    active,
+    payload,
+  }: { active?: boolean; payload?: Array<{ value: number; payload: { name: string } }> }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-background border rounded-lg shadow-lg px-3 py-2 text-sm">
+          <p className="font-medium">{payload[0].payload.name}</p>
+          <p className="text-muted-foreground">
+            Risk Score: <span className="font-bold text-foreground">{payload[0].value}</span>
+          </p>
+        </div>
+      )
+    }
+    return null
+  }
 
   return (
     <TooltipProvider>
@@ -90,7 +108,7 @@ export default function OverviewPage() {
                 <div className="p-4 bg-card rounded-lg border">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-sm text-muted-foreground">Critical Risk Categories</p>
-                    <Tooltip>
+                    <UITooltip>
                       <TooltipTrigger>
                         <HelpCircle className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
@@ -100,7 +118,7 @@ export default function OverviewPage() {
                           addressed immediately.
                         </p>
                       </TooltipContent>
-                    </Tooltip>
+                    </UITooltip>
                   </div>
                   <p className="text-3xl font-bold text-destructive">{criticalRisks}</p>
                   <p className="text-xs text-muted-foreground mt-1">Requires immediate attention</p>
@@ -108,7 +126,7 @@ export default function OverviewPage() {
                 <div className="p-4 bg-card rounded-lg border">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-sm text-muted-foreground">High Priority Risks</p>
-                    <Tooltip>
+                    <UITooltip>
                       <TooltipTrigger>
                         <HelpCircle className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
@@ -118,7 +136,7 @@ export default function OverviewPage() {
                           status.
                         </p>
                       </TooltipContent>
-                    </Tooltip>
+                    </UITooltip>
                   </div>
                   <p className="text-3xl font-bold text-orange-600">{highRisks}</p>
                   <p className="text-xs text-muted-foreground mt-1">Address within quarter</p>
@@ -126,7 +144,7 @@ export default function OverviewPage() {
                 <div className="p-4 bg-card rounded-lg border">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-sm text-muted-foreground">Overall AI Risk Score</p>
-                    <Tooltip>
+                    <UITooltip>
                       <TooltipTrigger>
                         <HelpCircle className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
@@ -136,7 +154,7 @@ export default function OverviewPage() {
                           posture.
                         </p>
                       </TooltipContent>
-                    </Tooltip>
+                    </UITooltip>
                   </div>
                   <div className="flex items-baseline gap-2">
                     <p className="text-3xl font-bold">{aiSpmMetrics.overallRiskScore}</p>
@@ -150,14 +168,14 @@ export default function OverviewPage() {
                 <div className="p-4 bg-card rounded-lg border">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-sm text-muted-foreground">Compliance Score</p>
-                    <Tooltip>
+                    <UITooltip>
                       <TooltipTrigger>
                         <HelpCircle className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p>Percentage of AI systems meeting GDPR, EU AI Act, and internal policy requirements.</p>
                       </TooltipContent>
-                    </Tooltip>
+                    </UITooltip>
                   </div>
                   <div className="flex items-baseline gap-2">
                     <p className="text-3xl font-bold text-primary">{aiSpmMetrics.complianceScore}%</p>
@@ -362,7 +380,7 @@ export default function OverviewPage() {
                       exposure, and misconfiguration count
                     </CardDescription>
                   </div>
-                  <Tooltip>
+                  <UITooltip>
                     <TooltipTrigger>
                       <HelpCircle className="h-5 w-5 text-muted-foreground" />
                     </TooltipTrigger>
@@ -372,21 +390,21 @@ export default function OverviewPage() {
                         acceptable.
                       </p>
                     </TooltipContent>
-                  </Tooltip>
+                  </UITooltip>
                 </div>
               </CardHeader>
               <CardContent>
-                <ChartContainer config={riskChartConfig} className="h-[250px]">
+                <div className="h-[250px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={riskHeatmapData} layout="vertical">
                       <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
                       <XAxis type="number" domain={[0, 100]} fontSize={11} />
                       <YAxis dataKey="name" type="category" fontSize={11} width={100} />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Bar dataKey="risk" fill="var(--color-risk)" radius={[0, 4, 4, 0]} />
+                      <Tooltip content={<CustomBarTooltip />} />
+                      <Bar dataKey="risk" fill="hsl(201 65% 48%)" radius={[0, 4, 4, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
-                </ChartContainer>
+                </div>
               </CardContent>
             </Card>
           </section>

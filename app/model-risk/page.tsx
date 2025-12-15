@@ -17,6 +17,7 @@ import {
   Activity,
   Info,
   HelpCircle,
+  Briefcase,
 } from "lucide-react"
 import { modelRiskProfiles, getModelRiskStatistics, getRiskLevel, getRiskColor } from "@/lib/model-risk-data"
 import { AppHeader } from "@/components/app-header"
@@ -33,6 +34,7 @@ export default function ModelRiskContextPage() {
       <AppHeader />
       <div className="min-h-screen bg-background">
         <div className="container py-8 px-8 max-w-[1600px] mx-auto space-y-8">
+          {/* Header */}
           <div className="flex items-start justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
@@ -65,6 +67,7 @@ export default function ModelRiskContextPage() {
             </div>
           </div>
 
+          {/* Explanation Card */}
           <Card className="border-primary/20 bg-gradient-to-r from-primary/5 to-transparent">
             <CardContent className="p-4">
               <div className="flex items-start gap-3">
@@ -167,25 +170,70 @@ export default function ModelRiskContextPage() {
             </Card>
           </div>
 
-          {/* Main Content Tabs */}
-          <Tabs defaultValue="overview" className="space-y-6">
+          <Card className="border-2 border-green-200 bg-gradient-to-br from-green-50/50 to-background">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Briefcase className="h-6 w-6 text-green-700" />
+                </div>
+                <div>
+                  <CardTitle className="text-xl">Approved Use Cases for {selectedModel.name}</CardTitle>
+                  <CardDescription>
+                    These applications have been reviewed and approved for this model at Storebrand
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+                {selectedModel.approvedUseCases.map((useCase, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 p-4 rounded-lg bg-white border border-green-200 shadow-sm"
+                  >
+                    <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+                    <span className="text-sm font-medium">{useCase}</span>
+                  </div>
+                ))}
+              </div>
+
+              {selectedModel.warnings && selectedModel.warnings.length > 0 && (
+                <div className="mt-6 pt-4 border-t border-green-200">
+                  <p className="text-sm font-semibold mb-3 flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-orange-500" />
+                    Important Warnings for This Model
+                  </p>
+                  <div className="grid gap-2 md:grid-cols-2">
+                    {selectedModel.warnings.map((warning, idx) => (
+                      <div key={idx} className="p-3 rounded-lg bg-orange-50 border border-orange-200">
+                        <p className="text-sm text-orange-900">{warning}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Main Content Tabs - Reorganized to remove duplicate content */}
+          <Tabs defaultValue="details" className="space-y-6">
             <TabsList className="grid w-full grid-cols-4 lg:w-[600px]">
-              <TabsTrigger value="overview">Model Overview</TabsTrigger>
-              <TabsTrigger value="inventory">Model Inventory</TabsTrigger>
-              <TabsTrigger value="alerts">Risk Alerts</TabsTrigger>
+              <TabsTrigger value="details">Model Details</TabsTrigger>
+              <TabsTrigger value="risks">Risk Assessment</TabsTrigger>
+              <TabsTrigger value="inventory">All Models</TabsTrigger>
               <TabsTrigger value="mitigations">Mitigations</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="overview" className="space-y-6">
+            <TabsContent value="details" className="space-y-6">
               <div className="grid gap-6 lg:grid-cols-2">
                 {/* Model Details Card */}
                 <Card>
                   <CardHeader className="border-b bg-muted/30">
                     <CardTitle className="flex items-center gap-2">
                       <Shield className="h-5 w-5 text-primary" />
-                      Model Details
+                      Model Information
                     </CardTitle>
-                    <CardDescription>Information about the selected model</CardDescription>
+                    <CardDescription>Technical specifications and capabilities</CardDescription>
                   </CardHeader>
                   <CardContent className="pt-6 space-y-4">
                     <div className="grid grid-cols-2 gap-4">
@@ -251,103 +299,13 @@ export default function ModelRiskContextPage() {
                   </CardContent>
                 </Card>
 
-                {/* Risk Assessment Card */}
+                {/* Active Alerts Card */}
                 <Card>
                   <CardHeader className="border-b bg-muted/30">
                     <CardTitle className="flex items-center gap-2">
-                      <Activity className="h-5 w-5 text-primary" />
-                      Risk Assessment
+                      <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                      Active Risk Alerts
                     </CardTitle>
-                    <CardDescription>Risk scores for the selected model (0-100, lower is better)</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pt-6 space-y-4">
-                    {/* Overall Risk */}
-                    <div className="p-4 bg-muted/30 rounded-lg border">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-semibold">Overall Risk</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl font-bold">{selectedModel.overallRisk}/100</span>
-                          <Badge
-                            variant="secondary"
-                            className={`${getRiskColor(selectedModel.overallRisk)} text-white`}
-                          >
-                            {getRiskLevel(selectedModel.overallRisk)}
-                          </Badge>
-                        </div>
-                      </div>
-                      <Progress value={selectedModel.overallRisk} className="h-3" />
-                    </div>
-
-                    {/* Individual Metrics */}
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { label: "Hallucination", value: selectedModel.hallucinationRisk },
-                        { label: "Bias", value: selectedModel.biasRisk },
-                        { label: "Toxicity", value: selectedModel.toxicityRisk },
-                        { label: "Privacy", value: selectedModel.privacyRisk },
-                        { label: "Security", value: selectedModel.securityRisk },
-                        { label: "Compliance", value: selectedModel.complianceRisk },
-                      ].map((metric) => (
-                        <div key={metric.label} className="p-3 border rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium">{metric.label}</span>
-                            <span className="font-bold">{metric.value}/100</span>
-                          </div>
-                          <Progress value={metric.value} className="h-2" />
-                          <Badge
-                            variant="secondary"
-                            className={`${getRiskColor(metric.value)} text-white text-xs mt-2 w-full justify-center`}
-                          >
-                            {getRiskLevel(metric.value)}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Use Cases and Alerts */}
-              <div className="grid gap-6 lg:grid-cols-2">
-                <Card>
-                  <CardHeader className="border-b bg-muted/30">
-                    <CardTitle>Approved Use Cases</CardTitle>
-                    <CardDescription>Safe applications for this model at Storebrand</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pt-6">
-                    <div className="space-y-2">
-                      {selectedModel.approvedUseCases.map((useCase, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-200"
-                        >
-                          <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
-                          <span className="text-sm font-medium text-green-900">{useCase}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {selectedModel.warnings && selectedModel.warnings.length > 0 && (
-                      <div className="mt-6 pt-4 border-t">
-                        <p className="text-sm font-semibold mb-3 flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4 text-orange-500" />
-                          Important Warnings
-                        </p>
-                        <div className="space-y-2">
-                          {selectedModel.warnings.map((warning, idx) => (
-                            <div key={idx} className="p-3 rounded-lg bg-orange-50 border border-orange-200">
-                              <p className="text-sm text-orange-900">{warning}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader className="border-b bg-muted/30">
-                    <CardTitle>Active Risk Alerts</CardTitle>
                     <CardDescription>Current issues detected with this model</CardDescription>
                   </CardHeader>
                   <CardContent className="pt-6">
@@ -386,6 +344,94 @@ export default function ModelRiskContextPage() {
               </div>
             </TabsContent>
 
+            <TabsContent value="risks" className="space-y-6">
+              <Card>
+                <CardHeader className="border-b bg-muted/30">
+                  <CardTitle className="flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-primary" />
+                    Risk Assessment for {selectedModel.name}
+                  </CardTitle>
+                  <CardDescription>
+                    Detailed risk scores across all dimensions. Scores range from 0-100 where lower is better.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-6">
+                  {/* Overall Risk */}
+                  <div className="p-6 bg-muted/30 rounded-lg border">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <span className="text-lg font-semibold">Overall Risk Score</span>
+                        <p className="text-sm text-muted-foreground">Weighted average of all risk dimensions</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-4xl font-bold">{selectedModel.overallRisk}</span>
+                        <span className="text-2xl text-muted-foreground">/100</span>
+                        <Badge
+                          variant="secondary"
+                          className={`${getRiskColor(selectedModel.overallRisk)} text-white text-sm px-3 py-1`}
+                        >
+                          {getRiskLevel(selectedModel.overallRisk)}
+                        </Badge>
+                      </div>
+                    </div>
+                    <Progress value={selectedModel.overallRisk} className="h-4" />
+                  </div>
+
+                  {/* Individual Metrics Grid */}
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      {
+                        label: "Hallucination",
+                        value: selectedModel.hallucinationRisk,
+                        description: "Risk of generating plausible but false information",
+                      },
+                      {
+                        label: "Bias",
+                        value: selectedModel.biasRisk,
+                        description: "Potential for unfair treatment of demographic groups",
+                      },
+                      {
+                        label: "Toxicity",
+                        value: selectedModel.toxicityRisk,
+                        description: "Likelihood of generating harmful content",
+                      },
+                      {
+                        label: "Privacy",
+                        value: selectedModel.privacyRisk,
+                        description: "Risk of exposing sensitive data",
+                      },
+                      {
+                        label: "Security",
+                        value: selectedModel.securityRisk,
+                        description: "Vulnerability to adversarial attacks",
+                      },
+                      {
+                        label: "Compliance",
+                        value: selectedModel.complianceRisk,
+                        description: "Alignment with regulatory requirements",
+                      },
+                    ].map((metric) => (
+                      <Card key={metric.label} className="p-4">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-semibold">{metric.label}</span>
+                          <span className="text-xl font-bold">{metric.value}/100</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">{metric.description}</p>
+                        <Progress value={metric.value} className="h-2 mb-2" />
+                        <Badge
+                          variant="secondary"
+                          className={`${getRiskColor(metric.value)} text-white text-xs w-full justify-center`}
+                        >
+                          {getRiskLevel(metric.value)}
+                        </Badge>
+                      </Card>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Model Inventory tab */}
             <TabsContent value="inventory" className="space-y-6">
               <Card>
                 <CardHeader className="border-b bg-muted/30">
@@ -420,6 +466,9 @@ export default function ModelRiskContextPage() {
                           <p className="text-sm text-muted-foreground">
                             {model.category} • Version {model.version} • {model.parameters}
                           </p>
+                          <p className="text-xs text-muted-foreground">
+                            {model.approvedUseCases.length} approved use cases
+                          </p>
                         </div>
                         <div className="text-right">
                           <p className="text-xs text-muted-foreground mb-1">Overall Risk</p>
@@ -437,44 +486,7 @@ export default function ModelRiskContextPage() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="alerts" className="space-y-6">
-              <Card>
-                <CardHeader className="border-b bg-muted/30">
-                  <CardTitle>All Risk Alerts</CardTitle>
-                  <CardDescription>
-                    Comprehensive view of all detected risks across all evaluated models
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="space-y-3">
-                    {modelRiskProfiles.flatMap((model) =>
-                      model.alerts.map((alert) => (
-                        <div
-                          key={`${model.modelId}-${alert.id}`}
-                          className="flex items-start justify-between p-4 border rounded-lg hover:bg-muted/30"
-                        >
-                          <div className="space-y-1">
-                            <div className="flex items-center gap-2">
-                              <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                              <span className="font-semibold text-sm">{alert.type} Alert</span>
-                              <span className="text-xs text-muted-foreground">• {model.name}</span>
-                            </div>
-                            <p className="text-sm text-muted-foreground">{alert.description}</p>
-                          </div>
-                          <Badge
-                            variant="secondary"
-                            className={`${alert.severity === "High" || alert.severity === "Critical" ? "bg-orange-500" : "bg-yellow-500"} text-white text-xs`}
-                          >
-                            {alert.severity}
-                          </Badge>
-                        </div>
-                      )),
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
+            {/* Mitigations tab */}
             <TabsContent value="mitigations" className="space-y-6">
               <Card>
                 <CardHeader className="border-b bg-muted/30">
