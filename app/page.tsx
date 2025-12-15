@@ -11,20 +11,25 @@ import {
   Shield,
   Database,
   DollarSign,
-  Activity,
   ArrowRight,
   Brain,
   AlertTriangle,
   Info,
   TrendingDown,
-  CheckCircle2,
   AlertCircle,
   HelpCircle,
 } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import Link from "next/link"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+
+const riskChartConfig: ChartConfig = {
+  risk: {
+    label: "Risk Score",
+    color: "hsl(var(--chart-1))",
+  },
+}
 
 export default function OverviewPage() {
   // Calculate risk statistics
@@ -37,18 +42,12 @@ export default function OverviewPage() {
     risk: asset.riskScore,
   }))
 
-  const riskChartConfig = {
-    risk: {
-      label: "Risk Score",
-      color: "hsl(var(--chart-1))",
-    },
-  }
-
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-background">
         <AppHeader />
         <main className="container mx-auto px-8 py-10 space-y-10 max-w-[1600px]">
+          {/* Board-Level Summary Card */}
           <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-background to-accent/30">
             <CardHeader className="pb-4">
               <div className="flex items-start justify-between">
@@ -80,7 +79,7 @@ export default function OverviewPage() {
                       trust. Traditional security controls do not observe how AI systems reason, retrieve data, or
                       propagate instructions. Without continuous adversarial testing across the full AI stack, failures
                       will only be visible after impact. This dashboard provides visibility into these emerging risks
-                      specific to Storebrand's insurance operations.
+                      specific to Storebrand&apos;s insurance operations.
                     </p>
                   </div>
                 </div>
@@ -169,6 +168,7 @@ export default function OverviewPage() {
             </CardContent>
           </Card>
 
+          {/* Risk Categories Section */}
           <section>
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -226,7 +226,7 @@ export default function OverviewPage() {
             </p>
           </section>
 
-          {/* Operational KPIs with explanations */}
+          {/* Operational KPIs */}
           <section>
             <div className="mb-4">
               <h2 className="text-xl font-semibold">Operational Metrics</h2>
@@ -258,7 +258,7 @@ export default function OverviewPage() {
               />
               <KpiCard
                 title="Monthly AI Spend"
-                value={`£${(assetManagementMetrics.totalCloudCostMonth / 1000).toFixed(1)}k`}
+                value={`NOK ${(assetManagementMetrics.totalCloudCostMonth / 1000).toFixed(1)}k`}
                 subtitle="Cloud & compute costs"
                 icon={DollarSign}
                 variant="default"
@@ -266,7 +266,7 @@ export default function OverviewPage() {
             </div>
           </section>
 
-          {/* Quick Navigation Cards */}
+          {/* Dashboard Navigation Cards */}
           <section>
             <div className="mb-4">
               <h2 className="text-xl font-semibold">Dashboard Views</h2>
@@ -283,21 +283,21 @@ export default function OverviewPage() {
                   </CardTitle>
                   <CardDescription className="mt-2">
                     Comprehensive view for CISOs and risk managers. Includes network topology, full risk register,
-                    security incidents, and compliance tracking specific to Storebrand's insurance operations.
+                    security incidents, and compliance tracking specific to Storebrand&apos;s insurance operations.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <AlertTriangle className="h-4 w-4 text-primary" />
                       <span>9 insurance-specific AI risk categories</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <Database className="h-4 w-4 text-primary" />
                       <span>Network topology of AI systems</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <Shield className="h-4 w-4 text-primary" />
                       <span>GDPR, EU AI Act, NIST compliance tracking</span>
                     </div>
                   </div>
@@ -324,15 +324,15 @@ export default function OverviewPage() {
                 <CardContent>
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <Brain className="h-4 w-4 text-primary" />
                       <span>8 major AI models assessed</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <AlertCircle className="h-4 w-4 text-primary" />
                       <span>Hallucination & bias risk scores</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <Shield className="h-4 w-4 text-primary" />
                       <span>Approved use cases per model</span>
                     </div>
                   </div>
@@ -347,14 +347,14 @@ export default function OverviewPage() {
             </div>
           </section>
 
-          {/* Risk Heat Map with explanation */}
+          {/* Risk Heat Map */}
           <section>
             <Card>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="flex items-center gap-2">
-                      <Activity className="h-5 w-5 text-primary" />
+                      <AlertTriangle className="h-5 w-5 text-primary" />
                       Top 5 Risk Assets
                     </CardTitle>
                     <CardDescription className="mt-1">
