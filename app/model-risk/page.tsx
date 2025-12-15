@@ -419,7 +419,7 @@ export default function ModelRiskContextPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {selectedModel.useCases.map((useCase, index) => (
+              {(selectedModel.approvedUseCases || []).map((useCase, index) => (
                 <div
                   key={index}
                   className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-900"
