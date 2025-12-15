@@ -102,8 +102,89 @@ export default function AIGovernancePage() {
             AI Governance Control Centre
           </h1>
           <p className="text-muted-foreground">
-            Unified CISO dashboard for security posture, asset management, and risk intelligence.
+            Unified CISO dashboard for security posture, asset management, and risk intelligence tailored for
+            Storebrand's insurance operations.
           </p>
+        </div>
+
+        {/* Board-Level Summary */}
+        <Card className="border-primary bg-gradient-to-br from-primary/5 to-primary/10">
+          <CardHeader>
+            <CardTitle className="text-2xl flex items-center gap-2">
+              <AlertCircle className="h-6 w-6 text-primary" />
+              Board-Level Summary
+            </CardTitle>
+            <CardDescription className="text-base">
+              Executive overview of AI risk exposure for Storebrand leadership
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-base leading-relaxed">
+              AI risk is not a single vulnerability but a systemic exposure created by autonomy, scale, and trust.
+              Traditional security controls do not observe how AI systems reason, retrieve data, or propagate
+              instructions. Without continuous adversarial testing across the full AI stack, failures will only be
+              visible after impact.
+            </p>
+            <div className="grid gap-4 md:grid-cols-3 pt-4 border-t">
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">Critical Risk Categories</p>
+                <p className="text-2xl font-bold text-destructive">
+                  {aiRiskRegister.filter((r) => r.severity === "Critical").length}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">High Priority Risks</p>
+                <p className="text-2xl font-bold text-warning">
+                  {aiRiskRegister.filter((r) => r.severity === "High").length}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">Total Insurance AI Systems</p>
+                <p className="text-2xl font-bold">{networkTopology.filter((n) => n.type === "model").length}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Risk Categories Overview */}
+        <div>
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-primary" />
+            AI Risk Categories (Insurance Sector)
+          </h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            {aiRiskRegister.slice(0, 9).map((risk) => (
+              <Card
+                key={risk.id}
+                className={`border-l-4 transition-all hover:shadow-lg cursor-pointer ${
+                  risk.severity === "Critical"
+                    ? "border-l-destructive hover:border-l-destructive/80"
+                    : risk.severity === "High"
+                      ? "border-l-warning hover:border-l-warning/80"
+                      : "border-l-primary hover:border-l-primary/80"
+                }`}
+                onClick={() => setSelectedRisk(risk)}
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-base leading-tight">{risk.name}</CardTitle>
+                    <Badge variant={severityColor(risk.severity) as any} className="flex-shrink-0">
+                      {risk.severity}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p className="text-sm text-muted-foreground line-clamp-2">{risk.description}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">Likelihood:</span>
+                    <Badge variant="outline" className="text-xs">
+                      {risk.likelihood}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
 
         {/* Executive KPIs */}
@@ -156,7 +237,8 @@ export default function AIGovernancePage() {
                   AI Asset Network Topology
                 </CardTitle>
                 <CardDescription>
-                  Visual representation of AI models, infrastructure, and data connections
+                  Visual representation of Storebrand's AI models, infrastructure, and data connections across insurance
+                  operations
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -243,7 +325,9 @@ export default function AIGovernancePage() {
               <Card className="lg:col-span-1">
                 <CardHeader>
                   <CardTitle className="text-lg">Risk Categories</CardTitle>
-                  <CardDescription>Select a risk to view details</CardDescription>
+                  <CardDescription>
+                    Select a risk to view comprehensive details and mitigation strategies
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
@@ -291,11 +375,15 @@ export default function AIGovernancePage() {
                       <AlertCircle className="h-4 w-4" />
                       Risk Description
                     </h4>
-                    <p className="text-sm text-muted-foreground">{selectedRisk.description}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{selectedRisk.description}</p>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-sm mb-2">Business Impact</h4>
+                    <h4 className="font-semibold text-sm mb-2">Business Impact for Storebrand</h4>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      These impacts are specific to insurance operations including claims, underwriting, and customer
+                      service:
+                    </p>
                     <ul className="space-y-1">
                       {selectedRisk.businessImpact.map((impact, i) => (
                         <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
@@ -308,6 +396,9 @@ export default function AIGovernancePage() {
 
                   <div>
                     <h4 className="font-semibold text-sm mb-2">Detection Challenges</h4>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Why these risks are difficult to identify in real-time:
+                    </p>
                     <ul className="space-y-1">
                       {selectedRisk.detectionChallenges.map((challenge, i) => (
                         <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
@@ -320,6 +411,9 @@ export default function AIGovernancePage() {
 
                   <div>
                     <h4 className="font-semibold text-sm mb-2">Recommended Controls</h4>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Actionable steps for the CISO and risk compliance teams:
+                    </p>
                     <ul className="space-y-1">
                       {selectedRisk.recommendedControls.map((control, i) => (
                         <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
@@ -332,21 +426,6 @@ export default function AIGovernancePage() {
                 </CardContent>
               </Card>
             </div>
-
-            {/* Board-Level Summary */}
-            <Card className="border-primary/50 bg-primary/5">
-              <CardHeader>
-                <CardTitle>Board-Level Summary</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm leading-relaxed">
-                  AI risk is not a single vulnerability but a systemic exposure created by autonomy, scale, and trust.
-                  Traditional security controls do not observe how AI systems reason, retrieve data, or propagate
-                  instructions. Without continuous adversarial testing across the full AI stack, failures will only be
-                  visible after impact.
-                </p>
-              </CardContent>
-            </Card>
           </TabsContent>
 
           {/* Security & Compliance View */}
@@ -356,7 +435,9 @@ export default function AIGovernancePage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Recent Security Incidents</CardTitle>
-                  <CardDescription>Latest incidents ordered by date</CardDescription>
+                  <CardDescription>
+                    Latest incidents ordered by date - actively monitored by the SOC team
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -387,7 +468,9 @@ export default function AIGovernancePage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Regulatory Compliance</CardTitle>
-                  <CardDescription>Status across major frameworks</CardDescription>
+                  <CardDescription>
+                    Status across major frameworks relevant to Norwegian insurance sector
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="space-y-4">
@@ -534,46 +617,50 @@ export default function AIGovernancePage() {
           {/* Asset Intelligence View */}
           <TabsContent value="assets" className="space-y-6">
             <div className="grid gap-6 lg:grid-cols-2">
-              {/* Asset Distribution */}
+              {/* Asset Overview */}
               <Card>
                 <CardHeader>
                   <CardTitle>Asset Overview</CardTitle>
-                  <CardDescription>Distribution and status</CardDescription>
+                  <CardDescription>
+                    Real-time status of all AI assets across Storebrand insurance operations
+                  </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 border rounded-lg">
-                      <p className="text-sm text-muted-foreground">Total Assets</p>
-                      <p className="text-2xl font-bold">{assetManagementMetrics.totalAssets}</p>
-                    </div>
-                    <div className="p-4 border rounded-lg">
-                      <p className="text-sm text-muted-foreground">Active</p>
-                      <p className="text-2xl font-bold text-success">{assetManagementMetrics.activeAssets}</p>
-                    </div>
-                    <div className="p-4 border rounded-lg">
-                      <p className="text-sm text-muted-foreground">Shadow AI</p>
-                      <p className="text-2xl font-bold text-destructive">{aiSpmMetrics.shadowAICount}</p>
-                    </div>
-                    <div className="p-4 border rounded-lg">
-                      <p className="text-sm text-muted-foreground">Deprecated</p>
-                      <p className="text-2xl font-bold text-muted-foreground">
-                        {assetManagementMetrics.deprecatedAssets}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t">
-                    <h4 className="text-sm font-semibold mb-3">Average Drift Score</h4>
-                    <div className="flex items-center gap-4">
-                      <div className="flex-1">
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${assetManagementMetrics.averageDriftScore > 30 ? "bg-warning" : "bg-success"}`}
-                            style={{ width: `${assetManagementMetrics.averageDriftScore}%` }}
-                          />
-                        </div>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-4 border rounded-lg">
+                        <p className="text-sm text-muted-foreground">Total Assets</p>
+                        <p className="text-2xl font-bold">{assetManagementMetrics.totalAssets}</p>
                       </div>
-                      <span className="text-lg font-bold">{assetManagementMetrics.averageDriftScore}</span>
+                      <div className="p-4 border rounded-lg">
+                        <p className="text-sm text-muted-foreground">Active</p>
+                        <p className="text-2xl font-bold text-success">{assetManagementMetrics.activeAssets}</p>
+                      </div>
+                      <div className="p-4 border rounded-lg">
+                        <p className="text-sm text-muted-foreground">Shadow AI</p>
+                        <p className="text-2xl font-bold text-destructive">{aiSpmMetrics.shadowAICount}</p>
+                      </div>
+                      <div className="p-4 border rounded-lg">
+                        <p className="text-sm text-muted-foreground">Deprecated</p>
+                        <p className="text-2xl font-bold text-muted-foreground">
+                          {assetManagementMetrics.deprecatedAssets}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t">
+                      <h4 className="text-sm font-semibold mb-3">Average Drift Score</h4>
+                      <div className="flex items-center gap-4">
+                        <div className="flex-1">
+                          <div className="h-2 bg-muted rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${assetManagementMetrics.averageDriftScore > 30 ? "bg-warning" : "bg-success"}`}
+                              style={{ width: `${assetManagementMetrics.averageDriftScore}%` }}
+                            />
+                          </div>
+                        </div>
+                        <span className="text-lg font-bold">{assetManagementMetrics.averageDriftScore}</span>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -583,7 +670,9 @@ export default function AIGovernancePage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Operational Cost Breakdown</CardTitle>
-                  <CardDescription>Top 5 most expensive models</CardDescription>
+                  <CardDescription>
+                    Top 5 most expensive models - optimization opportunities highlighted
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
