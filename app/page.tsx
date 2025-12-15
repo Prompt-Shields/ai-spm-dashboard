@@ -3,10 +3,12 @@
 import { AppHeader } from "@/components/app-header"
 import { KpiCard } from "@/components/kpi-card"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { aiSpmMetrics, assetManagementMetrics, aiSpmAssets, aiAssets } from "@/lib/mock-data"
-import { Shield, Database, DollarSign, Activity } from "lucide-react"
+import { Shield, Database, DollarSign, Activity, ArrowRight, Network, Brain, AlertTriangle } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis, YAxis, ResponsiveContainer } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import Link from "next/link"
 
 export default function OverviewPage() {
   // Simulated trend data
@@ -71,7 +73,6 @@ export default function OverviewPage() {
           />
         </div>
 
-        {/* Explanatory Section */}
         <Card className="bg-muted/50">
           <CardHeader>
             <CardTitle>About This Dashboard</CardTitle>
@@ -80,27 +81,107 @@ export default function OverviewPage() {
             <div>
               <h3 className="font-semibold mb-1 flex items-center gap-2">
                 <Shield className="h-4 w-4 text-primary" />
-                AI Security Posture Management (AI-SPM)
+                AI Governance
               </h3>
               <p className="text-sm text-muted-foreground">
-                The AI-SPM view provides security and compliance-focused insights for CISOs and security teams. It
-                tracks vulnerabilities, data governance, regulatory compliance (GDPR, EU AI Act, NIST AI RMF), security
-                incidents, and risk scores across all AI assets.
+                The AI Governance view provides a unified CISO dashboard combining security posture management, asset
+                intelligence, network topology visualization, and the comprehensive AI Risk Register. It integrates
+                security metrics, compliance tracking, operational costs, and threat intelligence in one cohesive
+                interface.
               </p>
             </div>
             <div>
               <h3 className="font-semibold mb-1 flex items-center gap-2">
-                <Database className="h-4 w-4 text-primary" />
-                AI Asset Management
+                <Brain className="h-4 w-4 text-primary" />
+                Model Risk Context
               </h3>
               <p className="text-sm text-muted-foreground">
-                The AI Asset Management view offers operational and inventory visibility for platform teams. It monitors
-                model performance, drift, costs, usage patterns, dependencies, and lifecycle status to ensure efficient
-                AI operations.
+                The Model Risk Context view focuses on AI model behavior and safety assessments. It provides detailed
+                risk profiles for individual models including hallucination scores, bias metrics, toxicity levels,
+                privacy risks, security assessments, and compliance status across major AI providers.
               </p>
             </div>
           </CardContent>
         </Card>
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Card className="border-primary/50 hover:border-primary transition-colors">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-primary" />
+                    AI Governance Dashboard
+                  </CardTitle>
+                  <CardDescription className="mt-2">
+                    Comprehensive CISO view with network topology, risk register, security posture, and asset
+                    intelligence
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3 mb-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <Network className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Network topology visualization</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <AlertTriangle className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">9 AI risk categories from PhD research</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Shield className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Security incidents & compliance tracking</span>
+                </div>
+              </div>
+              <Link href="/ai-governance">
+                <Button className="w-full">
+                  View AI Governance
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card className="border-primary/50 hover:border-primary transition-colors">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Brain className="h-5 w-5 text-primary" />
+                    Model Risk Context
+                  </CardTitle>
+                  <CardDescription className="mt-2">
+                    Detailed AI model behavior analysis with safety assessments and risk scoring
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3 mb-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <Activity className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Hallucination & bias metrics</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Shield className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Security & privacy risk scores</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Database className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">8 major AI models assessed</span>
+                </div>
+              </div>
+              <Link href="/model-risk">
+                <Button className="w-full">
+                  View Model Risk Context
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Two-column layout */}
         <div className="grid gap-6 lg:grid-cols-2">
@@ -130,7 +211,7 @@ export default function OverviewPage() {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium mb-3">Risk Heat Map (Top 10 Assets)</h4>
+                <h4 className="text-sm font-medium mb-3">Risk Heat Map (Top 5 Assets)</h4>
                 <ChartContainer
                   config={{
                     risk: {
