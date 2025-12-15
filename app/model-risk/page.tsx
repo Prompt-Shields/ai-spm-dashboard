@@ -21,6 +21,7 @@ import {
   TrendingUp,
   TrendingDown,
   Minus,
+  XCircle,
 } from "lucide-react"
 import { modelRiskProfiles, getRiskLevel, getRiskColor } from "@/lib/model-risk-data"
 import { AppHeader } from "@/components/app-header"
@@ -491,22 +492,47 @@ export default function ModelRiskContextPage() {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Strengths & Capabilities</CardTitle>
-                  <CardDescription>Key features and recommended applications</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {selectedModel.strengths.map((strength, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{strength}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <div className="space-y-6">
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                      Strengths & Capabilities
+                    </CardTitle>
+                    <CardDescription>Key features and recommended applications</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {selectedModel.strengths.map((strength, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0 mt-0.5" />
+                          <span className="text-sm">{strength}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <XCircle className="h-5 w-5 text-red-600" />
+                      Weaknesses & Limitations
+                    </CardTitle>
+                    <CardDescription>Known limitations and areas of concern</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {(selectedModel.weaknesses || []).map((weakness, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <XCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
+                          <span className="text-sm">{weakness}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </TabsContent>
 
@@ -679,10 +705,10 @@ export default function ModelRiskContextPage() {
                       key={alert.id}
                       className={`p-4 rounded-lg border-l-4 ${
                         alert.severity === "High"
-                          ? "border-l-red-500 bg-red-50 dark:bg-red-950/20"
+                          ? "border-l-red-500 bg-red-50 dark:bg-red-900/20"
                           : alert.severity === "Medium"
-                            ? "border-l-amber-500 bg-amber-50 dark:bg-amber-950/20"
-                            : "border-l-blue-500 bg-blue-50 dark:bg-blue-950/20"
+                            ? "border-l-amber-500 bg-amber-50 dark:bg-amber-900/20"
+                            : "border-l-blue-500 bg-blue-50 dark:bg-blue-900/20"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-4">
