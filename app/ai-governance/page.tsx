@@ -20,6 +20,7 @@ import {
   Server,
   Brain,
   HelpCircle,
+  Info,
 } from "lucide-react"
 
 export default function AIGovernancePage() {
@@ -65,18 +66,60 @@ export default function AIGovernancePage() {
       <div className="min-h-screen bg-background">
         <AppHeader />
         <main className="container mx-auto px-8 py-10 space-y-8 max-w-[1600px]">
-          {/* Page Header */}
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold flex items-center gap-3">
-              <Shield className="h-8 w-8 text-primary" />
-              AI Governance Dashboard
-            </h1>
-            <p className="text-muted-foreground max-w-3xl">
-              Comprehensive security posture management for Storebrand&apos;s AI systems. This dashboard combines asset
-              inventory, risk assessment, network topology, and compliance tracking for insurance-specific AI
-              deployments.
-            </p>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold flex items-center gap-3">
+                <Shield className="h-8 w-8 text-primary" />
+                AI Governance Dashboard
+              </h1>
+              <p className="text-muted-foreground max-w-4xl">
+                Centralised governance and security posture management for Storebrand&apos;s AI systems.
+              </p>
+            </div>
+
+            {/* AI Governance Principles Card */}
+            <Card className="border-l-4 border-l-primary bg-muted/30">
+              <CardContent className="p-5">
+                <div className="flex items-start gap-4">
+                  <Info className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div className="space-y-3">
+                    <div>
+                      <h3 className="font-semibold text-sm mb-1">What is AI Governance?</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        AI Governance is the framework of policies, processes, and controls that ensure AI systems are
+                        developed, deployed, and operated responsibly. For Storebrand, this means ensuring our AI
+                        systems comply with Norwegian regulations, EU AI Act requirements, and internal ethical
+                        standards while delivering value to our insurance customers.
+                      </p>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-4 pt-2">
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-semibold uppercase tracking-wide text-primary">Accountability</h4>
+                        <p className="text-xs text-muted-foreground">
+                          Clear ownership and responsibility for every AI system, with defined escalation paths for
+                          incidents.
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-semibold uppercase tracking-wide text-primary">Transparency</h4>
+                        <p className="text-xs text-muted-foreground">
+                          Explainable AI decisions for customers, regulators, and internal stakeholders with audit
+                          trails.
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="text-xs font-semibold uppercase tracking-wide text-primary">Compliance</h4>
+                        <p className="text-xs text-muted-foreground">
+                          Adherence to GDPR, EU AI Act, Finanstilsynet guidelines, and ESG reporting requirements.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
+          {/* End AI Governance Introduction */}
 
           {/* Quick Stats Row */}
           <div className="grid gap-4 md:grid-cols-4">

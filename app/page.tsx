@@ -297,26 +297,37 @@ export default function OverviewPage() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="h-5 w-5 text-primary" />
-                    AI Governance Dashboard
+                    AI Governance
                   </CardTitle>
                   <CardDescription className="mt-2">
-                    Comprehensive view for CISOs and risk managers. Includes network topology, full risk register,
-                    security incidents, and compliance tracking specific to Storebrand&apos;s insurance operations.
+                    Centralised framework for managing AI risk, compliance, and security across Storebrand. This
+                    dashboard provides the tools and visibility needed to ensure responsible AI deployment in insurance
+                    operations.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <AlertTriangle className="h-4 w-4 text-primary" />
-                      <span>9 insurance-specific AI risk categories</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Database className="h-4 w-4 text-primary" />
-                      <span>Network topology of AI systems</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Shield className="h-4 w-4 text-primary" />
-                      <span>GDPR, EU AI Act, NIST compliance tracking</span>
+                  <div className="space-y-3 mb-4">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      AI Governance encompasses the policies, processes, and controls that ensure AI systems operate
+                      within acceptable risk boundaries while meeting regulatory requirements.
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <AlertTriangle className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span>Risk Register</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Database className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span>Asset Inventory</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Shield className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span>Compliance Tracking</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Brain className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span>Network Topology</span>
+                      </div>
                     </div>
                   </div>
                   <Link href="/ai-governance">
@@ -327,6 +338,7 @@ export default function OverviewPage() {
                   </Link>
                 </CardContent>
               </Card>
+              {/* End AI Governance card */}
 
               <Card className="border-2 hover:border-primary/50 transition-colors">
                 <CardHeader>
