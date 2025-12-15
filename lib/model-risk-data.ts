@@ -1,10 +1,18 @@
 // Model Risk Context data and types
 
-export type ModelProvider = "OpenAI" | "Anthropic" | "Google" | "Meta" | "Stability AI" | "Mistral"
+export type ModelProvider = "OpenAI" | "Anthropic" | "Google" | "Meta" | "Stability AI" | "Mistral" | "DeepSeek"
 export type ModelCategory = "LLM" | "Image Generation" | "Speech"
 export type ModelStatus = "Production" | "Testing" | "Deprecated"
 export type RiskLevel = "Low Risk" | "Medium Risk" | "High Risk" | "Critical Risk"
 export type AlertSeverity = "Low" | "Medium" | "High" | "Critical"
+
+export interface DeepSeekApplication {
+  rank: number
+  name: string
+  description: string
+  tokensUsed: string
+  useContext: string
+}
 
 export interface ModelRiskProfile {
   modelId: string
@@ -37,6 +45,9 @@ export interface ModelRiskProfile {
 
   // Warnings
   warnings: string[]
+
+  applications?: DeepSeekApplication[]
+  pricing?: any
 }
 
 export interface ModelRiskAlert {
@@ -47,6 +58,159 @@ export interface ModelRiskAlert {
   examples: string[]
   detectedDate: string
 }
+
+export const deepSeekPricing = {
+  model: "DeepSeek V3.2",
+  contextWindow: "163,840 tokens",
+  inputCost: "$0.24 per million tokens",
+  outputCost: "$0.38 per million tokens",
+  pricingModel: "Pay-per-use API pricing based on token consumption",
+  notes:
+    "Pricing applies via OpenRouter API. Enterprise and volume discounts may be available through direct contracts.",
+}
+
+export const deepSeekApplications: DeepSeekApplication[] = [
+  {
+    rank: 1,
+    name: "Gobii",
+    description: "Web browsing agents that are always on",
+    tokensUsed: "31.7B tokens",
+    useContext: "Autonomous web agents for browsing, research, and data extraction tasks",
+  },
+  {
+    rank: 2,
+    name: "Janitor AI",
+    description: "Character chat and creation",
+    tokensUsed: "10.4B tokens",
+    useContext: "Interactive character-based conversations and roleplay applications",
+  },
+  {
+    rank: 3,
+    name: "New API",
+    description: "Unified AI framework",
+    tokensUsed: "6.83B tokens",
+    useContext: "API aggregation layer for multi-model orchestration and routing",
+  },
+  {
+    rank: 4,
+    name: "Chub AI",
+    description: "GenAI for everyone",
+    tokensUsed: "4.43B tokens",
+    useContext: "Consumer-facing generative AI platform for creative content",
+  },
+  {
+    rank: 5,
+    name: "SillyTavern",
+    description: "LLM frontend for power users",
+    tokensUsed: "4.3B tokens",
+    useContext: "Advanced LLM interface with customisation and multi-model support",
+  },
+  {
+    rank: 6,
+    name: "liteLLM",
+    description: "Open-source library to simplify LLM integrations",
+    tokensUsed: "1.79B tokens",
+    useContext: "Developer tooling for unified LLM API access and proxy management",
+  },
+  {
+    rank: 7,
+    name: "Kilo Code",
+    description: "AI coding agent for VS Code",
+    tokensUsed: "896M tokens",
+    useContext: "IDE-integrated coding assistance and code generation",
+  },
+  {
+    rank: 8,
+    name: "Cline",
+    description: "Autonomous coding agent right in your IDE",
+    tokensUsed: "870M tokens",
+    useContext: "Autonomous code writing, debugging, and refactoring agent",
+  },
+  {
+    rank: 9,
+    name: "shapes inc",
+    description: "General purpose social agents",
+    tokensUsed: "850M tokens",
+    useContext: "Social AI agents for community engagement and interaction",
+  },
+  {
+    rank: 10,
+    name: "Roo Code",
+    description: "A whole dev team of AI agents in your IDE",
+    tokensUsed: "652M tokens",
+    useContext: "Multi-agent coding system for complex development workflows",
+  },
+  {
+    rank: 11,
+    name: "easemate.ai",
+    description: "AI assistant for study, work, and creativity",
+    tokensUsed: "519M tokens",
+    useContext: "Productivity assistant for students and professionals",
+  },
+  {
+    rank: 12,
+    name: "Fish Audio",
+    description: "The most realistic text-to-speech platform",
+    tokensUsed: "496M tokens",
+    useContext: "Audio generation and voice synthesis applications",
+  },
+  {
+    rank: 13,
+    name: "Sophias Lorebary",
+    description: "Unofficial JanitorAI extension with advanced features",
+    tokensUsed: "450M tokens",
+    useContext: "Enhanced character interaction and lore management",
+  },
+  {
+    rank: 14,
+    name: "Open WebUI",
+    description: "Extensible, self-hosted AI interface",
+    tokensUsed: "222M tokens",
+    useContext: "Self-hosted LLM interface for privacy-conscious deployments",
+  },
+  {
+    rank: 15,
+    name: "Pollar News",
+    description: "AI-powered news aggregation and analysis",
+    tokensUsed: "203M tokens",
+    useContext: "News summarisation and content curation platform",
+  },
+  {
+    rank: 16,
+    name: "BLACKBOXAI",
+    description: "AI agent for builders",
+    tokensUsed: "180M tokens",
+    useContext: "Development automation and code generation for builders",
+  },
+  {
+    rank: 17,
+    name: "Telegram Lead Scanner",
+    description: "Automated lead generation via Telegram",
+    tokensUsed: "159M tokens",
+    useContext: "Business automation for lead capture and qualification",
+  },
+  {
+    rank: 18,
+    name: "SkyrimNet",
+    description: "AI-powered gaming companion",
+    tokensUsed: "158M tokens",
+    useContext: "Gaming NPC dialogue and interactive storytelling",
+  },
+  {
+    rank: 19,
+    name: "Miniapps.ai",
+    description: "Create and use mini AI-powered apps",
+    tokensUsed: "153M tokens",
+    useContext: "Low-code AI application builder and marketplace",
+  },
+  {
+    rank: 20,
+    name: "DeckCheck",
+    description: "AI-powered presentation review",
+    tokensUsed: "152M tokens",
+    useContext: "Presentation analysis and improvement suggestions",
+  },
+]
 
 export const modelRiskProfiles: ModelRiskProfile[] = [
   {
@@ -166,10 +330,10 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
   {
     modelId: "mrm-003",
     name: "DeepSeek R1",
-    provider: "Meta",
+    provider: "DeepSeek",
     version: "1.0",
     category: "LLM",
-    parameters: "Unknown",
+    parameters: "671B (37B active)",
     lastEvaluated: "2024-03-22",
     status: "Testing",
     overallRisk: 85,
@@ -180,8 +344,11 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
     securityRisk: 80,
     complianceRisk: 90,
     strengths: [
-      "High performance on coding and maths",
-      "Aggressive optimisation and cost-effectiveness",
+      "High performance on coding and maths (GPT-5 class reasoning)",
+      "Gold-medal results on 2025 IMO and IOI competitions",
+      "Aggressive optimisation and cost-effectiveness ($0.24/M input, $0.38/M output)",
+      "163,840 token context window with DeepSeek Sparse Attention (DSA)",
+      "Strong agentic tool-use capabilities",
       "Growing open-source community",
     ],
     keyRisks: [
@@ -190,6 +357,7 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       "Fewer safety layers → increased jailbreak risk",
       "Unknown data-handling practices → high privacy risk",
       "Regulatory risk for EU/US enterprises",
+      "China-based provider raises geopolitical concerns",
     ],
     approvedUseCases: ["Local/Offline Inference Only", "Internal R&D Exploration", "Non-Sensitive Internal Workloads"],
     alerts: [
@@ -219,6 +387,8 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       },
     ],
     warnings: ["Not recommended for regulated industries or customer-facing applications"],
+    applications: deepSeekApplications,
+    pricing: deepSeekPricing,
   },
   {
     modelId: "mrm-004",
@@ -481,7 +651,7 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
 ]
 
 // Helper functions
-export function getRiskLevel(score: number): RiskLevel {
+export function getRiskLevel(score: number): string {
   if (score >= 80) return "Critical Risk"
   if (score >= 65) return "High Risk"
   if (score >= 40) return "Medium Risk"
