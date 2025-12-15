@@ -13,6 +13,10 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Toolti
 import Link from "next/link"
 import { TooltipProvider } from "@/components/ui/tooltip"
 
+console.log("[v0] insuranceAiRiskRegister loaded:", insuranceAiRiskRegister?.length || "undefined")
+console.log("[v0] aiSpmMetrics loaded:", aiSpmMetrics)
+console.log("[v0] aiSpmAssets loaded:", aiSpmAssets?.length || "undefined")
+
 const riskChartConfig: ChartConfig = {
   risk: {
     label: "Risk Score",
@@ -21,12 +25,11 @@ const riskChartConfig: ChartConfig = {
 }
 
 export default function OverviewPage() {
-  // Calculate risk statistics
-  const criticalRisks = insuranceAiRiskRegister.filter((r) => r.severity === "Critical").length
-  const highRisks = insuranceAiRiskRegister.filter((r) => r.severity === "High").length
-  const totalRisks = insuranceAiRiskRegister.length
+  const criticalRisks = insuranceAiRiskRegister?.filter((r) => r.severity === "Critical").length || 0
+  const highRisks = insuranceAiRiskRegister?.filter((r) => r.severity === "High").length || 0
+  const totalRisks = insuranceAiRiskRegister?.length || 0
 
-  const riskHeatmapData = aiSpmAssets.slice(0, 5).map((asset) => ({
+  const riskHeatmapData = (aiSpmAssets || []).slice(0, 5).map((asset) => ({
     name: asset.modelName.length > 12 ? asset.modelName.substring(0, 12) + "..." : asset.modelName,
     risk: asset.riskScore,
   }))
