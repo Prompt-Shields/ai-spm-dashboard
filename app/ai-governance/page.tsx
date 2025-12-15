@@ -41,6 +41,10 @@ export default function AIGovernancePage() {
         return "bg-orange-500 text-white"
       case "internal":
         return "bg-green-600 text-white"
+      case "infrastructure":
+        return "bg-purple-600 text-white"
+      case "api":
+        return "bg-cyan-600 text-white"
       default:
         return "bg-muted text-muted-foreground"
     }
@@ -56,6 +60,10 @@ export default function AIGovernancePage() {
         return ExternalLink
       case "internal":
         return Server
+      case "infrastructure":
+        return Server
+      case "api":
+        return ExternalLink
       default:
         return Network
     }
@@ -258,7 +266,8 @@ export default function AIGovernancePage() {
                         AI System Network Topology
                       </CardTitle>
                       <CardDescription>
-                        Visual representation of AI systems, data sources, and external integrations at Storebrand
+                        Visual representation of AI systems, data sources, and external integrations at Storebrand.
+                        Click on any node for details.
                       </CardDescription>
                     </div>
                     <Tooltip>
@@ -275,6 +284,33 @@ export default function AIGovernancePage() {
                   </div>
                 </CardHeader>
                 <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted/30 rounded-lg">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-primary">
+                        {insuranceNetworkTopology.filter((n) => n.type === "model").length}
+                      </p>
+                      <p className="text-xs text-muted-foreground">AI Models</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-blue-600">
+                        {insuranceNetworkTopology.filter((n) => n.type === "database").length}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Databases</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-orange-500">
+                        {insuranceNetworkTopology.filter((n) => n.type === "external").length}
+                      </p>
+                      <p className="text-xs text-muted-foreground">External Systems</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-destructive">
+                        {insuranceNetworkTopology.filter((n) => n.riskLevel === "critical").length}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Critical Risk Nodes</p>
+                    </div>
+                  </div>
+
                   <div className="flex gap-4 mb-6 flex-wrap">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-primary"></div>
@@ -292,42 +328,100 @@ export default function AIGovernancePage() {
                       <div className="w-3 h-3 rounded-full bg-green-600"></div>
                       <span className="text-xs">Internal Services</span>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-purple-600"></div>
+                      <span className="text-xs">Infrastructure</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-cyan-600"></div>
+                      <span className="text-xs">APIs & Portals</span>
+                    </div>
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {insuranceNetworkTopology.map((node) => {
                       const IconComponent = getNodeIcon(node.type)
+                      const nodeColor =
+                        node.type === "infrastructure"
+                          ? "bg-purple-600 text-white"
+                          : node.type === "api"
+                            ? "bg-cyan-600 text-white"
+                            : getNodeColor(node.type)
                       return (
-                        <Card key={node.id} className="border">
+                        <Card key={node.id} className="border hover:shadow-md transition-shadow">
                           <CardContent className="p-4">
                             <div className="flex items-start gap-3">
-                              <div className={`p-2 rounded-lg ${getNodeColor(node.type)}`}>
+                              <div className={`p-2 rounded-lg ${nodeColor}`}>
                                 <IconComponent className="h-4 w-4" />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h4 className="font-medium text-sm truncate">{node.name}</h4>
-                                <p className="text-xs text-muted-foreground capitalize">{node.type}</p>
-                                {node.riskLevel && (
-                                  <Badge
-                                    variant={
-                                      node.riskLevel === "high"
-                                        ? "destructive"
-                                        : node.riskLevel === "medium"
-                                          ? "warning"
-                                          : "secondary"
-                                    }
-                                    className="mt-2 text-xs"
-                                  >
-                                    {node.riskLevel} risk
-                                  </Badge>
-                                )}
-                              </div>
-                            </div>
-                            {node.connections && node.connections.length > 0 && (
-                              <div className="mt-3 pt-3 border-t">
-                                <p className="text-xs text-muted-foreground mb-1">
-                                  Connected to {node.connections.length} system(s)
+                                <h4 className="font-medium text-sm">{node.name}</h4>
+                                <p className="text-xs text-muted-foreground capitalize">
+                                  {node.type} | {node.department}
                                 </p>
+                              </div>
+                              <Badge
+                                variant={
+                                  node.riskLevel === "critical"
+                                    ? "destructive"
+                                    : node.riskLevel === "high"
+                                      ? "destructive"
+                                      : node.riskLevel === "medium"
+                                        ? "warning"
+                                        : "secondary"
+                                }
+                                className="text-xs shrink-0"
+                              >
+                                {node.riskLevel}
+                              </Badge>
+                            </div>
+
+                            <p className="text-xs text-muted-foreground mt-3 line-clamp-2">{node.description}</p>
+
+                            <div className="mt-3 pt-3 border-t grid grid-cols-2 gap-2 text-xs">
+                              {node.monthlyTransactions && (
+                                <div>
+                                  <span className="text-muted-foreground">Monthly Txns:</span>
+                                  <span className="ml-1 font-medium">{node.monthlyTransactions.toLocaleString()}</span>
+                                </div>
+                              )}
+                              {node.dataClassification && (
+                                <div>
+                                  <span className="text-muted-foreground">Data:</span>
+                                  <span
+                                    className={`ml-1 font-medium capitalize ${
+                                      node.dataClassification === "restricted"
+                                        ? "text-destructive"
+                                        : node.dataClassification === "confidential"
+                                          ? "text-orange-600"
+                                          : ""
+                                    }`}
+                                  >
+                                    {node.dataClassification}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+
+                            {node.connections && node.connections.length > 0 && (
+                              <div className="mt-2 pt-2 border-t">
+                                <p className="text-xs text-muted-foreground">
+                                  <span className="font-medium">{node.connections.length}</span> connection(s):{" "}
+                                  {node.connections
+                                    .slice(0, 2)
+                                    .map((c) => {
+                                      const connected = insuranceNetworkTopology.find((n) => n.id === c)
+                                      return connected?.name || c
+                                    })
+                                    .join(", ")}
+                                  {node.connections.length > 2 ? "..." : ""}
+                                </p>
+                              </div>
+                            )}
+
+                            {node.owner && (
+                              <div className="mt-2 text-xs text-muted-foreground">
+                                Owner: <span className="font-medium">{node.owner}</span>
                               </div>
                             )}
                           </CardContent>
