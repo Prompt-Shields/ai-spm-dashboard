@@ -29,6 +29,20 @@ export default function OverviewPage() {
     risk: asset.riskScore,
   }))
 
+  const riskChartConfig = {
+    risk: {
+      label: "Risk Score",
+      color: "hsl(var(--chart-1))",
+    },
+  }
+
+  const costChartConfig = {
+    cost: {
+      label: "Cost (£)",
+      color: "hsl(var(--chart-2))",
+    },
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <AppHeader />
@@ -212,15 +226,7 @@ export default function OverviewPage() {
 
               <div>
                 <h4 className="text-sm font-medium mb-3">Risk Heat Map (Top 5 Assets)</h4>
-                <ChartContainer
-                  config={{
-                    risk: {
-                      label: "Risk Score",
-                      color: "hsl(var(--chart-1))",
-                    },
-                  }}
-                  className="h-[200px]"
-                >
+                <ChartContainer config={riskChartConfig} className="h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={riskHeatmapData.slice(0, 5)}>
                       <CartesianGrid strokeDasharray="3 3" />
@@ -264,15 +270,7 @@ export default function OverviewPage() {
 
               <div>
                 <h4 className="text-sm font-medium mb-3">Cloud Spend Trend (6 months)</h4>
-                <ChartContainer
-                  config={{
-                    cost: {
-                      label: "Cost (£)",
-                      color: "hsl(var(--chart-2))",
-                    },
-                  }}
-                  className="h-[200px]"
-                >
+                <ChartContainer config={costChartConfig} className="h-[200px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={costTrendData}>
                       <CartesianGrid strokeDasharray="3 3" />
