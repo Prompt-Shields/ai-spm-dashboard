@@ -4,107 +4,105 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Brand colors - Insurance design system */
-  --background: 0 0% 100%;
-  --foreground: 0 0% 17%;
+  /* Modern enterprise design system - slate/blue professional palette */
+  --background: 210 20% 98%;
+  --foreground: 222 47% 11%;
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 17%;
+  --card-foreground: 222 47% 11%;
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 17%;
-  --primary: 350 70% 36%; /* Deep red/burgundy */
+  --popover-foreground: 222 47% 11%;
+  --primary: 221 83% 53%; /* Professional blue */
   --primary-foreground: 0 0% 100%;
-  --secondary: 350 50% 94%; /* Light pink/rose for subtle highlights */
-  --secondary-foreground: 0 0% 17%;
-  --muted: 0 0% 97%;
-  --muted-foreground: 0 0% 42%;
-  --accent: 350 80% 97%; /* Very light pink accent */
-  --accent-foreground: 350 70% 36%;
-  --destructive: 0 65% 51%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  /* Added success and warning colors with foreground variants */
-  --success: 142 51% 45%;
+  --success: 142 71% 45%;
   --success-foreground: 0 0% 100%;
-  --warning: 38 95% 55%;
-  --warning-foreground: 0 0% 17%;
-  --border: 0 0% 91%;
-  --input: 0 0% 91%;
-  --ring: 350 70% 36%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 221 83% 53%;
 
-  /* Updated chart colors with vibrant, differentiated palette for better data visualization */
-  --chart-1: 350 70% 36%; /* Primary burgundy - brand */
-  --chart-2: 201 65% 48%; /* Teal blue - high contrast for data */
-  --chart-3: 142 51% 45%; /* Green - success/positive data */
-  --chart-4: 38 95% 55%; /* Amber - warning/attention */
-  --chart-5: 262 52% 47%; /* Purple - additional data series */
+  /* Vibrant chart palette for data visualization */
+  --chart-1: 221 83% 53%; /* Primary blue */
+  --chart-2: 142 71% 45%; /* Green */
+  --chart-3: 38 92% 50%; /* Amber */
+  --chart-4: 262 83% 58%; /* Purple */
+  --chart-5: 0 84% 60%; /* Red */
 
-  --radius: 0.5rem;
-  --sidebar: 0 0% 97%;
-  --sidebar-foreground: 0 0% 17%;
-  --sidebar-primary: 350 70% 36%;
+  --radius: 0.625rem;
+  --sidebar: 210 40% 98%;
+  --sidebar-foreground: 222 47% 11%;
+  --sidebar-primary: 221 83% 53%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 350 80% 97%;
-  --sidebar-accent-foreground: 350 70% 36%;
-  --sidebar-border: 0 0% 91%;
-  --sidebar-ring: 350 70% 36%;
+  --sidebar-accent: 210 40% 96%;
+  --sidebar-accent-foreground: 222 47% 11%;
+  --sidebar-border: 214 32% 91%;
+  --sidebar-ring: 221 83% 53%;
   --shadow-x: 0px;
-  --shadow-y: 2px;
-  --shadow-blur: 8px;
+  --shadow-y: 1px;
+  --shadow-blur: 3px;
   --shadow-spread: 0px;
-  --shadow-opacity: 0.08;
-  --shadow-color: #000000;
+  --shadow-opacity: 0.1;
+  --shadow-color: #0f172a;
 }
 
 .dark {
-  --background: 0 0% 10%;
-  --foreground: 0 0% 94%;
-  --card: 0 0% 17%;
-  --card-foreground: 0 0% 94%;
-  --popover: 0 0% 17%;
-  --popover-foreground: 0 0% 94%;
-  --primary: 350 60% 55%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 23%;
-  --secondary-foreground: 0 0% 94%;
-  --muted: 0 0% 17%;
-  --muted-foreground: 0 0% 63%;
-  --accent: 350 30% 20%;
-  --accent-foreground: 350 60% 80%;
-  --destructive: 0 65% 51%;
+  /* Dark mode with same professional palette */
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --card: 223 47% 15%;
+  --card-foreground: 210 40% 98%;
+  --popover: 223 47% 15%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 217 33% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 33% 17%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62% 50%;
   --destructive-foreground: 0 0% 100%;
-  /* Added dark mode success and warning colors */
-  --success: 142 55% 50%;
+  --success: 142 71% 45%;
   --success-foreground: 0 0% 100%;
-  --warning: 38 95% 60%;
-  --warning-foreground: 0 0% 17%;
-  --border: 0 0% 25%;
-  --input: 0 0% 25%;
-  --ring: 350 60% 55%;
-  /* Dark mode chart colors with better visibility */
-  --chart-1: 350 60% 60%;
-  --chart-2: 201 70% 55%;
-  --chart-3: 142 55% 50%;
-  --chart-4: 38 95% 60%;
-  --chart-5: 262 55% 55%;
-  --sidebar: 0 0% 10%;
-  --sidebar-foreground: 0 0% 94%;
-  --sidebar-primary: 350 60% 55%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 350 30% 20%;
-  --sidebar-accent-foreground: 350 60% 80%;
-  --sidebar-border: 0 0% 25%;
-  --sidebar-ring: 350 60% 55%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+  --border: 217 33% 25%;
+  --input: 217 33% 25%;
+  --ring: 217 91% 60%;
+  --chart-1: 217 91% 60%;
+  --chart-2: 142 71% 50%;
+  --chart-3: 38 92% 55%;
+  --chart-4: 262 83% 65%;
+  --chart-5: 0 75% 60%;
+  --sidebar: 222 47% 11%;
+  --sidebar-foreground: 210 40% 98%;
+  --sidebar-primary: 217 91% 60%;
+  --sidebar-primary-foreground: 222 47% 11%;
+  --sidebar-accent: 217 33% 17%;
+  --sidebar-accent-foreground: 210 40% 98%;
+  --sidebar-border: 217 33% 25%;
+  --sidebar-ring: 217 91% 60%;
   --shadow-x: 0px;
-  --shadow-y: 2px;
-  --shadow-blur: 8px;
+  --shadow-y: 1px;
+  --shadow-blur: 3px;
   --shadow-spread: 0px;
-  --shadow-opacity: 0.12;
+  --shadow-opacity: 0.25;
   --shadow-color: #000000;
 }
 
 @theme inline {
-  /* Typography - clean, professional aesthetic */
-  --font-sans: "Inter", "Helvetica Neue", "Arial", sans-serif;
-  --font-mono: "JetBrains Mono", "Consolas", monospace;
+  /* Clean typography with Inter font family */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
   --font-serif: "Source Serif 4", "Georgia", serif;
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -122,7 +120,6 @@
   --color-accent-foreground: hsl(var(--accent-foreground));
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
-  /* Added success and warning color mappings with foregrounds */
   --color-success: hsl(var(--success));
   --color-success-foreground: hsl(var(--success-foreground));
   --color-warning: hsl(var(--warning));
@@ -148,7 +145,6 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-  /* computed shadow variables below - do not modify */
   --shadow-2xs: var(--shadow-x) var(--shadow-y)
     color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
   --shadow-xs: var(--shadow-x) var(--shadow-y) var(--shadow-blur) var(--shadow-spread)
@@ -191,11 +187,10 @@
   h4,
   h5,
   h6 {
-    @apply font-semibold text-balance;
-    letter-spacing: -0.01em;
+    @apply font-semibold tracking-tight text-balance;
   }
 
   p {
-    @apply text-pretty;
+    @apply text-pretty leading-relaxed;
   }
 }
