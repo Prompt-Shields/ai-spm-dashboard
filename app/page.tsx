@@ -1,210 +1,274 @@
 "use client"
 
 import { AppHeader } from "@/components/app-header"
-import { KpiCard } from "@/components/kpi-card"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { aiSpmMetrics, assetManagementMetrics, aiSpmAssets, aiAssets } from "@/lib/mock-data"
-import { Shield, Database, DollarSign, Activity } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis, YAxis, ResponsiveContainer } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Shield, Brain, Building2, DollarSign, Users, TrendingUp } from "lucide-react"
+import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell, PieChart, Pie } from "recharts"
+import Link from "next/link"
+
+const usageByLLM = [
+  { name: "GPT-4o", requests: 145000, cost: 12400, risk: 72 },
+  { name: "Claude 3", requests: 98000, cost: 8900, risk: 45 },
+  { name: "Gemini Pro", requests: 67000, cost: 5200, risk: 38 },
+  { name: "Llama 3", requests: 34000, cost: 1200, risk: 52 },
+  { name: "Mistral", requests: 23000, cost: 890, risk: 41 },
+]
+
+const usageByDepartment = [
+  { name: "Claims", users: 145, requests: 89000, cost: 7800, color: "hsl(var(--chart-1))" },
+  { name: "Underwriting", users: 78, requests: 67000, cost: 5900, color: "hsl(var(--chart-2))" },
+  { name: "Customer Service", users: 234, requests: 123000, cost: 4200, color: "hsl(var(--chart-3))" },
+  { name: "Risk & Compliance", users: 45, requests: 34000, cost: 3100, color: "hsl(var(--chart-4))" },
+  { name: "IT Operations", users: 67, requests: 45000, cost: 2800, color: "hsl(var(--chart-5))" },
+]
+
+const totalRequests = usageByLLM.reduce((acc, llm) => acc + llm.requests, 0)
+const totalCost = usageByLLM.reduce((acc, llm) => acc + llm.cost, 0)
+const totalUsers = usageByDepartment.reduce((acc, dept) => acc + dept.users, 0)
+const avgRisk = Math.round(usageByLLM.reduce((acc, llm) => acc + llm.risk, 0) / usageByLLM.length)
 
 export default function OverviewPage() {
-  // Simulated trend data
-  const callsTrendData = Array.from({ length: 30 }, (_, i) => ({
-    day: i + 1,
-    calls: Math.floor(Math.random() * 50000) + 150000,
-  }))
-
-  const costTrendData = Array.from({ length: 6 }, (_, i) => ({
-    month: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"][i],
-    cost: Math.floor(Math.random() * 10000) + 35000,
-  }))
-
-  const riskHeatmapData = aiSpmAssets.slice(0, 10).map((asset) => ({
-    name: asset.modelName,
-    sensitivity: asset.sensitiveDataTypes.length * 20,
-    vulnerability: asset.highRiskVulnerabilities * 15 + asset.misconfigurationCount * 5,
-    risk: asset.riskScore,
-  }))
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean
+    payload?: Array<{ value: number; payload: { name: string; cost?: number; risk?: number } }>
+  }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload
+      return (
+        <div className="bg-card border rounded-lg shadow-lg px-3 py-2 text-sm">
+          <p className="font-medium">{data.name}</p>
+          <p className="text-muted-foreground">{payload[0].value.toLocaleString()} requests</p>
+          {data.cost && <p className="text-muted-foreground">${data.cost.toLocaleString()}</p>}
+        </div>
+      )
+    }
+    return null
+  }
 
   return (
     <div className="min-h-screen bg-background">
       <AppHeader />
-      <main className="container mx-auto px-8 py-10 space-y-10 max-w-[1600px]">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Governance Overview</h1>
-          <p className="text-muted-foreground">
-            Unified view of AI security posture and operational metrics across your organisation.
-          </p>
+      <main className="container mx-auto px-6 py-8 space-y-6 max-w-[1400px]">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold">AI Adoption Overview</h1>
+            <p className="text-muted-foreground mt-1">Monitor AI usage across models, departments, risk, and cost</p>
+          </div>
         </div>
 
-        {/* Top-level KPIs */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <KpiCard
-            title="Overall AI Risk Score"
-            value={aiSpmMetrics.overallRiskScore}
-            subtitle="Security posture indicator"
-            icon={Shield}
-            variant={aiSpmMetrics.overallRiskScore > 50 ? "warning" : "success"}
-            trend={aiSpmMetrics.riskTrendVsLastQuarter}
-          />
-          <KpiCard
-            title="Compliance Score"
-            value={`${aiSpmMetrics.complianceScore}%`}
-            subtitle="Regulatory alignment"
-            icon={Activity}
-            variant={aiSpmMetrics.complianceScore > 70 ? "success" : "warning"}
-          />
-          <KpiCard
-            title="Active AI Models"
-            value={assetManagementMetrics.activeAssets}
-            subtitle={`of ${assetManagementMetrics.totalAssets} total`}
-            icon={Database}
-            variant="default"
-          />
-          <KpiCard
-            title="Monthly Cloud Cost"
-            value={`£${(assetManagementMetrics.totalCloudCostMonth / 1000).toFixed(1)}k`}
-            subtitle="Operational expenditure"
-            icon={DollarSign}
-            variant="default"
-          />
+        {/* KPI Row */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Requests</p>
+                  <p className="text-2xl font-bold mt-1">{(totalRequests / 1000).toFixed(0)}K</p>
+                  <p className="text-xs text-success flex items-center gap-1 mt-1">
+                    <TrendingUp className="h-3 w-3" /> +12% this month
+                  </p>
+                </div>
+                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Brain className="h-5 w-5 text-primary" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Active Users</p>
+                  <p className="text-2xl font-bold mt-1">{totalUsers}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Across 5 departments</p>
+                </div>
+                <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-blue-500" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Monthly Cost</p>
+                  <p className="text-2xl font-bold mt-1">${(totalCost / 1000).toFixed(1)}K</p>
+                  <p className="text-xs text-warning flex items-center gap-1 mt-1">
+                    <TrendingUp className="h-3 w-3" /> +8% vs budget
+                  </p>
+                </div>
+                <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center">
+                  <DollarSign className="h-5 w-5 text-green-500" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Avg Risk Score</p>
+                  <p className="text-2xl font-bold mt-1">{avgRisk}/100</p>
+                  <p className="text-xs text-muted-foreground mt-1">Across all LLMs</p>
+                </div>
+                <div className="h-10 w-10 rounded-full bg-warning/10 flex items-center justify-center">
+                  <Shield className="h-5 w-5 text-warning" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Explanatory Section */}
-        <Card className="bg-muted/50">
-          <CardHeader>
-            <CardTitle>About This Dashboard</CardTitle>
+        {/* Charts Row */}
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Usage by LLM */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base font-semibold">Usage by LLM</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[220px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={usageByLLM} layout="vertical">
+                    <XAxis type="number" tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}K`} />
+                    <YAxis dataKey="name" type="category" width={80} tick={{ fontSize: 11 }} />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Bar dataKey="requests" fill="hsl(var(--chart-1))" radius={[0, 4, 4, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Usage by Department */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base font-semibold">Usage by Department</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-6">
+                <div className="h-[180px] w-[180px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={usageByDepartment}
+                        dataKey="requests"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={80}
+                        paddingAngle={2}
+                      >
+                        {usageByDepartment.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(value: number) => `${(value / 1000).toFixed(0)}K requests`} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex-1 space-y-2">
+                  {usageByDepartment.map((dept, i) => (
+                    <div key={i} className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dept.color }} />
+                        <span>{dept.name}</span>
+                      </div>
+                      <span className="font-medium">{dept.users} users</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Risk & Cost Table */}
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-semibold">LLM Risk & Cost Analysis</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <h3 className="font-semibold mb-1 flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary" />
-                AI Security Posture Management (AI-SPM)
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                The AI-SPM view provides security and compliance-focused insights for CISOs and security teams. It
-                tracks vulnerabilities, data governance, regulatory compliance (GDPR, EU AI Act, NIST AI RMF), security
-                incidents, and risk scores across all AI assets.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-1 flex items-center gap-2">
-                <Database className="h-4 w-4 text-primary" />
-                AI Asset Management
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                The AI Asset Management view offers operational and inventory visibility for platform teams. It monitors
-                model performance, drift, costs, usage patterns, dependencies, and lifecycle status to ensure efficient
-                AI operations.
-              </p>
+          <CardContent>
+            <div className="space-y-3">
+              {usageByLLM.map((llm, i) => (
+                <div key={i} className="flex items-center justify-between py-2 border-b last:border-0">
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Brain className="h-4 w-4 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{llm.name}</p>
+                      <p className="text-xs text-muted-foreground">{(llm.requests / 1000).toFixed(0)}K requests</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <p className="text-xs text-muted-foreground">Cost</p>
+                      <p className="font-medium text-sm">${llm.cost.toLocaleString()}</p>
+                    </div>
+                    <div className="w-24">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-muted-foreground">Risk</span>
+                        <span
+                          className={`text-xs font-medium ${llm.risk >= 60 ? "text-destructive" : llm.risk >= 40 ? "text-warning" : "text-success"}`}
+                        >
+                          {llm.risk}
+                        </span>
+                      </div>
+                      <Progress value={llm.risk} className="h-1.5" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Two-column layout */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          {/* Security Posture Snapshot */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-primary" />
-                Security Posture Snapshot
-              </CardTitle>
-              <CardDescription>Key security metrics from AI-SPM</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">High-risk incidents (30 days)</span>
-                  <span className="font-semibold text-destructive">{aiSpmMetrics.securityIncidentsYTD}</span>
+        {/* Quick Links */}
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Link href="/ai-governance" className="block">
+            <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Shield className="h-5 w-5 text-primary" />
+                  <span className="font-medium">AI Governance</span>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Shadow AI assets detected</span>
-                  <span className="font-semibold text-warning">{aiSpmMetrics.shadowAICount}</span>
+                <p className="text-sm text-muted-foreground">Risk register and compliance</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/ai-visibility" className="block">
+            <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Building2 className="h-5 w-5 text-primary" />
+                  <span className="font-medium">AI Visibility</span>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Mean Time to Resolve</span>
-                  <span className="font-semibold">{aiSpmMetrics.mttrHours.toFixed(1)} hours</span>
+                <p className="text-sm text-muted-foreground">Models, data, and vendors</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/model-risk" className="block">
+            <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <Brain className="h-5 w-5 text-primary" />
+                  <span className="font-medium">Model Risk</span>
                 </div>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium mb-3">Risk Heat Map (Top 10 Assets)</h4>
-                <ChartContainer
-                  config={{
-                    risk: {
-                      label: "Risk Score",
-                      color: "hsl(var(--chart-1))",
-                    },
-                  }}
-                  className="h-[200px]"
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={riskHeatmapData.slice(0, 5)}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" fontSize={10} angle={-45} textAnchor="end" height={80} />
-                      <YAxis fontSize={10} />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Bar dataKey="risk" fill="var(--color-risk)" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Operational Snapshot */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Database className="h-5 w-5 text-primary" />
-                Operational Snapshot
-              </CardTitle>
-              <CardDescription>Key operational metrics from Asset Management</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Total AI models</span>
-                  <span className="font-semibold">{assetManagementMetrics.totalAssets}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Average drift score</span>
-                  <span className="font-semibold">{assetManagementMetrics.averageDriftScore}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Monthly GPU hours</span>
-                  <span className="font-semibold">
-                    {aiAssets.reduce((sum, a) => sum + a.gpuHoursMonth, 0).toLocaleString()}h
-                  </span>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-medium mb-3">Cloud Spend Trend (6 months)</h4>
-                <ChartContainer
-                  config={{
-                    cost: {
-                      label: "Cost (£)",
-                      color: "hsl(var(--chart-2))",
-                    },
-                  }}
-                  className="h-[200px]"
-                >
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={costTrendData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" fontSize={10} />
-                      <YAxis fontSize={10} />
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                      <Line type="monotone" dataKey="cost" stroke="var(--color-cost)" strokeWidth={2} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
-              </div>
-            </CardContent>
-          </Card>
+                <p className="text-sm text-muted-foreground">Detailed model assessments</p>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </main>
     </div>

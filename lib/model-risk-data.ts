@@ -1,10 +1,18 @@
 // Model Risk Context data and types
 
-export type ModelProvider = "OpenAI" | "Anthropic" | "Google" | "Meta" | "Stability AI" | "Mistral"
+export type ModelProvider = "OpenAI" | "Anthropic" | "Google" | "Meta" | "Stability AI" | "Mistral" | "DeepSeek"
 export type ModelCategory = "LLM" | "Image Generation" | "Speech"
-export type ModelStatus = "Production" | "Testing" | "Deprecated"
+export type ModelStatus = "Production" | "Testing" | "Deprecated" | "Evaluation"
 export type RiskLevel = "Low Risk" | "Medium Risk" | "High Risk" | "Critical Risk"
 export type AlertSeverity = "Low" | "Medium" | "High" | "Critical"
+
+export interface DeepSeekApplication {
+  rank: number
+  name: string
+  description: string
+  tokensUsed: string
+  useContext: string
+}
 
 export interface ModelRiskProfile {
   modelId: string
@@ -27,6 +35,7 @@ export interface ModelRiskProfile {
 
   // Additional context
   strengths: string[]
+  weaknesses: string[]
   keyRisks: string[]
 
   // Use cases
@@ -37,6 +46,9 @@ export interface ModelRiskProfile {
 
   // Warnings
   warnings: string[]
+
+  applications?: DeepSeekApplication[]
+  pricing?: any
 }
 
 export interface ModelRiskAlert {
@@ -47,6 +59,159 @@ export interface ModelRiskAlert {
   examples: string[]
   detectedDate: string
 }
+
+export const deepSeekPricing = {
+  model: "DeepSeek V3.2",
+  contextWindow: "163,840 tokens",
+  inputCost: "$0.24 per million tokens",
+  outputCost: "$0.38 per million tokens",
+  pricingModel: "Pay-per-use API pricing based on token consumption",
+  notes:
+    "Pricing applies via OpenRouter API. Enterprise and volume discounts may be available through direct contracts.",
+}
+
+export const deepSeekApplications: DeepSeekApplication[] = [
+  {
+    rank: 1,
+    name: "Gobii",
+    description: "Web browsing agents that are always on",
+    tokensUsed: "31.7B tokens",
+    useContext: "Autonomous web agents for browsing, research, and data extraction tasks",
+  },
+  {
+    rank: 2,
+    name: "Janitor AI",
+    description: "Character chat and creation",
+    tokensUsed: "10.4B tokens",
+    useContext: "Interactive character-based conversations and roleplay applications",
+  },
+  {
+    rank: 3,
+    name: "New API",
+    description: "Unified AI framework",
+    tokensUsed: "6.83B tokens",
+    useContext: "API aggregation layer for multi-model orchestration and routing",
+  },
+  {
+    rank: 4,
+    name: "Chub AI",
+    description: "GenAI for everyone",
+    tokensUsed: "4.43B tokens",
+    useContext: "Consumer-facing generative AI platform for creative content",
+  },
+  {
+    rank: 5,
+    name: "SillyTavern",
+    description: "LLM frontend for power users",
+    tokensUsed: "4.3B tokens",
+    useContext: "Advanced LLM interface with customisation and multi-model support",
+  },
+  {
+    rank: 6,
+    name: "liteLLM",
+    description: "Open-source library to simplify LLM integrations",
+    tokensUsed: "1.79B tokens",
+    useContext: "Developer tooling for unified LLM API access and proxy management",
+  },
+  {
+    rank: 7,
+    name: "Kilo Code",
+    description: "AI coding agent for VS Code",
+    tokensUsed: "896M tokens",
+    useContext: "IDE-integrated coding assistance and code generation",
+  },
+  {
+    rank: 8,
+    name: "Cline",
+    description: "Autonomous coding agent right in your IDE",
+    tokensUsed: "870M tokens",
+    useContext: "Autonomous code writing, debugging, and refactoring agent",
+  },
+  {
+    rank: 9,
+    name: "shapes inc",
+    description: "General purpose social agents",
+    tokensUsed: "850M tokens",
+    useContext: "Social AI agents for community engagement and interaction",
+  },
+  {
+    rank: 10,
+    name: "Roo Code",
+    description: "A whole dev team of AI agents in your IDE",
+    tokensUsed: "652M tokens",
+    useContext: "Multi-agent coding system for complex development workflows",
+  },
+  {
+    rank: 11,
+    name: "easemate.ai",
+    description: "AI assistant for study, work, and creativity",
+    tokensUsed: "519M tokens",
+    useContext: "Productivity assistant for students and professionals",
+  },
+  {
+    rank: 12,
+    name: "Fish Audio",
+    description: "The most realistic text-to-speech platform",
+    tokensUsed: "496M tokens",
+    useContext: "Audio generation and voice synthesis applications",
+  },
+  {
+    rank: 13,
+    name: "Sophias Lorebary",
+    description: "Unofficial JanitorAI extension with advanced features",
+    tokensUsed: "450M tokens",
+    useContext: "Enhanced character interaction and lore management",
+  },
+  {
+    rank: 14,
+    name: "Open WebUI",
+    description: "Extensible, self-hosted AI interface",
+    tokensUsed: "222M tokens",
+    useContext: "Self-hosted LLM interface for privacy-conscious deployments",
+  },
+  {
+    rank: 15,
+    name: "Pollar News",
+    description: "AI-powered news aggregation and analysis",
+    tokensUsed: "203M tokens",
+    useContext: "News summarisation and content curation platform",
+  },
+  {
+    rank: 16,
+    name: "BLACKBOXAI",
+    description: "AI agent for builders",
+    tokensUsed: "180M tokens",
+    useContext: "Development automation and code generation for builders",
+  },
+  {
+    rank: 17,
+    name: "Telegram Lead Scanner",
+    description: "Automated lead generation via Telegram",
+    tokensUsed: "159M tokens",
+    useContext: "Business automation for lead capture and qualification",
+  },
+  {
+    rank: 18,
+    name: "SkyrimNet",
+    description: "AI-powered gaming companion",
+    tokensUsed: "158M tokens",
+    useContext: "Gaming NPC dialogue and interactive storytelling",
+  },
+  {
+    rank: 19,
+    name: "Miniapps.ai",
+    description: "Create and use mini AI-powered apps",
+    tokensUsed: "153M tokens",
+    useContext: "Low-code AI application builder and marketplace",
+  },
+  {
+    rank: 20,
+    name: "DeckCheck",
+    description: "AI-powered presentation review",
+    tokensUsed: "152M tokens",
+    useContext: "Presentation analysis and improvement suggestions",
+  },
+]
 
 export const modelRiskProfiles: ModelRiskProfile[] = [
   {
@@ -70,6 +235,12 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       "Large ecosystem, high compatibility with enterprise workflows",
       "Strong safety research commitment",
       "Option for strict enterprise isolation",
+    ],
+    weaknesses: [
+      "Output drift across releases may cause inconsistent behaviour",
+      "High cost compared to open-source alternatives",
+      "Dependent on OpenAI infrastructure availability",
+      "Limited customisation without fine-tuning access",
     ],
     keyRisks: [
       "Output drift across releases (operational risk)",
@@ -104,12 +275,9 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       {
         id: "alert-003",
         type: "Privacy",
-        severity: "Medium",
-        description: "Potential memorisation of training data including personal information",
-        examples: [
-          "Reproduced verbatim text from publicly available sources with identifiable information",
-          "Generated outputs containing patterns similar to email addresses and phone numbers",
-        ],
+        severity: "Low",
+        description: "Potential for memorised training data leakage",
+        examples: ["Occasionally reproduces verbatim text from training data"],
         detectedDate: "2024-03-14",
       },
     ],
@@ -136,6 +304,12 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       "Lower hallucination rate than GPT models",
       "Excellent at long-context reasoning",
       "Strong privacy and governance transparency",
+    ],
+    weaknesses: [
+      "Sometimes overly cautious, refusing valid requests",
+      "Slower response times than competitors",
+      "Limited fine-tuning and customisation options",
+      "Higher latency on complex reasoning tasks",
     ],
     keyRisks: [
       "Sometimes overly cautious (under-generates)",
@@ -166,13 +340,13 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
   {
     modelId: "mrm-003",
     name: "DeepSeek R1",
-    provider: "Meta",
-    version: "1.0",
+    provider: "DeepSeek",
+    version: "3.2",
     category: "LLM",
-    parameters: "Unknown",
-    lastEvaluated: "2024-03-22",
-    status: "Testing",
-    overallRisk: 85,
+    parameters: "671 billion (37B active MoE)",
+    lastEvaluated: "2024-03-25",
+    status: "Evaluation",
+    overallRisk: 78,
     hallucinationRisk: 75,
     biasRisk: 70,
     toxicityRisk: 58,
@@ -180,9 +354,19 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
     securityRisk: 80,
     complianceRisk: 90,
     strengths: [
-      "High performance on coding and maths",
-      "Aggressive optimisation and cost-effectiveness",
+      "High performance on coding and maths (GPT-5 class reasoning)",
+      "Gold-medal results on 2025 IMO and IOI competitions",
+      "Aggressive optimisation and cost-effectiveness ($0.24/M input, $0.38/M output)",
+      "163,840 token context window with DeepSeek Sparse Attention (DSA)",
+      "Strong agentic tool-use capabilities",
       "Growing open-source community",
+    ],
+    weaknesses: [
+      "China-based provider raises geopolitical and data sovereignty concerns",
+      "Unclear training data provenance poses intellectual property risk",
+      "Limited safety guardrails compared to Western models",
+      "No enterprise SLA or support guarantees",
+      "Regulatory uncertainty for EU/EEA deployments",
     ],
     keyRisks: [
       "Unclear training provenance (IP risk)",
@@ -190,6 +374,7 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       "Fewer safety layers → increased jailbreak risk",
       "Unknown data-handling practices → high privacy risk",
       "Regulatory risk for EU/US enterprises",
+      "China-based provider raises geopolitical concerns",
     ],
     approvedUseCases: ["Local/Offline Inference Only", "Internal R&D Exploration", "Non-Sensitive Internal Workloads"],
     alerts: [
@@ -219,6 +404,8 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       },
     ],
     warnings: ["Not recommended for regulated industries or customer-facing applications"],
+    applications: deepSeekApplications,
+    pricing: deepSeekPricing,
   },
   {
     modelId: "mrm-004",
@@ -229,50 +416,50 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
     parameters: "540 billion",
     lastEvaluated: "2024-03-22",
     status: "Production",
-    overallRisk: 65,
-    hallucinationRisk: 65,
-    biasRisk: 70,
-    toxicityRisk: 58,
+    overallRisk: 52,
+    hallucinationRisk: 55,
+    biasRisk: 58,
+    toxicityRisk: 50,
     privacyRisk: 60,
-    securityRisk: 55,
-    complianceRisk: 60,
+    securityRisk: 45,
+    complianceRisk: 55,
     strengths: [
-      "Strong factual grounding via Google Search integration",
-      "Excellent multimodal understanding",
-      "Deep integration with enterprise tooling (Workspace, Android)",
+      "Superior multi-modal capabilities",
+      "1M token context window ideal for large documents",
+      "Strong math and code reasoning",
+      "Excellent integration with Google Cloud ecosystem",
+    ],
+    weaknesses: [
+      "Google data practices may conflict with strict privacy requirements",
+      "Less mature enterprise tooling compared to OpenAI",
+      "Inconsistent performance across different task types",
+      "Limited third-party integration ecosystem",
     ],
     keyRisks: [
-      "Search-linked outputs may mix real-time data with incomplete grounding",
-      "Moderate hallucination rate",
-      "Privacy risk depending on Workspace settings",
-      "Limited transparency in model training",
+      "Google data practices may conflict with strict privacy needs",
+      "Less established enterprise track record",
+      "May hallucinate on niche domain queries",
     ],
-    approvedUseCases: ["Email Summarisation", "Document Analysis", "Internal Productivity Use Cases"],
+    approvedUseCases: ["Multimodal Document Analysis", "Image-to-Text", "Long Context Research", "Code Reviews"],
     alerts: [
       {
         id: "alert-008",
-        type: "Hallucination",
+        type: "Privacy",
         severity: "Medium",
-        description: "Generates confident but inaccurate statistical interpretations",
-        examples: [
-          "Misinterpreted correlation as causation in data analysis",
-          "Provided incorrect confidence intervals for statistical tests",
-        ],
+        description: "Google data practices may not align with enterprise privacy policies",
+        examples: ["Potential data retention by Google", "Cross-service data usage concerns"],
         detectedDate: "2024-03-20",
       },
       {
         id: "alert-009",
-        type: "Bias",
+        type: "Hallucination",
         severity: "Medium",
-        description: "Geographic bias in search results and recommendations",
-        examples: [
-          "Prioritised US-based sources over international alternatives",
-          "Applied regional stereotypes in cultural queries",
-        ],
+        description: "May hallucinate on niche domain queries",
+        examples: ["Generated fictional legal precedents", "Invented technical specifications for legacy systems"],
         detectedDate: "2024-03-21",
       },
     ],
-    warnings: ["Search-augmented answers require validation"],
+    warnings: ["Verify Google Cloud data residency meets regulatory requirements"],
   },
   {
     modelId: "mrm-005",
@@ -295,6 +482,12 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       "Cost-effective",
       "High performance on structured tasks",
       "Suitable for on-prem use",
+    ],
+    weaknesses: [
+      "Smaller safety research team than US competitors",
+      "Less comprehensive documentation and support",
+      "Moderate hallucination outside core reasoning tasks",
+      "Limited enterprise deployment track record",
     ],
     keyRisks: [
       "Smaller safety/alignment budget compared with US models",
@@ -335,6 +528,12 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
       "Cost-effective at scale",
       "Very high controllability and fine-tuning potential",
     ],
+    weaknesses: [
+      "Requires significant in-house ML expertise to deploy safely",
+      "No vendor support or SLA guarantees",
+      "Enterprise bears full responsibility for safety alignment",
+      "Infrastructure costs for self-hosting can be substantial",
+    ],
     keyRisks: [
       "Enterprises bear full responsibility for safety, privacy, alignment",
       "Jailbreak risk if not hardened",
@@ -348,22 +547,22 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
         type: "Security",
         severity: "Medium",
         description: "Jailbreak risk if not properly hardened",
-        examples: [
-          "Can generate inappropriate content without proper safeguards",
-          "Requires custom safety layers for production use",
-        ],
+        examples: ["Can be prompted to bypass safety guidelines", "Requires custom safety layers"],
         detectedDate: "2024-03-16",
       },
       {
         id: "alert-012",
-        type: "Hallucination",
+        type: "Bias",
         severity: "Medium",
-        description: "Moderate hallucination in open-ended tasks",
-        examples: ["Generates plausible but incorrect factual information", "May fabricate citations and references"],
+        description: "Training data biases require monitoring",
+        examples: [
+          "May reflect biases present in web training data",
+          "Requires custom debiasing for sensitive applications",
+        ],
         detectedDate: "2024-03-17",
       },
     ],
-    warnings: ["Safety outcomes depend entirely on internal controls"],
+    warnings: ["Requires dedicated ML ops team for safe deployment"],
   },
   {
     modelId: "mrm-007",
@@ -372,62 +571,49 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
     version: "3.0",
     category: "Speech",
     parameters: "1.5 billion",
-    lastEvaluated: "2024-03-30",
+    lastEvaluated: "2024-03-15",
     status: "Production",
-    overallRisk: 60,
-    hallucinationRisk: 40,
-    biasRisk: 70,
-    toxicityRisk: 52,
-    privacyRisk: 75,
-    securityRisk: 55,
-    complianceRisk: 60,
+    overallRisk: 35,
+    hallucinationRisk: 30,
+    biasRisk: 45,
+    toxicityRisk: 20,
+    privacyRisk: 55,
+    securityRisk: 30,
+    complianceRisk: 40,
     strengths: [
-      "Industry-leading transcription accuracy",
-      "Multi-language support",
-      "Robust to audio quality variations",
+      "Industry-leading speech recognition accuracy",
+      "Excellent multilingual support including Norwegian",
+      "Robust to background noise and accents",
+      "Can be self-hosted for privacy compliance",
+    ],
+    weaknesses: [
+      "Audio data processing raises privacy concerns",
+      "May struggle with heavy dialects or technical jargon",
+      "No real-time streaming support in base model",
+      "Requires significant compute for on-premise deployment",
     ],
     keyRisks: [
-      "Transcription errors may lead to misinterpreted instructions",
-      "Sensitive audio data exposure",
-      "Not suitable for regulated medical or legal dictation without review",
+      "Audio data may contain sensitive personal information",
+      "Transcription errors in domain-specific terminology",
+      "Data retention policies unclear for cloud deployment",
     ],
-    approvedUseCases: ["Transcription", "Customer Service", "Meeting Intelligence"],
+    approvedUseCases: [
+      "Customer Call Transcription",
+      "Meeting Notes Generation",
+      "Voice-to-Text for Accessibility",
+      "Claims Call Analysis",
+    ],
     alerts: [
       {
         id: "alert-013",
-        type: "Hallucination",
-        severity: "Medium",
-        description: "Fabricates speech content in low-quality audio",
-        examples: [
-          "Added non-existent words in noisy audio segments",
-          "Inserted plausible but incorrect technical terms in poor quality recordings",
-        ],
-        detectedDate: "2024-03-28",
-      },
-      {
-        id: "alert-014",
-        type: "Bias",
-        severity: "Medium",
-        description: "Accent and dialect recognition disparities",
-        examples: [
-          "Lower accuracy for non-standard English accents",
-          "Inconsistent performance across different demographic groups",
-        ],
-        detectedDate: "2024-03-29",
-      },
-      {
-        id: "alert-015",
         type: "Privacy",
-        severity: "High",
-        description: "Sensitive audio data exposure risk",
-        examples: [
-          "Audio contains personally identifiable information",
-          "Risk of data retention beyond expected lifecycle",
-        ],
-        detectedDate: "2024-03-30",
+        severity: "Medium",
+        description: "Audio data processing requires careful data handling",
+        examples: ["Customer conversations may contain PII", "Voice biometrics could enable identification"],
+        detectedDate: "2024-03-14",
       },
     ],
-    warnings: ["Not suitable for regulated medical or legal dictation without review"],
+    warnings: ["Ensure audio data handling complies with GDPR and local regulations"],
   },
   {
     modelId: "mrm-008",
@@ -435,53 +621,67 @@ export const modelRiskProfiles: ModelRiskProfile[] = [
     provider: "Stability AI",
     version: "1.0",
     category: "Image Generation",
-    parameters: "3.5 billion",
-    lastEvaluated: "2024-03-25",
+    parameters: "6.6 billion",
+    lastEvaluated: "2024-03-10",
     status: "Production",
-    overallRisk: 85,
-    hallucinationRisk: 0,
-    biasRisk: 88,
-    toxicityRisk: 82,
-    privacyRisk: 85,
-    securityRisk: 75,
-    complianceRisk: 80,
-    strengths: ["High-quality image generation", "Open-source and customisable", "Strong community support"],
-    keyRisks: [
-      "Significant demographic bias in human representation",
-      "Can generate inappropriate or harmful imagery",
-      "Limited content filtering",
+    overallRisk: 48,
+    hallucinationRisk: 25,
+    biasRisk: 70,
+    toxicityRisk: 65,
+    privacyRisk: 35,
+    securityRisk: 40,
+    complianceRisk: 60,
+    strengths: [
+      "High-quality image generation",
+      "Fully self-hostable for complete data control",
+      "Extensive customisation through fine-tuning",
+      "Large community and ecosystem of tools",
     ],
-    approvedUseCases: ["Marketing Materials", "Design Prototyping"],
+    weaknesses: [
+      "Can generate inappropriate or biased imagery",
+      "Copyright concerns with training data",
+      "Requires content moderation guardrails",
+      "May produce inconsistent brand imagery without fine-tuning",
+    ],
+    keyRisks: [
+      "Can generate inappropriate content without guardrails",
+      "Training data may include copyrighted material",
+      "Bias in generated imagery (demographics, stereotypes)",
+      "Brand reputation risk from misuse",
+    ],
+    approvedUseCases: [
+      "Marketing Asset Generation",
+      "Internal Presentations",
+      "Prototype Visualisation",
+      "Non-Customer-Facing Content Only",
+    ],
     alerts: [
       {
-        id: "alert-016",
+        id: "alert-014",
         type: "Bias",
         severity: "High",
-        description: "Significant demographic bias in human representation",
-        examples: [
-          "Overrepresented certain ethnicities in professional contexts",
-          "Stereotypical gender representations in career-related images",
-        ],
-        detectedDate: "2024-03-23",
+        description: "Demographic bias in generated imagery",
+        examples: ["Underrepresentation of diverse demographics", "Stereotypical depictions of certain professions"],
+        detectedDate: "2024-03-08",
       },
       {
-        id: "alert-017",
-        type: "Toxicity",
-        severity: "High",
-        description: "Can generate inappropriate or harmful imagery",
+        id: "alert-015",
+        type: "Compliance",
+        severity: "Medium",
+        description: "Copyright concerns with training data",
         examples: [
-          "Insufficient filtering for violent content requests",
-          "Generated stereotypical or offensive depictions despite content filters",
+          "May reproduce styles of copyrighted works",
+          "Unclear legal status for commercial use in some jurisdictions",
         ],
-        detectedDate: "2024-03-24",
+        detectedDate: "2024-03-09",
       },
     ],
-    warnings: ["Requires strict content moderation for public-facing applications"],
+    warnings: ["Implement content moderation before any customer-facing deployment"],
   },
 ]
 
 // Helper functions
-export function getRiskLevel(score: number): RiskLevel {
+export function getRiskLevel(score: number): string {
   if (score >= 80) return "Critical Risk"
   if (score >= 65) return "High Risk"
   if (score >= 40) return "Medium Risk"
