@@ -3,9 +3,8 @@
 import { AppHeader } from "@/components/app-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Shield, Brain, Building2, DollarSign, Users, TrendingUp } from "lucide-react"
+import { Shield, Brain, DollarSign, Users, TrendingUp } from "lucide-react"
 import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell, PieChart, Pie } from "recharts"
-import Link from "next/link"
 
 const usageByLLM = [
   { name: "GPT-4o", requests: 145000, cost: 12400, risk: 72 },
@@ -233,43 +232,6 @@ export default function OverviewPage() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Quick Links */}
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Link href="/ai-governance" className="block">
-            <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <Shield className="h-5 w-5 text-primary" />
-                  <span className="font-medium">AI Governance</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Risk register and compliance</p>
-              </CardContent>
-            </Card>
-          </Link>
-          <Link href="/ai-visibility" className="block">
-            <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <Building2 className="h-5 w-5 text-primary" />
-                  <span className="font-medium">AI Visibility</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Models, data, and vendors</p>
-              </CardContent>
-            </Card>
-          </Link>
-          <Link href="/model-risk" className="block">
-            <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all cursor-pointer">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <Brain className="h-5 w-5 text-primary" />
-                  <span className="font-medium">Model Risk</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Detailed model assessments</p>
-              </CardContent>
-            </Card>
-          </Link>
-        </div>
       </main>
     </div>
   )
