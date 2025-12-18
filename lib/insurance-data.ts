@@ -1,4 +1,4 @@
-// Storebrand Insurance-specific AI governance data
+// Insurance-specific AI governance data
 
 export interface InsuranceAIRiskCategory {
   id: string
@@ -10,10 +10,10 @@ export interface InsuranceAIRiskCategory {
   detectionChallenges: string[]
   recommendedControls: string[]
   severity: "Low" | "Medium" | "High" | "Critical"
-  storebrandContext: string
+  companyContext: string
 }
 
-export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
+export const insuranceAIRisks: InsuranceAIRiskCategory[] = [
   {
     id: "ins-risk-001",
     name: "AI-Driven Claims Processing Errors",
@@ -22,11 +22,11 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
     insuranceImpact: [
       "Wrongful claim denials affecting customer trust",
       "Overpayment of fraudulent claims (financial loss)",
-      "Regulatory penalties under Norwegian Financial Supervisory Authority (Finanstilsynet) requirements",
+      "Regulatory penalties under Financial Supervisory Authority requirements",
       "Discrimination complaints if bias affects certain demographics",
     ],
     regulatoryFramework: [
-      "Norwegian Insurance Activity Act (Forsikringsvirksomhetsloven)",
+      "Insurance Activity Act",
       "GDPR Article 22 (Automated Decision-Making)",
       "EU AI Act High-Risk Classification",
     ],
@@ -37,14 +37,14 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Model confidence scores don't correlate with accuracy",
     ],
     recommendedControls: [
-      "Human review for all claims above NOK 50,000",
+      "Human review for all claims above threshold",
       "Regular bias audits across demographic segments",
       "Explainability requirements for all automated decisions",
       "Monthly accuracy validation against manually reviewed claims",
     ],
     severity: "Critical",
-    storebrandContext:
-      "Storebrand processes over 100,000 claims annually across life, health, and property insurance. AI-assisted claims processing affects customer trust and brand reputation significantly.",
+    companyContext:
+      "The company processes over 100,000 claims annually across life, health, and property insurance. AI-assisted claims processing affects customer trust and brand reputation significantly.",
   },
   {
     id: "ins-risk-002",
@@ -55,13 +55,9 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Customers make financial decisions based on incorrect AI advice",
       "Liability for misinformation provided by AI representatives",
       "Loss of customer confidence in digital channels",
-      "Increased complaints to Finanstilsynet",
+      "Increased complaints to regulators",
     ],
-    regulatoryFramework: [
-      "Consumer Protection Act (Forbrukerkjøpsloven)",
-      "Insurance Contracts Act (Forsikringsavtaleloven)",
-      "Norwegian Marketing Control Act",
-    ],
+    regulatoryFramework: ["Consumer Protection Act", "Insurance Contracts Act", "Marketing Control Act"],
     likelihood: "High",
     detectionChallenges: [
       "Chatbot responses sound confident and professional even when incorrect",
@@ -76,8 +72,8 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Regular testing with edge-case customer queries",
     ],
     severity: "High",
-    storebrandContext:
-      "Storebrand's digital customer service handles 60% of routine inquiries. Maintaining accuracy while improving efficiency is critical to the digital transformation strategy.",
+    companyContext:
+      "Digital customer service handles 60% of routine inquiries. Maintaining accuracy while improving efficiency is critical to the digital transformation strategy.",
   },
   {
     id: "ins-risk-003",
@@ -86,12 +82,12 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "AI models used for risk assessment and premium calculation may perpetuate or amplify historical biases, leading to discriminatory pricing or coverage decisions that violate equality laws.",
     insuranceImpact: [
       "Legal action for discrimination (age, gender, ethnicity, disability)",
-      "Regulatory enforcement by Equality and Anti-Discrimination Ombud",
-      "Reputational damage as a responsible Norwegian insurer",
+      "Regulatory enforcement by Equality and Anti-Discrimination authorities",
+      "Reputational damage as a responsible insurer",
       "Financial penalties and mandatory model retraining",
     ],
     regulatoryFramework: [
-      "Equality and Anti-Discrimination Act (Likestillings- og diskrimineringsloven)",
+      "Equality and Anti-Discrimination Act",
       "GDPR Article 9 (Special Category Data)",
       "EU AI Act Prohibited Practices",
       "Insurance Directives (Solvency II)",
@@ -107,11 +103,11 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Independent third-party bias audits annually",
       "Documented rationale for all risk factors used",
       "Prohibition on proxy variables for protected attributes",
-      "Regular regulatory dialogue with Finanstilsynet",
+      "Regular regulatory dialogue",
     ],
     severity: "Critical",
-    storebrandContext:
-      "Storebrand is committed to sustainable and responsible insurance. Any perception of unfair treatment directly contradicts corporate values and ESG commitments.",
+    companyContext:
+      "The company is committed to sustainable and responsible insurance. Any perception of unfair treatment directly contradicts corporate values and ESG commitments.",
   },
   {
     id: "ins-risk-004",
@@ -143,8 +139,8 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Transparency reporting on false positive rates",
     ],
     severity: "Medium",
-    storebrandContext:
-      "Storebrand detects and prevents approximately NOK 40 million in fraud annually. Maintaining effectiveness while ensuring fair treatment is essential.",
+    companyContext:
+      "The company detects and prevents approximately $5 million in fraud annually. Maintaining effectiveness while ensuring fair treatment is essential.",
   },
   {
     id: "ins-risk-005",
@@ -159,7 +155,7 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
     ],
     regulatoryFramework: [
       "GDPR Articles 5, 25, 32 (data protection by design)",
-      "Norwegian Personal Data Act",
+      "Personal Data Act",
       "Sector-specific health data protection rules",
     ],
     likelihood: "Medium",
@@ -176,8 +172,8 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Third-party privacy audits before production deployment",
     ],
     severity: "Critical",
-    storebrandContext:
-      "Storebrand handles highly sensitive health, financial, and personal data for 1.7 million Norwegian customers. Privacy is non-negotiable.",
+    companyContext:
+      "The company handles highly sensitive health, financial, and personal data for 1.7 million customers. Privacy is non-negotiable.",
   },
   {
     id: "ins-risk-006",
@@ -209,23 +205,23 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Clear model retirement and retraining procedures",
     ],
     severity: "High",
-    storebrandContext:
-      "Storebrand relies on predictive models for pricing across all product lines. Model accuracy directly affects financial stability and regulatory capital requirements.",
+    companyContext:
+      "The company relies on predictive models for pricing across all product lines. Model accuracy directly affects financial stability and regulatory capital requirements.",
   },
   {
     id: "ins-risk-007",
     name: "Third-Party AI Vendor Risk",
     description:
-      "Storebrand uses AI solutions from external vendors (claims automation, fraud detection, customer service). Vendor failures, security breaches, or service discontinuation create operational risk.",
+      "The company uses AI solutions from external vendors (claims automation, fraud detection, customer service). Vendor failures, security breaches, or service discontinuation create operational risk.",
     insuranceImpact: [
       "Service disruption affecting customer experience",
-      "Data breaches at vendor affecting Storebrand customers",
+      "Data breaches at vendor affecting customers",
       "Regulatory non-compliance inherited from vendor practices",
       "Lock-in to problematic vendor technology",
     ],
     regulatoryFramework: [
       "GDPR Article 28 (processor requirements)",
-      "Outsourcing Guidelines (Finanstilsynet)",
+      "Outsourcing Guidelines",
       "Digital Operational Resilience Act (DORA)",
     ],
     likelihood: "Medium",
@@ -242,8 +238,8 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Regular vendor risk reviews and compliance attestations",
     ],
     severity: "High",
-    storebrandContext:
-      "Storebrand partners with multiple AI vendors as part of digital transformation. Vendor governance is critical to maintaining operational resilience.",
+    companyContext:
+      "The company partners with multiple AI vendors as part of digital transformation. Vendor governance is critical to maintaining operational resilience.",
   },
   {
     id: "ins-risk-008",
@@ -275,14 +271,14 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Regular explainability testing with diverse stakeholders",
     ],
     severity: "High",
-    storebrandContext:
-      "Storebrand must demonstrate responsible AI governance to regulators, customers, and ESG rating agencies. Explainability is a competitive differentiator.",
+    companyContext:
+      "The company must demonstrate responsible AI governance to regulators, customers, and ESG rating agencies. Explainability is a competitive differentiator.",
   },
   {
     id: "ins-risk-009",
     name: "AI-Enabled Social Engineering Attacks",
     description:
-      "Attackers use AI to create highly convincing phishing attacks, impersonation attempts, or fraudulent claims targeting Storebrand employees and customers.",
+      "Attackers use AI to create highly convincing phishing attacks, impersonation attempts, or fraudulent claims targeting employees and customers.",
     insuranceImpact: [
       "Financial fraud losses",
       "Data breaches via compromised employee accounts",
@@ -308,15 +304,15 @@ export const storebrandAIRisks: InsuranceAIRiskCategory[] = [
       "Regular social engineering testing (red team exercises)",
     ],
     severity: "High",
-    storebrandContext:
-      "Storebrand employees handle sensitive customer data daily. One successful social engineering attack could compromise thousands of customer records.",
+    companyContext:
+      "Employees handle sensitive customer data daily. One successful social engineering attack could compromise thousands of customer records.",
   },
 ]
 
-// Network topology for Storebrand insurance AI systems
-export interface StorebrandNetworkNode {
+// Network topology for insurance AI systems
+export interface NetworkNode {
   id: string
-  name: string // Changed from label to name for consistency
+  name: string
   type: "model" | "database" | "api" | "user" | "infrastructure" | "external" | "internal"
   riskLevel: "low" | "medium" | "high" | "critical"
   department: string
@@ -329,7 +325,7 @@ export interface StorebrandNetworkNode {
   owner?: string
 }
 
-export const storebrandNetworkTopology: StorebrandNetworkNode[] = [
+export const networkTopology: NetworkNode[] = [
   // AI Models
   {
     id: "ai-claims",
@@ -337,29 +333,29 @@ export const storebrandNetworkTopology: StorebrandNetworkNode[] = [
     type: "model",
     riskLevel: "critical",
     department: "Claims",
-    connections: ["db-claims", "db-documents", "infra-azure", "ext-medical"],
+    connections: ["db-claims", "db-documents", "infra-cloud", "ext-medical"],
     description:
       "Automated claims evaluation for property, casualty, and health insurance using computer vision and NLP. Processes 12,000+ claims monthly.",
     dataClassification: "restricted",
     monthlyTransactions: 12450,
     lastSecurityAudit: "2024-11-15",
     complianceFrameworks: ["EU AI Act", "GDPR", "Solvency II"],
-    owner: "Lars Eriksen",
+    owner: "Claims Director",
   },
   {
     id: "ai-chatbot",
-    name: "Kundeservice AI Chatbot",
+    name: "Customer Service AI Chatbot",
     type: "model",
     riskLevel: "high",
     department: "Customer Service",
-    connections: ["db-crm", "api-portal", "ext-bankid"],
+    connections: ["db-crm", "api-portal", "ext-identity"],
     description:
-      "24/7 Norwegian and English customer support assistant handling policy inquiries, claims status, and general questions. Serves 45,000 conversations monthly.",
+      "24/7 customer support assistant handling policy inquiries, claims status, and general questions. Serves 45,000 conversations monthly.",
     dataClassification: "confidential",
     monthlyTransactions: 45200,
     lastSecurityAudit: "2024-10-22",
     complianceFrameworks: ["EU AI Act", "GDPR"],
-    owner: "Ingrid Haugen",
+    owner: "Customer Service Manager",
   },
   {
     id: "ai-underwriting",
@@ -367,14 +363,14 @@ export const storebrandNetworkTopology: StorebrandNetworkNode[] = [
     type: "model",
     riskLevel: "critical",
     department: "Underwriting",
-    connections: ["db-actuarial", "db-health", "infra-azure", "ext-folkereg"],
+    connections: ["db-actuarial", "db-health", "infra-cloud", "ext-registry"],
     description:
       "AI-driven risk assessment and premium calculation for life, health, and pension products. Evaluates 8,500 applications monthly with 94% accuracy.",
     dataClassification: "restricted",
     monthlyTransactions: 8520,
     lastSecurityAudit: "2024-11-01",
     complianceFrameworks: ["EU AI Act", "GDPR", "Solvency II", "IDD"],
-    owner: "Erik Nordahl",
+    owner: "Underwriting Director",
   },
   {
     id: "ai-fraud",
@@ -382,14 +378,14 @@ export const storebrandNetworkTopology: StorebrandNetworkNode[] = [
     type: "model",
     riskLevel: "high",
     department: "Risk Management",
-    connections: ["db-claims", "db-actuarial", "infra-azure", "int-soc"],
+    connections: ["db-claims", "db-actuarial", "infra-cloud", "int-soc"],
     description:
-      "Pattern recognition AI identifying potentially fraudulent claims and applications. Flagged NOK 23M in suspicious activity last quarter.",
+      "Pattern recognition AI identifying potentially fraudulent claims and applications. Flagged $3M in suspicious activity last quarter.",
     dataClassification: "restricted",
     monthlyTransactions: 34000,
     lastSecurityAudit: "2024-09-30",
     complianceFrameworks: ["EU AI Act", "AML Directive"],
-    owner: "Morten Dahl",
+    owner: "Risk Manager",
   },
   {
     id: "ai-investment",
@@ -397,343 +393,154 @@ export const storebrandNetworkTopology: StorebrandNetworkNode[] = [
     type: "model",
     riskLevel: "high",
     department: "Asset Management",
-    connections: ["db-actuarial", "ext-markets", "ext-finanstilsynet", "infra-azure"],
+    connections: ["db-actuarial", "ext-markets", "ext-regulator", "infra-cloud"],
     description:
-      "AI-assisted investment decision support for NOK 450B pension fund. Provides portfolio optimisation and ESG screening.",
+      "AI-assisted investment decision support for pension fund. Provides portfolio optimisation and ESG screening.",
     dataClassification: "confidential",
     monthlyTransactions: 2800,
     lastSecurityAudit: "2024-10-15",
     complianceFrameworks: ["MiFID II", "SFDR", "EU AI Act"],
-    owner: "Kristin Solberg",
+    owner: "Investment Director",
   },
-  {
-    id: "ai-documents",
-    name: "Document Processing AI",
-    type: "model",
-    riskLevel: "medium",
-    department: "Operations",
-    connections: ["db-documents", "db-crm", "infra-azure"],
-    description:
-      "Automated extraction of information from policy documents, medical records, and claim forms. Processes 28,000 documents monthly with 97% accuracy.",
-    dataClassification: "confidential",
-    monthlyTransactions: 28400,
-    lastSecurityAudit: "2024-11-08",
-    complianceFrameworks: ["GDPR", "EU AI Act"],
-    owner: "Hanne Berger",
-  },
-  {
-    id: "ai-sales",
-    name: "Product Recommendation Engine",
-    type: "model",
-    riskLevel: "medium",
-    department: "Sales & Marketing",
-    connections: ["db-crm", "api-portal", "api-mobile"],
-    description:
-      "Personalised insurance product recommendations for cross-selling and retention. Increased conversion rate by 18% since deployment.",
-    dataClassification: "internal",
-    monthlyTransactions: 156000,
-    lastSecurityAudit: "2024-10-01",
-    complianceFrameworks: ["GDPR", "IDD"],
-    owner: "Thomas Lund",
-  },
-  {
-    id: "ai-compliance",
-    name: "Regulatory Compliance Monitor",
-    type: "model",
-    riskLevel: "high",
-    department: "Legal & Compliance",
-    connections: ["db-actuarial", "ext-finanstilsynet", "int-audit", "infra-azure"],
-    description:
-      "Automated monitoring of regulatory changes and compliance status across Norwegian and EU frameworks. Tracks 340+ regulatory requirements.",
-    dataClassification: "confidential",
-    monthlyTransactions: 4200,
-    lastSecurityAudit: "2024-11-20",
-    complianceFrameworks: ["EU AI Act", "Solvency II", "GDPR"],
-    owner: "Liv Andresen",
-  },
-
   // Databases
   {
     id: "db-claims",
-    name: "Claims Database (Oracle)",
+    name: "Claims Database",
     type: "database",
     riskLevel: "critical",
     department: "IT Infrastructure",
     connections: [],
     description:
-      "Comprehensive claims history with 2.4M records including personal injury, property damage, and health claims dating back 15 years.",
+      "Comprehensive claims history with 2.4M records including personal injury, property damage, and health claims.",
     dataClassification: "restricted",
-    monthlyTransactions: 89000,
-    lastSecurityAudit: "2024-10-10",
-    complianceFrameworks: ["GDPR", "ISO 27001"],
-    owner: "IT Operations",
-  },
-  {
-    id: "db-documents",
-    name: "Document Repository (SharePoint)",
-    type: "database",
-    riskLevel: "high",
-    department: "IT Infrastructure",
-    connections: [],
-    description:
-      "Central storage for 8.2M policy documents, medical records, and supporting claim documentation with full-text search.",
-    dataClassification: "confidential",
-    monthlyTransactions: 45000,
-    lastSecurityAudit: "2024-09-25",
-    complianceFrameworks: ["GDPR", "ISO 27001"],
-    owner: "IT Operations",
+    monthlyTransactions: 85000,
+    lastSecurityAudit: "2024-11-10",
+    complianceFrameworks: ["GDPR", "SOC 2"],
+    owner: "Database Administrator",
   },
   {
     id: "db-crm",
-    name: "Customer CRM (Salesforce)",
+    name: "Customer CRM Database",
     type: "database",
-    riskLevel: "critical",
+    riskLevel: "high",
     department: "IT Infrastructure",
     connections: [],
-    description:
-      "1.8M customer records including personal information, contact history, 4.2M active policies, and interaction logs.",
-    dataClassification: "restricted",
-    monthlyTransactions: 234000,
-    lastSecurityAudit: "2024-11-05",
-    complianceFrameworks: ["GDPR", "ISO 27001"],
-    owner: "IT Operations",
+    description: "Central customer relationship database with 1.7M customer profiles and interaction history.",
+    dataClassification: "confidential",
+    monthlyTransactions: 450000,
+    lastSecurityAudit: "2024-10-28",
+    complianceFrameworks: ["GDPR"],
+    owner: "Database Administrator",
   },
   {
     id: "db-actuarial",
-    name: "Financial & Actuarial DB",
+    name: "Actuarial Data Warehouse",
     type: "database",
-    riskLevel: "critical",
-    department: "Finance",
+    riskLevel: "high",
+    department: "Actuarial",
     connections: [],
-    description:
-      "Technical provisions, premium calculations, claims reserves totalling NOK 320B, and actuarial assumptions for all product lines.",
-    dataClassification: "restricted",
+    description: "Historical risk data, mortality tables, and pricing models supporting actuarial calculations.",
+    dataClassification: "confidential",
     monthlyTransactions: 12000,
-    lastSecurityAudit: "2024-10-20",
-    complianceFrameworks: ["Solvency II", "IFRS 17", "ISO 27001"],
-    owner: "Finance Operations",
+    lastSecurityAudit: "2024-09-15",
+    complianceFrameworks: ["Solvency II", "GDPR"],
+    owner: "Chief Actuary",
+  },
+  // External Systems
+  {
+    id: "ext-medical",
+    name: "Medical Records API",
+    type: "external",
+    riskLevel: "critical",
+    department: "External",
+    connections: [],
+    description: "Secure integration with healthcare providers for medical records verification in health claims.",
+    dataClassification: "restricted",
+    monthlyTransactions: 3200,
+    lastSecurityAudit: "2024-11-01",
+    complianceFrameworks: ["GDPR", "HIPAA-equivalent"],
+    owner: "Integration Manager",
   },
   {
-    id: "db-health",
-    name: "Health Records Database",
-    type: "database",
-    riskLevel: "critical",
-    department: "Health Insurance",
+    id: "ext-identity",
+    name: "Identity Verification Service",
+    type: "external",
+    riskLevel: "high",
+    department: "External",
     connections: [],
-    description:
-      "Protected health information (PHI) for 890,000 life and health insurance policyholders. Encrypted at rest and in transit.",
-    dataClassification: "restricted",
-    monthlyTransactions: 18000,
-    lastSecurityAudit: "2024-11-12",
-    complianceFrameworks: ["GDPR", "Health Data Act", "ISO 27001"],
-    owner: "Health Operations",
+    description: "Electronic identity verification for secure customer authentication.",
+    dataClassification: "confidential",
+    monthlyTransactions: 28000,
+    lastSecurityAudit: "2024-10-20",
+    complianceFrameworks: ["eIDAS", "GDPR"],
+    owner: "Security Manager",
   },
-
+  {
+    id: "ext-regulator",
+    name: "Regulatory Reporting Gateway",
+    type: "external",
+    riskLevel: "high",
+    department: "External",
+    connections: [],
+    description: "Automated regulatory reporting submission to financial supervisory authority.",
+    dataClassification: "confidential",
+    monthlyTransactions: 450,
+    lastSecurityAudit: "2024-11-05",
+    complianceFrameworks: ["Solvency II", "GDPR"],
+    owner: "Compliance Officer",
+  },
   // Infrastructure
   {
-    id: "infra-azure",
-    name: "Azure Cloud (Norway East)",
+    id: "infra-cloud",
+    name: "Cloud Platform",
     type: "infrastructure",
     riskLevel: "high",
     department: "IT Infrastructure",
     connections: [],
-    description:
-      "Primary cloud hosting in Norway for AI models, databases, and customer-facing applications. 99.95% uptime SLA.",
+    description: "Primary cloud infrastructure hosting AI workloads with GPU clusters for model training.",
     dataClassification: "internal",
-    monthlyTransactions: 45000000,
-    lastSecurityAudit: "2024-11-01",
+    monthlyTransactions: 2500000,
+    lastSecurityAudit: "2024-11-12",
     complianceFrameworks: ["ISO 27001", "SOC 2", "GDPR"],
-    owner: "Cloud Operations",
+    owner: "Cloud Architect",
   },
-  {
-    id: "infra-backup",
-    name: "Disaster Recovery (Azure Sweden)",
-    type: "infrastructure",
-    riskLevel: "medium",
-    department: "IT Infrastructure",
-    connections: [],
-    description:
-      "Secondary data centre in Sweden for business continuity. RPO: 1 hour, RTO: 4 hours for critical systems.",
-    dataClassification: "internal",
-    lastSecurityAudit: "2024-10-15",
-    complianceFrameworks: ["ISO 22301", "ISO 27001"],
-    owner: "Cloud Operations",
-  },
-
-  // APIs and Portals
-  {
-    id: "api-portal",
-    name: "Customer Web Portal",
-    type: "api",
-    riskLevel: "high",
-    department: "Digital",
-    connections: [],
-    description:
-      "storebrand.no customer self-service for policy management, claims submission, and pension overview. 420,000 monthly active users.",
-    dataClassification: "confidential",
-    monthlyTransactions: 890000,
-    lastSecurityAudit: "2024-11-18",
-    complianceFrameworks: ["WCAG 2.1", "GDPR", "PSD2"],
-    owner: "Digital Products",
-  },
-  {
-    id: "api-mobile",
-    name: "Mobile App (iOS/Android)",
-    type: "api",
-    riskLevel: "high",
-    department: "Digital",
-    connections: [],
-    description:
-      "Storebrand mobile app for on-the-go policy management and claims photo submission. 180,000 monthly active users.",
-    dataClassification: "confidential",
-    monthlyTransactions: 340000,
-    lastSecurityAudit: "2024-10-28",
-    complianceFrameworks: ["WCAG 2.1", "GDPR"],
-    owner: "Digital Products",
-  },
-  {
-    id: "api-partner",
-    name: "Partner API Gateway",
-    type: "api",
-    riskLevel: "medium",
-    department: "Digital",
-    connections: [],
-    description:
-      "B2B API for insurance distribution partners, brokers, and white-label integrations. 45 active partner connections.",
-    dataClassification: "confidential",
-    monthlyTransactions: 78000,
-    lastSecurityAudit: "2024-09-15",
-    complianceFrameworks: ["OAuth 2.0", "API Security Best Practices"],
-    owner: "Partner Solutions",
-  },
-
   // Internal Services
   {
     id: "int-soc",
     name: "Security Operations Centre",
     type: "internal",
-    riskLevel: "low",
-    department: "Information Security",
+    riskLevel: "medium",
+    department: "Security",
     connections: [],
-    description:
-      "24/7 security monitoring, incident response, and threat intelligence for all Storebrand digital assets.",
-    dataClassification: "internal",
-    lastSecurityAudit: "2024-11-25",
-    complianceFrameworks: ["ISO 27001", "NIST CSF"],
-    owner: "CISO Office",
-  },
-  {
-    id: "int-audit",
-    name: "Internal Audit System",
-    type: "internal",
-    riskLevel: "low",
-    department: "Internal Audit",
-    connections: [],
-    description: "Audit trail logging and compliance verification for all AI system decisions and data access.",
+    description: "24/7 security monitoring, incident response, and threat intelligence for all digital assets.",
     dataClassification: "confidential",
-    lastSecurityAudit: "2024-10-05",
-    complianceFrameworks: ["IIA Standards", "SOX"],
-    owner: "Internal Audit",
+    monthlyTransactions: 15000,
+    lastSecurityAudit: "2024-11-18",
+    complianceFrameworks: ["ISO 27001", "NIST"],
+    owner: "CISO",
   },
-
-  // External Systems
+  // APIs
   {
-    id: "ext-medical",
-    name: "Helsenorge Integration",
-    type: "external",
-    riskLevel: "high",
-    department: "External",
-    connections: [],
-    description:
-      "Integration with Norwegian national health portal for verified medical record retrieval with patient consent.",
-    dataClassification: "restricted",
-    monthlyTransactions: 8500,
-    lastSecurityAudit: "2024-11-10",
-    complianceFrameworks: ["Health Data Act", "GDPR"],
-    owner: "Health Operations",
-  },
-  {
-    id: "ext-bankid",
-    name: "BankID Norge",
-    type: "external",
+    id: "api-portal",
+    name: "Customer Portal",
+    type: "api",
     riskLevel: "medium",
-    department: "External",
+    department: "Digital",
     connections: [],
-    description: "National digital identity verification for secure customer authentication. 98% of logins use BankID.",
-    dataClassification: "internal",
-    monthlyTransactions: 920000,
-    lastSecurityAudit: "2024-10-01",
-    complianceFrameworks: ["eIDAS", "PSD2"],
-    owner: "Identity Services",
-  },
-  {
-    id: "ext-finanstilsynet",
-    name: "Finanstilsynet Reporting",
-    type: "external",
-    riskLevel: "medium",
-    department: "External",
-    connections: [],
-    description:
-      "Automated regulatory submissions to Norwegian Financial Supervisory Authority including Solvency II QRTs.",
+    description: "Customer self-service for policy management, claims submission, and account overview.",
     dataClassification: "confidential",
-    monthlyTransactions: 45,
-    lastSecurityAudit: "2024-09-20",
-    complianceFrameworks: ["Solvency II", "XBRL"],
-    owner: "Regulatory Reporting",
-  },
-  {
-    id: "ext-markets",
-    name: "Bloomberg Terminal Feed",
-    type: "external",
-    riskLevel: "medium",
-    department: "External",
-    connections: [],
-    description: "Real-time financial market data, ESG scores, and analytics for pension investment decisions.",
-    dataClassification: "internal",
-    monthlyTransactions: 2400000,
-    lastSecurityAudit: "2024-08-15",
-    complianceFrameworks: ["MiFID II"],
-    owner: "Asset Management",
-  },
-  {
-    id: "ext-folkereg",
-    name: "Folkeregisteret API",
-    type: "external",
-    riskLevel: "medium",
-    department: "External",
-    connections: [],
-    description: "Norwegian National Population Register for identity verification and address validation.",
-    dataClassification: "confidential",
-    monthlyTransactions: 34000,
-    lastSecurityAudit: "2024-10-12",
-    complianceFrameworks: ["GDPR", "Folkeregisterloven"],
-    owner: "Customer Operations",
-  },
-  {
-    id: "ext-kartverket",
-    name: "Kartverket Property Data",
-    type: "external",
-    riskLevel: "low",
-    department: "External",
-    connections: [],
-    description: "Norwegian Mapping Authority data for property insurance valuations and risk assessment.",
-    dataClassification: "public",
-    monthlyTransactions: 12000,
-    lastSecurityAudit: "2024-07-20",
-    complianceFrameworks: ["Open Data Directive"],
-    owner: "Property Insurance",
+    monthlyTransactions: 420000,
+    lastSecurityAudit: "2024-10-30",
+    complianceFrameworks: ["GDPR", "PCI DSS"],
+    owner: "Digital Product Manager",
   },
 ]
 
-export const insuranceAiRiskRegister = storebrandAIRisks.map((risk) => ({
-  id: risk.id,
-  name: risk.name,
-  description: risk.description,
-  severity: risk.severity,
-  likelihood: risk.likelihood,
-  businessImpact: risk.insuranceImpact,
-  detectionChallenges: risk.detectionChallenges,
-  recommendedControls: risk.recommendedControls,
+// Export aliases for backward compatibility
+export const insuranceAiRiskRegister = insuranceAIRisks.map((risk) => ({
+  ...risk,
+  businessImpact: risk.insuranceImpact.join("; "),
+  mitigations: risk.recommendedControls,
 }))
 
-export const insuranceNetworkTopology = storebrandNetworkTopology
+export const insuranceNetworkTopology = networkTopology

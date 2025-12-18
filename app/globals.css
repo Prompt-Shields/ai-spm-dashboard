@@ -4,14 +4,14 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Storebrand brand colors - Norwegian insurance design system */
+  /* Brand colors - Insurance design system */
   --background: 0 0% 100%;
   --foreground: 0 0% 17%;
   --card: 0 0% 100%;
   --card-foreground: 0 0% 17%;
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 17%;
-  --primary: 350 70% 36%; /* Storebrand deep red/burgundy */
+  --primary: 350 70% 36%; /* Deep red/burgundy */
   --primary-foreground: 0 0% 100%;
   --secondary: 350 50% 94%; /* Light pink/rose for subtle highlights */
   --secondary-foreground: 0 0% 17%;
@@ -31,7 +31,7 @@
   --ring: 350 70% 36%;
 
   /* Updated chart colors with vibrant, differentiated palette for better data visualization */
-  --chart-1: 350 70% 36%; /* Primary burgundy - Storebrand brand */
+  --chart-1: 350 70% 36%; /* Primary burgundy - brand */
   --chart-2: 201 65% 48%; /* Teal blue - high contrast for data */
   --chart-3: 142 51% 45%; /* Green - success/positive data */
   --chart-4: 38 95% 55%; /* Amber - warning/attention */
@@ -102,7 +102,7 @@
 }
 
 @theme inline {
-  /* Storebrand typography - clean, professional Norwegian aesthetic */
+  /* Typography - clean, professional aesthetic */
   --font-sans: "Inter", "Helvetica Neue", "Arial", sans-serif;
   --font-mono: "JetBrains Mono", "Consolas", monospace;
   --font-serif: "Source Serif 4", "Georgia", serif;
