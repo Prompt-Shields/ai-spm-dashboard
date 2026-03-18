@@ -1,0 +1,130 @@
+<h2>What should the core AI use case map look like?</h2>
+<p class="subtitle">This is the centerpiece of the tool — the visual that replaces Ardoq's architecture graph for AI governance</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="graph" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:16px;background:#0f172a;border-radius:8px;min-height:160px;position:relative;overflow:hidden">
+      <!-- Graph nodes -->
+      <svg width="100%" height="150" viewBox="0 0 300 150">
+        <!-- Edges -->
+        <line x1="150" y1="75" x2="60" y2="30" stroke="#334155" stroke-width="1.5"/>
+        <line x1="150" y1="75" x2="240" y2="30" stroke="#334155" stroke-width="1.5"/>
+        <line x1="150" y1="75" x2="60" y2="120" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4"/>
+        <line x1="150" y1="75" x2="240" y2="120" stroke="#22c55e" stroke-width="1.5"/>
+        <line x1="60" y1="30" x2="60" y2="120" stroke="#334155" stroke-width="1"/>
+        <line x1="240" y1="30" x2="240" y2="120" stroke="#334155" stroke-width="1"/>
+        <!-- Center node: Use Case -->
+        <circle cx="150" cy="75" r="22" fill="#6366f1" stroke="#818cf8" stroke-width="2"/>
+        <text x="150" y="70" text-anchor="middle" fill="white" font-size="7" font-family="sans-serif">AI Use</text>
+        <text x="150" y="80" text-anchor="middle" fill="white" font-size="7" font-family="sans-serif">Case</text>
+        <!-- Model node -->
+        <circle cx="60" cy="30" r="16" fill="#0ea5e9" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="60" y="34" text-anchor="middle" fill="white" font-size="6" font-family="sans-serif">Model</text>
+        <!-- Owner node -->
+        <circle cx="240" cy="30" r="16" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="240" y="34" text-anchor="middle" fill="white" font-size="6" font-family="sans-serif">Owner</text>
+        <!-- Risk node -->
+        <circle cx="60" cy="120" r="16" fill="#ef4444" stroke="#f87171" stroke-width="1.5"/>
+        <text x="60" y="124" text-anchor="middle" fill="white" font-size="6" font-family="sans-serif">Risk</text>
+        <!-- Mitigation node -->
+        <circle cx="240" cy="120" r="16" fill="#22c55e" stroke="#4ade80" stroke-width="1.5"/>
+        <text x="240" y="124" text-anchor="middle" fill="white" font-size="6" font-family="sans-serif">Fix</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — Relationship Graph</h3>
+      <p>Ardoq-style node-link diagram. Use cases at center, connected to models, owners, risks, and mitigations. Interactive — click a node to explore. Familiar to the Ardoq CPO.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="matrix" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:16px;background:#0f172a;border-radius:8px;min-height:160px;">
+      <div style="font-size:9px;color:#94a3b8;font-family:monospace;margin-bottom:6px">USE CASE → RISK HEAT MAP</div>
+      <table style="width:100%;border-collapse:collapse;font-size:8px;font-family:sans-serif">
+        <tr>
+          <td style="color:#64748b;padding:3px"></td>
+          <td style="color:#94a3b8;padding:3px;text-align:center">Hallucination</td>
+          <td style="color:#94a3b8;padding:3px;text-align:center">Data Leak</td>
+          <td style="color:#94a3b8;padding:3px;text-align:center">Bias</td>
+          <td style="color:#94a3b8;padding:3px;text-align:center">Compliance</td>
+        </tr>
+        <tr>
+          <td style="color:#e2e8f0;padding:3px;white-space:nowrap">Contract Review</td>
+          <td style="background:#ef4444;border-radius:3px;padding:3px;text-align:center;color:white">HIGH</td>
+          <td style="background:#f59e0b;border-radius:3px;padding:3px;text-align:center;color:white">MED</td>
+          <td style="background:#22c55e;border-radius:3px;padding:3px;text-align:center;color:white">LOW</td>
+          <td style="background:#ef4444;border-radius:3px;padding:3px;text-align:center;color:white">HIGH</td>
+        </tr>
+        <tr>
+          <td style="color:#e2e8f0;padding:3px;white-space:nowrap">Code Assistant</td>
+          <td style="background:#f59e0b;border-radius:3px;padding:3px;text-align:center;color:white">MED</td>
+          <td style="background:#22c55e;border-radius:3px;padding:3px;text-align:center;color:white">LOW</td>
+          <td style="background:#22c55e;border-radius:3px;padding:3px;text-align:center;color:white">LOW</td>
+          <td style="background:#f59e0b;border-radius:3px;padding:3px;text-align:center;color:white">MED</td>
+        </tr>
+        <tr>
+          <td style="color:#e2e8f0;padding:3px;white-space:nowrap">Customer Chat</td>
+          <td style="background:#f59e0b;border-radius:3px;padding:3px;text-align:center;color:white">MED</td>
+          <td style="background:#ef4444;border-radius:3px;padding:3px;text-align:center;color:white">HIGH</td>
+          <td style="background:#ef4444;border-radius:3px;padding:3px;text-align:center;color:white">HIGH</td>
+          <td style="background:#f59e0b;border-radius:3px;padding:3px;text-align:center;color:white">MED</td>
+        </tr>
+      </table>
+    </div>
+    <div class="card-body">
+      <h3>B — Risk Matrix</h3>
+      <p>Use cases as rows, risk categories as columns. Color-coded heat map. Fast to scan, great for CISO reporting. Less "architecture diagram", more operational dashboard.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="journey" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:16px;background:#0f172a;border-radius:8px;min-height:160px;">
+      <div style="font-size:9px;color:#94a3b8;font-family:monospace;margin-bottom:8px">AI USE CASE LIFECYCLE</div>
+      <div style="display:flex;align-items:center;gap:4px;font-size:8px;font-family:sans-serif">
+        <div style="background:#6366f1;border-radius:6px;padding:6px 8px;color:white;text-align:center;min-width:44px">
+          <div style="font-size:10px">🤖</div>
+          <div>Discover</div>
+        </div>
+        <div style="color:#475569;font-size:12px">→</div>
+        <div style="background:#0ea5e9;border-radius:6px;padding:6px 8px;color:white;text-align:center;min-width:44px">
+          <div style="font-size:10px">🗺️</div>
+          <div>Map</div>
+        </div>
+        <div style="color:#475569;font-size:12px">→</div>
+        <div style="background:#ef4444;border-radius:6px;padding:6px 8px;color:white;text-align:center;min-width:44px">
+          <div style="font-size:10px">⚠️</div>
+          <div>Assess</div>
+        </div>
+        <div style="color:#475569;font-size:12px">→</div>
+        <div style="background:#f59e0b;border-radius:6px;padding:6px 8px;color:white;text-align:center;min-width:44px">
+          <div style="font-size:10px">👤</div>
+          <div>Own</div>
+        </div>
+        <div style="color:#475569;font-size:12px">→</div>
+        <div style="background:#22c55e;border-radius:6px;padding:6px 8px;color:white;text-align:center;min-width:44px">
+          <div style="font-size:10px">✅</div>
+          <div>Mitigate</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;background:#1e293b;border-radius:6px;padding:8px">
+        <div style="color:#6366f1;font-size:8px;font-family:monospace">CONTRACT REVIEW AI</div>
+        <div style="display:flex;gap:4px;margin-top:4px">
+          <div style="background:#6366f1;height:4px;border-radius:2px;flex:1"></div>
+          <div style="background:#0ea5e9;height:4px;border-radius:2px;flex:1"></div>
+          <div style="background:#ef4444;height:4px;border-radius:2px;flex:1"></div>
+          <div style="background:#334155;height:4px;border-radius:2px;flex:1"></div>
+          <div style="background:#334155;height:4px;border-radius:2px;flex:1"></div>
+        </div>
+        <div style="color:#64748b;font-size:7px;margin-top:2px">Stage 3 of 5 — Risk Assessment in progress</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Lifecycle Pipeline</h3>
+      <p>Each AI use case moves through stages: Discover → Map → Assess → Own → Mitigate. Progress tracking per use case. Makes Ardoq's gap obvious — they have no lifecycle concept.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px">You can select multiple — these can coexist as different views of the same data.</p>

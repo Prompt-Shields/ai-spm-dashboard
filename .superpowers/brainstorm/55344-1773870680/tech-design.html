@@ -1,0 +1,120 @@
+<h2>Technical Design — Final Section</h2>
+<p class="subtitle">How the two repos combine, what's built, and what's mocked for the demo</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+
+  <!-- Repo Merge Strategy -->
+  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04);grid-column:1/-1">
+    <div style="font-size:12px;font-weight:700;color:#0f172a;font-family:sans-serif;margin-bottom:10px">📦 Repo Merge Strategy</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;flex:1;text-align:center">
+        <div style="font-size:10px;font-weight:600;color:#6366f1;font-family:sans-serif">ai-spm-dashboard</div>
+        <div style="font-size:9px;color:#64748b;font-family:sans-serif;margin-top:3px">Next.js 15 + React 19<br>Tailwind + shadcn/ui<br>4 pages, mock data</div>
+        <div style="font-size:9px;color:#22c55e;font-family:sans-serif;margin-top:4px;font-weight:600">✓ Primary codebase</div>
+      </div>
+      <div style="font-size:18px;color:#cbd5e1">+</div>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;flex:1;text-align:center">
+        <div style="font-size:10px;font-weight:600;color:#8b5cf6;font-family:sans-serif">claude-ai-governance-dashboard</div>
+        <div style="font-size:9px;color:#64748b;font-family:sans-serif;margin-top:3px">Vanilla HTML/CSS/JS<br>Dark theme design system<br>Agent chat UI patterns</div>
+        <div style="font-size:9px;color:#f59e0b;font-family:sans-serif;margin-top:4px;font-weight:600">→ Extract agent chat UI</div>
+      </div>
+      <div style="font-size:18px;color:#cbd5e1">=</div>
+      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:10px;flex:1;text-align:center">
+        <div style="font-size:10px;font-weight:700;color:#0369a1;font-family:sans-serif">AIMaps</div>
+        <div style="font-size:9px;color:#0c4a6e;font-family:sans-serif;margin-top:3px">Next.js 15 + React 19<br>New Map + Discover pages<br>Onboarding demo overlay<br>Agent chat component</div>
+        <div style="font-size:9px;color:#22c55e;font-family:sans-serif;margin-top:4px;font-weight:600">✓ Demo-ready tomorrow</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New pages -->
+  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+    <div style="font-size:12px;font-weight:700;color:#0f172a;font-family:sans-serif;margin-bottom:8px">🗂️ Page Structure (New)</div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;gap-8px;align-items:start;gap:6px">
+        <span style="background:#dcfce7;color:#166534;font-size:8px;border-radius:3px;padding:1px 5px;font-family:sans-serif;white-space:nowrap;flex-shrink:0">NEW</span>
+        <div style="font-size:10px;font-family:sans-serif"><strong style="color:#0f172a">/</strong> <span style="color:#64748b">→ Map (relationship graph homepage)</span></div>
+      </div>
+      <div style="display:flex;gap-8px;align-items:start;gap:6px">
+        <span style="background:#dcfce7;color:#166534;font-size:8px;border-radius:3px;padding:1px 5px;font-family:sans-serif;white-space:nowrap;flex-shrink:0">NEW</span>
+        <div style="font-size:10px;font-family:sans-serif"><strong style="color:#0f172a">/discover</strong> <span style="color:#64748b">→ Agent intake + live discovery feed</span></div>
+      </div>
+      <div style="display:flex;gap-8px;align-items:start;gap:6px">
+        <span style="background:#fef3c7;color:#92400e;font-size:8px;border-radius:3px;padding:1px 5px;font-family:sans-serif;white-space:nowrap;flex-shrink:0">KEEP</span>
+        <div style="font-size:10px;font-family:sans-serif"><strong style="color:#0f172a">/register</strong> <span style="color:#64748b">→ Replaces current /ai-governance</span></div>
+      </div>
+      <div style="display:flex;gap-8px;align-items:start;gap:6px">
+        <span style="background:#dcfce7;color:#166534;font-size:8px;border-radius:3px;padding:1px 5px;font-family:sans-serif;white-space:nowrap;flex-shrink:0">NEW</span>
+        <div style="font-size:10px;font-family:sans-serif"><strong style="color:#0f172a">/owners</strong> <span style="color:#64748b">→ People + accountability view</span></div>
+      </div>
+      <div style="display:flex;gap-8px;align-items:start;gap:6px">
+        <span style="background:#fef3c7;color:#92400e;font-size:8px;border-radius:3px;padding:1px 5px;font-family:sans-serif;white-space:nowrap;flex-shrink:0">KEEP</span>
+        <div style="font-size:10px;font-family:sans-serif"><strong style="color:#0f172a">/comply</strong> <span style="color:#64748b">→ Replaces current /model-risk</span></div>
+      </div>
+      <div style="display:flex;gap-8px;align-items:start;gap:6px">
+        <span style="background:#dcfce7;color:#166534;font-size:8px;border-radius:3px;padding:1px 5px;font-family:sans-serif;white-space:nowrap;flex-shrink:0">NEW</span>
+        <div style="font-size:10px;font-family:sans-serif"><strong style="color:#0f172a">/demo</strong> <span style="color:#64748b">→ Guided onboarding journey overlay</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key new components -->
+  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+    <div style="font-size:12px;font-weight:700;color:#0f172a;font-family:sans-serif;margin-bottom:8px">🧩 Key New Components</div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">UseCaseGraph</span> — D3-force relationship map, interactive nodes, side panel on click</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">AgentConversation</span> — Animated chat thread showing agent ↔ employee exchange</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">DiscoveryFeed</span> — Live-updating list of use cases being extracted</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">DemoJourney</span> — Step overlay with progress, narrative text, and CTA buttons</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">UseCaseDetailPanel</span> — Slide-in panel with risks, owner, model, mitigations</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">RiskBadge</span> — OWASP/NIST/EU AI Act mapped risk chips</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#6366f1;font-weight:600">ComplianceRadar</span> — Framework coverage chart per use case</div>
+    </div>
+  </div>
+
+  <!-- Demo data -->
+  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+    <div style="font-size:12px;font-weight:700;color:#0f172a;font-family:sans-serif;margin-bottom:8px">🎭 Demo Data (Mock)</div>
+    <div style="font-size:10px;font-family:sans-serif;color:#475569;margin-bottom:6px">Insurance company scenario (reuses existing mock data theme). 8 departments, 47 use cases:</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px">
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">Legal: Contract Review AI</span>
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">IT: Code Assistant</span>
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">Claims: Fraud Detection</span>
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">CS: Customer Chat</span>
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">HR: CV Screening</span>
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">Finance: Report Gen</span>
+      <span style="background:#f1f5f9;border-radius:4px;padding:2px 7px;font-size:9px;color:#475569;font-family:sans-serif">Risk: Risk Models</span>
+      <span style="background:#fef2f2;border-radius:4px;padding:2px 7px;font-size:9px;color:#dc2626;font-family:sans-serif">12 Shadow AI 🚨</span>
+    </div>
+  </div>
+
+  <!-- Tech stack additions -->
+  <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+    <div style="font-size:12px;font-weight:700;color:#0f172a;font-family:sans-serif;margin-bottom:8px">⚙️ Tech Stack Additions</div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#22c55e;font-weight:600">+ react-force-graph</span> — WebGL relationship graph with physics simulation</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#22c55e;font-weight:600">+ framer-motion</span> — Demo journey transitions, node pop-in animations</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#22c55e;font-weight:600">+ Demo timer</span> — Agent conversation typewriter animation (simulates real-time)</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#f59e0b;font-weight:600">Keep</span> — All existing shadcn/ui, Recharts, Tailwind</div>
+      <div style="font-size:10px;font-family:sans-serif;color:#475569"><span style="color:#f59e0b;font-weight:600">Keep</span> — No backend, all data in /lib/</div>
+    </div>
+  </div>
+
+  <!-- Product name -->
+  <div style="background:linear-gradient(135deg,#f0f9ff,#f5f3ff);border:1px solid #bae6fd;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+    <div style="font-size:12px;font-weight:700;color:#0369a1;font-family:sans-serif;margin-bottom:8px">🏷️ Product Name</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="background:white;border:1px solid #e0e7ff;border-radius:6px;padding:7px 10px;display:flex;align-items:center;gap:8px">
+        <div style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center"><span style="color:white;font-size:9px;font-weight:700">A</span></div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:#0f172a;font-family:sans-serif">AIMaps</div>
+          <div style="font-size:9px;color:#64748b;font-family:sans-serif">Simple, memorable, describes exactly what it does</div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#64748b;font-family:sans-serif;padding:0 4px">Or keep <strong>AI SPM</strong> branding — your call. The codebase name doesn't need to change.</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px">Any changes to the technical approach? Or shall we lock this and write the full spec?</p>
