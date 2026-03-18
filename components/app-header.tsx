@@ -1,46 +1,72 @@
-"use client"
+'use client'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils'
+import { Map, Radio, ClipboardList, Users, ShieldCheck, AlertTriangle, Play } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Shield, Brain, LayoutDashboard, Eye } from "lucide-react"
+const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
+  { href: '/', label: 'Map', Icon: Map },
+  { href: '/discover', label: 'Discover', Icon: Radio },
+  { href: '/register', label: 'Register', Icon: ClipboardList },
+  { href: '/owners', label: 'Owners', Icon: Users },
+  { href: '/comply', label: 'Comply', Icon: ShieldCheck },
+]
 
-export function AppHeader() {
+interface AppHeaderProps {
+  onStartDemo?: () => void
+}
+
+export function AppHeader({ onStartDemo }: AppHeaderProps) {
   const pathname = usePathname()
 
-  const navItems = [
-    { href: "/", label: "Overview", icon: LayoutDashboard },
-    { href: "/ai-governance", label: "AI Governance", icon: Shield },
-    { href: "/ai-visibility", label: "AI Visibility", icon: Eye },
-    { href: "/model-risk", label: "Model Risk", icon: Brain },
-  ]
-
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-card/80 backdrop-blur-lg">
-      <div className="container flex h-14 items-center px-6 max-w-[1400px] mx-auto">
-        <Link href="/" className="mr-8 flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-          <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-primary text-primary-foreground">
-            <Shield className="h-4 w-4" />
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
+      <div className="max-w-screen-xl mx-auto px-6 flex items-center gap-6 h-14">
+        {/* Logo */}
+        <div className="flex items-center gap-2 pr-6 border-r border-slate-100">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <span className="text-white text-xs font-bold">AI</span>
           </div>
-          <span className="text-base font-semibold tracking-tight">AI Governance</span>
-        </Link>
-        <nav className="flex items-center gap-1">
-          {navItems.map((item) => (
+          <span className="text-sm font-bold text-slate-900">AIMaps</span>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex items-center gap-1 flex-1">
+          {NAV.map(({ href, label, Icon }) => (
             <Link
-              key={item.href}
-              href={item.href}
+              key={href}
+              href={href}
               className={cn(
-                "flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md transition-all",
-                pathname === item.href
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+                'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors',
+                pathname === href
+                  ? 'bg-indigo-50 text-indigo-600 font-medium'
+                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
               )}
             >
-              <item.icon className="h-4 w-4" />
-              {item.label}
+              <Icon size={14} />
+              {label}
             </Link>
           ))}
         </nav>
+
+        {/* Right side */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-red-600">
+            <AlertTriangle size={12} />
+            12 Critical Risks
+          </div>
+          <button
+            onClick={onStartDemo}
+            className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+          >
+            <Play size={11} />
+            Start Demo
+          </button>
+          <div className="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-semibold text-indigo-700">
+            JK
+          </div>
+        </div>
       </div>
     </header>
   )
