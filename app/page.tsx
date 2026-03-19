@@ -65,23 +65,25 @@ export default function MapPage() {
         </select>
 
         {/* Legend */}
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5">
           {[
-            { color: '#6366f1', label: 'Use Case' },
-            { color: '#0ea5e9', label: 'AI Model' },
-            { color: '#f59e0b', label: 'Owner' },
-            { color: '#ef4444', label: 'Risk' },
-          ].map(item => (
+            { color: '#00d9ff', label: 'Use Case'  },
+            { color: '#f59e0b', label: 'AI Model'  },
+            { color: '#10b981', label: 'Vendor'    },
+            { color: '#7c3aed', label: 'Owner'     },
+            { color: '#ef4444', label: 'Risk'      },
+          ].map((item, i) => (
             <div key={item.label} className="flex items-center gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-              <span className="text-xs text-slate-500">{item.label}</span>
+              {i > 0 && <span className="text-slate-700 text-xs mx-1">·</span>}
+              <div className="w-2 h-5 rounded-sm" style={{ backgroundColor: item.color }} />
+              <span className="text-xs" style={{ color: '#9ca8bb' }}>{item.label}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Graph */}
-      <div style={{ height: 'calc(100vh - 320px)', minHeight: '400px' }}>
+      <div className="rounded-xl overflow-hidden border border-slate-700" style={{ height: 'calc(100vh - 320px)', minHeight: '420px' }}>
         <UseCaseGraph
           useCases={USE_CASES}
           persons={PERSONS}
