@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/junseki/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/scripts/start-server.sh --project-dir /Users/junseki/Documents/GitHub/ai-spm-dashboard)",
+      "Bash(/Users/junseki/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.5/skills/brainstorming/scripts/start-server.sh --project-dir /Users/junseki/Documents/GitHub/ai-spm-dashboard)",
+      "Bash(ls /Users/junseki/Documents/GitHub/ai-spm-dashboard/package.json && cat /Users/junseki/Documents/GitHub/ai-spm-dashboard/package.json | python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('dependencies',{}\\), indent=2\\)\\)\")"
+    ]
+  }
+}

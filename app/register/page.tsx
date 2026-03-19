@@ -38,6 +38,33 @@ export default function RegisterPage() {
         </button>
       </div>
 
+      {/* Status pipeline */}
+      <div className="grid grid-cols-5 gap-2 mb-5">
+        {[
+          { status: 'discovered', label: 'Discovered', color: 'bg-slate-200', textColor: 'text-slate-600' },
+          { status: 'assessed',   label: 'Assessed',   color: 'bg-blue-200',  textColor: 'text-blue-700'  },
+          { status: 'owned',      label: 'Owned',      color: 'bg-yellow-200',textColor: 'text-yellow-700'},
+          { status: 'mitigated',  label: 'Mitigated',  color: 'bg-purple-200',textColor: 'text-purple-700'},
+          { status: 'compliant',  label: 'Compliant',  color: 'bg-green-200', textColor: 'text-green-700' },
+        ].map((s, i) => {
+          const count = USE_CASES.filter(uc => uc.status === s.status).length
+          return (
+            <button
+              key={s.status}
+              onClick={() => setFilterStatus(filterStatus === s.status ? 'all' : s.status)}
+              className={`relative flex flex-col items-center py-3 px-2 rounded-xl border-2 transition-all ${
+                filterStatus === s.status ? 'border-indigo-500 shadow-md' : 'border-transparent bg-white border-slate-200 hover:border-slate-300'
+              } shadow-sm`}
+            >
+              {i < 4 && <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 rotate-45 bg-white border-r-2 border-t-2 border-slate-200 z-10" />}
+              <div className={`text-2xl font-bold ${s.textColor}`}>{count}</div>
+              <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
+              <div className={`absolute bottom-0 left-0 right-0 h-1 rounded-b-xl ${s.color}`} />
+            </button>
+          )
+        })}
+      </div>
+
       {/* Filters */}
       <div className="flex gap-3 mb-5">
         <input

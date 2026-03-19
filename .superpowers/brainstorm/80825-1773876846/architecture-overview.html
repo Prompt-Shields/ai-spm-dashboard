@@ -1,0 +1,135 @@
+<h2>Proposed Architecture — Two Diagrams</h2>
+<p class="subtitle">Review the component breakdown for each diagram. Let me know if anything should be added, removed, or renamed.</p>
+
+<style>
+  .diagrams { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+  .diagram-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 20px; }
+  .diagram-title { font-size: 13px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .diagram-audience { font-size: 12px; color: #64748b; margin-bottom: 16px; }
+  .zone { margin-bottom: 14px; }
+  .zone-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin-bottom: 6px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; border: 1px solid; }
+  .chip-azure { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .chip-ext { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+  .chip-user { background: #fdf4ff; color: #7e22ce; border-color: #e9d5ff; }
+  .chip-app { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+  .divider { border: none; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+</style>
+
+<div class="diagrams">
+
+  <div class="diagram-card">
+    <div class="diagram-title">Diagram A — Executive / CISO</div>
+    <div class="diagram-audience">Audience: Board, CISO, CPO · Style: High-level swim lanes, no SKUs</div>
+
+    <div class="zone">
+      <div class="zone-label">Users</div>
+      <div class="chips">
+        <span class="chip chip-user">CISO</span>
+        <span class="chip chip-user">AI Owners</span>
+        <span class="chip chip-user">Employees</span>
+        <span class="chip chip-user">Compliance Team</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">AIMaps Platform</div>
+      <div class="chips">
+        <span class="chip chip-app">Map</span>
+        <span class="chip chip-app">Discover</span>
+        <span class="chip chip-app">Register</span>
+        <span class="chip chip-app">Owners</span>
+        <span class="chip chip-app">Comply</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">Azure Cloud</div>
+      <div class="chips">
+        <span class="chip chip-azure">Azure Static Web Apps</span>
+        <span class="chip chip-azure">Azure OpenAI</span>
+        <span class="chip chip-azure">Azure Cosmos DB</span>
+        <span class="chip chip-azure">Azure Entra ID</span>
+        <span class="chip chip-azure">Azure Monitor</span>
+        <span class="chip chip-azure">Azure API Management</span>
+        <span class="chip chip-azure">Azure Service Bus</span>
+        <span class="chip chip-azure">Azure Communication Services</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">External Integrations</div>
+      <div class="chips">
+        <span class="chip chip-ext">Okta / Entra SSO</span>
+        <span class="chip chip-ext">Slack</span>
+        <span class="chip chip-ext">Email (SMTP)</span>
+        <span class="chip chip-ext">Microsoft Teams</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-card">
+    <div class="diagram-title">Diagram B — Enterprise Architect</div>
+    <div class="diagram-audience">Audience: IT Architect, CTO, Technical Buyer · Style: Full service-level with security boundaries</div>
+
+    <div class="zone">
+      <div class="zone-label">Client Layer</div>
+      <div class="chips">
+        <span class="chip chip-user">Browser (Next.js SPA)</span>
+        <span class="chip chip-user">Azure Static Web Apps</span>
+        <span class="chip chip-user">Azure CDN / Front Door</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">API & Agent Layer</div>
+      <div class="chips">
+        <span class="chip chip-azure">Azure API Management</span>
+        <span class="chip chip-azure">Azure Container Apps (Agent Runner)</span>
+        <span class="chip chip-azure">Azure Service Bus (Async Queue)</span>
+        <span class="chip chip-azure">Azure OpenAI (GPT-4o)</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">Data Layer</div>
+      <div class="chips">
+        <span class="chip chip-azure">Azure Cosmos DB (Use Cases)</span>
+        <span class="chip chip-azure">Azure Blob Storage (Docs)</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">Identity & Security</div>
+      <div class="chips">
+        <span class="chip chip-azure">Azure Entra ID</span>
+        <span class="chip chip-azure">Azure Key Vault</span>
+        <span class="chip chip-azure">Private Endpoints / VNet</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">Observability</div>
+      <div class="chips">
+        <span class="chip chip-azure">Azure Monitor</span>
+        <span class="chip chip-azure">Log Analytics Workspace</span>
+        <span class="chip chip-azure">Application Insights</span>
+      </div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">Outbound Integrations</div>
+      <div class="chips">
+        <span class="chip chip-ext">Slack API</span>
+        <span class="chip chip-ext">Azure Comm. Services (Email)</span>
+        <span class="chip chip-ext">Okta SCIM / SAML</span>
+        <span class="chip chip-ext">Microsoft Teams Webhook</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<hr class="divider">
+<p class="subtitle" style="text-align:center">Does this component breakdown look right? Any services to add or remove before I generate the draw.io files?</p>

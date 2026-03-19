@@ -28,7 +28,10 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
             <span className="text-white text-xs font-bold">AI</span>
           </div>
-          <span className="text-sm font-bold text-slate-900">AIMaps</span>
+          <div>
+            <span className="text-sm font-bold text-slate-900">Atlas AI</span>
+            <span className="hidden lg:inline text-xs text-slate-400 ml-1.5">Mapping AI use cases with risks</span>
+          </div>
         </div>
 
         {/* Nav */}

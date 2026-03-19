@@ -1,0 +1,497 @@
+<mxfile host="app.diagrams.net" modified="2026-03-19T00:00:00.000Z" agent="Claude" version="21.0.0" type="device">
+
+  <!-- ═══════════════════════════════════════════════
+       DIAGRAM A — CISO / Executive View
+       ═══════════════════════════════════════════════ -->
+  <diagram id="diagram-a-executive" name="A — CISO Executive View">
+    <mxGraphModel dx="1600" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ── Background canvas ── -->
+        <mxCell id="bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#e2e8f0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1654" height="1000" as="geometry" />
+        </mxCell>
+
+        <!-- ══ TITLE ══ -->
+        <mxCell id="title" value="Atlas AI — Azure Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=22;fontStyle=1;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="28" width="700" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle-a" value="Diagram A · CISO / Executive View  ·  High-level swim lanes — no SKUs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=12;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="700" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ══ LEGEND (top-right) ══ -->
+        <mxCell id="legend-bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#cbd5e1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="20" width="354" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="Legend — Node Types" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="30" width="200" height="20" as="geometry" />
+        </mxCell>
+        <!-- Legend items -->
+        <mxCell id="leg-user" value="User / Actor" style="rounded=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="60" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-app" value="Application Module" style="rounded=1;fillColor=#fff7ed;strokeColor=#ea580c;fontColor=#9a3412;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="60" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-ai" value="AI / Model" style="rounded=1;fillColor=#faf5ff;strokeColor=#9333ea;fontColor=#6b21a8;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="98" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-data" value="Data Store" style="rounded=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontColor=#14532d;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="98" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-identity" value="Identity / Security" style="rounded=1;fillColor=#fef2f2;strokeColor=#dc2626;fontColor=#991b1b;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="136" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-infra" value="Infra / Compute" style="rounded=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="136" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-msg" value="Messaging / Queue" style="rounded=1;fillColor=#fff7ed;strokeColor=#d97706;fontColor=#92400e;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="174" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-ext" value="External Integration" style="rounded=1;fillColor=#f0fdf4;strokeColor=#059669;fontColor=#064e3b;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="174" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-obs" value="Observability" style="rounded=1;fillColor=#fefce8;strokeColor=#ca8a04;fontColor=#713f12;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="212" width="120" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LANE 1: USERS
+        ══════════════════════════════════════ -->
+        <mxCell id="lane1-bg" value="" style="rounded=1;fillColor=#ede9fe;strokeColor=#7c3aed;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="1220" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="lane1-label" value="USERS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#4c1d95;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="175" width="80" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="u-ciso" value="&lt;b&gt;CISO&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#6d28d9&apos;&gt;Governance oversight&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="u-aiowner" value="&lt;b&gt;AI Owners&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#6d28d9&apos;&gt;Use case accountability&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="240" y="130" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="u-employee" value="&lt;b&gt;Employees&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#6d28d9&apos;&gt;AI tool reporters&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="410" y="130" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="u-compliance" value="&lt;b&gt;Compliance Team&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#6d28d9&apos;&gt;Regulatory review&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="580" y="130" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LANE 2: ATLAS AI PLATFORM
+        ══════════════════════════════════════ -->
+        <mxCell id="lane2-bg" value="" style="rounded=1;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="270" width="1220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="lane2-label" value="ATLAS AI PLATFORM" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#9a3412;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="360" width="130" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p-map" value="&lt;b&gt;Map&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#9a3412&apos;&gt;Force graph, risk view&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fed7aa;strokeColor=#ea580c;fontColor=#9a3412;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="70" y="300" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p-discover" value="&lt;b&gt;Discover&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#9a3412&apos;&gt;Agent campaigns&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fed7aa;strokeColor=#ea580c;fontColor=#9a3412;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="250" y="300" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p-register" value="&lt;b&gt;Register&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#9a3412&apos;&gt;Use case intake&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fed7aa;strokeColor=#ea580c;fontColor=#9a3412;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="430" y="300" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p-owners" value="&lt;b&gt;Owners&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#9a3412&apos;&gt;Accountability assignment&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fed7aa;strokeColor=#ea580c;fontColor=#9a3412;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="610" y="300" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p-comply" value="&lt;b&gt;Comply&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#9a3412&apos;&gt;EU AI Act · NIST · OWASP&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fed7aa;strokeColor=#ea580c;fontColor=#9a3412;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="790" y="300" width="150" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LANE 3: MICROSOFT AZURE  (sub-grouped by type)
+        ══════════════════════════════════════ -->
+        <mxCell id="lane3-bg" value="" style="rounded=1;fillColor=#f8fafc;strokeColor=#2563eb;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="1220" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3-label" value="MICROSOFT AZURE" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#1e40af;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="-14" y="620" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lane3-sublabel" value="(Hosting · AI · Data · Identity · Comms · Observability)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="60" y="456" width="500" height="18" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: Infra / Compute -->
+        <mxCell id="az-group-infra" value="Infra / Compute" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#1e40af;" vertex="1" parent="1">
+          <mxGeometry x="60" y="476" width="130" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-swa" value="&lt;b&gt;Static Web Apps&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Frontend hosting · CDN&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="60" y="494" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="az-apim" value="&lt;b&gt;API Management&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Gateway · throttle · auth&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="245" y="494" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: AI / Model -->
+        <mxCell id="az-group-ai" value="AI / Model" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#6b21a8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="558" width="130" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-openai" value="&lt;b&gt;Azure OpenAI&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;GPT-4o · agent reasoning&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#9333ea;fontColor=#6b21a8;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="60" y="576" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: Data -->
+        <mxCell id="az-group-data" value="Data Store" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#14532d;" vertex="1" parent="1">
+          <mxGeometry x="245" y="558" width="130" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-cosmos" value="&lt;b&gt;Cosmos DB&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Use cases · risks · owners&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontColor=#14532d;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="245" y="576" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: Identity / Security -->
+        <mxCell id="az-group-id" value="Identity / Security" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#991b1b;" vertex="1" parent="1">
+          <mxGeometry x="430" y="476" width="130" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-entra" value="&lt;b&gt;Entra ID&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;SSO · RBAC · OAuth 2.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;fontColor=#991b1b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="430" y="494" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: Messaging -->
+        <mxCell id="az-group-msg" value="Messaging / Queue" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#92400e;" vertex="1" parent="1">
+          <mxGeometry x="615" y="476" width="140" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-servicebus" value="&lt;b&gt;Service Bus&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Async agent task queue&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d97706;fontColor=#92400e;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="615" y="494" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: Vendor Comms -->
+        <mxCell id="az-group-comms" value="Vendor Comms" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#064e3b;" vertex="1" parent="1">
+          <mxGeometry x="430" y="558" width="130" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-comms" value="&lt;b&gt;Comm. Services&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Email notifications&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="430" y="576" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Azure: Observability -->
+        <mxCell id="az-group-obs" value="Observability" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#713f12;" vertex="1" parent="1">
+          <mxGeometry x="615" y="558" width="130" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="az-monitor" value="&lt;b&gt;Azure Monitor&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Logs · metrics · alerts&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;fontColor=#713f12;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="615" y="576" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LANE 4: EXTERNAL INTEGRATIONS
+        ══════════════════════════════════════ -->
+        <mxCell id="lane4-bg" value="" style="rounded=1;fillColor=#f0fdf4;strokeColor=#059669;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="780" width="1220" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="lane4-label" value="EXTERNAL INTEGRATIONS" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#064e3b;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="-28" y="870" width="160" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ext-okta" value="&lt;b&gt;Okta / Entra SSO&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Identity provider · SAML&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="70" y="810" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-slack" value="&lt;b&gt;Slack&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Agent outreach channel&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="260" y="810" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-email" value="&lt;b&gt;Email (SMTP)&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Owner notifications&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="450" y="810" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ext-teams" value="&lt;b&gt;Microsoft Teams&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Webhook notifications&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="640" y="810" width="165" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             FLOW ARROWS
+        ══════════════════════════════════════ -->
+        <!-- Users → Platform -->
+        <mxCell id="arr-u-p1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#7c3aed;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="u-ciso" target="p-map" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-u-p2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#7c3aed;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="u-employee" target="p-discover" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-u-p3" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#7c3aed;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="u-compliance" target="p-comply" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Platform → Azure -->
+        <mxCell id="arr-p-az1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#ea580c;strokeWidth=2;" edge="1" source="p-discover" target="az-openai" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-p-az2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#ea580c;strokeWidth=2;" edge="1" source="p-map" target="az-cosmos" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-p-az3" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#ea580c;strokeWidth=2;" edge="1" source="p-owners" target="az-servicebus" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Azure → External -->
+        <mxCell id="arr-az-ext1" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#2563eb;strokeWidth=2;" edge="1" source="az-servicebus" target="ext-slack" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-az-ext2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#2563eb;strokeWidth=2;" edge="1" source="az-comms" target="ext-email" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr-az-ext3" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#dc2626;strokeWidth=2;dashed=1;" edge="1" source="az-entra" target="ext-okta" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ═══════════════════════════════════════════════
+       DIAGRAM B — Enterprise Architect View
+       ═══════════════════════════════════════════════ -->
+  <diagram id="diagram-b-architect" name="B — Enterprise Architect View">
+    <mxGraphModel dx="1600" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1654" pageHeight="1300" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ── Background ── -->
+        <mxCell id="bg-b" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#e2e8f0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1654" height="1260" as="geometry" />
+        </mxCell>
+
+        <!-- ══ TITLE ══ -->
+        <mxCell id="b-title" value="Atlas AI — Azure Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=22;fontStyle=1;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="28" width="700" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="b-subtitle" value="Diagram B · Enterprise Architect View  ·  Full service-level with security &amp; VNet boundaries" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=12;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="800" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ══ LEGEND ══ -->
+        <mxCell id="b-legend-bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#cbd5e1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="20" width="354" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="b-legend-title" value="Legend — Layer / Node Types" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=11;fontStyle=1;fontColor=#1e293b;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="30" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-client" value="Client (Frontend)" style="rounded=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="58" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-api" value="API / Compute" style="rounded=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="58" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-ai2" value="AI Model" style="rounded=1;fillColor=#faf5ff;strokeColor=#9333ea;fontColor=#6b21a8;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="94" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-data2" value="Data Store" style="rounded=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontColor=#14532d;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="94" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-id2" value="Identity / Security" style="rounded=1;fillColor=#fef2f2;strokeColor=#dc2626;fontColor=#991b1b;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="130" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-secret" value="Secrets / Vault" style="rounded=1;fillColor=#fef2f2;strokeColor=#b91c1c;fontColor=#7f1d1d;fontSize=10;fontStyle=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="130" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-msg2" value="Messaging / Queue" style="rounded=1;fillColor=#fff7ed;strokeColor=#d97706;fontColor=#92400e;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="166" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-obs2" value="Observability" style="rounded=1;fillColor=#fefce8;strokeColor=#ca8a04;fontColor=#713f12;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="166" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-ext2" value="External Integration" style="rounded=1;fillColor=#f0fdf4;strokeColor=#059669;fontColor=#064e3b;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="202" width="130" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-vnet" value="VNet / Private Boundary" style="rounded=1;fillColor=none;strokeColor=#2563eb;strokeWidth=2;fontColor=#1e40af;fontSize=10;fontStyle=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="202" width="130" height="26" as="geometry" />
+        </mxCell>
+        <!-- Arrow legend -->
+        <mxCell id="b-leg-arr-note" value="— solid: data flow  · · · dashed: auth/identity" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="238" width="272" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-leg-arr-note2" value="Arrow colour matches source layer colour" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#64748b;" vertex="1" parent="1">
+          <mxGeometry x="1298" y="256" width="272" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LAYER 1: CLIENT
+        ══════════════════════════════════════ -->
+        <mxCell id="b-l1-bg" value="" style="rounded=1;fillColor=#ede9fe;strokeColor=#7c3aed;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="1220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="b-l1-lbl" value="CLIENT LAYER" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;fontColor=#4c1d95;" vertex="1" parent="1">
+          <mxGeometry x="56" y="104" width="130" height="16" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-browser" value="&lt;b&gt;Browser&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Next.js 16 SPA · React 19&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ede9fe;strokeColor=#7c3aed;fontColor=#4c1d95;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="60" y="124" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-swa2" value="&lt;b&gt;Static Web Apps&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Azure-hosted Next.js build&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="255" y="124" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-cdn2" value="&lt;b&gt;CDN / Front Door&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Global edge · TLS · routing&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="450" y="124" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             VNet BOUNDARY (wraps layers 2–5)
+        ══════════════════════════════════════ -->
+        <mxCell id="b-vnet-box" value="Azure Virtual Network — Private Endpoints" style="rounded=1;fillColor=none;strokeColor=#2563eb;strokeWidth=3;fontColor=#1d4ed8;fontSize=12;fontStyle=1;verticalAlign=top;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="1220" height="770" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LAYER 2: API & AGENT
+        ══════════════════════════════════════ -->
+        <mxCell id="b-l2-bg" value="" style="rounded=1;fillColor=#eff6ff;strokeColor=#3b82f6;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="60" y="270" width="1180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="b-l2-lbl" value="API &amp; AGENT LAYER" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;fontColor=#1e40af;" vertex="1" parent="1">
+          <mxGeometry x="76" y="274" width="160" height="16" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-apim2" value="&lt;b&gt;API Management&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Gateway · rate-limit · JWT&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="80" y="294" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-aca2" value="&lt;b&gt;Container Apps&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Agent runner · serverless&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="275" y="294" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-openai2" value="&lt;b&gt;Azure OpenAI&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;GPT-4o · agent reasoning&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#faf5ff;strokeColor=#9333ea;fontColor=#6b21a8;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="470" y="294" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-servicebus2" value="&lt;b&gt;Service Bus&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Async agent task queue&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#d97706;fontColor=#92400e;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="665" y="294" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LAYER 3: DATA
+        ══════════════════════════════════════ -->
+        <mxCell id="b-l3-bg" value="" style="rounded=1;fillColor=#f0fdf4;strokeColor=#16a34a;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="60" y="420" width="1180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="b-l3-lbl" value="DATA LAYER" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;fontColor=#14532d;" vertex="1" parent="1">
+          <mxGeometry x="76" y="424" width="130" height="16" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-cosmos2" value="&lt;b&gt;Cosmos DB&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Use cases · risks · owners&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontColor=#14532d;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="80" y="444" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-blob2" value="&lt;b&gt;Blob Storage&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Risk docs · audit logs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontColor=#14532d;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="275" y="444" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LAYER 4: IDENTITY & SECURITY
+        ══════════════════════════════════════ -->
+        <mxCell id="b-l4-bg" value="" style="rounded=1;fillColor=#fef2f2;strokeColor=#dc2626;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="60" y="570" width="1180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="b-l4-lbl" value="IDENTITY &amp; SECURITY" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;fontColor=#991b1b;" vertex="1" parent="1">
+          <mxGeometry x="76" y="574" width="170" height="16" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-entra2" value="&lt;b&gt;Entra ID&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;SSO · RBAC · OAuth 2.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;fontColor=#991b1b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="80" y="594" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-keyvault2" value="&lt;b&gt;Key Vault&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;API keys · secrets · certs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#b91c1c;fontColor=#7f1d1d;fontSize=11;arcSize=30;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="275" y="594" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-vnet-note" value="&lt;b&gt;Private Endpoints / VNet&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;No public internet exposure&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#2563eb;fontColor=#1e40af;fontSize=11;arcSize=30;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="594" width="200" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LAYER 5: OBSERVABILITY
+        ══════════════════════════════════════ -->
+        <mxCell id="b-l5-bg" value="" style="rounded=1;fillColor=#fefce8;strokeColor=#ca8a04;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="60" y="720" width="1180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="b-l5-lbl" value="OBSERVABILITY" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;fontColor=#713f12;" vertex="1" parent="1">
+          <mxGeometry x="76" y="724" width="130" height="16" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-monitor2" value="&lt;b&gt;Azure Monitor&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Metrics · alerts · dashboards&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;fontColor=#713f12;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="80" y="742" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-loganalytics2" value="&lt;b&gt;Log Analytics&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;Centralised log workspace&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;fontColor=#713f12;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="275" y="742" width="165" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="b-appinsights2" value="&lt;b&gt;App Insights&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px&apos;&gt;APM · traces · exceptions&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;fontColor=#713f12;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="470" y="742" width="165" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             LAYER 6: OUTBOUND INTEGRATIONS (outside VNet)
+        ══════════════════════════════════════ -->
+        <mxCell id="b-l6-bg" value="" style="rounded=1;fillColor=#f0fdf4;strokeColor=#059669;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1040" width="1220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b-l6-lbl" value="OUTBOUND INTEGRATIONS  (outside VNet)" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;fontColor=#064e3b;" vertex="1" parent="1">
+          <mxGeometry x="56" y="1044" width="320" height="16" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-slack2" value="&lt;b&gt;Slack API&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Agent outreach channel&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1064" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b-email-ext2" value="&lt;b&gt;Azure Comm. (Email)&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Owner notification emails&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="255" y="1064" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b-okta-ext2" value="&lt;b&gt;Okta SCIM / SAML&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Identity federation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="450" y="1064" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b-teams-ext2" value="&lt;b&gt;MS Teams Webhook&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:9px;color:#064e3b&apos;&gt;Risk alert notifications&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbf7d0;strokeColor=#059669;fontColor=#064e3b;fontSize=11;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="645" y="1064" width="165" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ══════════════════════════════════════
+             FLOW ARROWS — Diagram B
+        ══════════════════════════════════════ -->
+        <!-- Client → API layer -->
+        <mxCell id="b2-arr1" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#7c3aed;strokeWidth=2;fontSize=9;fontColor=#4c1d95;" edge="1" source="b-browser" target="b-cdn2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b2-arr2" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#7c3aed;strokeWidth=2;" edge="1" source="b-cdn2" target="b-apim2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- APIM → Agent runner -->
+        <mxCell id="b2-arr3" value="REST" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#2563eb;strokeWidth=2;fontSize=9;fontColor=#1e40af;" edge="1" source="b-apim2" target="b-aca2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Agent → OpenAI -->
+        <mxCell id="b2-arr4" value="Prompt" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#9333ea;strokeWidth=2;fontSize=9;fontColor=#6b21a8;" edge="1" source="b-aca2" target="b-openai2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Agent → Service Bus -->
+        <mxCell id="b2-arr5" value="Enqueue" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d97706;strokeWidth=2;fontSize=9;fontColor=#92400e;" edge="1" source="b-aca2" target="b-servicebus2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Agent → Cosmos DB -->
+        <mxCell id="b2-arr6" value="Read/Write" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#16a34a;strokeWidth=2;fontSize=9;fontColor=#14532d;" edge="1" source="b-aca2" target="b-cosmos2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- APIM → Entra (auth, dashed) -->
+        <mxCell id="b2-arr7" value="Validate JWT" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#dc2626;strokeWidth=2;fontSize=9;fontColor=#991b1b;dashed=1;" edge="1" source="b-apim2" target="b-entra2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Agent → Key Vault (dashed) -->
+        <mxCell id="b2-arr8" value="Fetch secrets" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b91c1c;strokeWidth=2;fontSize=9;fontColor=#7f1d1d;dashed=1;" edge="1" source="b-aca2" target="b-keyvault2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Agent → App Insights -->
+        <mxCell id="b2-arr9" value="Telemetry" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#ca8a04;strokeWidth=2;fontSize=9;fontColor=#713f12;" edge="1" source="b-aca2" target="b-appinsights2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Service Bus → Slack (outbound) -->
+        <mxCell id="b2-arr10" value="Push" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#059669;strokeWidth=2;fontSize=9;fontColor=#064e3b;" edge="1" source="b-servicebus2" target="b-slack2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Comms → Email -->
+        <mxCell id="b2-arr11" value="Send" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#059669;strokeWidth=2;fontSize=9;fontColor=#064e3b;" edge="1" source="b-aca2" target="b-email-ext2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Entra → Okta (federated, dashed) -->
+        <mxCell id="b2-arr12" value="Federation" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#dc2626;strokeWidth=2;fontSize=9;fontColor=#991b1b;dashed=1;" edge="1" source="b-entra2" target="b-okta-ext2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- Service Bus → Teams -->
+        <mxCell id="b2-arr13" value="Alert" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#059669;strokeWidth=2;fontSize=9;fontColor=#064e3b;" edge="1" source="b-servicebus2" target="b-teams-ext2" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+</mxfile>
