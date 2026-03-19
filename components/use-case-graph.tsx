@@ -130,24 +130,48 @@ export function UseCaseGraph({ useCases, persons, filterDept, filterSeverity, on
     return { nodes, links }
   }, [filtered, persons])
 
-  // Configure d3 forces + zoom-to-fit after data loads
+  // Department → radial position mapping for clustering
+  const deptPositions = useMemo(() => {
+    const depts = Array.from(new Set(filtered.map(uc => uc.department)))
+    const r = Math.max(200, depts.length * 55)
+    return Object.fromEntries(depts.map((d, i) => {
+      const angle = (2 * Math.PI * i) / depts.length - Math.PI / 2
+      return [d, { x: Math.cos(angle) * r, y: Math.sin(angle) * r }]
+    }))
+  }, [filtered])
+
+  // Configure d3 forces + department clustering + zoom-to-fit
   useEffect(() => {
     const t = setTimeout(() => {
       const fg = graphRef.current
       if (!fg) return
-      // Strong charge repulsion
-      fg.d3Force('charge')?.strength(-500)
-      // Longer link distance so connected nodes don't pile up
-      fg.d3Force('link')?.distance(140).strength(0.4)
-      // Collision radius = half the card diagonal + padding
-      const collide = Math.sqrt((CW / 2) ** 2 + (CH / 2) ** 2) + 10
+      fg.d3Force('charge')?.strength(-400)
+      fg.d3Force('link')?.distance(80).strength(0.5)
+      const collide = Math.sqrt((CW / 2) ** 2 + (CH / 2) ** 2) + 8
       fg.d3Force('collision')?.radius(collide)
+      // Cluster use-case nodes toward their department centroid
+      const clusterX = fg.d3Force('x') ?? { strength: () => {} }
+      const clusterY = fg.d3Force('y') ?? { strength: () => {} }
+      if (fg.d3Force('x')) {
+        fg.d3Force('x')
+          .strength((n: GraphNode) => n.type === 'usecase' ? 0.15 : 0.05)
+          .x((n: GraphNode) => {
+            if (n.type === 'usecase' && n.data) return deptPositions[n.data.department]?.x ?? 0
+            return 0
+          })
+        fg.d3Force('y')
+          .strength((n: GraphNode) => n.type === 'usecase' ? 0.15 : 0.05)
+          .y((n: GraphNode) => {
+            if (n.type === 'usecase' && n.data) return deptPositions[n.data.department]?.y ?? 0
+            return 0
+          })
+      }
+      void clusterX; void clusterY
       fg.d3ReheatSimulation?.()
-      // Auto-fit after settling
-      setTimeout(() => fg.zoomToFit?.(400, 40), 1800)
+      setTimeout(() => fg.zoomToFit?.(600, 60), 2500)
     }, 100)
     return () => clearTimeout(t)
-  }, [filtered])
+  }, [filtered, deptPositions])
 
   const handleNodeClick = useCallback((node: object) => {
     const n = node as GraphNode
