@@ -1,0 +1,90 @@
+Source Component,Source Type,Target Component,Target Type,Reference Type,Description
+Sarah Chen,Person,Contract Review AI,AI Use Case,owns,Use case owner
+Sarah Chen,Person,Legal Brief Summariser,AI Use Case,owns,Use case owner
+Sarah Chen,Person,Clause Extractor,AI Use Case,owns,Use case owner
+Sarah Chen,Person,Compliance Checker,AI Use Case,owns,Use case owner
+Sarah Chen,Person,NDA Drafting Assistant,AI Use Case,owns,Use case owner
+James Okafor,Person,Code Assistant,AI Use Case,owns,Use case owner
+James Okafor,Person,Infrastructure Monitoring AI,AI Use Case,owns,Use case owner
+James Okafor,Person,Incident Summariser,AI Use Case,owns,Use case owner
+James Okafor,Person,Security Log Analyser,AI Use Case,owns,Use case owner
+James Okafor,Person,Deployment Describer,AI Use Case,owns,Use case owner
+Emma Fischer,Person,Fraud Detection Model,AI Use Case,owns,Use case owner
+Emma Fischer,Person,Claims Triage AI,AI Use Case,owns,Use case owner
+Emma Fischer,Person,Damage Assessment AI,AI Use Case,owns,Use case owner
+Emma Fischer,Person,Claims Letter Generator,AI Use Case,owns,Use case owner
+Emma Fischer,Person,Subrogation Analyser,AI Use Case,owns,Use case owner
+Alex Kumar,Person,Customer Chat Bot,AI Use Case,owns,Use case owner
+Alex Kumar,Person,Complaint Classifier,AI Use Case,owns,Use case owner
+Alex Kumar,Person,Sentiment Tracker,AI Use Case,owns,Use case owner
+Alex Kumar,Person,Response Suggester,AI Use Case,owns,Use case owner
+Alex Kumar,Person,FAQ Generator,AI Use Case,owns,Use case owner
+Priya Sharma,Person,CV Screening,AI Use Case,owns,Use case owner
+Priya Sharma,Person,Job Description Generator,AI Use Case,owns,Use case owner
+Priya Sharma,Person,Interview Scorer,AI Use Case,owns,Use case owner
+Priya Sharma,Person,Onboarding Assistant,AI Use Case,owns,Use case owner
+Priya Sharma,Person,Salary Benchmarker,AI Use Case,owns,Use case owner
+Marco Rossi,Person,Report Generator,AI Use Case,owns,Use case owner
+Marco Rossi,Person,Budget Forecasting,AI Use Case,owns,Use case owner
+Marco Rossi,Person,Invoice Classifier,AI Use Case,owns,Use case owner
+Marco Rossi,Person,Expense Anomaly Detector,AI Use Case,owns,Use case owner
+Marco Rossi,Person,Earnings Summariser,AI Use Case,owns,Use case owner
+Lisa Wang,Person,Risk Scoring,AI Use Case,owns,Use case owner
+Lisa Wang,Person,Regulatory Change Tracker,AI Use Case,owns,Use case owner
+Lisa Wang,Person,Policy Gap Analyzer,AI Use Case,owns,Use case owner
+Lisa Wang,Person,Audit Trail Generator,AI Use Case,owns,Use case owner
+Lisa Wang,Person,Sanctions Screener,AI Use Case,owns,Use case owner
+Tom Bradley,Person,Policy Risk Assessor,AI Use Case,owns,Use case owner
+Tom Bradley,Person,Pricing Explainer,AI Use Case,owns,Use case owner
+Tom Bradley,Person,Risk Appetite Optimizer,AI Use Case,owns,Use case owner
+Tom Bradley,Person,Portfolio Analyser,AI Use Case,owns,Use case owner
+Tom Bradley,Person,Renewal Predictor,AI Use Case,owns,Use case owner
+Contract Review AI,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Legal Brief Summariser,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Clause Extractor,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Compliance Checker,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+NDA Drafting Assistant,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Code Assistant,AI Use Case,GitHub Copilot,AI Model,uses,AI model powering use case
+Infrastructure Monitoring AI,AI Use Case,Gemini Pro,AI Model,uses,AI model powering use case
+Incident Summariser,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Security Log Analyser,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Deployment Describer,AI Use Case,GitHub Copilot,AI Model,uses,AI model powering use case
+Customer Chat Bot,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Complaint Classifier,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+FAQ Generator,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Response Suggester,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Claims Triage AI,AI Use Case,Gemini Pro,AI Model,uses,AI model powering use case
+Claims Letter Generator,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Subrogation Analyser,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Job Description Generator,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Onboarding Assistant,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Salary Benchmarker,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Report Generator,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Budget Forecasting,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Invoice Classifier,AI Use Case,Gemini Pro,AI Model,uses,AI model powering use case
+Expense Anomaly Detector,AI Use Case,Llama 3,AI Model,uses,AI model powering use case
+Earnings Summariser,AI Use Case,Mistral Large,AI Model,uses,AI model powering use case
+Regulatory Change Tracker,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Policy Gap Analyzer,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Audit Trail Generator,AI Use Case,Gemini Pro,AI Model,uses,AI model powering use case
+Sanctions Screener,AI Use Case,Mistral Large,AI Model,uses,AI model powering use case
+Pricing Explainer,AI Use Case,Claude 3.5 Sonnet,AI Model,uses,AI model powering use case
+Risk Appetite Optimizer,AI Use Case,GPT-4o,AI Model,uses,AI model powering use case
+Portfolio Analyser,AI Use Case,Gemini Pro,AI Model,uses,AI model powering use case
+Renewal Predictor,AI Use Case,Llama 3,AI Model,uses,AI model powering use case
+Customer CRM Database,Data Source,Kundeservice Chatbot,AI Model (Visibility),feeds,Data source provides data to model
+Customer CRM Database,Data Source,Document Processing AI,AI Model (Visibility),feeds,Data source provides data to model
+Claims Processing System,Data Source,Claims Assessment AI,AI Model (Visibility),feeds,Data source provides data to model
+Claims Processing System,Data Source,Fraud Detection System,AI Model (Visibility),feeds,Data source provides data to model
+Health Records Vault,Data Source,Claims Assessment AI,AI Model (Visibility),feeds,Data source provides data to model
+Health Records Vault,Data Source,Underwriting Risk Engine,AI Model (Visibility),feeds,Data source provides data to model
+Actuarial Data Warehouse,Data Source,Underwriting Risk Engine,AI Model (Visibility),feeds,Data source provides data to model
+Actuarial Data Warehouse,Data Source,Fraud Detection System,AI Model (Visibility),feeds,Data source provides data to model
+Azure OpenAI Service,Infrastructure,Claims Assessment AI,AI Model (Visibility),hosts,Infrastructure hosting model
+Azure OpenAI Service,Infrastructure,Kundeservice Chatbot,AI Model (Visibility),hosts,Infrastructure hosting model
+ML Training Cluster,Infrastructure,Underwriting Risk Engine,AI Model (Visibility),hosts,Infrastructure hosting model
+ML Training Cluster,Infrastructure,Fraud Detection System,AI Model (Visibility),hosts,Infrastructure hosting model
+Anthropic,Vendor,Kundeservice Chatbot,AI Model (Visibility),provides,Vendor provides AI service
+Google Cloud,Vendor,Document Processing AI,AI Model (Visibility),provides,Vendor provides AI service
+Microsoft Azure,Vendor,Claims Assessment AI,AI Model (Visibility),provides,Vendor provides AI service
+Microsoft Azure,Vendor,Underwriting Risk Engine,AI Model (Visibility),provides,Vendor provides AI service

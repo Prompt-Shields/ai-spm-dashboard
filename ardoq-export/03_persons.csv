@@ -1,0 +1,9 @@
+Component Name,Component Type,Email,Department,Role,Use Cases Count,Assessments Pending,Assessments Complete
+Sarah Chen,Person,sarah.chen@company.com,Legal,Senior Counsel,5,2,3
+James Okafor,Person,james.okafor@company.com,IT,Engineering Lead,5,1,4
+Emma Fischer,Person,emma.fischer@company.com,Claims,Claims Director,5,3,2
+Alex Kumar,Person,alex.kumar@company.com,Customer Service,CS Manager,5,0,5
+Priya Sharma,Person,priya.sharma@company.com,HR,HR Director,5,4,1
+Marco Rossi,Person,marco.rossi@company.com,Finance,CFO,5,1,4
+Lisa Wang,Person,lisa.wang@company.com,Risk & Compliance,CRO,5,0,5
+Tom Bradley,Person,tom.bradley@company.com,Underwriting,Chief Underwriter,5,2,3

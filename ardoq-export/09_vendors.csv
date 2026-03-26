@@ -1,0 +1,6 @@
+Component Name,Component Type,Vendor ID,Service,Contract Status,Contract Expiry,Annual Spend (NOK),SLA Uptime (%),Actual Uptime (%),Data Processing Location,GDPR DPA,AI Act Compliant,Last Security Audit,Risk Rating,Primary Contact,Use Cases,Exit Strategy
+Anthropic,Vendor,vendor-1,Claude API,active,2025-12-31,1490400,99.9,99.94,EU (Ireland),true,true,2024-09-15,low,enterprise@anthropic.com,"Chatbot; Summarisation",Azure OpenAI fallback
+Google Cloud,Vendor,vendor-2,Document AI + Vertex AI,active,2025-06-30,675600,99.95,99.97,EU (Finland),true,true,2024-10-01,low,cloud-support@google.com,"Document processing; OCR",Azure Form Recognizer
+Microsoft Azure,Vendor,vendor-3,Azure OpenAI + Azure ML,active,2026-03-31,4476000,99.9,99.87,Norway East,true,true,2024-11-01,low,azure-enterprise@microsoft.com,"Claims AI; Training; Hosting",Multi-cloud strategy
+Datadog,Vendor,vendor-4,AI Observability,active,2025-09-30,542400,99.9,99.96,EU (Germany),true,true,2024-08-20,low,enterprise@datadoghq.com,"Model monitoring; Alerting; Dashboards",Azure Monitor
+Weights & Biases,Vendor,vendor-5,MLOps Platform,evaluation,2025-04-30,180000,99.5,99.82,EU (Ireland),true,true,2024-07-15,medium,sales@wandb.com,"Experiment tracking; Model versioning",Azure ML native

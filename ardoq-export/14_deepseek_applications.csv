@@ -1,0 +1,21 @@
+Component Name,Component Type,Rank,Description,Tokens Used,Use Context
+Gobii,DeepSeek Application,1,Web browsing agents that are always on,31.7B tokens,"Autonomous web agents for browsing, research, and data extraction tasks"
+Janitor AI,DeepSeek Application,2,Character chat and creation,10.4B tokens,Interactive character-based conversations and roleplay applications
+New API,DeepSeek Application,3,Unified AI framework,6.83B tokens,"API aggregation layer for multi-model orchestration and routing"
+Chub AI,DeepSeek Application,4,GenAI for everyone,4.43B tokens,Consumer-facing generative AI platform for creative content
+SillyTavern,DeepSeek Application,5,LLM frontend for power users,4.3B tokens,"Advanced LLM interface with customisation and multi-model support"
+liteLLM,DeepSeek Application,6,Open-source library to simplify LLM integrations,1.79B tokens,Developer tooling for unified LLM API access and proxy management
+Kilo Code,DeepSeek Application,7,AI coding agent for VS Code,896M tokens,IDE-integrated coding assistance and code generation
+Cline,DeepSeek Application,8,Autonomous coding agent right in your IDE,870M tokens,"Autonomous code writing, debugging, and refactoring agent"
+shapes inc,DeepSeek Application,9,General purpose social agents,850M tokens,Social AI agents for community engagement and interaction
+Roo Code,DeepSeek Application,10,A whole dev team of AI agents in your IDE,652M tokens,Multi-agent coding system for complex development workflows
+easemate.ai,DeepSeek Application,11,"AI assistant for study, work, and creativity",519M tokens,Productivity assistant for students and professionals
+Fish Audio,DeepSeek Application,12,The most realistic text-to-speech platform,496M tokens,Audio generation and voice synthesis applications
+Sophias Lorebary,DeepSeek Application,13,Unofficial JanitorAI extension with advanced features,450M tokens,Enhanced character interaction and lore management
+Open WebUI,DeepSeek Application,14,"Extensible, self-hosted AI interface",222M tokens,Self-hosted LLM interface for privacy-conscious deployments
+Pollar News,DeepSeek Application,15,AI-powered news aggregation and analysis,203M tokens,News summarisation and content curation platform
+BLACKBOXAI,DeepSeek Application,16,AI agent for builders,180M tokens,Development automation and code generation for builders
+Telegram Lead Scanner,DeepSeek Application,17,Automated lead generation via Telegram,159M tokens,Business automation for lead capture and qualification
+SkyrimNet,DeepSeek Application,18,AI-powered gaming companion,158M tokens,Gaming NPC dialogue and interactive storytelling
+Miniapps.ai,DeepSeek Application,19,Create and use mini AI-powered apps,153M tokens,Low-code AI application builder and marketplace
+DeckCheck,DeepSeek Application,20,AI-powered presentation review,152M tokens,Presentation analysis and improvement suggestions

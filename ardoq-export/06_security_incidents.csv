@@ -1,0 +1,11 @@
+Component Name,Component Type,Incident ID,Date,Related Asset ID,Incident Type,Severity,Status,MTTR (Hours),Description
+Prompt injection - MarketingCopilot,Security Incident,INC-001,2024-11-28,spm-004,Prompt injection,Critical,In progress,0,Multiple sophisticated prompt injection attempts detected
+Data exfiltration - ChatbotAlpha,Security Incident,INC-002,2024-11-25,spm-011,Data exfiltration,Critical,Open,0,Suspicious data access patterns indicating possible exfiltration
+Policy violation - HealthcareAnalytics,Security Incident,INC-003,2024-11-20,spm-003,Policy violation,High,Resolved,48,PHI data accessed without proper authorisation
+Model abuse - SalesPredictor,Security Incident,INC-004,2024-11-18,spm-008,Model abuse,High,Resolved,72,Unauthorised attempts to extract training data
+Prompt injection - CustomerServiceGPT,Security Incident,INC-005,2024-11-15,spm-001,Prompt injection,Medium,Resolved,24,Basic prompt injection attempt successfully blocked
+Data exfiltration - ProductRecommender,Security Incident,INC-006,2024-11-12,spm-012,Data exfiltration,Medium,Resolved,36,Anomalous API calls detected and blocked
+Policy violation - HRAssistant,Security Incident,INC-007,2024-11-08,spm-006,Policy violation,Low,Resolved,12,Minor policy violation in data handling procedures
+Prompt injection - SentimentAnalyser,Security Incident,INC-008,2024-11-05,spm-014,Prompt injection,Low,Resolved,8,Low-sophistication prompt injection attempt detected
+Data exfiltration - MarketingCopilot,Security Incident,INC-009,2024-10-30,spm-004,Data exfiltration,Critical,Resolved,96,Confirmed data exfiltration event - containment successful
+Model abuse - ChatbotAlpha,Security Incident,INC-010,2024-10-25,spm-011,Model abuse,High,Resolved,60,Repeated attempts to manipulate model outputs
