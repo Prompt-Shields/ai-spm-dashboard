@@ -1,0 +1,144 @@
+Source Custom ID,Target Custom ID,Reference Type,Description
+cap-llm,tp-gpt4o,Is Realized By,GPT-4o realizes LLM capability
+cap-llm,tp-chatgpt5o,Is Realized By,ChatGPT-5o realizes LLM capability
+cap-llm,tp-claude35,Is Realized By,Claude 3.5 Sonnet realizes LLM capability
+cap-llm,tp-gemini,Is Realized By,Gemini Pro realizes LLM capability
+cap-llm,tp-copilot,Is Realized By,GitHub Copilot realizes LLM capability
+cap-llm,tp-llama3,Is Realized By,Llama 3 realizes LLM capability
+cap-llm,tp-mistral,Is Realized By,Mistral Large realizes LLM capability
+cap-llm,tp-deepseek,Is Realized By,DeepSeek R1 realizes LLM capability
+cap-speech,tp-whisper,Is Realized By,Whisper realizes Speech Recognition capability
+cap-imggen,tp-sdxl,Is Realized By,Stable Diffusion XL realizes Image Generation capability
+cap-cv,tp-gpt4o-vision,Is Realized By,GPT-4o Vision realizes Computer Vision capability
+cap-ml-fraud,tp-fraud-ml,Is Realized By,Custom Fraud Classifier realizes Fraud Detection capability
+cap-nlp-sentiment,tp-sentiment-ml,Is Realized By,Custom Sentiment Model realizes Sentiment Analysis capability
+cap-ml-classification,tp-cv-hirevue,Is Realized By,CV Classifier realizes Classification capability
+cap-cv,tp-interview-hirevue,Is Realized By,Interview AI realizes Computer Vision capability
+cap-ml-riskscore,tp-risk-ml,Is Realized By,Custom Risk Model realizes Risk Scoring capability
+cap-ml-riskscore,tp-underwriting-ml,Is Realized By,Custom Underwriting Model realizes Risk Scoring capability
+cap-llm-docanalysis,tp-azure-openai-claims,Is Realized By,Azure OpenAI Claims realizes Document Analysis capability
+cap-llm-conversational,tp-claude-chatbot,Is Realized By,Anthropic Claude Chatbot realizes Conversational AI capability
+cap-ml-riskscore,tp-custom-underwriting,Is Realized By,Custom ML Underwriting realizes Risk Scoring capability
+cap-ml-anomaly,tp-tf-fraud,Is Realized By,TensorFlow Fraud realizes Anomaly Detection capability
+cap-nlp-ner,tp-google-docai,Is Realized By,Google Document AI realizes NER capability
+app-contract-review,tp-gpt4o,Deploys,Contract Review AI deploys GPT-4o
+app-legal-brief,tp-claude35,Deploys,Legal Brief Summariser deploys Claude 3.5
+app-clause-extractor,tp-gpt4o,Deploys,Clause Extractor deploys GPT-4o
+app-compliance-checker,tp-gpt4o,Deploys,Compliance Checker deploys GPT-4o
+app-nda-drafting,tp-claude35,Deploys,NDA Drafting Assistant deploys Claude 3.5
+app-code-assistant,tp-copilot,Deploys,Code Assistant deploys GitHub Copilot
+app-infra-monitoring,tp-gemini,Deploys,Infrastructure Monitoring deploys Gemini Pro
+app-incident-summariser,tp-claude35,Deploys,Incident Summariser deploys Claude 3.5
+app-security-log,tp-gpt4o,Deploys,Security Log Analyser deploys GPT-4o
+app-deployment-describer,tp-copilot,Deploys,Deployment Describer deploys GitHub Copilot
+app-fraud-detection,tp-fraud-ml,Deploys,Fraud Detection Model deploys Custom Fraud Classifier
+app-claims-triage,tp-gemini,Deploys,Claims Triage AI deploys Gemini Pro
+app-damage-assessment,tp-gpt4o-vision,Deploys,Damage Assessment AI deploys GPT-4o Vision
+app-claims-letter,tp-claude35,Deploys,Claims Letter Generator deploys Claude 3.5
+app-subrogation,tp-gpt4o,Deploys,Subrogation Analyser deploys GPT-4o
+app-customer-chatbot,tp-gpt4o,Deploys,Customer Chat Bot deploys GPT-4o
+app-complaint-classifier,tp-claude35,Deploys,Complaint Classifier deploys Claude 3.5
+app-sentiment-tracker,tp-sentiment-ml,Deploys,Sentiment Tracker deploys Custom Sentiment Model
+app-response-suggester,tp-claude35,Deploys,Response Suggester deploys Claude 3.5
+app-faq-generator,tp-gpt4o,Deploys,FAQ Generator deploys GPT-4o
+app-cv-screening,tp-cv-hirevue,Deploys,CV Screening deploys HireVue CV Classifier
+app-job-desc-gen,tp-gpt4o,Deploys,Job Description Generator deploys GPT-4o
+app-interview-scorer,tp-interview-hirevue,Deploys,Interview Scorer deploys HireVue Interview AI
+app-onboarding,tp-claude35,Deploys,Onboarding Assistant deploys Claude 3.5
+app-salary-bench,tp-gpt4o,Deploys,Salary Benchmarker deploys GPT-4o
+app-report-gen,tp-gpt4o,Deploys,Report Generator deploys GPT-4o
+app-budget-forecast,tp-claude35,Deploys,Budget Forecasting deploys Claude 3.5
+app-invoice-classifier,tp-gemini,Deploys,Invoice Classifier deploys Gemini Pro
+app-expense-anomaly,tp-llama3,Deploys,Expense Anomaly Detector deploys Llama 3
+app-earnings-summariser,tp-mistral,Deploys,Earnings Summariser deploys Mistral Large
+app-risk-scoring,tp-risk-ml,Deploys,Risk Scoring deploys Custom Risk Model
+app-reg-tracker,tp-gpt4o,Deploys,Regulatory Change Tracker deploys GPT-4o
+app-policy-gap,tp-claude35,Deploys,Policy Gap Analyzer deploys Claude 3.5
+app-audit-trail,tp-gemini,Deploys,Audit Trail Generator deploys Gemini Pro
+app-sanctions,tp-mistral,Deploys,Sanctions Screener deploys Mistral Large
+app-policy-risk,tp-underwriting-ml,Deploys,Policy Risk Assessor deploys Custom Underwriting Model
+app-pricing-explainer,tp-claude35,Deploys,Pricing Explainer deploys Claude 3.5
+app-risk-appetite,tp-gpt4o,Deploys,Risk Appetite Optimizer deploys GPT-4o
+app-portfolio,tp-gemini,Deploys,Portfolio Analyser deploys Gemini Pro
+app-renewal,tp-llama3,Deploys,Renewal Predictor deploys Llama 3
+app-vis-claims,tp-azure-openai-claims,Deploys,Claims Assessment AI deploys Azure OpenAI
+app-vis-chatbot,tp-claude-chatbot,Deploys,Kundeservice Chatbot deploys Anthropic Claude
+app-vis-underwriting,tp-custom-underwriting,Deploys,Underwriting Risk Engine deploys Custom ML
+app-vis-fraud,tp-tf-fraud,Deploys,Fraud Detection System deploys TensorFlow
+app-vis-docproc,tp-google-docai,Deploys,Document Processing AI deploys Google Document AI
+person-sarah-chen,app-contract-review,Is Owner Of,Sarah Chen owns Contract Review AI
+person-sarah-chen,app-legal-brief,Is Owner Of,Sarah Chen owns Legal Brief Summariser
+person-sarah-chen,app-clause-extractor,Is Owner Of,Sarah Chen owns Clause Extractor
+person-sarah-chen,app-compliance-checker,Is Owner Of,Sarah Chen owns Compliance Checker
+person-sarah-chen,app-nda-drafting,Is Owner Of,Sarah Chen owns NDA Drafting Assistant
+person-james-okafor,app-code-assistant,Is Owner Of,James Okafor owns Code Assistant
+person-james-okafor,app-infra-monitoring,Is Owner Of,James Okafor owns Infrastructure Monitoring
+person-james-okafor,app-incident-summariser,Is Owner Of,James Okafor owns Incident Summariser
+person-james-okafor,app-security-log,Is Owner Of,James Okafor owns Security Log Analyser
+person-james-okafor,app-deployment-describer,Is Owner Of,James Okafor owns Deployment Describer
+person-emma-fischer,app-fraud-detection,Is Owner Of,Emma Fischer owns Fraud Detection Model
+person-emma-fischer,app-claims-triage,Is Owner Of,Emma Fischer owns Claims Triage AI
+person-emma-fischer,app-damage-assessment,Is Owner Of,Emma Fischer owns Damage Assessment AI
+person-emma-fischer,app-claims-letter,Is Owner Of,Emma Fischer owns Claims Letter Generator
+person-emma-fischer,app-subrogation,Is Owner Of,Emma Fischer owns Subrogation Analyser
+person-alex-kumar,app-customer-chatbot,Is Owner Of,Alex Kumar owns Customer Chat Bot
+person-alex-kumar,app-complaint-classifier,Is Owner Of,Alex Kumar owns Complaint Classifier
+person-alex-kumar,app-sentiment-tracker,Is Owner Of,Alex Kumar owns Sentiment Tracker
+person-alex-kumar,app-response-suggester,Is Owner Of,Alex Kumar owns Response Suggester
+person-alex-kumar,app-faq-generator,Is Owner Of,Alex Kumar owns FAQ Generator
+person-priya-sharma,app-cv-screening,Is Owner Of,Priya Sharma owns CV Screening
+person-priya-sharma,app-job-desc-gen,Is Owner Of,Priya Sharma owns Job Description Generator
+person-priya-sharma,app-interview-scorer,Is Owner Of,Priya Sharma owns Interview Scorer
+person-priya-sharma,app-onboarding,Is Owner Of,Priya Sharma owns Onboarding Assistant
+person-priya-sharma,app-salary-bench,Is Owner Of,Priya Sharma owns Salary Benchmarker
+person-marco-rossi,app-report-gen,Is Owner Of,Marco Rossi owns Report Generator
+person-marco-rossi,app-budget-forecast,Is Owner Of,Marco Rossi owns Budget Forecasting
+person-marco-rossi,app-invoice-classifier,Is Owner Of,Marco Rossi owns Invoice Classifier
+person-marco-rossi,app-expense-anomaly,Is Owner Of,Marco Rossi owns Expense Anomaly Detector
+person-marco-rossi,app-earnings-summariser,Is Owner Of,Marco Rossi owns Earnings Summariser
+person-lisa-wang,app-risk-scoring,Is Owner Of,Lisa Wang owns Risk Scoring
+person-lisa-wang,app-reg-tracker,Is Owner Of,Lisa Wang owns Regulatory Change Tracker
+person-lisa-wang,app-policy-gap,Is Owner Of,Lisa Wang owns Policy Gap Analyzer
+person-lisa-wang,app-audit-trail,Is Owner Of,Lisa Wang owns Audit Trail Generator
+person-lisa-wang,app-sanctions,Is Owner Of,Lisa Wang owns Sanctions Screener
+person-tom-bradley,app-policy-risk,Is Owner Of,Tom Bradley owns Policy Risk Assessor
+person-tom-bradley,app-pricing-explainer,Is Owner Of,Tom Bradley owns Pricing Explainer
+person-tom-bradley,app-risk-appetite,Is Owner Of,Tom Bradley owns Risk Appetite Optimizer
+person-tom-bradley,app-portfolio,Is Owner Of,Tom Bradley owns Portfolio Analyser
+person-tom-bradley,app-renewal,Is Owner Of,Tom Bradley owns Renewal Predictor
+person-sarah-chen,org-legal,Belongs To,Sarah Chen belongs to Legal
+person-james-okafor,org-it,Belongs To,James Okafor belongs to IT
+person-emma-fischer,org-claims,Belongs To,Emma Fischer belongs to Claims
+person-alex-kumar,org-customer-service,Belongs To,Alex Kumar belongs to Customer Service
+person-priya-sharma,org-hr,Belongs To,Priya Sharma belongs to HR
+person-marco-rossi,org-finance,Belongs To,Marco Rossi belongs to Finance
+person-lisa-wang,org-risk,Belongs To,Lisa Wang belongs to Risk & Compliance
+person-tom-bradley,org-underwriting,Belongs To,Tom Bradley belongs to Underwriting
+app-vis-claims,ds-claims,Reads From,Claims Assessment AI reads from Claims Processing System
+app-vis-claims,ds-health,Reads From,Claims Assessment AI reads from Health Records Vault
+app-vis-chatbot,ds-crm,Reads From,Kundeservice Chatbot reads from Customer CRM
+app-vis-underwriting,ds-health,Reads From,Underwriting Risk Engine reads from Health Records Vault
+app-vis-underwriting,ds-actuarial,Reads From,Underwriting Risk Engine reads from Actuarial Data Warehouse
+app-vis-fraud,ds-claims,Reads From,Fraud Detection System reads from Claims Processing System
+app-vis-fraud,ds-crm,Reads From,Fraud Detection System reads from Customer CRM
+app-vis-docproc,ds-crm,Reads From,Document Processing AI reads from Customer CRM
+app-vis-claims,ts-azure-openai,Runs On,Claims Assessment AI runs on Azure OpenAI Service
+app-vis-chatbot,ts-anthropic,Runs On,Kundeservice Chatbot runs on Anthropic Claude API
+app-vis-underwriting,ts-ml-training,Runs On,Underwriting Risk Engine runs on ML Training Cluster
+app-vis-fraud,ts-ml-training,Runs On,Fraud Detection System runs on ML Training Cluster
+app-vis-docproc,ts-google-docai,Runs On,Document Processing AI runs on Google Document AI
+ca-contract-review-euai,app-contract-review,Has Subject,EU AI Act assessment for Contract Review AI
+ca-code-assistant-euai,app-code-assistant,Has Subject,EU AI Act assessment for Code Assistant
+ca-fraud-detection-euai,app-fraud-detection,Has Subject,EU AI Act assessment for Fraud Detection Model
+ca-customer-chatbot-euai,app-customer-chatbot,Has Subject,EU AI Act assessment for Customer Chat Bot
+ca-cv-screening-euai,app-cv-screening,Has Subject,EU AI Act assessment for CV Screening
+ca-interview-scorer-euai,app-interview-scorer,Has Subject,EU AI Act assessment for Interview Scorer
+ca-report-gen-euai,app-report-gen,Has Subject,EU AI Act assessment for Report Generator
+ca-policy-risk-euai,app-policy-risk,Has Subject,EU AI Act assessment for Policy Risk Assessor
+ca-security-log-euai,app-security-log,Has Subject,EU AI Act assessment for Security Log Analyser
+ca-risk-scoring-euai,app-risk-scoring,Has Subject,EU AI Act assessment for Risk Scoring
+ca-sanctions-euai,app-sanctions,Has Subject,EU AI Act assessment for Sanctions Screener
+ca-contract-review-gdpr,app-contract-review,Has Subject,GDPR assessment for Contract Review AI
+ca-spm003-gdpr,app-spm-003,Has Subject,GDPR assessment for HealthcareAnalytics
+ca-spm004-gdpr,app-spm-004,Has Subject,GDPR assessment for MarketingCopilot
+ca-spm011-gdpr,app-spm-011,Has Subject,GDPR assessment for ChatbotAlpha
