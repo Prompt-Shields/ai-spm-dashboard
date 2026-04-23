@@ -19,7 +19,12 @@
       "Bash(pkill -f \"next dev\" 2>/dev/null || true\nrm -rf /Users/junseki/Documents/GitHub/ai-spm-dashboard/scripts\necho \"Cleanup done\")",
       "Bash(git add public/screenshots/screenshot-map.png public/screenshots/screenshot-architecture-ciso.png public/screenshots/screenshot-architecture-enterprise.png && git status)",
       "Bash(git commit -m \"$\\(cat <<'EOF'\ndocs: add README screenshots for Map and Architecture sections\n\n- screenshot-map.png: Atlas AI Map page force-directed graph\n- screenshot-architecture-ciso.png: CISO/Executive view architecture diagram\n- screenshot-architecture-enterprise.png: Enterprise Architect view diagram\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git push origin main)"
+      "Bash(git push origin main)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:help.ardoq.com)",
+      "WebSearch"
     ]
   }
 }
