@@ -147,6 +147,28 @@ export function listActiveInstances(): PolicyInstance[] {
   return Array.from(instances.values()).filter((i) => i.status === "active")
 }
 
+/** All instances regardless of status — used by the admin UI. */
+export function listAllInstances(): PolicyInstance[] {
+  seedFixtures()
+  return Array.from(instances.values())
+}
+
+export function getInstanceById(id: string): PolicyInstance | undefined {
+  seedFixtures()
+  return instances.get(id)
+}
+
+export function upsertInstance(instance: PolicyInstance): PolicyInstance {
+  seedFixtures()
+  instances.set(instance.id, instance)
+  return instance
+}
+
+export function deleteInstanceById(id: string): boolean {
+  seedFixtures()
+  return instances.delete(id)
+}
+
 export function getReferencedTemplates(active: PolicyInstance[]) {
   const ids = new Set(active.map((i) => i.templateId))
   return POLICY_TEMPLATES.filter((t) => ids.has(t.id))
@@ -164,4 +186,25 @@ export function listViolations(limit = 100): PolicyViolation[] {
 
 export function violationCount(): number {
   return violations.length
+}
+
+// ─── Synthetic stats for demo (replace with real telemetry) ─────────────
+//
+// Until the violation feed produces enough data, we synthesise plausible
+// stats so the UI renders meaningfully on a fresh boot.
+
+export function ensureDemoStats(): void {
+  seedFixtures()
+  for (const instance of instances.values()) {
+    if (instance.stats) continue
+    instance.stats = {
+      totalEvaluations30d: Math.floor(20000 + Math.random() * 80000),
+      totalHits30d: Math.floor(50 + Math.random() * 400),
+      blockCount30d: Math.floor(40 + Math.random() * 200),
+      flagCount30d: Math.floor(10 + Math.random() * 100),
+      lastTriggeredAt: new Date(Date.now() - Math.random() * 86_400_000).toISOString(),
+      falsePositives30d: Math.floor(Math.random() * 8),
+      falsePositiveRate: Math.random() * 0.04 // 0–4%
+    }
+  }
 }
