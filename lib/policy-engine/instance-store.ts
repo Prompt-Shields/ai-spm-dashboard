@@ -3,6 +3,7 @@
 
 import type { PolicyInstance, PolicyTemplate, EnforcementMode } from "../policy-templates/types"
 import { getTemplateById } from "../policy-templates/templates"
+import { AUTO_DEMOTE_DEFAULTS } from "./promotion"
 
 const STORAGE_KEY = "policy-instances-v1"
 
@@ -63,13 +64,16 @@ export function cloneFromTemplate(
   }
 
   const now = new Date().toISOString()
+  // CRITICAL: All new instances start as Guideline (mode: "log").
+  // Templates only *suggest* a target enforcement mode via defaults.enforcementMode.
+  // Admins must explicitly promote to Strict via the promotion wizard.
   const instance: PolicyInstance = {
     id: generateId(),
     name: options.name ?? template.name,
     templateId: template.id,
     templateVersion: template.version,
     parameterValues: defaultParameterValues(template),
-    enforcementMode: template.defaults.enforcementMode,
+    enforcementMode: "log",
     severity: template.severity,
     appliesTo: {
       applicationIds: [],
@@ -83,7 +87,10 @@ export function cloneFromTemplate(
     status: "draft",
     createdBy: options.createdBy ?? "system",
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
+    promotionHistory: [],
+    autoDemote: { ...AUTO_DEMOTE_DEFAULTS },
+    rolloutStrategy: "all"
   }
 
   const all = loadAll()

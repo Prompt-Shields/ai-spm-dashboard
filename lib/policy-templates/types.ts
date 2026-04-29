@@ -129,6 +129,54 @@ export interface PolicyTemplate {
   updatedAt: string
 }
 
+// ─── Policy class (UX-level concept) ─────────────────────────────────
+// Derived from enforcementMode but used as the primary visual signal.
+// Guideline = advisory (log/flag). Strict = real-time enforcement (block/redact).
+
+export type PolicyClass = "guideline" | "strict"
+
+export function classOf(mode: EnforcementMode): PolicyClass {
+  return mode === "block" || mode === "redact" ? "strict" : "guideline"
+}
+
+// ─── Promotion lifecycle ─────────────────────────────────────────────
+
+export interface ApprovalRecord {
+  role: string // e.g. "DPO", "Security Lead"
+  status: "pending" | "approved" | "rejected"
+  approverId?: string
+  at?: string
+  notes?: string
+}
+
+export interface PromotionEligibility {
+  eligible: boolean
+  daysInGuideline: number
+  daysRequired: number
+  falsePositiveRate: number
+  fpRateThreshold: number
+  approvers: ApprovalRecord[]
+  blockingReasons: string[]
+}
+
+export interface AutoDemoteConfig {
+  enabled: boolean
+  fpRateThreshold: number // % above which auto-demote triggers (e.g. 5 = 5%)
+  windowMinutes: number // rolling window for FP measurement
+  graceSeconds: number // countdown before auto-demote fires
+}
+
+export type RolloutStrategy = "all" | "canary" | "phased"
+
+export interface PromotionEvent {
+  from: PolicyClass
+  to: PolicyClass
+  at: string
+  by: string
+  reason?: string
+  approvers?: ApprovalRecord[]
+}
+
 // ─── The Instance (user-owned, editable) ─────────────────────────────
 
 export type InstanceStatus = "draft" | "testing" | "active" | "paused" | "archived"
@@ -173,6 +221,13 @@ export interface PolicyInstance {
   updatedAt: string
   activatedAt?: string
 
+  // Promotion lifecycle (Guideline ⇄ Strict)
+  promotionHistory: PromotionEvent[]
+  autoDemote: AutoDemoteConfig
+  rolloutStrategy: RolloutStrategy
+  rolloutPercentage?: number // for "phased" — current percentage (0-100)
+  rolloutCanaryAppId?: string // for "canary" — single app the policy is live on
+
   // Stats (populated from violation feed)
   stats?: {
     totalEvaluations30d: number
@@ -180,6 +235,8 @@ export interface PolicyInstance {
     blockCount30d: number
     flagCount30d: number
     lastTriggeredAt?: string
+    falsePositives30d?: number
+    falsePositiveRate?: number // 0-1
   }
 }
 
