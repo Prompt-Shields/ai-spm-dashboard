@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState, useTransition, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -32,9 +32,9 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
   const router = useRouter()
   const [instance, setInstance] = useState(initialInstance)
   const [wizardOpen, setWizardOpen] = useState(false)
-  const [tab, setTab] = useState<"detection" | "scope" | "approvals" | "history">(
-    "detection"
-  )
+  const [tab, setTab] = useState<
+    "detection" | "scope" | "test" | "approvals" | "history"
+  >("detection")
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
@@ -172,6 +172,9 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
         </div>
       )}
 
+      {/* Watchdog banner (only when relevant) */}
+      <WatchdogBanner instance={instance} />
+
       {/* Mode toggle (always visible) */}
       <PolicyModeToggle
         instance={instance}
@@ -191,7 +194,7 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
 
       {/* Tabs */}
       <div className="border-b flex gap-4 text-sm">
-        {(["detection", "scope", "approvals", "history"] as const).map((t) => (
+        {(["detection", "scope", "test", "approvals", "history"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -209,6 +212,7 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
 
       {tab === "detection" && <DetectionTab template={template} instance={instance} />}
       {tab === "scope" && <ScopeTab instance={instance} applications={applications} />}
+      {tab === "test" && <TestConsoleTab instance={instance} template={template} />}
       {tab === "approvals" && (
         <ApprovalsTab
           instance={instance}
@@ -596,5 +600,350 @@ function HistoryTab({ instance }: { instance: PolicyInstance }) {
         </ol>
       )}
     </Card>
+  )
+}
+
+// ─── Test Console Tab ────────────────────────────────────────────────
+
+interface PolicyTestResultUI {
+  matched: boolean
+  triggeredDetectors: Array<{
+    detectorId: string
+    confidence: number
+    matchedSubstring?: string
+    explanation: string
+  }>
+  actionThatWouldFire: string
+  evaluationTimeMs: number
+}
+
+function TestConsoleTab({
+  instance,
+  template
+}: {
+  instance: PolicyInstance
+  template: PolicyTemplate
+}) {
+  const [prompt, setPrompt] = useState("")
+  const [result, setResult] = useState<PolicyTestResultUI | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
+
+  const samplePrompts = [
+    template.exampleViolation,
+    template.exampleSafeInput
+  ].filter((s): s is string => Boolean(s))
+
+  const runTest = async () => {
+    setErr(null)
+    setLoading(true)
+    setResult(null)
+    try {
+      const res = await fetch(`/api/policies/${instance.id}/evaluate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setErr(data.error ?? "Test failed")
+        return
+      }
+      setResult(data.result)
+    } catch (e) {
+      setErr(String(e))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const cls = classOf(instance.enforcementMode)
+
+  return (
+    <div className="space-y-4">
+      <Card className="p-4">
+        <div className="flex items-baseline justify-between gap-2 mb-3">
+          <div>
+            <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+              Test console
+            </div>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Dry-run evaluation. No state changes, no violations recorded.
+              Returns what the detectors would say against this policy&apos;s
+              current parameter values.
+            </p>
+          </div>
+          <Badge variant="outline" className="text-[10px]">
+            Mode: <span className="font-mono ml-1">{instance.enforcementMode}</span>
+          </Badge>
+        </div>
+
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          rows={6}
+          placeholder="Paste a prompt or model response to test against this policy..."
+          className="w-full px-3 py-2 rounded-md border bg-background text-sm font-mono resize-y"
+        />
+
+        {samplePrompts.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            <span className="text-[10px] text-muted-foreground self-center">
+              Try a sample:
+            </span>
+            {samplePrompts.map((s, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setPrompt(s)}
+                className="text-[11px] px-2 py-0.5 rounded border hover:bg-accent text-left max-w-md truncate"
+                title={s}
+              >
+                {i === 0 ? "🚨 violation" : "✓ safe"} —{" "}
+                <span className="font-mono">{s.slice(0, 60)}…</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {err && (
+          <div className="mt-3 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {err}
+          </div>
+        )}
+
+        <div className="mt-3 flex justify-end">
+          <button
+            onClick={runTest}
+            disabled={loading || prompt.trim().length === 0}
+            className="px-4 py-1.5 rounded-md text-sm font-medium bg-foreground text-background hover:opacity-90 disabled:opacity-50"
+          >
+            {loading ? "Evaluating…" : "Run test →"}
+          </button>
+        </div>
+      </Card>
+
+      {result && (
+        <Card
+          className={cn(
+            "p-4 border-2",
+            result.matched
+              ? "border-amber-300 dark:border-amber-700 bg-amber-50/50 dark:bg-amber-950/20"
+              : "border-green-300 dark:border-green-700 bg-green-50/50 dark:bg-green-950/20"
+          )}
+        >
+          <div className="flex items-baseline justify-between gap-2 mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">{result.matched ? "🚨" : "✓"}</span>
+              <div>
+                <div className="text-sm font-semibold">
+                  {result.matched
+                    ? "Policy would fire"
+                    : "Clean — no detectors matched"}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Evaluated in {result.evaluationTimeMs}ms ·{" "}
+                  {result.triggeredDetectors.length} detector
+                  {result.triggeredDetectors.length === 1 ? "" : "s"} hit
+                </div>
+              </div>
+            </div>
+            {result.matched && (
+              <Badge variant="warning" className="text-[10px] capitalize">
+                Action: {result.actionThatWouldFire}
+              </Badge>
+            )}
+          </div>
+
+          {result.matched && cls === "guideline" && (
+            <div className="mb-3 rounded p-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 text-xs">
+              In Guideline mode this would only be{" "}
+              <span className="font-mono">logged</span>. After promotion to
+              Strict the action becomes{" "}
+              <span className="font-mono">
+                {template.defaults.enforcementMode}
+              </span>
+              .
+            </div>
+          )}
+
+          {result.triggeredDetectors.length > 0 && (
+            <div className="space-y-2">
+              {result.triggeredDetectors.map((d) => (
+                <div
+                  key={d.detectorId}
+                  className="rounded p-2.5 border bg-background/60"
+                >
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="text-sm font-medium font-mono">
+                      {d.detectorId}
+                    </span>
+                    <Badge variant="outline" className="text-[10px] font-mono">
+                      conf {d.confidence.toFixed(2)}
+                    </Badge>
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {d.explanation}
+                  </div>
+                  {d.matchedSubstring && (
+                    <code className="block text-[11px] mt-1.5 bg-muted/40 rounded px-2 py-1">
+                      Match: {d.matchedSubstring}
+                    </code>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
+      )}
+    </div>
+  )
+}
+
+// ─── Watchdog Banner ─────────────────────────────────────────────────
+//
+// Live banner that surfaces auto-demote risk. Polls the read-only
+// watchdog snapshot every 15s. Shows nothing in the happy path
+// (Strict + low FP, or Guideline mode entirely).
+
+interface WatchdogResult {
+  instanceId: string
+  name: string
+  action: "ok" | "grace_started" | "still_grace" | "auto_demoted" | "recovered"
+  fpRate: number
+  threshold: number
+  graceUntil?: string
+  reason?: string
+}
+
+function WatchdogBanner({ instance }: { instance: PolicyInstance }) {
+  const cls = classOf(instance.enforcementMode)
+  const [data, setData] = useState<WatchdogResult | null>(null)
+
+  useEffect(() => {
+    if (cls !== "strict") {
+      setData(null)
+      return
+    }
+    let cancelled = false
+
+    const fetchSnapshot = async () => {
+      try {
+        const res = await fetch("/api/policies/watchdog/tick", { method: "GET" })
+        if (!res.ok) return
+        const body = await res.json()
+        if (cancelled) return
+        const mine = (body.results as WatchdogResult[]).find(
+          (r) => r.instanceId === instance.id
+        )
+        setData(mine ?? null)
+      } catch {
+        // ignore — banner just won't update
+      }
+    }
+
+    fetchSnapshot()
+    const t = setInterval(fetchSnapshot, 15_000)
+    return () => {
+      cancelled = true
+      clearInterval(t)
+    }
+  }, [instance.id, cls])
+
+  if (!data || data.action === "ok") return null
+
+  const tone =
+    data.action === "auto_demoted"
+      ? "destructive"
+      : data.action === "still_grace" || data.action === "grace_started"
+        ? "warning"
+        : "info"
+
+  return (
+    <Card
+      className={cn(
+        "p-4 border-2",
+        tone === "destructive" &&
+          "border-destructive bg-destructive/10",
+        tone === "warning" &&
+          "border-amber-300 dark:border-amber-700 bg-amber-50/50 dark:bg-amber-950/20",
+        tone === "info" &&
+          "border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-950/10"
+      )}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <span className="text-lg">
+            {data.action === "auto_demoted"
+              ? "🚨"
+              : data.action === "still_grace" || data.action === "grace_started"
+                ? "⚠️"
+                : "✓"}
+          </span>
+          <div>
+            <div className="text-sm font-semibold">
+              {data.action === "auto_demoted" &&
+                "Auto-demoted by watchdog"}
+              {data.action === "grace_started" && "Watchdog grace period started"}
+              {data.action === "still_grace" && "Watchdog grace period active"}
+              {data.action === "recovered" && "Recovered — back below threshold"}
+            </div>
+            <div className="text-xs text-muted-foreground mt-0.5">
+              FP rate{" "}
+              <span className="font-mono font-medium text-foreground">
+                {data.fpRate.toFixed(2)}%
+              </span>{" "}
+              vs threshold{" "}
+              <span className="font-mono">{data.threshold}%</span>
+              {data.graceUntil && data.action !== "auto_demoted" && (
+                <>
+                  {" "}
+                  · auto-demote at{" "}
+                  <CountdownClock until={data.graceUntil} />
+                </>
+              )}
+            </div>
+            {data.reason && (
+              <div className="text-xs text-muted-foreground mt-0.5 italic">
+                {data.reason}
+              </div>
+            )}
+          </div>
+        </div>
+        <button
+          onClick={async () => {
+            await fetch("/api/policies/watchdog/tick", { method: "POST" })
+            // Reload to pick up any state change
+            window.location.reload()
+          }}
+          className="text-xs px-3 py-1 rounded border border-input hover:bg-accent shrink-0"
+        >
+          Run watchdog now
+        </button>
+      </div>
+    </Card>
+  )
+}
+
+function CountdownClock({ until }: { until: string }) {
+  const [now, setNow] = useState(Date.now())
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(t)
+  }, [])
+
+  const target = new Date(until).getTime()
+  const remainingMs = Math.max(0, target - now)
+  const seconds = Math.floor(remainingMs / 1000)
+  const m = Math.floor(seconds / 60)
+  const s = seconds % 60
+
+  if (remainingMs === 0) {
+    return <span className="font-mono text-destructive">imminent</span>
+  }
+  return (
+    <span className="font-mono">
+      T-{m}:{s.toString().padStart(2, "0")}
+    </span>
   )
 }

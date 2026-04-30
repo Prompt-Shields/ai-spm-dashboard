@@ -34,6 +34,16 @@ const SEED_LIFECYCLE = {
 const instances: Map<string, PolicyInstance> = new Map()
 const violations: PolicyViolation[] = []
 
+// Per-instance watchdog state. Tracks when an instance's FP rate FIRST
+// crossed the auto-demote threshold; used to enforce the grace period.
+// Cleared whenever the rate drops back below the threshold.
+interface WatchdogState {
+  firstDetectedAt: string // ISO timestamp
+  lastObservedFpRate: number
+  graceUntil: string // ISO timestamp when grace period ends
+}
+const watchdogState: Map<string, WatchdogState> = new Map()
+
 let seeded = false
 
 function seedFixtures(): void {
@@ -192,6 +202,30 @@ export function violationCount(): number {
 //
 // Until the violation feed produces enough data, we synthesise plausible
 // stats so the UI renders meaningfully on a fresh boot.
+
+// ─── Watchdog state API ─────────────────────────────────────────────────
+
+export function getWatchdogState(instanceId: string): WatchdogState | undefined {
+  return watchdogState.get(instanceId)
+}
+
+export function setWatchdogState(instanceId: string, state: WatchdogState): void {
+  watchdogState.set(instanceId, state)
+}
+
+export function clearWatchdogState(instanceId: string): void {
+  watchdogState.delete(instanceId)
+}
+
+export function listAllWatchdogStates(): Array<{
+  instanceId: string
+  state: WatchdogState
+}> {
+  return Array.from(watchdogState.entries()).map(([instanceId, state]) => ({
+    instanceId,
+    state
+  }))
+}
 
 export function ensureDemoStats(): void {
   seedFixtures()
