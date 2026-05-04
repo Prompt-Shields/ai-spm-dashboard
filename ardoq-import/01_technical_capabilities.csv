@@ -1,0 +1,32 @@
+Level 1,Level 2,Level 3,Description,Custom ID
+Artificial Intelligence,,,Root AI capability node — all AI sub-capabilities must be descendants of this node for AI Lens detection.,cap-ai
+Artificial Intelligence,Large Language Model,,Text generation and understanding using transformer-based architectures.,cap-llm
+Artificial Intelligence,Large Language Model,Text Generation,Generating human-like text from prompts.,cap-llm-textgen
+Artificial Intelligence,Large Language Model,Text Summarisation,Condensing long documents into shorter summaries.,cap-llm-summarisation
+Artificial Intelligence,Large Language Model,Code Generation,Generating and analysing source code.,cap-llm-codegen
+Artificial Intelligence,Large Language Model,Conversational AI,Interactive multi-turn dialogue systems.,cap-llm-conversational
+Artificial Intelligence,Large Language Model,Document Analysis,Extracting insights and structure from documents.,cap-llm-docanalysis
+Artificial Intelligence,Computer Vision,,Visual data processing and interpretation.,cap-cv
+Artificial Intelligence,Computer Vision,Image Classification,Categorising images into predefined classes.,cap-cv-imgclass
+Artificial Intelligence,Computer Vision,Object Detection,Identifying and locating objects within images.,cap-cv-objdetect
+Artificial Intelligence,Computer Vision,Damage Assessment,Estimating damage severity from visual evidence.,cap-cv-damage
+Artificial Intelligence,Natural Language Processing,,Understanding and processing human language.,cap-nlp
+Artificial Intelligence,Natural Language Processing,Sentiment Analysis,Determining sentiment or emotional tone from text.,cap-nlp-sentiment
+Artificial Intelligence,Natural Language Processing,Named Entity Recognition,Identifying entities such as names and dates in text.,cap-nlp-ner
+Artificial Intelligence,Natural Language Processing,Text Classification,Categorising text into topics or labels.,cap-nlp-textclass
+Artificial Intelligence,Speech Recognition,,Converting spoken language into text.,cap-speech
+Artificial Intelligence,Speech Recognition,Transcription,Converting audio recordings to text transcripts.,cap-speech-transcription
+Artificial Intelligence,Speech Recognition,Meeting Notes,Generating structured meeting notes from audio.,cap-speech-meeting
+Artificial Intelligence,Image Generation,,Creating images from textual descriptions or parameters.,cap-imggen
+Artificial Intelligence,Image Generation,Marketing Visuals,Generating promotional and marketing images.,cap-imggen-marketing
+Artificial Intelligence,Image Generation,Product Visualisation,Creating visual representations of products.,cap-imggen-product
+Artificial Intelligence,Machine Learning,,Statistical and predictive modelling.,cap-ml
+Artificial Intelligence,Machine Learning,Risk Scoring,Calculating risk probabilities from input features.,cap-ml-riskscore
+Artificial Intelligence,Machine Learning,Fraud Detection,Detecting fraudulent patterns in transactions and claims.,cap-ml-fraud
+Artificial Intelligence,Machine Learning,Anomaly Detection,Identifying unusual patterns deviating from expected behaviour.,cap-ml-anomaly
+Artificial Intelligence,Machine Learning,Classification,Categorising inputs into discrete classes.,cap-ml-classification
+Artificial Intelligence,Machine Learning,Forecasting,Predicting future values from historical data.,cap-ml-forecasting
+Artificial Intelligence,Agentic AI,,Autonomous AI systems that plan and execute multi-step tasks.,cap-agentic
+Artificial Intelligence,Agentic AI,Autonomous Agents,Self-directed agents that operate with minimal human oversight.,cap-agentic-auto
+Artificial Intelligence,Agentic AI,Orchestration,Coordinating multiple AI components to accomplish complex tasks.,cap-agentic-orch
+Artificial Intelligence,Retrieval-Augmented Generation,,Combining LLM generation with external knowledge retrieval.,cap-rag

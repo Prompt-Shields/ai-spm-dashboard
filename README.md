@@ -11,12 +11,14 @@ All data is simulated for demonstration and prototyping.
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Features](#features)
-3. [Tech Stack](#tech-stack)
-4. [Project Structure](#project-structure)
-5. [Getting Started](#getting-started)
-6. [Roadmap](#roadmap)
-7. [Licence](#licence)
+2. [Complementing Ardoq](#complementing-ardoq)
+3. [Architecture](#architecture)
+4. [Features](#features)
+5. [Tech Stack](#tech-stack)
+6. [Project Structure](#project-structure)
+7. [Getting Started](#getting-started)
+8. [Roadmap](#roadmap)
+9. [Licence](#licence)
 
 ---
 
@@ -30,6 +32,60 @@ AI governance requires **two complementary capabilities**:
 | **AI Asset Management** | Track inventory, lifecycle, dependencies, and performance | AI Platform / Engineering Teams |
 
 Atlas AI unifies both perspectives into a single interface.
+
+---
+
+## Complementing Ardoq
+
+> "Ardoq tells you what systems you have. Atlas AI tells you what AI those systems are doing — and whether it's safe."
+
+| Dimension | Ardoq | Atlas AI |
+|-----------|-------|----------|
+| Primary object | System / Application / Capability | AI Use Case |
+| Risk focus | Architectural dependency risk | AI-specific operational risk |
+| Compliance | IT governance frameworks | AI regulation (EU AI Act, OWASP LLM, NIST AI RMF) |
+| Visualisation | System maps, roadmaps, tech debt | AI use case force graph + risk graph |
+| Audience | Enterprise architects, IT | CISOs, AI governance leads, compliance officers |
+
+Ardoq owns the IT landscape layer — it maps systems, capabilities, and infrastructure dependencies. Atlas AI owns the AI governance layer that lives *inside* those systems — the use cases, models, risks, owners, and compliance status. They are complementary: Ardoq is the container; Atlas AI is the content.
+
+![The Atlas AI Map — AI use cases, models, vendors, owners, and risks visualised as a force-directed graph.](public/screenshots/screenshot-map.png)
+
+---
+
+## Architecture
+
+Atlas AI is designed as a cloud-native platform on Microsoft Azure, structured around two complementary architectural views: one for executive stakeholders, one for enterprise architects.
+
+### CISO / Executive View
+
+Four swim lanes showing users, platform components, Azure services, and external integrations:
+
+| Layer | Components |
+|-------|-----------|
+| Users | CISO, AI Governance Lead, AI Product Owner, Compliance Officer, Business Stakeholder |
+| Atlas AI Platform | Dashboard UI, API Gateway, Auth Service, AI Risk Engine, Compliance Engine, Notification Engine |
+| Microsoft Azure | Azure AD B2C, Azure Container Apps, Azure Cosmos DB, Azure AI Services, Azure Monitor, Azure Key Vault |
+| External Integrations | GitHub / Azure DevOps, Slack / Teams, Jira / ServiceNow, EU AI Act API |
+
+![CISO / Executive view — platform layers and external integrations.](public/screenshots/screenshot-architecture-ciso.png)
+
+### Enterprise Architect View
+
+Six layers inside an Azure VNet boundary:
+
+| Layer | Components |
+|-------|-----------|
+| Client | Next.js SPA, Browser |
+| API & Agent | API Gateway, AI Risk Engine, Compliance Engine, Auth Service |
+| Data | Azure Cosmos DB, Azure Blob Storage |
+| Identity & Security | Azure AD B2C, Azure Key Vault |
+| Observability | Azure Monitor, Application Insights |
+| Outbound Integrations | GitHub / Azure DevOps, Slack / Teams, Jira / ServiceNow, EU AI Act API |
+
+![Enterprise Architect view — layered components inside Azure VNet.](public/screenshots/screenshot-architecture-enterprise.png)
+
+> **Note:** The current prototype runs entirely client-side with simulated data — no backend or external API is required to run locally. The architecture above represents the intended production deployment design.
 
 ---
 
@@ -112,6 +168,8 @@ ai-spm-dashboard/
 │   ├── model-risk-data.ts
 │   ├── insurance-data.ts
 │   └── utils.ts
+├── public/
+│   └── screenshots/          # README screenshot assets (user-provided)
 ├── styles/
 ├── package.json
 ├── pnpm-lock.yaml

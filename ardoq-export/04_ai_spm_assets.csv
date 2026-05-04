@@ -1,0 +1,16 @@
+Component Name,Component Type,Asset ID,Owner,Department,Hosting Location,Model Type,Third Party,Sensitive Data Types,Data Lineage Score,Likelihood of Leakage,Misconfiguration Count,High Risk Vulnerabilities,Dependency CVEs,Prompt Injection Attempts (30d),Data Exfiltration Alerts (30d),User Risk Score,GDPR Status,EU AI Act Status,NIST AI RMF Status,Policy Violations (30d),Overall Risk Score
+CustomerServiceGPT,AI SPM Asset,spm-001,Sarah Mitchell,Customer Support,Azure,LLM,false,"PII; Financial",85,0.23,2,1,CVE-2024-12345,45,2,68,Partial,Compliant,Partial,3,72
+LegalDocReviewer,AI SPM Asset,spm-002,James Chen,Legal,AWS,Fine-tuned model,false,"IP; PII",92,0.15,0,0,,12,0,32,Compliant,Compliant,Compliant,0,28
+HealthcareAnalytics,AI SPM Asset,spm-003,Dr Emily Watson,Healthcare,GCP,CV model,false,"PHI; PII",78,0.42,5,3,"CVE-2024-11111; CVE-2024-22222",8,5,81,Non-compliant,Partial,Non-compliant,8,89
+MarketingCopilot,AI SPM Asset,spm-004,Unknown,Marketing,AWS,Agent,true,PII,45,0.67,8,5,"CVE-2024-33333; CVE-2024-44444; CVE-2024-55555",123,12,94,Non-compliant,Non-compliant,Non-compliant,15,95
+FinancialForecast,AI SPM Asset,spm-005,Robert Williams,Finance,On-premise,LLM,false,"Financial; IP",88,0.18,1,0,,5,0,25,Compliant,Compliant,Compliant,0,22
+HRAssistant,AI SPM Asset,spm-006,Lisa Anderson,Human Resources,Azure,LLM,false,PII,82,0.28,3,2,CVE-2024-66666,34,3,55,Partial,Compliant,Partial,4,58
+CodeReviewer,AI SPM Asset,spm-007,Michael Brown,Engineering,GCP,Fine-tuned model,false,IP,90,0.12,0,0,,18,1,28,Compliant,Compliant,Compliant,1,26
+SalesPredictor,AI SPM Asset,spm-008,Unknown,Sales,AWS,Agent,true,"Financial; PII",52,0.58,6,4,"CVE-2024-77777; CVE-2024-88888",89,7,87,Non-compliant,Non-compliant,Partial,11,84
+SupplyChainOptimiser,AI SPM Asset,spm-009,Amanda Taylor,Operations,Azure,LLM,false,IP,86,0.21,2,1,CVE-2024-99999,23,1,42,Compliant,Compliant,Compliant,2,38
+FraudDetector,AI SPM Asset,spm-010,David Martinez,Risk Management,On-premise,CV model,false,"Financial; PII",94,0.09,0,0,,3,0,18,Compliant,Compliant,Compliant,0,15
+ChatbotAlpha,AI SPM Asset,spm-011,Unknown,IT,AWS,LLM,true,PII,38,0.73,9,6,"CVE-2024-10101; CVE-2024-10102; CVE-2024-10103",156,15,96,Non-compliant,Non-compliant,Non-compliant,18,97
+ProductRecommender,AI SPM Asset,spm-012,Jessica Lee,E-commerce,GCP,Agent,false,PII,75,0.32,3,2,CVE-2024-10104,41,3,62,Partial,Partial,Compliant,5,65
+ContractAnalyser,AI SPM Asset,spm-013,Thomas Green,Procurement,Azure,Fine-tuned model,false,"IP; Financial",89,0.16,1,0,,14,0,31,Compliant,Compliant,Compliant,1,29
+SentimentAnalyser,AI SPM Asset,spm-014,Maria Rodriguez,Customer Insights,AWS,LLM,false,PII,80,0.25,2,1,CVE-2024-10105,28,2,48,Compliant,Compliant,Partial,3,52
+ImageClassifier,AI SPM Asset,spm-015,Kevin Park,Quality Assurance,GCP,CV model,false,None,91,0.08,0,0,,2,0,15,Compliant,Compliant,Compliant,0,12

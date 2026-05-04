@@ -1,0 +1,9 @@
+Component Name,Component Type,Model ID,Input Cost (per M tokens),Output Cost (per M tokens),Context Window,Estimated Monthly Spend (NOK),Pricing Notes
+ChatGPT-5o,Model Pricing,mrm-001,$2.50,$10.00,128K tokens,45000,Enterprise API pricing with volume discounts available
+Claude Sonnet,Model Pricing,mrm-002,$3.00,$15.00,200K tokens,38000,Enterprise API pricing with dedicated capacity option
+DeepSeek R1,Model Pricing,mrm-003,$0.24,$0.38,164K tokens,5200,Pay-per-use API pricing via OpenRouter
+Gemini 2.0 Pro,Model Pricing,mrm-004,$1.25,$5.00,1M tokens,22000,Cloud API pricing with committed use discounts
+Mistral Large,Model Pricing,mrm-005,$2.00,$6.00,128K tokens,15000,API pricing with self-hosting option available
+Llama 3.1 70B,Model Pricing,mrm-006,$0.70,$0.90,128K tokens,8500,Self-hosted or API via third-party providers
+Whisper Large v3,Model Pricing,mrm-007,$0.006/min audio,N/A,30s audio chunks,12000,Per-minute audio processing pricing
+Stable Diffusion XL,Model Pricing,mrm-008,$0.002/image,$0.02/image,N/A,3500,Per-image generation pricing

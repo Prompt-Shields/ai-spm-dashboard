@@ -1,0 +1,23 @@
+Component Name,Description,Custom ID,Provider,Version,Model Category,Parameters,Lifecycle Status,Input Cost Per M Tokens,Output Cost Per M Tokens,Context Window,Estimated Monthly Spend NOK,Tags
+GPT-4o,OpenAI flagship LLM with excellent reasoning and instruction following. Large ecosystem; high enterprise compatibility.,tp-gpt4o,OpenAI,1.0,LLM,1.8 trillion,Production,$2.50,$10.00,128K tokens,45000,"ai-model,llm,openai"
+ChatGPT-5o,Next-generation OpenAI LLM evaluated for enterprise deployment.,tp-chatgpt5o,OpenAI,1.0,LLM,1.8 trillion,Production,$2.50,$10.00,128K tokens,45000,"ai-model,llm,openai"
+Claude 3.5 Sonnet,Anthropic LLM with strong safety guardrails; excellent at analysis and nuanced tasks.,tp-claude35,Anthropic,3.5,LLM,Unknown,Production,$3.00,$15.00,200K tokens,38000,"ai-model,llm,anthropic"
+Gemini Pro,Google LLM with excellent multimodal reasoning and long context window support.,tp-gemini,Google,2.0,LLM,540B,Production,$1.25,$5.00,1M tokens,22000,"ai-model,llm,google"
+GitHub Copilot,Microsoft AI coding assistant integrated into IDE for engineering staff.,tp-copilot,Microsoft,,LLM,,Production,,,,,ai-model,llm,microsoft,coding
+Llama 3,Meta open-source LLM with strong performance for self-hosted deployments.,tp-llama3,Meta,3.1,LLM,70B,Production,$0.70,$0.90,128K tokens,8500,"ai-model,llm,meta,open-source"
+Mistral Large,Mistral AI LLM with strong European language support and efficient architecture.,tp-mistral,Mistral AI,2.0,LLM,123B,Production,$2.00,$6.00,128K tokens,15000,"ai-model,llm,mistral"
+DeepSeek R1,DeepSeek reasoning model with cost-efficient Mixture of Experts architecture. Open-weight.,tp-deepseek,DeepSeek,R1,LLM,671B (37B MoE active),Evaluation,$0.24,$0.38,164K tokens,5200,"ai-model,llm,deepseek,open-weight"
+Whisper Large v3,OpenAI industry-leading speech recognition across multiple languages.,tp-whisper,OpenAI,3.0,Speech,1.5B,Production,$0.006/min,,30s chunks,12000,"ai-model,speech,openai"
+Stable Diffusion XL,Stability AI flexible image generation with fine-tuning capabilities.,tp-sdxl,Stability AI,1.0,Image Generation,6.6B,Production,$0.002/image,$0.02/image,,3500,"ai-model,image-gen,stability-ai"
+GPT-4o Vision,OpenAI multimodal model for image and document analysis.,tp-gpt4o-vision,OpenAI,,Computer Vision,,Production,,,,,ai-model,vision,openai
+Custom Fraud Classifier,Internal ML classifier for insurance claims fraud detection.,tp-fraud-ml,Internal,,Machine Learning,,Production,,,,,"ai-model,custom,fraud"
+Custom Sentiment Model,Internal sentiment analysis model for customer interaction monitoring.,tp-sentiment-ml,Internal,,Machine Learning,,Production,,,,,"ai-model,custom,sentiment"
+CV Classifier (HireVue),Third-party AI classifier for candidate CV screening and ranking.,tp-cv-hirevue,HireVue,,Machine Learning,,Production,,,,,"ai-model,third-party,hr"
+Interview AI (HireVue),Third-party AI for video interview scoring using facial and speech analysis.,tp-interview-hirevue,HireVue,,Computer Vision,,Production,,,,,"ai-model,third-party,hr,high-risk"
+Custom Risk Model,Internal ML model for enterprise-wide risk scoring.,tp-risk-ml,Internal,,Machine Learning,,Production,,,,,"ai-model,custom,risk"
+Custom Underwriting Model,Internal model for underwriting policy risk assessment.,tp-underwriting-ml,Internal,,Machine Learning,,Production,,,,,"ai-model,custom,underwriting"
+Azure OpenAI (Claims),Azure-hosted OpenAI v2.4.1 for claims assessment.,tp-azure-openai-claims,Microsoft Azure,v2.4.1,LLM,,Production,,,,78500,"ai-model,azure,claims"
+Anthropic Claude (Chatbot),Anthropic Claude 3 Sonnet for customer service chatbot.,tp-claude-chatbot,Anthropic,claude-3-sonnet,Conversational AI,,Production,,,,124200,"ai-model,anthropic,chatbot"
+Custom ML (Underwriting),Internal custom ML v3.1.0 risk scoring model.,tp-custom-underwriting,Internal,v3.1.0,Risk Scoring,,Production,,,,45800,"ai-model,custom,underwriting"
+TensorFlow (Fraud),Internal TensorFlow v1.8.3 anomaly detection system.,tp-tf-fraud,Internal,v1.8.3,Anomaly Detection,,Production,,,,32100,"ai-model,tensorflow,fraud"
+Google Document AI,Google Document AI v1.2 for document understanding.,tp-google-docai,Google,v1.2,Document Understanding,,Production,,,,56300,"ai-model,google,document"

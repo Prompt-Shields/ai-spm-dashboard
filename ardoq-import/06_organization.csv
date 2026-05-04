@@ -1,0 +1,20 @@
+Component Name,Description,Custom ID,Tags
+Legal,Legal department responsible for contracts; compliance; and NDA management.,org-legal,department
+IT,Information Technology department responsible for engineering; infrastructure; and security.,org-it,department
+Claims,Claims department responsible for claims processing; fraud detection; and assessment.,org-claims,department
+Customer Service,Customer Service department handling customer queries; complaints; and engagement.,org-customer-service,department
+HR,Human Resources department responsible for recruitment; onboarding; and employee management.,org-hr,department
+Finance,Finance department responsible for reporting; budgeting; and financial operations.,org-finance,department
+Risk & Compliance,Risk & Compliance department responsible for risk scoring; regulatory tracking; and auditing.,org-risk,department
+Underwriting,Underwriting department responsible for policy risk assessment; pricing; and portfolio analysis.,org-underwriting,department
+Customer Support,Customer Support team handling direct customer interactions and service delivery.,org-customer-support,department
+Healthcare,Healthcare department responsible for medical analytics and patient monitoring.,org-healthcare,department
+Marketing,Marketing department responsible for campaigns; content; and SEO.,org-marketing,department
+Sales,Sales department responsible for lead management and pipeline forecasting.,org-sales,department
+Engineering,Engineering department responsible for software development and code quality.,org-engineering,department
+Operations,Operations department responsible for supply chain and logistics optimisation.,org-operations,department
+Risk Management,Risk Management team responsible for fraud detection and transaction monitoring.,org-risk-mgmt,department
+E-commerce,E-commerce department responsible for product recommendations and personalisation.,org-ecommerce,department
+Procurement,Procurement department responsible for contract analysis and vendor management.,org-procurement,department
+Customer Insights,Customer Insights team responsible for sentiment analysis and brand monitoring.,org-customer-insights,department
+Quality Assurance,Quality Assurance department responsible for product inspection and defect detection.,org-qa,department

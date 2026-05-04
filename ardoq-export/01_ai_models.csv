@@ -1,0 +1,15 @@
+Component Name,Component Type,Description,Provider,Version,Model Category,Parameters,Status,Overall Risk Score,Hallucination Risk,Bias Risk,Toxicity Risk,Privacy Risk,Security Risk,Compliance Risk,Approved Use Cases,Last Evaluated
+ChatGPT-5o,AI Model,"Excellent reasoning and instruction following. Large ecosystem, high compatibility with enterprise workflows.",OpenAI,1.0,LLM,1.8 trillion,Production,70,68,75,65,70,55,65,"Customer Support; Knowledge Work Support; Code Assistance; Document Analysis",2024-03-15
+Claude Sonnet,AI Model,"Strong safety guardrails, excellent at analysis and nuanced tasks.",Anthropic,3.5,LLM,Unknown,Production,45,35,40,30,45,40,55,"Document Analysis; Research Support; Code Review; Compliance Checking",2024-03-14
+DeepSeek R1,AI Model,"Strong reasoning capability with cost-efficient architecture using Mixture of Experts. Open-weight model.",DeepSeek,R1,LLM,671B (37B MoE active),Evaluation,78,72,80,85,82,75,70,"Research; Code Analysis; Data Processing",2024-03-20
+Gemini 2.0 Pro,AI Model,"Excellent multimodal reasoning and long context window support.",Google,2.0,LLM,540B,Production,52,48,50,45,55,50,58,"Multimodal Analysis; Document Understanding; Research Support; Translation",2024-03-13
+Mistral Large,AI Model,"Strong European language support and efficient architecture.",Mistral,2.0,LLM,123B,Production,58,52,55,50,60,52,62,"European Language Tasks; Compliance; Contract Analysis; Translation",2024-03-16
+Llama 3.1 70B,AI Model,"Open-source flexibility with strong performance for self-hosted deployments.",Meta,3.1,LLM,70B,Production,60,55,58,52,58,48,65,"Internal Document Search; Training Assistance; Code Generation; Research",2024-03-15
+Whisper Large v3,AI Model,"Industry-leading speech recognition accuracy across multiple languages.",OpenAI,3.0,Speech,1.5B,Production,35,25,30,20,45,30,35,"Transcription; Meeting Notes; Voice Commands; Accessibility",2024-03-12
+Stable Diffusion XL,AI Model,"Flexible image generation with fine-tuning capabilities.",Stability AI,1.0,Image Generation,6.6B,Production,48,40,55,60,42,35,45,"Marketing Images; Product Visualisation; Design Prototyping",2024-03-18
+GPT-4o,AI Model (AIMAPS),"OpenAI large language model used across Legal, Claims, Customer Service, HR, Finance, Risk & Compliance, and Underwriting departments.",OpenAI,,LLM,,,,,,,,,,,
+Claude 3.5 Sonnet,AI Model (AIMAPS),"Anthropic large language model used for Legal, IT, Claims, Customer Service, HR, and Risk & Compliance use cases.",Anthropic,,LLM,,,,,,,,,,,
+Gemini Pro,AI Model (AIMAPS),"Google large language model used across Claims, Customer Service, HR, Finance, Risk & Compliance, and Underwriting.",Google,,LLM,,,,,,,,,,,
+GitHub Copilot,AI Model (AIMAPS),"Microsoft AI coding assistant integrated into IDE for engineering staff.",Microsoft,,LLM,,,,,,,,,,,
+Llama 3,AI Model (AIMAPS),"Meta open-source LLM used for Customer Service, Finance, and Underwriting use cases.",Meta,,LLM,,,,,,,,,,,
+Mistral Large,AI Model (AIMAPS),"Mistral AI large language model used for Customer Service, HR, Finance, Risk & Compliance tasks.",Mistral AI,,LLM,,,,,,,,,,,

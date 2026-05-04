@@ -1,0 +1,7 @@
+Component Name,Component Type,Prompt ID,Associated Model,Category,Version,Last Modified,Approval Status,Risk Level,Injection Protection,Output Validation,Human Review Policy,Avg Tokens,Description
+Claims Initial Assessment,Prompt Template,prompt-1,Claims Assessment AI,Decision Support,v3.2,2024-11-10,approved,high,true,true,Required for >NOK 100k,2400,Evaluates claims against policy terms.
+Customer Query Response,Prompt Template,prompt-2,Kundeservice Chatbot,Customer Service,v5.1,2024-11-18,approved,medium,true,true,Escalation triggers,850,Handles customer inquiries in Norwegian/English.
+Policy Terms Explanation,Prompt Template,prompt-3,Kundeservice Chatbot,Information,v2.8,2024-10-25,approved,low,true,true,Not required,1200,Explains policy terms in plain language.
+Fraud Pattern Analysis,Prompt Template,prompt-4,Claims Assessment AI,Risk Detection,v1.4,2024-09-15,approved,high,true,true,Always required,3200,Analyses claims for fraud indicators.
+Document Classification,Prompt Template,prompt-5,Document Processing AI,Automation,v2.0,2024-11-05,approved,low,true,true,Sampling only,600,Classifies and routes documents.
+Underwriting Summary,Prompt Template,prompt-6,Claims Assessment AI,Decision Support,v1.9,2024-10-30,under-review,high,true,true,Always required,2800,Generates underwriting summaries.
