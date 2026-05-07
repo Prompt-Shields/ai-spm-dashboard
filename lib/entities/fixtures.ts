@@ -30,14 +30,14 @@ export function ensureFixturesSeeded(): void {
   const now = nowIso()
 
   // ─── Technical Capabilities — REQUIRED ROOT for Ardoq AI Lens ─────
-  const capabilities: Array<Parameters<typeof technicalCapabilitiesStore.upsert>[0]> = [
-    { id: "cap-ai", level1: "Artificial Intelligence", description: "Root capability for AI Lens detection", tenantId: t, tags: ["ai-root"] },
-    { id: "cap-llm", level1: "Artificial Intelligence", level2: "LLM", description: "Large language models", tenantId: t, tags: ["ai", "llm"] },
-    { id: "cap-vision", level1: "Artificial Intelligence", level2: "Computer Vision", description: "Image / video analysis", tenantId: t, tags: ["ai", "vision"] },
-    { id: "cap-speech", level1: "Artificial Intelligence", level2: "Speech", description: "Speech recognition + synthesis", tenantId: t, tags: ["ai", "speech"] },
-    { id: "cap-imagegen", level1: "Artificial Intelligence", level2: "Image Generation", description: "Text-to-image and image-to-image", tenantId: t, tags: ["ai", "imagegen"] }
+  const capabilities = [
+    { id: "cap-ai", level1: "Artificial Intelligence", description: "Root capability for AI Lens detection", tags: ["ai-root"] },
+    { id: "cap-llm", level1: "Artificial Intelligence", level2: "LLM", description: "Large language models", tags: ["ai", "llm"] },
+    { id: "cap-vision", level1: "Artificial Intelligence", level2: "Computer Vision", description: "Image / video analysis", tags: ["ai", "vision"] },
+    { id: "cap-speech", level1: "Artificial Intelligence", level2: "Speech", description: "Speech recognition + synthesis", tags: ["ai", "speech"] },
+    { id: "cap-imagegen", level1: "Artificial Intelligence", level2: "Image Generation", description: "Text-to-image and image-to-image", tags: ["ai", "imagegen"] }
   ]
-  for (const c of capabilities) technicalCapabilitiesStore.upsert(c as never)
+  for (const c of capabilities) technicalCapabilitiesStore.upsert({ ...c, tenantId: t, createdAt: now, updatedAt: now })
 
   // ─── Organizational Units ─────────────────────────────────────────
   const orgs = [

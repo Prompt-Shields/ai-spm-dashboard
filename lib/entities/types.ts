@@ -175,7 +175,7 @@ export interface TechnologyProduct extends TenantScoped, Timestamped {
 // ─── Technical Capability ────────────────────────────────────────────
 // Read-only seeded hierarchy; required by Ardoq AI Lens to detect AI Systems.
 
-export interface TechnicalCapability extends TenantScoped {
+export interface TechnicalCapability extends TenantScoped, Timestamped {
   id: CustomId
   level1: string                     // "Artificial Intelligence" (root, exact name)
   level2?: string                    // "LLM", "Computer Vision", ...
