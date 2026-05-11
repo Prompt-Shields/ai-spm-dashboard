@@ -1,8 +1,11 @@
 // /adoption — the dashboard's "is anyone actually using this" page.
-// Currently hosts only the guided-tour engagement section; future
-// adoption-flavoured tiles (DAU/MAU, tutorials completed, templates
+// Surfaces two slices of Promptly's on-device telemetry:
+//   - AdoptionSummarySection: DAU/MAU, top apps, risk action mix
+//   - TourFunnelSection: guided-tour engagement funnel
+// Future adoption-flavoured tiles (tutorials completed, templates
 // invoked, ticket deflection) will land here too.
 
+import { AdoptionSummarySection } from "@/components/adoption-summary-section"
 import { TourFunnelSection } from "@/components/tour-funnel-section"
 
 export const dynamic = "force-dynamic"
@@ -12,7 +15,7 @@ export const metadata = {
 
 export default function AdoptionPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
         <h1 className="text-xl font-bold text-slate-900">Adoption</h1>
         <p className="text-sm text-slate-500 mt-0.5">
@@ -22,6 +25,7 @@ export default function AdoptionPage() {
         </p>
       </div>
 
+      <AdoptionSummarySection />
       <TourFunnelSection />
     </div>
   )

@@ -2,8 +2,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Map, Radio, ClipboardList, Users, ShieldCheck, AlertTriangle, Play, Shield, TrendingUp } from 'lucide-react'
+import { Map, Radio, ClipboardList, Users, ShieldCheck, Play, Shield, TrendingUp } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { LiveViolationPill } from '@/components/live-violation-pill'
 
 const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/', label: 'Map', Icon: Map },
@@ -57,10 +58,7 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-red-600">
-            <AlertTriangle size={12} />
-            12 Critical Risks
-          </div>
+          <LiveViolationPill />
           <button
             onClick={onStartDemo}
             className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
