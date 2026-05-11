@@ -53,6 +53,10 @@ export type ActionType =
   | "rewrite"
   | "notify"
   | "require_review"
+  // Promptly-emitted "no-op" tick. Fires for every prompt that ran the
+  // PEP and matched no policy. Gives the dashboard a denominator for
+  // false-positive rates (totalEvaluations vs totalHits).
+  | "evaluated"
 
 export interface Action {
   type: ActionType
@@ -256,6 +260,10 @@ export interface PolicyViolation {
     detectorOutput: string
     matchedPattern?: string
     confidence?: number
+    /// Optional URL host when the prompt was observed inside a browser
+    /// tab. Lets the dashboard scope per-domain rules and shows up in
+    /// the Ardoq export's "where" column.
+    urlHost?: string
   }
   reviewed: boolean
   reviewedBy?: string
