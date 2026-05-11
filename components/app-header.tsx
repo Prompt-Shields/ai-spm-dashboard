@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Map, Radio, ClipboardList, Users, ShieldCheck, AlertTriangle, Play, Shield } from 'lucide-react'
+import { Map, Radio, ClipboardList, Users, ShieldCheck, AlertTriangle, Play, Shield, TrendingUp } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
@@ -12,6 +12,7 @@ const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/owners', label: 'Owners', Icon: Users },
   { href: '/comply', label: 'Comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', label: 'Policies', Icon: Shield },
+  { href: '/adoption', label: 'Adoption', Icon: TrendingUp },
 ]
 
 interface AppHeaderProps {
