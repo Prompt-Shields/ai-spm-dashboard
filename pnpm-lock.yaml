@@ -113,6 +113,9 @@ importers:
       embla-carousel-react:
         specifier: 8.5.1
         version: 8.5.1(react@19.2.0)
+      fflate:
+        specifier: ^0.8.3
+        version: 0.8.3
       framer-motion:
         specifier: ^12.38.0
         version: 12.38.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -1438,6 +1441,9 @@ packages:
   fast-equals@5.4.0:
     resolution: {integrity: sha512-jt2DW/aNFNwke7AUd+Z+e6pz39KO5rzdbbFCg2sGafS4mk13MI7Z8O5z9cADNn5lhGODIgLwug6TZO2ctf7kcw==}
     engines: {node: '>=6.0.0'}
+
+  fflate@0.8.3:
+    resolution: {integrity: sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==}
 
   float-tooltip@1.7.5:
     resolution: {integrity: sha512-/kXzuDnnBqyyWyhDMH7+PfP8J/oXiAavGzcRxASOMRHFuReDtofizLLJsf7nnDLAfEaMW4pVWaXrAjtnglpEkg==}
@@ -3074,6 +3080,8 @@ snapshots:
   eventemitter3@4.0.7: {}
 
   fast-equals@5.4.0: {}
+
+  fflate@0.8.3: {}
 
   float-tooltip@1.7.5:
     dependencies:
