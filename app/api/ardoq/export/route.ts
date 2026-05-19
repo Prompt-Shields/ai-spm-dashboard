@@ -11,18 +11,27 @@
 //                (`atlas-ardoq-export-YYYY-MM-DD.zip`). The 80% admin
 //                path now: one click, one download.
 //
+// Authentication: requires `Authorization: Bearer <ATLAS_ADMIN_API_KEY>`
+//   on every mode. The endpoint dumps the entire tenant inventory —
+//   including PII, owner emails, data classifications — so leaving it
+//   open is not acceptable. The gate is a shared-secret stopgap until
+//   the atlas.ai session-based auth port lands (see lib/auth/admin-gate).
+//
 // All responses are tenant-scoped. We use DEFAULT_TENANT_ID until the
 // auth layer is wired up; the boundary is centralised in
 // `lib/entities/types.ts` so cursor's atlas.ai port flips this in one place.
 
 import { NextResponse, type NextRequest } from "next/server"
 import { zipSync, strToU8 } from "fflate"
+import { requireAdminAuth } from "@/lib/auth/admin-gate"
 import { exportArdoqBundle } from "@/lib/entities/ardoq-export"
 import { DEFAULT_TENANT_ID } from "@/lib/entities/types"
 
 export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest) {
+  const denial = requireAdminAuth(req)
+  if (denial) return denial
   const url = new URL(req.url)
   const fileParam = url.searchParams.get("file")
   const bundleParam = url.searchParams.get("bundle")
