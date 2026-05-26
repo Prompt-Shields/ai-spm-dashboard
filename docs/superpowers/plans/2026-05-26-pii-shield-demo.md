@@ -137,7 +137,7 @@ describe('detectPII', () => {
   it('detects a Luhn-valid credit card and ignores invalid digit runs', () => {
     const ok = detectPII('card 4111 1111 1111 1111 here')
     expect(ok.some(x => x.type === 'CREDIT_CARD' && x.value === '4111 1111 1111 1111')).toBe(true)
-    const bad = detectPII('order number 1234 5678 1234 5670')
+    const bad = detectPII('order number 1234 5678 1234 5678')
     expect(bad.some(x => x.type === 'CREDIT_CARD')).toBe(false)
   })
   it('detects SSN and does NOT also report it as a phone', () => {
