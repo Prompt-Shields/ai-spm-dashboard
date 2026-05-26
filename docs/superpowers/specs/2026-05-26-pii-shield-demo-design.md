@@ -85,10 +85,11 @@ interface AnonymizeResult {
 - If the masked prompt contains no placeholders, returns a plain helpful answer (no tokens to restore).
 
 **`examples.ts` — `EXAMPLE_PROMPTS: { label: string; text: string }[]`**
-- 3–4 one-click sample prompts pre-loaded with PII across several types, e.g.:
+- Exactly 3 one-click sample prompts pre-loaded with PII across several types:
   - "Draft a payment-reminder email to Sarah Chen at sarah.chen@acme.com — her invoice tied to card 4111 1111 1111 1111 is overdue."
   - A support-ticket example with phone + SSN.
   - An example with an API key (`sk-...`) and an IP address.
+- These 3 prompts are the **acceptance fixtures** for the heuristic PERSON/ADDRESS detection: the detector must correctly handle these specific prompts (e.g. "Sarah Chen"); general-purpose name/address accuracy is explicitly out of scope.
 
 ### UI
 
@@ -140,7 +141,7 @@ inputText
 
 ## Testing
 
-Add **Vitest** as a dev dependency with an `npm test` script, scoped to `lib/pii`:
+Add **Vitest** as a dev dependency with an `npm test` script. Add a `vitest.config.ts` (or `package.json` config) that scopes test discovery to `lib/pii/**` so the runner does not try to collect the Next.js/React files. Test files:
 - `detector.test.ts`: each PII type detected in representative strings; Luhn rejects invalid card numbers; no false positives on clean text; overlap resolution.
 - `anonymizer.test.ts`: **round-trip property** — `deanonymize(anonymize(text, detectPII(text)).masked, mapping) === text` for the example prompts; repeated values reuse one placeholder; `[EMAIL_10]` not corrupted by `[EMAIL_1]` restore.
 - `mock-chatgpt.test.ts`: reply only ever contains placeholder tokens (never raw PII) given a masked prompt.
