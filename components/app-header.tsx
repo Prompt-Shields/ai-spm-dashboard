@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { Map, Radio, ClipboardList, Users, ShieldCheck, Play, Shield, TrendingUp, EyeOff } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { LiveViolationPill } from '@/components/live-violation-pill'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/', label: 'Map', Icon: Map },
@@ -59,6 +60,7 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
+          <LanguageSwitcher />
           <LiveViolationPill />
           <button
             onClick={onStartDemo}
