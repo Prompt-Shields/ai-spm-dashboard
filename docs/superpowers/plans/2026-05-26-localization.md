@@ -184,12 +184,18 @@ export function resolveLocale({ cookie, country, acceptLanguage }: Input): Local
 - [ ] **Step 1: Create `en.ts` with the chrome namespaces needed to wire everything** (page namespaces are filled in Phase B; start with `common` + `nav`):
 
 ```ts
+// NB: do NOT use `as const` here. Messages = typeof en must be the WIDENED
+// shape (values typed as `string`) so nb/fr can hold translated values
+// ("Atlas KI", "Norsk", …). `as const` would make Messages carry literal
+// types ('Atlas AI') and every translated value would be a type error.
+// Shape drift (missing/extra keys) is still caught by typing nb/fr as Messages
+// + the completeness test.
 export const en = {
   common: { appName: 'Atlas AI', tagline: 'Mapping AI use cases with risks', startDemo: 'Start Demo' },
-  nav: { map: 'Map', discover: 'Discover', register: 'Register', owners: 'Owners', comply: 'Comply', policies: 'Policies', adoption: 'Adoption', piiShield: 'PII Shield Demo' },
-} as const
+  nav: { map: 'Map', discover: 'Discover', register: 'Register', owners: 'Owners', comply: 'Comply', policies: 'Policies', piiShield: 'PII Shield Demo' },
+}
 ```
-(Note: include `adoption`/`piiShield` only if those tabs exist on this branch; this branch has `piiShield`. Adjust to the actual NAV.)
+(Note: this branch's NAV has `piiShield` and no `adoption`. Match the actual `NAV` array in `components/app-header.tsx`.)
 
 - [ ] **Step 2: Create `types.ts`**
 
@@ -376,7 +382,7 @@ import type { Messages } from '../types'
 import { en } from './en'
 export const nb: Messages = { ...en } // deep-translated in Phase B
 ```
-(Use a structured copy — duplicate the en object literal so values can diverge per locale; a shallow spread is fine to start since nested objects are replaced wholesale per namespace in Phase B.)
+(Use a structured copy — duplicate the en object literal so values can diverge per locale; a shallow spread is fine to start since nested objects are replaced wholesale per namespace in Phase B. **Phase B agents must REASSIGN a namespace's object, never mutate the shared nested object in place** — otherwise a shallow-spread placeholder would leak edits across locales.)
 
 - [ ] **Step 2: Write the completeness test `completeness.test.ts`**
 
@@ -421,7 +427,7 @@ describe('catalog completeness', () => {
 6. Commit per namespace: `feat(i18n): localize <page>`.
 
 ### Task 9: Localize app chrome
-`components/app-header.tsx` (nav labels via `nav.*`, `common.startDemo`), and any shared components (`kpi-card`, `risk-chip`, detail panels). Namespace: `nav`, `common`.
+`components/app-header.tsx` (nav labels via `nav.*`, plus the hardcoded chrome strings: `common.startDemo` = "Start Demo", `common.appName` = "Atlas AI", `common.tagline` = "Mapping AI use cases with risks", and the `"12 Critical Risks"` pill text), the `metadata.title`/`metadata.description` in `app/layout.tsx`, and any shared components (`kpi-card`, `risk-chip`, detail panels). Namespace: `nav`, `common`. (Note: `metadata` is set in a server file, so build it from `getMessages(await getLocale())` via Next's `generateMetadata` if you want it localized too.)
 
 ### Task 10–N: Localize each page (one task/agent per page)
 One per route, each owning its namespace:
