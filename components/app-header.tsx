@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { Map, Radio, ClipboardList, Users, ShieldCheck, AlertTriangle, Play, Shield, EyeOff } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/', label: 'Map', Icon: Map },
@@ -57,6 +58,7 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
+          <LanguageSwitcher />
           <div className="flex items-center gap-1.5 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-red-600">
             <AlertTriangle size={12} />
             12 Critical Risks
