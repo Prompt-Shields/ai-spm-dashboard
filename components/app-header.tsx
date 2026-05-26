@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Map, Radio, ClipboardList, Users, ShieldCheck, Play, Shield, TrendingUp } from 'lucide-react'
+import { Map, Radio, ClipboardList, Users, ShieldCheck, Play, Shield, TrendingUp, EyeOff } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { LiveViolationPill } from '@/components/live-violation-pill'
 
@@ -14,6 +14,7 @@ const NAV: { href: string; label: string; Icon: LucideIcon }[] = [
   { href: '/comply', label: 'Comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', label: 'Policies', Icon: Shield },
   { href: '/adoption', label: 'Adoption', Icon: TrendingUp },
+  { href: '/pii-shield', label: 'PII Shield Demo', Icon: EyeOff },
 ]
 
 interface AppHeaderProps {
