@@ -1,0 +1,26 @@
+export const register = {
+  title: 'Register',
+  subtitle: '{count} bruksområder · {shadow} skygge-KI',
+  exportCsv: 'Eksporter CSV',
+  status: {
+    discovered: 'Oppdaget',
+    assessed: 'Vurdert',
+    owned: 'Eid',
+    mitigated: 'Avhjulpet',
+    compliant: 'Etterlevd',
+  },
+  searchPlaceholder: 'Søk i bruksområder …',
+  allDepartments: 'Alle avdelinger',
+  allStatuses: 'Alle statuser',
+  resultsCount: '{count} treff',
+  columns: {
+    useCase: 'Bruksområde',
+    department: 'Avdeling',
+    model: 'Modell',
+    owner: 'Eier',
+    topRisk: 'Høyeste risiko',
+    status: 'Status',
+  },
+  shadowAiBadge: 'Skygge-KI',
+  unowned: 'Uten eier',
+}
