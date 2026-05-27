@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { DemoWrapper } from '@/components/demo-wrapper'
-import { getLocale, getMessages } from '@/lib/i18n/server'
+import { getLocale, getMessages, getT } from '@/lib/i18n/server'
 import { LocaleProvider } from '@/lib/i18n/provider'
 
-export const metadata: Metadata = {
-  title: 'Atlas AI — Mapping AI Use Cases with Risks',
-  description: 'Map your organisation\'s AI use cases to risks, owners, and compliance frameworks',
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getT()
+  return {
+    title: t('common.metaTitle'),
+    description: t('common.metaDescription'),
+  }
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

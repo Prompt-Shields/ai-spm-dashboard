@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import { aiSpmMetrics, aiSpmAssets } from "@/lib/mock-data"
 import { insuranceAiRiskRegister, insuranceNetworkTopology } from "@/lib/insurance-data"
+import { useT } from "@/lib/i18n/provider"
 import {
   AlertTriangle,
   Brain,
@@ -22,6 +23,7 @@ import {
 } from "lucide-react"
 
 export default function AIGovernancePage() {
+  const t = useT()
   const [expandedRisk, setExpandedRisk] = useState<string | null>(null)
 
   const criticalRisks = insuranceAiRiskRegister.filter((r) => r.severity === "Critical").length
@@ -76,8 +78,8 @@ export default function AIGovernancePage() {
       <main className="container mx-auto px-6 py-8 space-y-8 max-w-[1400px]">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-semibold">AI Governance</h1>
-          <p className="text-muted-foreground mt-1">Risk management, compliance, and network topology</p>
+          <h1 className="text-2xl font-semibold">{t('aiGovernance.title')}</h1>
+          <p className="text-muted-foreground mt-1">{t('aiGovernance.subtitle')}</p>
         </div>
 
         {/* Stats Row */}
@@ -86,7 +88,7 @@ export default function AIGovernancePage() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Critical Risks</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('aiGovernance.stats.criticalRisks')}</p>
                   <p className="text-3xl font-bold text-destructive mt-1">{criticalRisks}</p>
                 </div>
                 <div className="h-10 w-10 rounded-full bg-destructive/10 flex items-center justify-center">
@@ -100,7 +102,7 @@ export default function AIGovernancePage() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">High Priority</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('aiGovernance.stats.highPriority')}</p>
                   <p className="text-3xl font-bold text-warning mt-1">{highRisks}</p>
                 </div>
                 <div className="h-10 w-10 rounded-full bg-warning/10 flex items-center justify-center">
@@ -114,7 +116,7 @@ export default function AIGovernancePage() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">AI Systems</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('aiGovernance.stats.aiSystems')}</p>
                   <p className="text-3xl font-bold mt-1">
                     {insuranceNetworkTopology.filter((n) => n.type === "model").length}
                   </p>
@@ -130,7 +132,7 @@ export default function AIGovernancePage() {
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Compliance</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t('aiGovernance.stats.compliance')}</p>
                   <p className="text-3xl font-bold text-primary mt-1">{aiSpmMetrics.complianceScore}%</p>
                 </div>
                 <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -144,9 +146,9 @@ export default function AIGovernancePage() {
         {/* Tabbed Content */}
         <Tabs defaultValue="risks" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="risks">Risk Register</TabsTrigger>
-            <TabsTrigger value="topology">Network Topology</TabsTrigger>
-            <TabsTrigger value="inventory">AI Inventory</TabsTrigger>
+            <TabsTrigger value="risks">{t('aiGovernance.tabs.risks')}</TabsTrigger>
+            <TabsTrigger value="topology">{t('aiGovernance.tabs.topology')}</TabsTrigger>
+            <TabsTrigger value="inventory">{t('aiGovernance.tabs.inventory')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="risks" className="space-y-4">
@@ -181,19 +183,19 @@ export default function AIGovernancePage() {
                     {expandedRisk === risk.id && (
                       <div className="mt-4 pt-4 border-t grid gap-4 md:grid-cols-2">
                         <div className="space-y-2">
-                          <p className="text-sm font-medium">Impact</p>
+                          <p className="text-sm font-medium">{t('aiGovernance.risk.impact')}</p>
                           <p className="text-sm text-muted-foreground">{risk.businessImpact}</p>
                         </div>
                         <div className="space-y-2">
-                          <p className="text-sm font-medium">Mitigation</p>
+                          <p className="text-sm font-medium">{t('aiGovernance.risk.mitigation')}</p>
                           <p className="text-sm text-muted-foreground">{risk.mitigationStrategy}</p>
                         </div>
                         <div className="space-y-2">
-                          <p className="text-sm font-medium">Owner</p>
+                          <p className="text-sm font-medium">{t('aiGovernance.risk.owner')}</p>
                           <p className="text-sm text-muted-foreground">{risk.owner}</p>
                         </div>
                         <div className="space-y-2">
-                          <p className="text-sm font-medium">Residual Risk</p>
+                          <p className="text-sm font-medium">{t('aiGovernance.risk.residualRisk')}</p>
                           <p className="text-sm font-bold">{risk.residualRisk}</p>
                         </div>
                       </div>
@@ -209,19 +211,19 @@ export default function AIGovernancePage() {
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-primary"></div>
-                <span className="text-sm">AI Models</span>
+                <span className="text-sm">{t('aiGovernance.topology.aiModels')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                <span className="text-sm">Databases</span>
+                <span className="text-sm">{t('aiGovernance.topology.databases')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-                <span className="text-sm">External</span>
+                <span className="text-sm">{t('aiGovernance.topology.external')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                <span className="text-sm">Infrastructure</span>
+                <span className="text-sm">{t('aiGovernance.topology.infrastructure')}</span>
               </div>
             </div>
 
@@ -277,7 +279,7 @@ export default function AIGovernancePage() {
                       </div>
                       <p className="text-sm text-muted-foreground">{asset.description}</p>
                       <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
-                        <span>Owner: {asset.owner}</span>
+                        <span>{t('aiGovernance.inventory.owner', { owner: asset.owner })}</span>
                         <span className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {new Date(asset.lastUpdated).toLocaleDateString("en-GB")}
@@ -286,7 +288,7 @@ export default function AIGovernancePage() {
                     </div>
                     <div className="text-right">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm text-muted-foreground">Risk</span>
+                        <span className="text-sm text-muted-foreground">{t('aiGovernance.inventory.risk')}</span>
                         <span
                           className={`font-bold ${asset.riskScore >= 70 ? "text-destructive" : asset.riskScore >= 40 ? "text-warning" : "text-success"}`}
                         >

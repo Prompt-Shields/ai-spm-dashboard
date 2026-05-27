@@ -3,57 +3,50 @@ import { useState } from 'react'
 import { Satellite, Link2, ScanSearch } from 'lucide-react'
 import { AGENT_CONVERSATIONS, DISCOVERY_STATS } from '@/lib/aimaps-data'
 import { AgentConversationCard } from '@/components/agent-conversation-card'
+import { useT } from '@/lib/i18n/provider'
 import type { LucideIcon } from 'lucide-react'
 
 const ENTRY_CARDS: {
   Icon: LucideIcon
-  title: string
-  description: string
-  action: string
+  id: 'cisoCampaign' | 'selfRegistration' | 'autoDetect'
   color: 'indigo' | 'sky' | 'amber'
-  badge?: string
-  onClick?: () => void
+  badgeCount?: number
 }[] = [
   {
     Icon: Satellite,
-    title: 'CISO Discovery Campaign',
-    description: 'Send AI agents to interview all departments. Agents ask about AI tool usage, data handling, and risk exposure.',
-    action: 'Launch Campaign',
+    id: 'cisoCampaign',
     color: 'indigo',
   },
   {
     Icon: Link2,
-    title: 'Employee Self-Registration',
-    description: 'Share a link with staff. An AI agent interviews them conversationally and extracts use case data automatically.',
-    action: 'Copy Link',
+    id: 'selfRegistration',
     color: 'sky',
   },
   {
     Icon: ScanSearch,
-    title: 'Auto-Detect via Okta',
-    description: '12 new AI tools detected in your SaaS estate this week. Review and trigger intake agents for ungoverned tools.',
-    action: 'Review Alerts',
+    id: 'autoDetect',
     color: 'amber',
-    badge: '12 new',
+    badgeCount: 12,
   },
 ]
 
 export default function DiscoverPage() {
+  const t = useT()
   const [campaignLaunched, setCampaignLaunched] = useState(false)
 
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-slate-900">Discover</h1>
-        <p className="text-sm text-slate-500 mt-0.5">AI agents interview employees to map AI use cases — no forms, no manual entry</p>
+        <h1 className="text-xl font-bold text-slate-900">{t('discover.title')}</h1>
+        <p className="text-sm text-slate-500 mt-0.5">{t('discover.subtitle')}</p>
       </div>
 
       {/* Entry point cards */}
       <div className="grid grid-cols-3 gap-4 mb-8">
         {ENTRY_CARDS.map(card => {
-          const onClick = card.title === 'CISO Discovery Campaign' ? () => setCampaignLaunched(true) : undefined
+          const onClick = card.id === 'cisoCampaign' ? () => setCampaignLaunched(true) : undefined
           return (
-            <div key={card.title} className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <div key={card.id} className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
               <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 ${
                 card.color === 'indigo' ? 'bg-indigo-50 text-indigo-600' :
                 card.color === 'sky' ? 'bg-sky-50 text-sky-600' :
@@ -61,8 +54,8 @@ export default function DiscoverPage() {
               }`}>
                 <card.Icon size={18} />
               </div>
-              <h3 className="text-sm font-semibold text-slate-900 mb-1">{card.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed mb-4">{card.description}</p>
+              <h3 className="text-sm font-semibold text-slate-900 mb-1">{t(`discover.cards.${card.id}.title`)}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed mb-4">{t(`discover.cards.${card.id}.description`)}</p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={onClick}
@@ -72,10 +65,10 @@ export default function DiscoverPage() {
                     'bg-amber-100 hover:bg-amber-200 text-amber-700'
                   }`}
                 >
-                  {card.action}
+                  {t(`discover.cards.${card.id}.action`)}
                 </button>
-                {card.badge && (
-                  <span className="text-xs font-medium bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">{card.badge}</span>
+                {card.badgeCount !== undefined && (
+                  <span className="text-xs font-medium bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">{t('discover.cards.autoDetect.badge', { count: card.badgeCount })}</span>
                 )}
               </div>
             </div>
@@ -86,10 +79,10 @@ export default function DiscoverPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3 mb-6">
         {[
-          { label: 'Outreach Sent', value: DISCOVERY_STATS.outreachSent, color: 'text-slate-800' },
-          { label: 'Responded', value: DISCOVERY_STATS.responded, color: 'text-sky-600' },
-          { label: 'Use Cases Identified', value: DISCOVERY_STATS.useCasesFound, color: 'text-indigo-600' },
-          { label: 'Shadow AI Detected', value: DISCOVERY_STATS.shadowAiFound, color: 'text-red-500' },
+          { label: t('discover.stats.outreachSent'), value: DISCOVERY_STATS.outreachSent, color: 'text-slate-800' },
+          { label: t('discover.stats.responded'), value: DISCOVERY_STATS.responded, color: 'text-sky-600' },
+          { label: t('discover.stats.useCasesIdentified'), value: DISCOVERY_STATS.useCasesFound, color: 'text-indigo-600' },
+          { label: t('discover.stats.shadowAiDetected'), value: DISCOVERY_STATS.shadowAiFound, color: 'text-red-500' },
         ].map(s => (
           <div key={s.label} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm text-center">
             <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
@@ -100,7 +93,7 @@ export default function DiscoverPage() {
 
       {/* Conversation feed */}
       <div>
-        <h2 className="text-sm font-semibold text-slate-700 mb-3">Agent Conversations</h2>
+        <h2 className="text-sm font-semibold text-slate-700 mb-3">{t('discover.conversations')}</h2>
         <div className="grid grid-cols-2 gap-4">
           {AGENT_CONVERSATIONS.map((conv, i) => (
             <AgentConversationCard

@@ -11,11 +11,12 @@ import { aiSpmAssets } from "@/lib/mock-data"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { TemplateCloneClient } from "./client"
+import { getT } from "@/lib/i18n/server"
 
 export const dynamic = "force-static"
 
 export function generateStaticParams() {
-  return POLICY_TEMPLATES.map((t) => ({ id: t.id }))
+  return POLICY_TEMPLATES.map((tpl) => ({ id: tpl.id }))
 }
 
 export default async function TemplateDetailPage({
@@ -23,6 +24,7 @@ export default async function TemplateDetailPage({
 }: {
   params: Promise<{ id: string }>
 }) {
+  const t = await getT()
   const { id } = await params
   const template = getTemplateById(id)
   if (!template) return notFound()
@@ -39,7 +41,7 @@ export default async function TemplateDetailPage({
         href="/policy-enforcement/templates"
         className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
       >
-        ← Template library
+        {t('policyEnforcement.backToLibrary')}
       </Link>
 
       {/* Header */}
@@ -84,7 +86,7 @@ export default async function TemplateDetailPage({
         {/* Rationale */}
         <Card className="p-4">
           <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-            Rationale
+            {t('policyEnforcement.templateDetail.rationale')}
           </div>
           <p className="text-sm">{template.rationale}</p>
         </Card>
@@ -92,7 +94,7 @@ export default async function TemplateDetailPage({
         {/* Examples */}
         <Card className="p-4">
           <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-            Example violation
+            {t('policyEnforcement.templateDetail.exampleViolation')}
           </div>
           <code className="block text-[11px] bg-muted/40 rounded p-2 whitespace-pre-wrap">
             {template.exampleViolation}
@@ -100,7 +102,7 @@ export default async function TemplateDetailPage({
           {template.exampleSafeInput && (
             <>
               <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mt-3 mb-2">
-                Example safe input
+                {t('policyEnforcement.templateDetail.exampleSafeInput')}
               </div>
               <code className="block text-[11px] bg-green-50/40 dark:bg-green-950/10 rounded p-2 whitespace-pre-wrap">
                 {template.exampleSafeInput}
@@ -114,15 +116,15 @@ export default async function TemplateDetailPage({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="p-4">
           <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-            Triggers ({template.triggers.length})
+            {t('policyEnforcement.templateDetail.triggers', { count: template.triggers.length })}
           </div>
           <ul className="text-sm space-y-1.5">
-            {template.triggers.map((t, i) => (
+            {template.triggers.map((trigger, i) => (
               <li key={i}>
                 <Badge variant="outline" className="text-[10px] capitalize mr-2">
-                  {t.stage}
+                  {trigger.stage}
                 </Badge>
-                <span className="text-xs text-muted-foreground">{t.description}</span>
+                <span className="text-xs text-muted-foreground">{trigger.description}</span>
               </li>
             ))}
           </ul>
@@ -130,7 +132,7 @@ export default async function TemplateDetailPage({
 
         <Card className="p-4">
           <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-            Detectors ({template.detectors.length})
+            {t('policyEnforcement.templateDetail.detectors', { count: template.detectors.length })}
           </div>
           <ul className="text-sm space-y-1.5">
             {template.detectors.map((d) => (
@@ -151,7 +153,7 @@ export default async function TemplateDetailPage({
 
         <Card className="p-4">
           <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-            Actions ({template.actions.length})
+            {t('policyEnforcement.templateDetail.actions', { count: template.actions.length })}
           </div>
           <ul className="text-sm space-y-1.5">
             {template.actions.map((a, i) => (
@@ -169,7 +171,7 @@ export default async function TemplateDetailPage({
       {/* Tunable parameters */}
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3">
-          Tunable parameters ({template.tunableParameters.length})
+          {t('policyEnforcement.templateDetail.tunableParameters', { count: template.tunableParameters.length })}
         </div>
         <div className="space-y-2">
           {template.tunableParameters.map((p) => (
@@ -185,7 +187,7 @@ export default async function TemplateDetailPage({
                   </Badge>
                   {p.locked && (
                     <Badge variant="secondary" className="text-[9px]">
-                      🔒 locked
+                      {t('policyEnforcement.templateDetail.locked')}
                     </Badge>
                   )}
                 </div>
@@ -194,7 +196,7 @@ export default async function TemplateDetailPage({
                 {p.helpText}
               </div>
               <div className="text-[11px] mt-1.5 font-mono text-muted-foreground">
-                Default: {JSON.stringify(p.default)}
+                {t('policyEnforcement.templateDetail.defaultPrefix')} {JSON.stringify(p.default)}
               </div>
             </div>
           ))}
@@ -205,7 +207,7 @@ export default async function TemplateDetailPage({
       {template.regulatoryReferences.length > 0 && (
         <Card className="p-4">
           <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-            Regulatory references
+            {t('policyEnforcement.templateDetail.regulatoryReferences')}
           </div>
           <div className="flex flex-wrap gap-1.5">
             {template.regulatoryReferences.map((r) => (
@@ -223,37 +225,36 @@ export default async function TemplateDetailPage({
       {/* Defaults */}
       <Card className="p-4 bg-muted/30">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-          Template defaults (suggested target after promotion)
+          {t('policyEnforcement.templateDetail.defaultsHeading')}
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm">
           <div>
-            <div className="text-xs text-muted-foreground">Suggested mode</div>
+            <div className="text-xs text-muted-foreground">{t('policyEnforcement.templateDetail.suggestedMode')}</div>
             <div className="font-mono capitalize">
               {template.defaults.enforcementMode}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Risk tiers</div>
+            <div className="text-xs text-muted-foreground">{t('policyEnforcement.templateDetail.riskTiers')}</div>
             <div>
               {template.defaults.appliesTo.riskTiers?.join(", ") ?? "—"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Data classifications</div>
+            <div className="text-xs text-muted-foreground">{t('policyEnforcement.templateDetail.dataClassifications')}</div>
             <div>
               {template.defaults.appliesTo.dataClassifications?.join(", ") ?? "—"}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground">Departments</div>
+            <div className="text-xs text-muted-foreground">{t('policyEnforcement.templateDetail.departments')}</div>
             <div>
               {template.defaults.appliesTo.departments?.join(", ") ?? "—"}
             </div>
           </div>
         </div>
         <p className="text-xs text-muted-foreground mt-3 italic">
-          Cloned policies start in Guideline mode. Use the promotion wizard
-          to flip to Strict once you trust the false-positive rate.
+          {t('policyEnforcement.templateDetail.defaultsNote')}
         </p>
       </Card>
     </div>

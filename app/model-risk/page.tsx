@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress"
 import { modelRiskProfiles } from "@/lib/model-risk-data"
 import { sampleAppsData, publicAppsData, modelPricing } from "@/lib/model-risk-page-data"
+import { useT } from "@/lib/i18n/provider"
 import {
   AlertTriangle,
   CheckCircle,
@@ -22,6 +23,7 @@ import {
 } from "lucide-react"
 
 export default function ModelRiskContextPage() {
+  const t = useT()
   const [selectedModelId, setSelectedModelId] = useState<string>(modelRiskProfiles[0].modelId)
   const selectedModel = modelRiskProfiles.find((m) => m.modelId === selectedModelId) || modelRiskProfiles[0]
 
@@ -38,9 +40,9 @@ export default function ModelRiskContextPage() {
   }
 
   const getRiskLabel = (score: number) => {
-    if (score >= 65) return "High"
-    if (score >= 40) return "Medium"
-    return "Low"
+    if (score >= 65) return t("modelRisk.riskLevel.high")
+    if (score >= 40) return t("modelRisk.riskLevel.medium")
+    return t("modelRisk.riskLevel.low")
   }
 
   const overallRisk = Math.round(
@@ -62,8 +64,8 @@ export default function ModelRiskContextPage() {
         {/* Header with Model Selector */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold">Model Risk</h1>
-            <p className="text-muted-foreground mt-1">Assess model behaviour, risks, and use cases</p>
+            <h1 className="text-2xl font-semibold">{t("modelRisk.title")}</h1>
+            <p className="text-muted-foreground mt-1">{t("modelRisk.subtitle")}</p>
           </div>
           <Select value={selectedModelId} onValueChange={setSelectedModelId}>
             <SelectTrigger className="w-[260px]">
@@ -93,17 +95,17 @@ export default function ModelRiskContextPage() {
                   <h2 className="text-xl font-semibold">{selectedModel.name}</h2>
                   <p className="text-sm text-muted-foreground">{selectedModel.provider}</p>
                   <Badge variant={getRiskBadgeVariant(overallRisk)} className="mt-2">
-                    {getRiskLabel(overallRisk)} Risk
+                    {t("modelRisk.riskLevelBadge", { level: getRiskLabel(overallRisk) })}
                   </Badge>
                 </div>
               </div>
 
               <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
-                  { label: "Hallucination", score: selectedModel.hallucinationRisk },
-                  { label: "Bias", score: selectedModel.biasRisk },
-                  { label: "Toxicity", score: selectedModel.toxicityRisk },
-                  { label: "Privacy", score: selectedModel.privacyRisk },
+                  { label: t("modelRisk.dimensions.hallucination"), score: selectedModel.hallucinationRisk },
+                  { label: t("modelRisk.dimensions.bias"), score: selectedModel.biasRisk },
+                  { label: t("modelRisk.dimensions.toxicity"), score: selectedModel.toxicityRisk },
+                  { label: t("modelRisk.dimensions.privacy"), score: selectedModel.privacyRisk },
                 ].map((dim) => (
                   <div key={dim.label} className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
@@ -125,7 +127,7 @@ export default function ModelRiskContextPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-success" />
-              Approved Use Cases
+              {t("modelRisk.approvedUseCases")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -143,38 +145,38 @@ export default function ModelRiskContextPage() {
         {/* Tabs */}
         <Tabs defaultValue="details" className="space-y-4">
           <TabsList>
-            <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="risk">Risk Assessment</TabsTrigger>
-            <TabsTrigger value="apps">Applications</TabsTrigger>
-            <TabsTrigger value="pricing">Pricing</TabsTrigger>
-            <TabsTrigger value="mitigations">Mitigations</TabsTrigger>
+            <TabsTrigger value="details">{t("modelRisk.tabs.details")}</TabsTrigger>
+            <TabsTrigger value="risk">{t("modelRisk.tabs.risk")}</TabsTrigger>
+            <TabsTrigger value="apps">{t("modelRisk.tabs.apps")}</TabsTrigger>
+            <TabsTrigger value="pricing">{t("modelRisk.tabs.pricing")}</TabsTrigger>
+            <TabsTrigger value="mitigations">{t("modelRisk.tabs.mitigations")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="details" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Model Information</CardTitle>
+                  <CardTitle className="text-base">{t("modelRisk.modelInfo.title")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Provider</span>
+                    <span className="text-muted-foreground">{t("modelRisk.modelInfo.provider")}</span>
                     <span className="font-medium">{selectedModel.provider}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Version</span>
+                    <span className="text-muted-foreground">{t("modelRisk.modelInfo.version")}</span>
                     <span className="font-medium">{selectedModel.version}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Type</span>
+                    <span className="text-muted-foreground">{t("modelRisk.modelInfo.type")}</span>
                     <span className="font-medium">{selectedModel.type}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Parameters</span>
+                    <span className="text-muted-foreground">{t("modelRisk.modelInfo.parameters")}</span>
                     <span className="font-medium">{selectedModel.parameters}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Status</span>
+                    <span className="text-muted-foreground">{t("modelRisk.modelInfo.status")}</span>
                     <Badge variant={selectedModel.status === "Production" ? "success" : "secondary"}>
                       {selectedModel.status}
                     </Badge>
@@ -184,11 +186,11 @@ export default function ModelRiskContextPage() {
 
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Strengths & Weaknesses</CardTitle>
+                  <CardTitle className="text-base">{t("modelRisk.strengthsWeaknesses.title")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-success mb-2">Strengths</p>
+                    <p className="text-sm font-medium text-success mb-2">{t("modelRisk.strengthsWeaknesses.strengths")}</p>
                     <ul className="space-y-1">
                       {(selectedModel.strengths || []).slice(0, 3).map((s, i) => (
                         <li key={i} className="text-sm flex items-start gap-2">
@@ -199,7 +201,7 @@ export default function ModelRiskContextPage() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-destructive mb-2">Weaknesses</p>
+                    <p className="text-sm font-medium text-destructive mb-2">{t("modelRisk.strengthsWeaknesses.weaknesses")}</p>
                     <ul className="space-y-1">
                       {(selectedModel.weaknesses || []).slice(0, 3).map((w, i) => (
                         <li key={i} className="text-sm flex items-start gap-2">
@@ -218,13 +220,25 @@ export default function ModelRiskContextPage() {
             <div className="grid gap-4 md:grid-cols-2">
               {[
                 {
-                  label: "Hallucination Risk",
+                  label: t("modelRisk.riskAssessment.hallucinationLabel"),
                   score: selectedModel.hallucinationRisk,
-                  desc: "False information generation",
+                  desc: t("modelRisk.riskAssessment.hallucinationDesc"),
                 },
-                { label: "Bias Risk", score: selectedModel.biasRisk, desc: "Potential unfair outcomes" },
-                { label: "Toxicity Risk", score: selectedModel.toxicityRisk, desc: "Harmful content generation" },
-                { label: "Privacy Risk", score: selectedModel.privacyRisk, desc: "Data exposure concerns" },
+                {
+                  label: t("modelRisk.riskAssessment.biasLabel"),
+                  score: selectedModel.biasRisk,
+                  desc: t("modelRisk.riskAssessment.biasDesc"),
+                },
+                {
+                  label: t("modelRisk.riskAssessment.toxicityLabel"),
+                  score: selectedModel.toxicityRisk,
+                  desc: t("modelRisk.riskAssessment.toxicityDesc"),
+                },
+                {
+                  label: t("modelRisk.riskAssessment.privacyLabel"),
+                  score: selectedModel.privacyRisk,
+                  desc: t("modelRisk.riskAssessment.privacyDesc"),
+                },
               ].map((risk) => (
                 <Card key={risk.label}>
                   <CardContent className="p-4">
@@ -233,7 +247,7 @@ export default function ModelRiskContextPage() {
                         <h4 className="font-medium text-sm">{risk.label}</h4>
                         <p className="text-xs text-muted-foreground">{risk.desc}</p>
                       </div>
-                      <Badge variant={getRiskBadgeVariant(risk.score)}>{risk.score}/100</Badge>
+                      <Badge variant={getRiskBadgeVariant(risk.score)}>{t("modelRisk.riskAssessment.scoreOutOf", { score: risk.score })}</Badge>
                     </div>
                     <Progress value={risk.score} className="h-2" />
                   </CardContent>
@@ -245,7 +259,7 @@ export default function ModelRiskContextPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5 text-warning" />
-                  Active Alerts
+                  {t("modelRisk.activeAlerts")}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -272,7 +286,7 @@ export default function ModelRiskContextPage() {
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
                     <Building2 className="h-5 w-5 text-primary" />
-                    Internal Applications
+                    {t("modelRisk.apps.internalTitle")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -290,12 +304,12 @@ export default function ModelRiskContextPage() {
                         </div>
                         <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
                           <span>{app.department}</span>
-                          <span>{app.monthlyQueries.toLocaleString()} queries/mo</span>
+                          <span>{t("modelRisk.apps.queriesPerMonth", { count: app.monthlyQueries.toLocaleString() })}</span>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">No internal applications</p>
+                    <p className="text-sm text-muted-foreground">{t("modelRisk.apps.noInternal")}</p>
                   )}
                 </CardContent>
               </Card>
@@ -304,7 +318,7 @@ export default function ModelRiskContextPage() {
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
                     <Globe className="h-5 w-5 text-primary" />
-                    Public Applications
+                    {t("modelRisk.apps.publicTitle")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -317,7 +331,7 @@ export default function ModelRiskContextPage() {
                             <p className="text-xs text-muted-foreground">{app.description}</p>
                           </div>
                           <Badge variant="outline" className="text-xs">
-                            {app.users} users
+                            {t("modelRisk.apps.users", { count: app.users })}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
@@ -335,7 +349,7 @@ export default function ModelRiskContextPage() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">No public applications</p>
+                    <p className="text-sm text-muted-foreground">{t("modelRisk.apps.noPublic")}</p>
                   )}
                 </CardContent>
               </Card>
@@ -347,7 +361,7 @@ export default function ModelRiskContextPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-primary" />
-                  Pricing Information
+                  {t("modelRisk.pricing.title")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -355,19 +369,19 @@ export default function ModelRiskContextPage() {
                   <div className="space-y-4">
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                       <div className="p-4 bg-muted/50 rounded-lg">
-                        <p className="text-sm text-muted-foreground">Input Cost</p>
+                        <p className="text-sm text-muted-foreground">{t("modelRisk.pricing.inputCost")}</p>
                         <p className="text-lg font-bold">{pricing.inputCost}</p>
                       </div>
                       <div className="p-4 bg-muted/50 rounded-lg">
-                        <p className="text-sm text-muted-foreground">Output Cost</p>
+                        <p className="text-sm text-muted-foreground">{t("modelRisk.pricing.outputCost")}</p>
                         <p className="text-lg font-bold">{pricing.outputCost}</p>
                       </div>
                       <div className="p-4 bg-muted/50 rounded-lg">
-                        <p className="text-sm text-muted-foreground">Context Window</p>
+                        <p className="text-sm text-muted-foreground">{t("modelRisk.pricing.contextWindow")}</p>
                         <p className="text-lg font-bold">{pricing.contextWindow}</p>
                       </div>
                       <div className="p-4 bg-muted/50 rounded-lg">
-                        <p className="text-sm text-muted-foreground">Est. Monthly</p>
+                        <p className="text-sm text-muted-foreground">{t("modelRisk.pricing.estMonthly")}</p>
                         <p className="text-lg font-bold text-primary">{pricing.monthlyEstimate}</p>
                       </div>
                     </div>
@@ -379,7 +393,7 @@ export default function ModelRiskContextPage() {
                     </div>
                   </div>
                 ) : (
-                  <p className="text-muted-foreground">Pricing information not available</p>
+                  <p className="text-muted-foreground">{t("modelRisk.pricing.notAvailable")}</p>
                 )}
               </CardContent>
             </Card>
@@ -390,7 +404,7 @@ export default function ModelRiskContextPage() {
               <CardHeader className="pb-3">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Shield className="h-5 w-5 text-primary" />
-                  Risk Mitigations
+                  {t("modelRisk.mitigations.title")}
                 </CardTitle>
               </CardHeader>
               <CardContent>

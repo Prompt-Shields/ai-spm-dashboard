@@ -10,6 +10,7 @@ import {
 import { getTemplateById } from "@/lib/policy-templates/templates"
 import { aiSpmAssets } from "@/lib/mock-data"
 import { PolicyDetailClient } from "./client"
+import { getT } from "@/lib/i18n/server"
 
 export const dynamic = "force-dynamic"
 
@@ -18,6 +19,7 @@ export default async function PolicyDetailPage({
 }: {
   params: Promise<{ id: string }>
 }) {
+  const t = await getT()
   const { id } = await params
   ensureDemoStats()
   const instance = getInstanceById(id)
@@ -37,7 +39,7 @@ export default async function PolicyDetailPage({
         href="/policy-enforcement"
         className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
       >
-        ← All policies
+        {t('policyEnforcement.backToPolicies')}
       </Link>
 
       <PolicyDetailClient
