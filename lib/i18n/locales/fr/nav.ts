@@ -5,5 +5,6 @@ export const nav = {
   owners: 'Propriétaires',
   comply: 'Conformité',
   policies: 'Politiques',
+  adoption: 'Adoption',
   piiShield: 'Démo bouclier PII',
 }

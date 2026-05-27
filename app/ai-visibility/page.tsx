@@ -14,8 +14,10 @@ import {
   getVisibilitySummary,
 } from "@/lib/ai-visibility-data"
 import { Brain, Database, FileText, Server, Building2, CheckCircle, AlertTriangle, Shield, Lock } from "lucide-react"
+import { useT } from "@/lib/i18n/provider"
 
 export default function AIVisibilityPage() {
+  const t = useT()
   const [activeTab, setActiveTab] = useState("models")
   const summary = getVisibilitySummary()
 
@@ -53,9 +55,9 @@ export default function AIVisibilityPage() {
       <main className="container mx-auto px-6 py-8 max-w-[1400px] space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-semibold">AI Visibility</h1>
+          <h1 className="text-2xl font-semibold">{t('aiVisibility.title')}</h1>
           <p className="text-muted-foreground mt-1">
-            End-to-end visibility across models, data, prompts, infrastructure, and vendors
+            {t('aiVisibility.subtitle')}
           </p>
         </div>
 
@@ -72,7 +74,7 @@ export default function AIVisibilityPage() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{summary.totalModels}</p>
-                  <p className="text-xs text-muted-foreground">Models</p>
+                  <p className="text-xs text-muted-foreground">{t('aiVisibility.summary.models')}</p>
                 </div>
               </div>
             </CardContent>
@@ -88,7 +90,7 @@ export default function AIVisibilityPage() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{summary.totalDataSources}</p>
-                  <p className="text-xs text-muted-foreground">Data Sources</p>
+                  <p className="text-xs text-muted-foreground">{t('aiVisibility.summary.dataSources')}</p>
                 </div>
               </div>
             </CardContent>
@@ -104,7 +106,7 @@ export default function AIVisibilityPage() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{summary.totalPrompts}</p>
-                  <p className="text-xs text-muted-foreground">Prompts</p>
+                  <p className="text-xs text-muted-foreground">{t('aiVisibility.summary.prompts')}</p>
                 </div>
               </div>
             </CardContent>
@@ -120,7 +122,7 @@ export default function AIVisibilityPage() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{summary.totalInfrastructure}</p>
-                  <p className="text-xs text-muted-foreground">Infrastructure</p>
+                  <p className="text-xs text-muted-foreground">{t('aiVisibility.summary.infrastructure')}</p>
                 </div>
               </div>
             </CardContent>
@@ -136,7 +138,7 @@ export default function AIVisibilityPage() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{summary.totalVendors}</p>
-                  <p className="text-xs text-muted-foreground">Vendors</p>
+                  <p className="text-xs text-muted-foreground">{t('aiVisibility.summary.vendors')}</p>
                 </div>
               </div>
             </CardContent>
@@ -146,11 +148,11 @@ export default function AIVisibilityPage() {
         {/* Tabbed Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList>
-            <TabsTrigger value="models">Models</TabsTrigger>
-            <TabsTrigger value="data">Data</TabsTrigger>
-            <TabsTrigger value="prompts">Prompts</TabsTrigger>
-            <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>
-            <TabsTrigger value="vendors">Vendors</TabsTrigger>
+            <TabsTrigger value="models">{t('aiVisibility.tabs.models')}</TabsTrigger>
+            <TabsTrigger value="data">{t('aiVisibility.tabs.data')}</TabsTrigger>
+            <TabsTrigger value="prompts">{t('aiVisibility.tabs.prompts')}</TabsTrigger>
+            <TabsTrigger value="infrastructure">{t('aiVisibility.tabs.infrastructure')}</TabsTrigger>
+            <TabsTrigger value="vendors">{t('aiVisibility.tabs.vendors')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="models" className="mt-4 space-y-3">
@@ -168,8 +170,8 @@ export default function AIVisibilityPage() {
                           {model.provider} | {model.version}
                         </p>
                         <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                          <span>{model.monthlyInferences.toLocaleString()} inferences/mo</span>
-                          <span>P95: {model.latencyP95}</span>
+                          <span>{t('aiVisibility.model.inferences', { count: model.monthlyInferences.toLocaleString() })}</span>
+                          <span>{t('aiVisibility.model.p95', { value: model.latencyP95 })}</span>
                           <span>{model.costPerMonth}</span>
                         </div>
                       </div>
@@ -199,7 +201,7 @@ export default function AIVisibilityPage() {
                         </p>
                         <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
                           <span>{source.recordCount}</span>
-                          <span>Owner: {source.dataOwner}</span>
+                          <span>{t('aiVisibility.data.owner', { owner: source.dataOwner })}</span>
                         </div>
                       </div>
                     </div>
@@ -270,7 +272,7 @@ export default function AIVisibilityPage() {
                           {infra.type} | {infra.provider}
                         </p>
                         <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                          <span>Uptime: {infra.uptime}%</span>
+                          <span>{t('aiVisibility.infra.uptime', { uptime: infra.uptime })}</span>
                           <span>{infra.region}</span>
                           <span>{infra.costPerMonth}</span>
                         </div>
@@ -302,9 +304,9 @@ export default function AIVisibilityPage() {
                         <h3 className="font-medium">{vendor.name}</h3>
                         <p className="text-sm text-muted-foreground">{vendor.service}</p>
                         <div className="flex gap-4 mt-2 text-xs text-muted-foreground">
-                          <span>{vendor.annualSpend}/year</span>
-                          <span>SLA: {vendor.actualUptime}%</span>
-                          <span>Expires: {vendor.contractExpiry}</span>
+                          <span>{t('aiVisibility.vendor.annualSpend', { amount: vendor.annualSpend })}</span>
+                          <span>{t('aiVisibility.vendor.sla', { uptime: vendor.actualUptime })}</span>
+                          <span>{t('aiVisibility.vendor.expires', { date: vendor.contractExpiry })}</span>
                         </div>
                       </div>
                     </div>
@@ -318,7 +320,7 @@ export default function AIVisibilityPage() {
                       ) : (
                         <Badge variant="warning">
                           <AlertTriangle className="h-3 w-3 mr-1" />
-                          Pending
+                          {t('aiVisibility.vendor.pending')}
                         </Badge>
                       )}
                     </div>

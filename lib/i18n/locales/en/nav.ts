@@ -5,5 +5,6 @@ export const nav = {
   owners: 'Owners',
   comply: 'Comply',
   policies: 'Policies',
+  adoption: 'Adoption',
   piiShield: 'PII Shield Demo',
 }

@@ -19,6 +19,7 @@
 // short-lived shape until the atlas.ai session-based auth port lands.
 
 import { useEffect, useState } from 'react'
+import { useT } from '@/lib/i18n/provider'
 
 interface ExportManifestFile {
   name: string
@@ -37,6 +38,7 @@ interface ExportManifest {
 const KEY_STORAGE = 'atlas.adminApiKey'
 
 export default function ArdoqIntegrationPage() {
+  const t = useT()
   const [adminKey, setAdminKey] = useState('')
   const [manifest, setManifest] = useState<ExportManifest | null>(null)
   const [loading, setLoading] = useState(false)
@@ -61,7 +63,7 @@ export default function ArdoqIntegrationPage() {
 
   async function fetchManifest() {
     if (!adminKey.trim()) {
-      setError('Paste your admin API key first.')
+      setError(t('ardoq.errors.pasteKeyFirst'))
       return
     }
     setLoading(true)
@@ -74,13 +76,14 @@ export default function ArdoqIntegrationPage() {
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
         throw new Error(
-          body?.message || `Failed to fetch manifest (HTTP ${res.status})`,
+          body?.message ||
+            t('ardoq.errors.fetchManifestHttp', { status: res.status }),
         )
       }
       const data: ExportManifest = await res.json()
       setManifest(data)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to fetch manifest.')
+      setError(e instanceof Error ? e.message : t('ardoq.errors.fetchManifest'))
     } finally {
       setLoading(false)
     }
@@ -88,7 +91,7 @@ export default function ArdoqIntegrationPage() {
 
   async function downloadZip() {
     if (!adminKey.trim()) {
-      setError('Paste your admin API key first.')
+      setError(t('ardoq.errors.pasteKeyFirst'))
       return
     }
     setDownloading(true)
@@ -100,7 +103,8 @@ export default function ArdoqIntegrationPage() {
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
         throw new Error(
-          body?.message || `Failed to download ZIP (HTTP ${res.status})`,
+          body?.message ||
+            t('ardoq.errors.downloadZipHttp', { status: res.status }),
         )
       }
       // Pull the filename out of Content-Disposition so the download
@@ -119,7 +123,7 @@ export default function ArdoqIntegrationPage() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to download ZIP.')
+      setError(e instanceof Error ? e.message : t('ardoq.errors.downloadZip'))
     } finally {
       setDownloading(false)
     }
@@ -128,23 +132,20 @@ export default function ArdoqIntegrationPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-slate-900">Ardoq export</h1>
+        <h1 className="text-xl font-bold text-slate-900">{t('ardoq.header.title')}</h1>
         <p className="mt-1 text-sm text-slate-500">
-          Download a 9-CSV bundle matching Ardoq AI Lens import schema.
-          Drop the ZIP into the Ardoq import wizard — entities, owners,
-          data stores, references, compliance assessments all flow
-          through in one round-trip.
+          {t('ardoq.header.description')}
         </p>
       </div>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4 mb-4">
         <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1">
-          Admin API key
+          {t('ardoq.apiKey.label')}
         </label>
         <p className="text-xs text-slate-500 mb-2">
-          Set <code className="rounded bg-slate-100 px-1">ATLAS_ADMIN_API_KEY</code>{' '}
-          in the deployment environment, paste the same value here.
-          Lives in sessionStorage — cleared when the tab closes.
+          {t('ardoq.apiKey.hintBefore')}
+          <code className="rounded bg-slate-100 px-1">ATLAS_ADMIN_API_KEY</code>
+          {t('ardoq.apiKey.hintAfter')}
         </p>
         <input
           type="password"
@@ -163,7 +164,11 @@ export default function ArdoqIntegrationPage() {
             disabled={loading || !adminKey.trim()}
             className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {loading ? 'Loading…' : manifest ? 'Refresh preview' : 'Preview export'}
+            {loading
+              ? t('ardoq.actions.loading')
+              : manifest
+                ? t('ardoq.actions.refreshPreview')
+                : t('ardoq.actions.previewExport')}
           </button>
           <button
             type="button"
@@ -171,7 +176,7 @@ export default function ArdoqIntegrationPage() {
             disabled={downloading || !adminKey.trim()}
             className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {downloading ? 'Downloading…' : 'Download ZIP'}
+            {downloading ? t('ardoq.actions.downloading') : t('ardoq.actions.downloadZip')}
           </button>
         </div>
 
@@ -184,16 +189,17 @@ export default function ArdoqIntegrationPage() {
         {manifest && (
           <div className="mt-4">
             <div className="mb-2 text-xs text-slate-500">
-              Generated{' '}
-              {new Date(manifest.generatedAt).toLocaleString()} · tenant{' '}
-              <span className="font-mono">{manifest.tenantId}</span>
+              {t('ardoq.manifest.meta', {
+                date: new Date(manifest.generatedAt).toLocaleString(),
+                tenant: manifest.tenantId,
+              })}
             </div>
             <table className="w-full text-sm">
               <thead className="text-left text-xs uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="py-1.5 pr-3 font-medium">File</th>
-                  <th className="py-1.5 pr-3 font-medium text-right">Rows</th>
-                  <th className="py-1.5 pr-3 font-medium text-right">Size</th>
+                  <th className="py-1.5 pr-3 font-medium">{t('ardoq.manifest.colFile')}</th>
+                  <th className="py-1.5 pr-3 font-medium text-right">{t('ardoq.manifest.colRows')}</th>
+                  <th className="py-1.5 pr-3 font-medium text-right">{t('ardoq.manifest.colSize')}</th>
                 </tr>
               </thead>
               <tbody>

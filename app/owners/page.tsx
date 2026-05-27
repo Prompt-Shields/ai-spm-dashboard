@@ -4,8 +4,10 @@ import { Bot } from 'lucide-react'
 import { PERSONS, USE_CASES } from '@/lib/aimaps-data'
 import { OwnerDetailPanel } from '@/components/owner-detail-panel'
 import type { Person } from '@/lib/aimaps-types'
+import { useT } from '@/lib/i18n/provider'
 
 export default function OwnersPage() {
+  const t = useT()
   const [selected, setSelected] = useState<Person | null>(null)
   const unownedCount = USE_CASES.filter(uc => !uc.ownerId).length
   const totalPending = PERSONS.reduce((sum, p) => sum + p.assessmentsPending, 0)
@@ -14,17 +16,17 @@ export default function OwnersPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-slate-900">Owners</h1>
-        <p className="text-sm text-slate-500 mt-0.5">People accountable for AI use cases across the organisation</p>
+        <h1 className="text-xl font-bold text-slate-900">{t('owners.title')}</h1>
+        <p className="text-sm text-slate-500 mt-0.5">{t('owners.subtitle')}</p>
       </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-4 gap-3 mb-6">
         {[
-          { label: 'Owners', value: PERSONS.length - 1, color: 'text-indigo-600' },
-          { label: 'Pending Assessments', value: totalPending, color: 'text-amber-600' },
-          { label: 'Completed', value: totalComplete, color: 'text-green-600' },
-          { label: 'Unowned Use Cases', value: unownedCount, color: 'text-red-500' },
+          { label: t('owners.kpi.owners'), value: PERSONS.length - 1, color: 'text-indigo-600' },
+          { label: t('owners.kpi.pendingAssessments'), value: totalPending, color: 'text-amber-600' },
+          { label: t('owners.kpi.completed'), value: totalComplete, color: 'text-green-600' },
+          { label: t('owners.kpi.unownedUseCases'), value: unownedCount, color: 'text-red-500' },
         ].map(kpi => (
           <div key={kpi.label} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <div className="text-xs text-slate-400 uppercase tracking-wide mb-1">{kpi.label}</div>
@@ -38,7 +40,7 @@ export default function OwnersPage() {
         <div className="mb-4">
           <button className="flex items-center gap-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors">
             <Bot size={13} />
-            Notify All Pending Owners via AI Agent
+            {t('owners.notifyAll')}
           </button>
         </div>
       )}
@@ -48,7 +50,7 @@ export default function OwnersPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50">
-              {['Owner', 'Department', 'Use Cases', 'Pending', 'Completed', ''].map(h => (
+              {[t('owners.table.owner'), t('owners.table.department'), t('owners.table.useCases'), t('owners.table.pending'), t('owners.table.completed'), ''].map(h => (
                 <th key={h} className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-4 py-3">{h}</th>
               ))}
             </tr>
@@ -77,7 +79,7 @@ export default function OwnersPage() {
                 <td className="px-4 py-3">
                   <span className="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">{person.assessmentsComplete}</span>
                 </td>
-                <td className="px-4 py-3 text-xs text-indigo-500">View →</td>
+                <td className="px-4 py-3 text-xs text-indigo-500">{t('owners.table.view')}</td>
               </tr>
             ))}
           </tbody>

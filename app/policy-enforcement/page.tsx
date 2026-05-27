@@ -17,10 +17,13 @@ import {
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { getT } from "@/lib/i18n/server"
+import type { TFunc } from "@/lib/i18n/translate"
 
 export const dynamic = "force-dynamic"
 
-export default function PolicyEnforcementListPage() {
+export default async function PolicyEnforcementListPage() {
+  const t = await getT()
   ensureDemoStats()
   const instances = listAllInstances()
 
@@ -33,45 +36,44 @@ export default function PolicyEnforcementListPage() {
     <div className="space-y-6">
       <div className="flex items-baseline justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Policy Enforcement</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t('policyEnforcement.list.title')}</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Promote Guidelines to Strict once you trust the false-positive rate.
+            {t('policyEnforcement.list.subtitle')}
           </p>
         </div>
         <Link
           href="/policy-enforcement/templates"
           className="px-4 py-2 rounded-md text-sm font-medium bg-foreground text-background hover:opacity-90"
         >
-          + New from template
+          {t('policyEnforcement.list.newFromTemplate')}
         </Link>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <SummaryCard label="Strictly enforced" value={strict.length} icon="🛡️" />
-        <SummaryCard label="Guidelines (observing)" value={guideline.length} icon="📘" />
-        <SummaryCard label="Apps under policy" value={totalApps} icon="🔗" />
+        <SummaryCard label={t('policyEnforcement.list.summary.strictlyEnforced')} value={strict.length} icon="🛡️" />
+        <SummaryCard label={t('policyEnforcement.list.summary.guidelinesObserving')} value={guideline.length} icon="📘" />
+        <SummaryCard label={t('policyEnforcement.list.summary.appsUnderPolicy')} value={totalApps} icon="🔗" />
       </div>
 
       {totalBlocks30d > 0 && (
-        <div className="rounded-md border bg-green-50/50 dark:bg-green-950/10 px-4 py-3 text-sm">
-          <span className="font-medium">{totalBlocks30d.toLocaleString()}</span>
-          <span className="text-muted-foreground"> blocks in the last 30 days across all Strict policies.</span>
+        <div className="rounded-md border bg-green-50/50 dark:bg-green-950/10 px-4 py-3 text-sm text-muted-foreground">
+          {t('policyEnforcement.list.blocksBanner', { count: totalBlocks30d.toLocaleString() })}
         </div>
       )}
 
-      <Section title="🛡️ Strictly Enforced" subtitle="Live policies blocking or redacting traffic in real time.">
+      <Section title={t('policyEnforcement.list.strictSection.title')} subtitle={t('policyEnforcement.list.strictSection.subtitle')}>
         {strict.length === 0 ? (
-          <EmptyState message="No Strict policies yet. Promote a Guideline once it's earned its keep." />
+          <EmptyState message={t('policyEnforcement.list.strictSection.empty')} />
         ) : (
-          strict.map((instance) => <PolicyRow key={instance.id} instance={instance} />)
+          strict.map((instance) => <PolicyRow key={instance.id} instance={instance} t={t} />)
         )}
       </Section>
 
-      <Section title="📘 Guidelines" subtitle="Policies in observation mode. Logging only — no traffic altered.">
+      <Section title={t('policyEnforcement.list.guidelineSection.title')} subtitle={t('policyEnforcement.list.guidelineSection.subtitle')}>
         {guideline.length === 0 ? (
-          <EmptyState message="No Guidelines yet. Clone a template to get started." />
+          <EmptyState message={t('policyEnforcement.list.guidelineSection.empty')} />
         ) : (
-          guideline.map((instance) => <PolicyRow key={instance.id} instance={instance} />)
+          guideline.map((instance) => <PolicyRow key={instance.id} instance={instance} t={t} />)
         )}
       </Section>
     </div>
@@ -114,7 +116,7 @@ function EmptyState({ message }: { message: string }) {
   )
 }
 
-function PolicyRow({ instance }: { instance: ReturnType<typeof listAllInstances>[number] }) {
+function PolicyRow({ instance, t }: { instance: ReturnType<typeof listAllInstances>[number]; t: TFunc }) {
   const cls = classOf(instance.enforcementMode)
   const template = getTemplateById(instance.templateId)
   const categoryMeta = template ? POLICY_CATEGORIES_META[template.category] : null
@@ -148,12 +150,12 @@ function PolicyRow({ instance }: { instance: ReturnType<typeof listAllInstances>
               <h3 className="text-sm font-semibold">{instance.name}</h3>
               {cls === "strict" && (
                 <Badge variant="success" className="font-mono text-[10px]">
-                  ● LIVE
+                  {t('policyEnforcement.list.row.live')}
                 </Badge>
               )}
               {hasPendingPromotion && (
                 <Badge variant="warning" className="text-[10px]">
-                  Awaiting {pendingApprovers.length} approval(s)
+                  {t('policyEnforcement.list.row.awaitingApprovals', { count: pendingApprovers.length })}
                 </Badge>
               )}
               {categoryMeta && (
@@ -170,21 +172,21 @@ function PolicyRow({ instance }: { instance: ReturnType<typeof listAllInstances>
 
             <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-muted-foreground">
               <span>
-                Apps:{" "}
+                {t('policyEnforcement.list.row.appsLabel')}{" "}
                 <span className="font-mono font-medium text-foreground">
-                  {instance.appliesTo.applicationIds.length || "all"}
+                  {instance.appliesTo.applicationIds.length || t('policyEnforcement.list.row.appsAll')}
                 </span>
               </span>
               {cls === "strict" && (
                 <>
                   <span>
-                    Hits/30d:{" "}
+                    {t('policyEnforcement.list.row.hits30dLabel')}{" "}
                     <span className="font-mono font-medium text-foreground">
                       {instance.stats?.totalHits30d ?? 0}
                     </span>
                   </span>
                   <span>
-                    FP rate:{" "}
+                    {t('policyEnforcement.list.row.fpRateLabel')}{" "}
                     <span className="font-mono font-medium text-foreground">
                       {((instance.stats?.falsePositiveRate ?? 0) * 100).toFixed(1)}%
                     </span>
@@ -200,10 +202,10 @@ function PolicyRow({ instance }: { instance: ReturnType<typeof listAllInstances>
                   )}
                 >
                   {eligibility.eligible
-                    ? "Eligible to promote"
+                    ? t('policyEnforcement.list.row.eligibleToPromote')
                     : eligibility.daysInGuideline < eligibility.daysRequired
-                      ? `Promote in ${eligibility.daysRequired - eligibility.daysInGuideline}d`
-                      : "Not yet eligible"}
+                      ? t('policyEnforcement.list.row.promoteInDays', { days: eligibility.daysRequired - eligibility.daysInGuideline })
+                      : t('policyEnforcement.list.row.notYetEligible')}
                 </span>
               )}
             </div>
@@ -211,7 +213,7 @@ function PolicyRow({ instance }: { instance: ReturnType<typeof listAllInstances>
 
           <div className="text-xs text-muted-foreground shrink-0 self-center">
             <span className="opacity-50 group-hover:opacity-100 transition-opacity">
-              View →
+              {t('policyEnforcement.list.row.view')}
             </span>
           </div>
         </div>
