@@ -1,0 +1,26 @@
+export const register = {
+  title: 'Register',
+  subtitle: '{count} use cases · {shadow} shadow AI',
+  exportCsv: 'Export CSV',
+  status: {
+    discovered: 'Discovered',
+    assessed: 'Assessed',
+    owned: 'Owned',
+    mitigated: 'Mitigated',
+    compliant: 'Compliant',
+  },
+  searchPlaceholder: 'Search use cases...',
+  allDepartments: 'All Departments',
+  allStatuses: 'All Statuses',
+  resultsCount: '{count} results',
+  columns: {
+    useCase: 'Use Case',
+    department: 'Department',
+    model: 'Model',
+    owner: 'Owner',
+    topRisk: 'Top Risk',
+    status: 'Status',
+  },
+  shadowAiBadge: 'Shadow AI',
+  unowned: 'Unowned',
+}

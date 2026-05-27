@@ -1,7 +1,33 @@
 import type { Messages } from '../types'
-import { en } from './en'
+import { common } from './fr/common'
+import { nav } from './fr/nav'
+import { map } from './fr/map'
+import { discover } from './fr/discover'
+import { register } from './fr/register'
+import { owners } from './fr/owners'
+import { comply } from './fr/comply'
+import { aiGovernance } from './fr/aiGovernance'
+import { aiVisibility } from './fr/aiVisibility'
+import { modelRisk } from './fr/modelRisk'
+import { piiShield } from './fr/piiShield'
+import { ardoq } from './fr/ardoq'
+import { policyEnforcement } from './fr/policyEnforcement'
 
-// French. Starts as a deep copy of en; namespaces are translated per-page in
-// Phase B. Use a deep clone so editing one namespace never leaks into en/nb
-// through a shared reference.
-export const fr: Messages = structuredClone(en)
+// French. Each namespace lives in its own file under ./fr/ and is translated
+// per-page in Phase B. Typed as Messages so any shape drift from en is a
+// compile error (the completeness test guards keys at runtime too).
+export const fr: Messages = {
+  common,
+  nav,
+  map,
+  discover,
+  register,
+  owners,
+  comply,
+  aiGovernance,
+  aiVisibility,
+  modelRisk,
+  piiShield,
+  ardoq,
+  policyEnforcement,
+}
