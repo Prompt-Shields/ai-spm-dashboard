@@ -35,4 +35,20 @@ export const piiShield = {
   withoutShield: 'Sans le Shield — ChatGPT recevrait ceci',
   responding: 'ChatGPT répond…',
   mappingTitle: 'PII détectées → marqueurs',
+  types: {
+    email: 'e-mail',
+    phone: 'téléphone',
+    ssn: 'NSS', // TODO(i18n): native review
+    creditCard: 'carte',
+    ip: 'IP',
+    apiKey: 'clé API',
+    person: 'nom',
+    address: 'adresse',
+  },
+  mapping: {
+    placeholder: 'Marqueur',
+    type: 'Type',
+    original: 'Original',
+    noPiiDetected: 'Aucune PII détectée.',
+  },
 }

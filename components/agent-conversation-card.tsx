@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { MessageSquare, Mail, Globe } from 'lucide-react'
 import type { AgentConversation } from '@/lib/aimaps-types'
+import { useT } from '@/lib/i18n/provider'
 
 interface AgentConversationCardProps {
   conversation: AgentConversation
@@ -21,6 +22,7 @@ const STATUS_STYLE = {
 }
 
 export function AgentConversationCard({ conversation, autoPlay = false, delay = 0 }: AgentConversationCardProps) {
+  const t = useT()
   const [visibleCount, setVisibleCount] = useState(autoPlay ? 0 : conversation.messages.length)
 
   useEffect(() => {
@@ -54,7 +56,7 @@ export function AgentConversationCard({ conversation, autoPlay = false, delay = 
           </div>
         </div>
         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_STYLE[conversation.status]}`}>
-          {conversation.status === 'in-progress' ? 'In progress' : conversation.status === 'complete' ? 'Complete' : 'No response'}
+          {conversation.status === 'in-progress' ? t('agentConversation.status.inProgress') : conversation.status === 'complete' ? t('agentConversation.status.complete') : t('agentConversation.status.noResponse')}
         </span>
       </div>
 
@@ -65,7 +67,7 @@ export function AgentConversationCard({ conversation, autoPlay = false, delay = 
             <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold ${
               msg.role === 'agent' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-600'
             }`}>
-              {msg.role === 'agent' ? 'AI' : conversation.employeeName[0]}
+              {msg.role === 'agent' ? t('agentConversation.role.agentInitial') : conversation.employeeName[0]}
             </div>
             <div className={`text-xs px-3 py-2 rounded-xl max-w-xs leading-relaxed ${
               msg.role === 'agent'

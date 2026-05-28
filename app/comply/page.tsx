@@ -39,7 +39,11 @@ export default function ComplyPage() {
       {/* Framework cards */}
       <div className="grid grid-cols-4 gap-4 mb-8">
         {FRAMEWORKS.map(fw => (
-          <ComplianceCoverageCard key={fw.key} framework={fw} />
+          <ComplianceCoverageCard
+            key={fw.key}
+            framework={fw}
+            gapsLabel={t('comply.coverageGaps', { count: fw.gapCount })}
+          />
         ))}
       </div>
 
