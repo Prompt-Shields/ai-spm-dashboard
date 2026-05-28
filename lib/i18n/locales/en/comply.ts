@@ -2,6 +2,7 @@ export const comply = {
   title: 'Comply',
   subtitle: 'Framework coverage across all AI use cases',
   exportReport: 'Export Compliance Report',
+  coverageGaps: '{count} gaps remaining',
   breakdown: {
     heading: 'Overall Coverage Breakdown',
     stats: '{covered} covered · {partial} partial · {gap} gap',

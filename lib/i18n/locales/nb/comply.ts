@@ -2,6 +2,7 @@ export const comply = {
   title: 'Samsvar',
   subtitle: 'Rammeverkdekning på tvers av alle KI-bruksområder',
   exportReport: 'Eksporter samsvarsrapport',
+  coverageGaps: '{count} gjenstående mangler',
   breakdown: {
     heading: 'Samlet dekningsoversikt',
     stats: '{covered} dekket · {partial} delvis · {gap} mangel',

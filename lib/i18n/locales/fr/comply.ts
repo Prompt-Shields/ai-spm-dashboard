@@ -2,6 +2,7 @@ export const comply = {
   title: 'Conformité',
   subtitle: "Couverture des cadres pour tous les cas d'usage de l'IA",
   exportReport: 'Exporter le rapport de conformité',
+  coverageGaps: '{count} écarts restants',
   breakdown: {
     heading: "Vue d'ensemble de la couverture",
     stats: '{covered} couverts · {partial} partiels · {gap} manquants',

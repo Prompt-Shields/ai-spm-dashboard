@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { useT } from "@/lib/i18n/provider"
 import type { PolicyTemplate } from "@/lib/policy-templates/types"
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 
 export function TemplateCloneClient({ template, applications }: Props) {
   const router = useRouter()
+  const t = useT()
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [name, setName] = useState(template.name)
@@ -37,7 +39,7 @@ export function TemplateCloneClient({ template, applications }: Props) {
       })
       const data = await res.json()
       if (!res.ok) {
-        setError(data.error ?? "Clone failed")
+        setError(data.error ?? t('policyEnforcement.templateDetailClient.cloneFailed'))
         return
       }
       // Redirect to the freshly created policy detail page
@@ -60,15 +62,17 @@ export function TemplateCloneClient({ template, applications }: Props) {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-lg">📘</span>
-            <span className="text-sm font-semibold">Clone & start observing</span>
+            <span className="text-sm font-semibold">
+              {t('policyEnforcement.templateDetailClient.heading')}
+            </span>
           </div>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Creates a Guideline policy. Observation only — nothing is blocked
-            until you promote to Strict.
+            {t('policyEnforcement.templateDetailClient.description')}
           </p>
         </div>
         <Badge variant="outline" className="text-[10px]">
-          Mode on clone: <span className="font-mono ml-1">log</span>
+          {t('policyEnforcement.templateDetailClient.modeOnClone')}{' '}
+          <span className="font-mono ml-1">log</span>
         </Badge>
       </div>
 
@@ -81,18 +85,17 @@ export function TemplateCloneClient({ template, applications }: Props) {
       <div className="space-y-3">
         <div>
           <label className="text-xs font-medium text-muted-foreground block mb-1">
-            Policy name
+            {t('policyEnforcement.templateDetailClient.policyNameLabel')}
           </label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full px-3 py-1.5 rounded-md border bg-background text-sm"
-            placeholder="e.g. PII Output - Customer Service"
+            placeholder={t('policyEnforcement.templateDetailClient.policyNamePlaceholder')}
           />
           <div className="text-[10px] text-muted-foreground mt-1">
-            Defaults to template name. Customise to distinguish multiple
-            instances of the same template.
+            {t('policyEnforcement.templateDetailClient.policyNameHelp')}
           </div>
         </div>
 
@@ -102,7 +105,13 @@ export function TemplateCloneClient({ template, applications }: Props) {
             onClick={() => setShowAppPicker((s) => !s)}
             className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
           >
-            {showAppPicker ? "▾" : "▸"} Apply to specific applications (optional, {selectedAppIds.size} selected)
+            {showAppPicker
+              ? t('policyEnforcement.templateDetailClient.applyToggleOpen', {
+                  count: selectedAppIds.size,
+                })
+              : t('policyEnforcement.templateDetailClient.applyToggleClosed', {
+                  count: selectedAppIds.size,
+                })}
           </button>
 
           {showAppPicker && (
@@ -129,8 +138,7 @@ export function TemplateCloneClient({ template, applications }: Props) {
             </div>
           )}
           <div className="text-[10px] text-muted-foreground mt-1">
-            Leave empty to apply broadly via the template&apos;s default
-            data-classification / risk-tier filters.
+            {t('policyEnforcement.templateDetailClient.applyHelp')}
           </div>
         </div>
 
@@ -140,7 +148,9 @@ export function TemplateCloneClient({ template, applications }: Props) {
             onClick={handleClone}
             className="px-4 py-1.5 rounded-md text-sm font-medium bg-foreground text-background hover:opacity-90 disabled:opacity-50"
           >
-            {pending ? "Cloning…" : "Clone & Customize →"}
+            {pending
+              ? t('policyEnforcement.templateDetailClient.cloning')
+              : t('policyEnforcement.templateDetailClient.cloneAction')}
           </button>
         </div>
       </div>

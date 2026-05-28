@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { useT } from "@/lib/i18n/provider"
 import { PolicyModeToggle } from "@/components/policy/mode-toggle"
 import { PromotionWizard } from "@/components/policy/promotion-wizard"
 import {
@@ -30,6 +31,7 @@ interface Props {
 
 export function PolicyDetailClient({ initialInstance, template, applications }: Props) {
   const router = useRouter()
+  const t = useT()
   const [instance, setInstance] = useState(initialInstance)
   const [wizardOpen, setWizardOpen] = useState(false)
   const [tab, setTab] = useState<
@@ -73,12 +75,12 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
     })
     const data = await res.json()
     if (!res.ok) {
-      setError(data.error ?? "Promotion request failed")
+      setError(data.error ?? t('policyEnforcement.policyDetailClient.errors.promotionFailed'))
       return
     }
     setInstance(data.instance)
     setWizardOpen(false)
-    setToast("Promotion request submitted — awaiting approvals")
+    setToast(t('policyEnforcement.policyDetailClient.toasts.promotionSubmitted'))
   }
 
   const submitApproval = (role: string, decision: "approved" | "rejected") => {
@@ -96,17 +98,19 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
       })
       const data = await res.json()
       if (!res.ok) {
-        setError(data.error ?? "Approval failed")
+        setError(data.error ?? t('policyEnforcement.policyDetailClient.errors.approvalFailed'))
         return
       }
       setInstance(data.instance)
       if (data.promoted) {
-        setToast(`✓ Promoted to Strict — all approvals collected`)
+        setToast(t('policyEnforcement.policyDetailClient.toasts.promotedAllCollected'))
       } else if (data.rejected) {
-        setToast(`Rejected — policy stays in Guideline`)
+        setToast(t('policyEnforcement.policyDetailClient.toasts.rejectedStaysGuideline'))
       } else {
         setToast(
-          `Recorded. ${data.remainingApprovers.length} approval(s) still pending.`
+          t('policyEnforcement.policyDetailClient.toasts.recordedRemaining', {
+            count: data.remainingApprovers.length,
+          })
         )
       }
     })
@@ -125,11 +129,11 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
       })
       const data = await res.json()
       if (!res.ok) {
-        setError(data.error ?? "Demotion failed")
+        setError(data.error ?? t('policyEnforcement.policyDetailClient.errors.demotionFailed'))
         return
       }
       setInstance(data.instance)
-      setToast("Demoted to Guideline")
+      setToast(t('policyEnforcement.policyDetailClient.toasts.demotedToGuideline'))
     })
   }
 
@@ -151,7 +155,10 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
               </Badge>
             )}
             <span className="text-xs text-muted-foreground">
-              from {template.name} v{template.version}
+              {t('policyEnforcement.shared.fromTemplate', {
+                name: template.name,
+                version: template.version,
+              })}
             </span>
           </div>
           <h1 className="text-2xl font-semibold">{instance.name}</h1>
@@ -194,18 +201,18 @@ export function PolicyDetailClient({ initialInstance, template, applications }: 
 
       {/* Tabs */}
       <div className="border-b flex gap-4 text-sm">
-        {(["detection", "scope", "test", "approvals", "history"] as const).map((t) => (
+        {(["detection", "scope", "test", "approvals", "history"] as const).map((id) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
+            key={id}
+            onClick={() => setTab(id)}
             className={cn(
               "px-3 py-2 -mb-px border-b-2 transition-colors capitalize",
-              tab === t
+              tab === id
                 ? "border-foreground font-medium"
                 : "border-transparent text-muted-foreground hover:text-foreground"
             )}
           >
-            {t}
+            {t(`policyEnforcement.policyDetailClient.tabs.${id}`)}
           </button>
         ))}
       </div>
@@ -248,12 +255,13 @@ function PendingApprovalsCard({
   onApprove: (role: string, decision: "approved" | "rejected") => void
   disabled: boolean
 }) {
+  const t = useT()
   const lastEvent = instance.promotionHistory.at(-1)
   const approvers = lastEvent?.approvers ?? []
   return (
     <Card className="p-4 border-amber-200 dark:border-amber-900 bg-amber-50/50 dark:bg-amber-950/10">
       <div className="text-xs uppercase tracking-wider text-amber-900 dark:text-amber-200 font-semibold mb-2">
-        Promotion in progress — awaiting approvals
+        {t('policyEnforcement.policyDetailClient.pendingApprovals.heading')}
       </div>
       <div className="space-y-2">
         {approvers.map((a) => (
@@ -288,14 +296,14 @@ function PendingApprovalsCard({
                   onClick={() => onApprove(a.role, "rejected")}
                   className="text-xs px-2 py-1 rounded border border-input hover:bg-accent disabled:opacity-50"
                 >
-                  Reject
+                  {t('policyEnforcement.shared.actions.reject')}
                 </button>
                 <button
                   disabled={disabled}
                   onClick={() => onApprove(a.role, "approved")}
                   className="text-xs px-2 py-1 rounded font-medium bg-foreground text-background hover:opacity-90 disabled:opacity-50"
                 >
-                  Approve as {a.role}
+                  {t('policyEnforcement.shared.actions.approveAs', { role: a.role })}
                 </button>
               </div>
             )}
@@ -303,8 +311,7 @@ function PendingApprovalsCard({
         ))}
       </div>
       <div className="mt-3 text-[10px] text-muted-foreground">
-        Demo mode: any visitor can approve. In production, only signed-in users
-        with the listed role can sign off.
+        {t('policyEnforcement.policyDetailClient.pendingApprovals.demoNote')}
       </div>
     </Card>
   )
@@ -317,15 +324,18 @@ function DetectionTab({
   template: PolicyTemplate
   instance: PolicyInstance
 }) {
+  const t = useT()
   return (
     <div className="space-y-4">
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-          Rationale
+          {t('policyEnforcement.policyDetailClient.detection.rationale')}
         </div>
         <p className="text-sm">{template.rationale}</p>
         <div className="mt-3 text-xs">
-          <div className="text-muted-foreground">Example violation:</div>
+          <div className="text-muted-foreground">
+            {t('policyEnforcement.policyDetailClient.detection.exampleViolation')}
+          </div>
           <code className="block bg-muted/40 rounded p-2 mt-1 text-[11px] whitespace-pre-wrap">
             {template.exampleViolation}
           </code>
@@ -334,7 +344,9 @@ function DetectionTab({
 
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3">
-          Detectors ({template.detectors.length})
+          {t('policyEnforcement.policyDetailClient.detection.detectorsCount', {
+            count: template.detectors.length,
+          })}
         </div>
         <div className="space-y-2">
           {template.detectors.map((d) => (
@@ -353,7 +365,7 @@ function DetectionTab({
 
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3">
-          Tunable parameters
+          {t('policyEnforcement.policyDetailClient.detection.tunableParameters')}
         </div>
         <div className="space-y-2">
           {template.tunableParameters.map((p) => (
@@ -366,7 +378,8 @@ function DetectionTab({
               </div>
               <div className="text-xs text-muted-foreground mt-0.5">{p.helpText}</div>
               <div className="text-[11px] mt-1 font-mono text-muted-foreground">
-                Current: {JSON.stringify(instance.parameterValues[p.key])}
+                {t('policyEnforcement.policyDetailClient.detection.currentPrefix')}{' '}
+                {JSON.stringify(instance.parameterValues[p.key])}
               </div>
             </div>
           ))}
@@ -383,6 +396,7 @@ function ScopeTab({
   instance: PolicyInstance
   applications: Array<{ id: string; name: string }>
 }) {
+  const t = useT()
   const assignedIds = new Set(instance.appliesTo.applicationIds)
   const assigned = applications.filter((a) => assignedIds.has(a.id))
   const unassigned = applications.filter((a) => !assignedIds.has(a.id))
@@ -391,26 +405,42 @@ function ScopeTab({
     <div className="space-y-4">
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-          Applies to
+          {t('policyEnforcement.policyDetailClient.scope.appliesTo')}
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm">
-          <ScopeChip label="Data classifications" values={instance.appliesTo.dataClassifications} />
-          <ScopeChip label="Risk tiers" values={instance.appliesTo.riskTiers} />
-          <ScopeChip label="Departments" values={instance.appliesTo.departments} />
           <ScopeChip
-            label="Specific apps"
-            values={[`${assigned.length} of ${applications.length}`]}
+            label={t('policyEnforcement.policyDetailClient.scope.dataClassifications')}
+            values={instance.appliesTo.dataClassifications}
+          />
+          <ScopeChip
+            label={t('policyEnforcement.policyDetailClient.scope.riskTiers')}
+            values={instance.appliesTo.riskTiers}
+          />
+          <ScopeChip
+            label={t('policyEnforcement.policyDetailClient.scope.departments')}
+            values={instance.appliesTo.departments}
+          />
+          <ScopeChip
+            label={t('policyEnforcement.policyDetailClient.scope.specificApps')}
+            values={[
+              t('policyEnforcement.policyDetailClient.scope.assignedCountOfTotal', {
+                assigned: assigned.length,
+                total: applications.length,
+              }),
+            ]}
           />
         </div>
       </Card>
 
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-          Assigned applications ({assigned.length})
+          {t('policyEnforcement.policyDetailClient.scope.assignedApplications', {
+            count: assigned.length,
+          })}
         </div>
         {assigned.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            No specific applications assigned. Currently scoped by classification/tier filters above.
+            {t('policyEnforcement.policyDetailClient.scope.emptyAssigned')}
           </p>
         ) : (
           <ul className="text-sm space-y-1">
@@ -428,7 +458,9 @@ function ScopeTab({
       {unassigned.length > 0 && (
         <details className="text-sm">
           <summary className="cursor-pointer text-muted-foreground hover:text-foreground">
-            {unassigned.length} unassigned application(s) — view all
+            {t('policyEnforcement.policyDetailClient.scope.unassignedDetails', {
+              count: unassigned.length,
+            })}
           </summary>
           <ul className="mt-2 ml-4 space-y-0.5 text-xs text-muted-foreground">
             {unassigned.map((a) => (
@@ -442,12 +474,15 @@ function ScopeTab({
 }
 
 function ScopeChip({ label, values }: { label: string; values: string[] }) {
+  const t = useT()
   return (
     <div className="rounded border p-2">
       <div className="text-xs text-muted-foreground">{label}</div>
       <div className="text-sm mt-0.5">
         {values.length === 0 ? (
-          <span className="text-muted-foreground italic">none</span>
+          <span className="text-muted-foreground italic">
+            {t('policyEnforcement.policyDetailClient.scope.none')}
+          </span>
         ) : (
           values.join(", ")
         )}
@@ -467,6 +502,7 @@ function ApprovalsTab({
   onApprove: (role: string, decision: "approved" | "rejected") => void
   disabled: boolean
 }) {
+  const t = useT()
   const required = requiredApproversFor(template)
   const lastEvent = instance.promotionHistory.at(-1)
   const lastApprovers = lastEvent?.approvers ?? []
@@ -475,11 +511,12 @@ function ApprovalsTab({
     <div className="space-y-4">
       <Card className="p-4">
         <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-2">
-          Required approvers for promotion
+          {t('policyEnforcement.policyDetailClient.approvals.requiredHeading')}
         </div>
         <p className="text-sm text-muted-foreground mb-3">
-          Promoting this policy from Guideline to Strict requires sign-off from these roles
-          (set by template category: <span className="font-medium">{template.category}</span>).
+          {t('policyEnforcement.policyDetailClient.approvals.requiredBody', {
+            category: template.category,
+          })}
         </p>
         <ul className="space-y-1.5">
           {required.map((role) => {
@@ -524,7 +561,9 @@ function ApprovalsTab({
                     }
                     className="text-[10px] capitalize"
                   >
-                    {record?.status ?? "no decision"}
+                    {record?.status
+                      ? t(`policyEnforcement.shared.status.${record.status}`)
+                      : t('policyEnforcement.shared.status.noDecision')}
                   </Badge>
                   {record?.status === "pending" && (
                     <button
@@ -532,7 +571,7 @@ function ApprovalsTab({
                       onClick={() => onApprove(role, "approved")}
                       className="text-xs px-2 py-1 rounded font-medium bg-foreground text-background hover:opacity-90 disabled:opacity-50"
                     >
-                      Approve
+                      {t('policyEnforcement.shared.actions.approve')}
                     </button>
                   )}
                 </div>
@@ -546,14 +585,15 @@ function ApprovalsTab({
 }
 
 function HistoryTab({ instance }: { instance: PolicyInstance }) {
+  const t = useT()
   return (
     <Card className="p-4">
       <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3">
-        Promotion history
+        {t('policyEnforcement.policyDetailClient.history.heading')}
       </div>
       {instance.promotionHistory.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          No mode changes yet. This policy has been in Guideline mode since creation.
+          {t('policyEnforcement.policyDetailClient.history.empty')}
         </p>
       ) : (
         <ol className="relative ml-4 border-l space-y-4">
@@ -566,10 +606,16 @@ function HistoryTab({ instance }: { instance: PolicyInstance }) {
                 )}
               />
               <div className="text-sm font-medium">
-                {event.from} → {event.to}
+                {t('policyEnforcement.policyDetailClient.history.transition', {
+                  from: event.from,
+                  to: event.to,
+                })}
               </div>
               <div className="text-xs text-muted-foreground">
-                {new Date(event.at).toLocaleString()} by {event.by}
+                {t('policyEnforcement.policyDetailClient.history.byUser', {
+                  time: new Date(event.at).toLocaleString(),
+                  user: event.by,
+                })}
               </div>
               {event.reason && (
                 <div className="text-xs text-muted-foreground mt-0.5">
@@ -590,7 +636,7 @@ function HistoryTab({ instance }: { instance: PolicyInstance }) {
                       }
                       className="text-[10px]"
                     >
-                      {a.role}: {a.status}
+                      {a.role}: {t(`policyEnforcement.shared.status.${a.status}`)}
                     </Badge>
                   ))}
                 </div>
@@ -624,6 +670,7 @@ function TestConsoleTab({
   instance: PolicyInstance
   template: PolicyTemplate
 }) {
+  const t = useT()
   const [prompt, setPrompt] = useState("")
   const [result, setResult] = useState<PolicyTestResultUI | null>(null)
   const [loading, setLoading] = useState(false)
@@ -646,7 +693,7 @@ function TestConsoleTab({
       })
       const data = await res.json()
       if (!res.ok) {
-        setErr(data.error ?? "Test failed")
+        setErr(data.error ?? t('policyEnforcement.policyDetailClient.errors.testFailed'))
         return
       }
       setResult(data.result)
@@ -665,16 +712,15 @@ function TestConsoleTab({
         <div className="flex items-baseline justify-between gap-2 mb-3">
           <div>
             <div className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
-              Test console
+              {t('policyEnforcement.policyDetailClient.test.heading')}
             </div>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Dry-run evaluation. No state changes, no violations recorded.
-              Returns what the detectors would say against this policy&apos;s
-              current parameter values.
+              {t('policyEnforcement.policyDetailClient.test.description')}
             </p>
           </div>
           <Badge variant="outline" className="text-[10px]">
-            Mode: <span className="font-mono ml-1">{instance.enforcementMode}</span>
+            {t('policyEnforcement.policyDetailClient.test.modeLabel')}{' '}
+            <span className="font-mono ml-1">{instance.enforcementMode}</span>
           </Badge>
         </div>
 
@@ -682,14 +728,14 @@ function TestConsoleTab({
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={6}
-          placeholder="Paste a prompt or model response to test against this policy..."
+          placeholder={t('policyEnforcement.policyDetailClient.test.promptPlaceholder')}
           className="w-full px-3 py-2 rounded-md border bg-background text-sm font-mono resize-y"
         />
 
         {samplePrompts.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2">
             <span className="text-[10px] text-muted-foreground self-center">
-              Try a sample:
+              {t('policyEnforcement.policyDetailClient.test.trySample')}
             </span>
             {samplePrompts.map((s, i) => (
               <button
@@ -699,7 +745,10 @@ function TestConsoleTab({
                 className="text-[11px] px-2 py-0.5 rounded border hover:bg-accent text-left max-w-md truncate"
                 title={s}
               >
-                {i === 0 ? "🚨 violation" : "✓ safe"} —{" "}
+                {i === 0
+                  ? t('policyEnforcement.policyDetailClient.test.sampleViolation')
+                  : t('policyEnforcement.policyDetailClient.test.sampleSafe')}
+                {t('policyEnforcement.policyDetailClient.test.sampleSeparator')}
                 <span className="font-mono">{s.slice(0, 60)}…</span>
               </button>
             ))}
@@ -718,7 +767,9 @@ function TestConsoleTab({
             disabled={loading || prompt.trim().length === 0}
             className="px-4 py-1.5 rounded-md text-sm font-medium bg-foreground text-background hover:opacity-90 disabled:opacity-50"
           >
-            {loading ? "Evaluating…" : "Run test →"}
+            {loading
+              ? t('policyEnforcement.policyDetailClient.test.evaluating')
+              : t('policyEnforcement.policyDetailClient.test.runTest')}
           </button>
         </div>
       </Card>
@@ -738,32 +789,42 @@ function TestConsoleTab({
               <div>
                 <div className="text-sm font-semibold">
                   {result.matched
-                    ? "Policy would fire"
-                    : "Clean — no detectors matched"}
+                    ? t('policyEnforcement.policyDetailClient.test.wouldFire')
+                    : t('policyEnforcement.policyDetailClient.test.cleanNoMatch')}
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  Evaluated in {result.evaluationTimeMs}ms ·{" "}
-                  {result.triggeredDetectors.length} detector
-                  {result.triggeredDetectors.length === 1 ? "" : "s"} hit
+                  {result.triggeredDetectors.length === 1
+                    ? t('policyEnforcement.policyDetailClient.test.evaluatedInOne', {
+                        ms: result.evaluationTimeMs,
+                        count: result.triggeredDetectors.length,
+                      })
+                    : t('policyEnforcement.policyDetailClient.test.evaluatedInMany', {
+                        ms: result.evaluationTimeMs,
+                        count: result.triggeredDetectors.length,
+                      })}
                 </div>
               </div>
             </div>
             {result.matched && (
               <Badge variant="warning" className="text-[10px] capitalize">
-                Action: {result.actionThatWouldFire}
+                {t('policyEnforcement.policyDetailClient.test.actionLabel', {
+                  action: result.actionThatWouldFire,
+                })}
               </Badge>
             )}
           </div>
 
           {result.matched && cls === "guideline" && (
             <div className="mb-3 rounded p-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 text-xs">
-              In Guideline mode this would only be{" "}
-              <span className="font-mono">logged</span>. After promotion to
-              Strict the action becomes{" "}
+              {t('policyEnforcement.policyDetailClient.test.guidelineNotePrefix')}
+              <span className="font-mono">
+                {t('policyEnforcement.policyDetailClient.test.guidelineNoteLogged')}
+              </span>
+              {t('policyEnforcement.policyDetailClient.test.guidelineNoteMiddle')}
               <span className="font-mono">
                 {template.defaults.enforcementMode}
               </span>
-              .
+              {t('policyEnforcement.policyDetailClient.test.guidelineNoteSuffix')}
             </div>
           )}
 
@@ -779,7 +840,9 @@ function TestConsoleTab({
                       {d.detectorId}
                     </span>
                     <Badge variant="outline" className="text-[10px] font-mono">
-                      conf {d.confidence.toFixed(2)}
+                      {t('policyEnforcement.policyDetailClient.test.confidence', {
+                        value: d.confidence.toFixed(2),
+                      })}
                     </Badge>
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">
@@ -787,7 +850,9 @@ function TestConsoleTab({
                   </div>
                   {d.matchedSubstring && (
                     <code className="block text-[11px] mt-1.5 bg-muted/40 rounded px-2 py-1">
-                      Match: {d.matchedSubstring}
+                      {t('policyEnforcement.policyDetailClient.test.matchLabel', {
+                        value: d.matchedSubstring,
+                      })}
                     </code>
                   )}
                 </div>
@@ -817,6 +882,7 @@ interface WatchdogResult {
 }
 
 function WatchdogBanner({ instance }: { instance: PolicyInstance }) {
+  const t = useT()
   const cls = classOf(instance.enforcementMode)
   const [data, setData] = useState<WatchdogResult | null>(null)
 
@@ -883,22 +949,30 @@ function WatchdogBanner({ instance }: { instance: PolicyInstance }) {
           <div>
             <div className="text-sm font-semibold">
               {data.action === "auto_demoted" &&
-                "Auto-demoted by watchdog"}
-              {data.action === "grace_started" && "Watchdog grace period started"}
-              {data.action === "still_grace" && "Watchdog grace period active"}
-              {data.action === "recovered" && "Recovered — back below threshold"}
+                t('policyEnforcement.policyDetailClient.watchdog.autoDemoted')}
+              {data.action === "grace_started" &&
+                t('policyEnforcement.policyDetailClient.watchdog.graceStarted')}
+              {data.action === "still_grace" &&
+                t('policyEnforcement.policyDetailClient.watchdog.stillGrace')}
+              {data.action === "recovered" &&
+                t('policyEnforcement.policyDetailClient.watchdog.recovered')}
             </div>
             <div className="text-xs text-muted-foreground mt-0.5">
-              FP rate{" "}
+              {t('policyEnforcement.policyDetailClient.watchdog.fpRatePrefix')}
               <span className="font-mono font-medium text-foreground">
-                {data.fpRate.toFixed(2)}%
-              </span>{" "}
-              vs threshold{" "}
-              <span className="font-mono">{data.threshold}%</span>
+                {t('policyEnforcement.policyDetailClient.watchdog.fpRateValue', {
+                  value: data.fpRate.toFixed(2),
+                })}
+              </span>
+              {t('policyEnforcement.policyDetailClient.watchdog.vsThreshold')}
+              <span className="font-mono">
+                {t('policyEnforcement.policyDetailClient.watchdog.thresholdValue', {
+                  value: data.threshold,
+                })}
+              </span>
               {data.graceUntil && data.action !== "auto_demoted" && (
                 <>
-                  {" "}
-                  · auto-demote at{" "}
+                  {t('policyEnforcement.policyDetailClient.watchdog.autoDemoteAt')}
                   <CountdownClock until={data.graceUntil} />
                 </>
               )}
@@ -918,7 +992,7 @@ function WatchdogBanner({ instance }: { instance: PolicyInstance }) {
           }}
           className="text-xs px-3 py-1 rounded border border-input hover:bg-accent shrink-0"
         >
-          Run watchdog now
+          {t('policyEnforcement.policyDetailClient.watchdog.runNow')}
         </button>
       </div>
     </Card>
@@ -926,10 +1000,11 @@ function WatchdogBanner({ instance }: { instance: PolicyInstance }) {
 }
 
 function CountdownClock({ until }: { until: string }) {
+  const t = useT()
   const [now, setNow] = useState(Date.now())
   useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000)
-    return () => clearInterval(t)
+    const id = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(id)
   }, [])
 
   const target = new Date(until).getTime()
@@ -939,11 +1014,18 @@ function CountdownClock({ until }: { until: string }) {
   const s = seconds % 60
 
   if (remainingMs === 0) {
-    return <span className="font-mono text-destructive">imminent</span>
+    return (
+      <span className="font-mono text-destructive">
+        {t('policyEnforcement.policyDetailClient.watchdog.imminent')}
+      </span>
+    )
   }
   return (
     <span className="font-mono">
-      T-{m}:{s.toString().padStart(2, "0")}
+      {t('policyEnforcement.policyDetailClient.watchdog.countdown', {
+        m,
+        s: s.toString().padStart(2, '0'),
+      })}
     </span>
   )
 }

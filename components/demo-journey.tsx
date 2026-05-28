@@ -2,53 +2,14 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { X } from 'lucide-react'
+import { useT } from '@/lib/i18n/provider'
 
 const STEPS = [
-  {
-    step: 1,
-    route: '/',
-    title: 'Your org has no AI map yet',
-    body: 'You\'re starting from zero — like every CISO does. Let\'s find out what AI your organisation is actually using.',
-    cta: 'Launch Discovery Agent →',
-    duration: 30,
-    final: false,
-  },
-  {
-    step: 2,
-    route: '/discover',
-    title: 'AI Agent is interviewing your employees',
-    body: 'Agents are reaching out across Slack and email. Watch as they extract use cases from natural conversations — no forms, no surveys.',
-    cta: 'See the map populate →',
-    duration: 90,
-    final: false,
-  },
-  {
-    step: 3,
-    route: '/',
-    title: '47 use cases mapped. 12 critical risks identified.',
-    body: 'All from agent conversations. No manual entry. Click any node to explore the full risk picture for that use case.',
-    cta: 'Assign ownership →',
-    duration: 60,
-    final: false,
-  },
-  {
-    step: 4,
-    route: '/owners',
-    title: 'Owners identified and notified',
-    body: 'AI suggested owners based on who reported each use case. One click to confirm. Agents automatically send each owner their risk assessment tasks.',
-    cta: 'See compliance coverage →',
-    duration: 45,
-    final: false,
-  },
-  {
-    step: 5,
-    route: '/comply',
-    title: 'From 0% to 73% EU AI Act coverage — this session.',
-    body: 'Every use case is mapped to the frameworks that matter. Gaps are visible. Remediations are one click away. Your AI is now governed.',
-    cta: 'Finish demo',
-    duration: 45,
-    final: true,
-  },
+  { step: 1, id: 's1', route: '/',         duration: 30, final: false },
+  { step: 2, id: 's2', route: '/discover', duration: 90, final: false },
+  { step: 3, id: 's3', route: '/',         duration: 60, final: false },
+  { step: 4, id: 's4', route: '/owners',   duration: 45, final: false },
+  { step: 5, id: 's5', route: '/comply',   duration: 45, final: true  },
 ]
 
 interface DemoJourneyProps {
@@ -56,6 +17,7 @@ interface DemoJourneyProps {
 }
 
 export function DemoJourney({ onClose }: DemoJourneyProps) {
+  const t = useT()
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
   const step = STEPS[currentStep]
@@ -90,19 +52,19 @@ export function DemoJourney({ onClose }: DemoJourneyProps) {
 
         {/* Step label */}
         <div className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1">
-          Step {step.step} of {STEPS.length} · ~{step.duration}s
+          {t('demoJourney.progress', { current: step.step, total: STEPS.length, duration: step.duration })}
         </div>
 
         {/* Content */}
-        <h3 className="text-sm font-bold text-slate-900 mb-1">{step.title}</h3>
-        <p className="text-xs text-slate-500 leading-relaxed mb-4">{step.body}</p>
+        <h3 className="text-sm font-bold text-slate-900 mb-1">{t(`demoJourney.steps.${step.id}.title`)}</h3>
+        <p className="text-xs text-slate-500 leading-relaxed mb-4">{t(`demoJourney.steps.${step.id}.body`)}</p>
 
         {/* CTA */}
         <button
           onClick={handleNext}
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-xl transition-colors"
         >
-          {step.cta}
+          {t(`demoJourney.steps.${step.id}.cta`)}
         </button>
       </div>
     </div>

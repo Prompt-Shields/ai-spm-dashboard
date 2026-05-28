@@ -35,4 +35,20 @@ export const piiShield = {
   withoutShield: 'Uten Shield — ChatGPT ville mottatt dette',
   responding: 'ChatGPT svarer…',
   mappingTitle: 'Oppdaget PII → plassholdere',
+  types: {
+    email: 'e-post',
+    phone: 'telefon',
+    ssn: 'fødselsnummer', // TODO(i18n): native review
+    creditCard: 'kort',
+    ip: 'IP',
+    apiKey: 'API-nøkkel', // TODO(i18n): native review
+    person: 'navn',
+    address: 'adresse',
+  },
+  mapping: {
+    placeholder: 'Plassholder',
+    type: 'Type',
+    original: 'Original',
+    noPiiDetected: 'Ingen PII oppdaget.',
+  },
 }
