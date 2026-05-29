@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { useT } from "@/lib/i18n/provider"
 import type {
   PolicyTemplate,
   PolicyCategory,
@@ -37,6 +38,7 @@ const SEVERITY_BADGE_VARIANT: Record<
 }
 
 export function TemplateLibraryClient({ templates, categoryMeta }: Props) {
+  const t = useT()
   const [query, setQuery] = useState("")
   const [activeCat, setActiveCat] = useState<PolicyCategory | "ALL">("ALL")
 
@@ -78,7 +80,7 @@ export function TemplateLibraryClient({ templates, categoryMeta }: Props) {
       <div className="flex flex-wrap gap-2 items-center">
         <input
           type="text"
-          placeholder="Search by name, OWASP ID, regulation…"
+          placeholder={t('policyEnforcement.templatesListClient.searchPlaceholder')}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="flex-1 min-w-[260px] px-3 py-1.5 rounded-md border bg-background text-sm"
@@ -87,7 +89,7 @@ export function TemplateLibraryClient({ templates, categoryMeta }: Props) {
 
       <div className="flex flex-wrap gap-1.5">
         <CategoryPill
-          label="All"
+          label={t('policyEnforcement.templatesListClient.allCategory')}
           count={counts.ALL}
           active={activeCat === "ALL"}
           onClick={() => setActiveCat("ALL")}
@@ -105,7 +107,10 @@ export function TemplateLibraryClient({ templates, categoryMeta }: Props) {
 
       {/* Result count */}
       <div className="text-xs text-muted-foreground">
-        {filtered.length} of {templates.length} templates
+        {t('policyEnforcement.templatesListClient.resultCount', {
+          filtered: filtered.length,
+          total: templates.length,
+        })}
       </div>
 
       {/* Grid */}
@@ -118,7 +123,7 @@ export function TemplateLibraryClient({ templates, categoryMeta }: Props) {
       {filtered.length === 0 && (
         <Card className="p-8 border-dashed text-center">
           <p className="text-sm text-muted-foreground">
-            No templates match — try clearing the search or category filter.
+            {t('policyEnforcement.templatesListClient.empty')}
           </p>
         </Card>
       )}
@@ -161,6 +166,7 @@ function TemplateCard({
   template: PolicyTemplate
   categoryMeta: Props["categoryMeta"]
 }) {
+  const t = useT()
   const meta = categoryMeta[template.category]
   return (
     <Link href={`/policy-enforcement/templates/${template.id}`} className="group">
@@ -195,10 +201,19 @@ function TemplateCard({
 
         <div className="flex items-center justify-between gap-2 text-xs pt-2 border-t">
           <span className="text-muted-foreground">
-            {template.detectors.length} detector
-            {template.detectors.length === 1 ? "" : "s"}
+            {template.detectors.length === 1
+              ? t('policyEnforcement.templatesListClient.detectorsOne', {
+                  count: template.detectors.length,
+                })
+              : t('policyEnforcement.templatesListClient.detectorsMany', {
+                  count: template.detectors.length,
+                })}
           </span>
-          <span className="text-muted-foreground">v{template.version}</span>
+          <span className="text-muted-foreground">
+            {t('policyEnforcement.templatesListClient.versionLabel', {
+              version: template.version,
+            })}
+          </span>
         </div>
 
         {template.regulatoryReferences.length > 0 && (

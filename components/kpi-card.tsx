@@ -8,10 +8,19 @@ interface KpiCardProps {
   subtitle?: string
   icon?: LucideIcon
   trend?: "up" | "down" | "neutral"
+  trendLabel?: string
   variant?: "default" | "success" | "warning" | "danger"
 }
 
-export function KpiCard({ title, value, subtitle, icon: Icon, trend, variant = "default" }: KpiCardProps) {
+export function KpiCard({
+  title,
+  value,
+  subtitle,
+  icon: Icon,
+  trend,
+  trendLabel = "vs last quarter",
+  variant = "default",
+}: KpiCardProps) {
   const variantColors = {
     default: "text-foreground",
     success: "text-success",
@@ -38,7 +47,7 @@ export function KpiCard({ title, value, subtitle, icon: Icon, trend, variant = "
             >
               {trend === "up" ? "↑" : trend === "down" ? "↓" : "→"}
             </span>
-            <span className="text-xs text-muted-foreground">vs last quarter</span>
+            <span className="text-xs text-muted-foreground">{trendLabel}</span>
           </div>
         )}
       </CardContent>

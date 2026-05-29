@@ -1,0 +1,26 @@
+export const register = {
+  title: 'Registre',
+  subtitle: "{count} cas d'usage · {shadow} IA fantôme",
+  exportCsv: 'Exporter en CSV',
+  status: {
+    discovered: 'Découvert',
+    assessed: 'Évalué',
+    owned: 'Attribué',
+    mitigated: 'Atténué',
+    compliant: 'Conforme',
+  },
+  searchPlaceholder: "Rechercher des cas d'usage…",
+  allDepartments: 'Tous les services',
+  allStatuses: 'Tous les statuts',
+  resultsCount: '{count} résultats',
+  columns: {
+    useCase: "Cas d'usage",
+    department: 'Service',
+    model: 'Modèle',
+    owner: 'Responsable',
+    topRisk: 'Risque principal',
+    status: 'Statut',
+  },
+  shadowAiBadge: 'IA fantôme',
+  unowned: 'Sans responsable',
+}

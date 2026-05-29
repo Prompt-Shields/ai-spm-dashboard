@@ -1,13 +1,14 @@
 'use client'
 import { X, ShieldAlert, User, Database, CheckCircle2, Clock, Circle } from 'lucide-react'
 import type { UseCase, Person } from '@/lib/aimaps-types'
+import { useT } from '@/lib/i18n/provider'
 
-const STATUS_CFG: Record<string, { label: string; text: string; dot: string }> = {
-  discovered: { label: 'Discovered', text: 'text-slate-400',  dot: 'bg-slate-400'  },
-  assessed:   { label: 'Assessed',   text: 'text-blue-400',   dot: 'bg-blue-400'   },
-  owned:      { label: 'Owned',      text: 'text-amber-400',  dot: 'bg-amber-400'  },
-  mitigated:  { label: 'Mitigated',  text: 'text-purple-400', dot: 'bg-purple-400' },
-  compliant:  { label: 'Compliant',  text: 'text-green-400',  dot: 'bg-green-400'  },
+const STATUS_CFG: Record<string, { key: string; text: string; dot: string }> = {
+  discovered: { key: 'discovered', text: 'text-slate-400',  dot: 'bg-slate-400'  },
+  assessed:   { key: 'assessed',   text: 'text-blue-400',   dot: 'bg-blue-400'   },
+  owned:      { key: 'owned',      text: 'text-amber-400',  dot: 'bg-amber-400'  },
+  mitigated:  { key: 'mitigated',  text: 'text-purple-400', dot: 'bg-purple-400' },
+  compliant:  { key: 'compliant',  text: 'text-green-400',  dot: 'bg-green-400'  },
 }
 
 const SEVERITY_CFG: Record<string, { color: string; bar: string }> = {
@@ -24,10 +25,10 @@ const DATA_CLASS_CFG: Record<string, { color: string; bg: string }> = {
   public:       { color: 'text-green-400',  bg: 'bg-green-900/30'  },
 }
 
-const COMPLIANCE_CFG: Record<string, { label: string; color: string }> = {
-  covered: { label: 'Covered', color: 'text-green-400'  },
-  partial: { label: 'Partial', color: 'text-yellow-400' },
-  gap:     { label: 'Gap',     color: 'text-red-400'    },
+const COMPLIANCE_CFG: Record<string, { key: string; color: string }> = {
+  covered: { key: 'covered', color: 'text-green-400'  },
+  partial: { key: 'partial', color: 'text-yellow-400' },
+  gap:     { key: 'gap',     color: 'text-red-400'    },
 }
 
 interface UseCaseDetailPanelProps {
@@ -37,6 +38,7 @@ interface UseCaseDetailPanelProps {
 }
 
 export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPanelProps) {
+  const t = useT()
   const status    = STATUS_CFG[useCase.status] ?? STATUS_CFG.discovered
   const dataClass = DATA_CLASS_CFG[useCase.dataClassification] ?? DATA_CLASS_CFG.internal
   const worstSev  = ['critical','high','medium','low'].find(s => useCase.risks.some(r => r.severity === s))
@@ -52,7 +54,7 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
         <div className="flex-1 min-w-0 pr-3">
           <div className="flex items-center gap-2 mb-1">
             <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${status.dot}`} />
-            <span className={`text-[10px] font-bold uppercase tracking-wider ${status.text}`}>{status.label}</span>
+            <span className={`text-[10px] font-bold uppercase tracking-wider ${status.text}`}>{t(`useCaseDetail.status.${status.key}`)}</span>
           </div>
           <h2 className="text-sm font-semibold text-slate-100 leading-snug">{useCase.name}</h2>
           <p className="text-xs text-slate-500 mt-0.5">{useCase.department}</p>
@@ -74,19 +76,19 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
             <div className={`rounded-lg px-3 py-2.5 ${dataClass.bg}`}>
               <div className="flex items-center gap-1.5 mb-0.5">
                 <Database size={10} className={dataClass.color} />
-                <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">Data</span>
+                <span className="text-[9px] font-semibold uppercase tracking-wider text-slate-500">{t('useCaseDetail.meta.data')}</span>
               </div>
               <span className={`text-xs font-semibold capitalize ${dataClass.color}`}>{useCase.dataClassification}</span>
             </div>
             <div className="rounded-lg px-3 py-2.5 bg-slate-800/50">
-              <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-500 mb-0.5">Discovery</div>
+              <div className="text-[9px] font-semibold uppercase tracking-wider text-slate-500 mb-0.5">{t('useCaseDetail.meta.discovery')}</div>
               <span className="text-xs font-semibold text-slate-300 capitalize">{useCase.discoveryMethod.replace(/-/g,' ')}</span>
             </div>
           </div>
 
           {/* AI Models */}
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">AI Models</div>
+            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">{t('useCaseDetail.sections.aiModels')}</div>
             <div className="flex flex-wrap gap-1.5">
               {useCase.models.map(m => (
                 <span key={m.id} className="text-[11px] font-medium px-2.5 py-1 rounded-lg"
@@ -100,7 +102,7 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
 
           {/* Owner */}
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Owner</div>
+            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">{t('useCaseDetail.sections.owner')}</div>
             {owner ? (
               <div className="flex items-center gap-2.5 rounded-lg px-3 py-2 bg-slate-800/50">
                 <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
@@ -116,8 +118,8 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
             ) : (
               <div className="flex items-center gap-2 rounded-lg px-3 py-2 bg-red-900/20 border border-red-900/30">
                 <ShieldAlert size={12} className="text-red-400" />
-                <span className="text-xs font-semibold text-red-400">No owner assigned</span>
-                <button className="ml-auto text-[10px] font-semibold text-red-400 hover:text-red-300">Assign →</button>
+                <span className="text-xs font-semibold text-red-400">{t('useCaseDetail.owner.none')}</span>
+                <button className="ml-auto text-[10px] font-semibold text-red-400 hover:text-red-300">{t('useCaseDetail.owner.assign')}</button>
               </div>
             )}
           </div>
@@ -126,11 +128,11 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-                Risks <span className="text-slate-600 normal-case">({useCase.risks.length})</span>
+                {t('useCaseDetail.sections.risks')} <span className="text-slate-600 normal-case">{t('useCaseDetail.risks.count', { count: useCase.risks.length })}</span>
               </div>
               {worstSev && (
                 <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded ${SEVERITY_CFG[worstSev].color}`}>
-                  Worst: {worstSev}
+                  {t('useCaseDetail.risks.worst', { severity: worstSev })}
                 </span>
               )}
             </div>
@@ -150,13 +152,13 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
                         {risk.owaspRef && (
                           <span className="text-[9px] font-mono px-1.5 py-0.5 rounded"
                             style={{ background: '#f59e0b15', color: '#f59e0b', border: '1px solid #f59e0b25' }}>
-                            OWASP {risk.owaspRef}
+                            {t('useCaseDetail.risks.refs.owasp', { ref: risk.owaspRef })}
                           </span>
                         )}
                         {risk.euAiActRef && (
                           <span className="text-[9px] font-mono px-1.5 py-0.5 rounded"
                             style={{ background: '#00d9ff15', color: '#00d9ff', border: '1px solid #00d9ff25' }}>
-                            EU AI Act {risk.euAiActRef}
+                            {t('useCaseDetail.risks.refs.euAiAct', { ref: risk.euAiActRef })}
                           </span>
                         )}
                         {risk.nistRef && (
@@ -175,7 +177,7 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
 
           {/* Mitigations */}
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Mitigations</div>
+            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">{t('useCaseDetail.sections.mitigations')}</div>
             <div className="space-y-1.5">
               {useCase.risks.flatMap(r => r.mitigations).map(m => {
                 const Icon  = m.status === 'applied' ? CheckCircle2 : m.status === 'pending' ? Clock : Circle
@@ -195,7 +197,7 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
 
           {/* Compliance */}
           <div>
-            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Compliance Coverage</div>
+            <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">{t('useCaseDetail.compliance.heading')}</div>
             <div className="grid grid-cols-2 gap-1.5">
               {([
                 ['euAiAct',   'EU AI Act'   ],
@@ -209,7 +211,7 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
                   <div key={key} className="rounded-lg px-3 py-2 flex items-center justify-between"
                     style={{ background: '#1a1f2e' }}>
                     <span className="text-[10px] text-slate-400">{label}</span>
-                    <span className={`text-[10px] font-semibold ${cfg.color}`}>{cfg.label}</span>
+                    <span className={`text-[10px] font-semibold ${cfg.color}`}>{t(`useCaseDetail.compliance.levels.${cfg.key}`)}</span>
                   </div>
                 )
               })}
@@ -224,11 +226,11 @@ export function UseCaseDetailPanel({ useCase, owner, onClose }: UseCaseDetailPan
         style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: '#141824' }}>
         <button className="flex-1 text-xs font-semibold py-2 rounded-lg transition-colors"
           style={{ background: '#00d9ff18', color: '#00d9ff', border: '1px solid #00d9ff30' }}>
-          Edit Use Case
+          {t('useCaseDetail.actions.edit')}
         </button>
         <button className="flex-1 text-xs font-semibold py-2 rounded-lg transition-colors"
           style={{ background: '#7c3aed18', color: '#a78bfa', border: '1px solid #7c3aed30' }}>
-          Assign Owner
+          {t('useCaseDetail.actions.assignOwner')}
         </button>
       </div>
     </div>
