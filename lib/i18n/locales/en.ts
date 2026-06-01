@@ -17,7 +17,6 @@ import { comply } from './en/comply'
 import { aiGovernance } from './en/aiGovernance'
 import { aiVisibility } from './en/aiVisibility'
 import { modelRisk } from './en/modelRisk'
-import { piiShield } from './en/piiShield'
 import { ardoq } from './en/ardoq'
 import { policyEnforcement } from './en/policyEnforcement'
 import { demoJourney } from './en/demoJourney'
@@ -33,7 +32,6 @@ export const en = {
   aiGovernance,
   aiVisibility,
   modelRisk,
-  piiShield,
   ardoq,
   policyEnforcement,
   demoJourney,

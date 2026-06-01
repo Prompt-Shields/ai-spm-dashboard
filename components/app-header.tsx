@@ -8,7 +8,7 @@ import { LiveViolationPill } from '@/components/live-violation-pill'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { useT } from '@/lib/i18n/provider'
 
-const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
+const NAV: { href: string; key: string; Icon: LucideIcon; external?: boolean }[] = [
   { href: '/', key: 'map', Icon: Map },
   { href: '/discover', key: 'discover', Icon: Radio },
   { href: '/register', key: 'register', Icon: ClipboardList },
@@ -16,7 +16,7 @@ const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
   { href: '/comply', key: 'comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', key: 'policies', Icon: Shield },
   { href: '/adoption', key: 'adoption', Icon: TrendingUp },
-  { href: '/pii-shield', key: 'piiShield', Icon: EyeOff },
+  { href: 'https://demo-chat.promptshields.com', key: 'piiShield', Icon: EyeOff, external: true },
 ]
 
 interface AppHeaderProps {
@@ -43,21 +43,34 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
 
         {/* Nav */}
         <nav className="flex items-center gap-1 flex-1 min-w-0 overflow-x-auto">
-          {NAV.map(({ href, key, Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                'flex flex-shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors whitespace-nowrap',
-                pathname === href
-                  ? 'bg-indigo-50 text-indigo-600 font-medium'
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
-              )}
-            >
-              <Icon size={14} />
-              {t(`nav.${key}`)}
-            </Link>
-          ))}
+          {NAV.map(({ href, key, Icon, external }) =>
+            external ? (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors whitespace-nowrap text-slate-500 hover:text-slate-800 hover:bg-slate-50"
+              >
+                <Icon size={14} />
+                {t(`nav.${key}`)}
+              </a>
+            ) : (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  'flex flex-shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors whitespace-nowrap',
+                  pathname === href
+                    ? 'bg-indigo-50 text-indigo-600 font-medium'
+                    : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                )}
+              >
+                <Icon size={14} />
+                {t(`nav.${key}`)}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Right side */}

@@ -9,7 +9,6 @@ import { comply } from './nb/comply'
 import { aiGovernance } from './nb/aiGovernance'
 import { aiVisibility } from './nb/aiVisibility'
 import { modelRisk } from './nb/modelRisk'
-import { piiShield } from './nb/piiShield'
 import { ardoq } from './nb/ardoq'
 import { policyEnforcement } from './nb/policyEnforcement'
 import { demoJourney } from './nb/demoJourney'
@@ -28,7 +27,6 @@ export const nb: Messages = {
   aiGovernance,
   aiVisibility,
   modelRisk,
-  piiShield,
   ardoq,
   policyEnforcement,
   demoJourney,
