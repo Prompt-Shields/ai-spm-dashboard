@@ -93,7 +93,12 @@ export default function DiscoverPage() {
 
       {/* Conversation feed */}
       <div>
-        <h2 className="text-sm font-semibold text-slate-700 mb-3">{t('discover.conversations')}</h2>
+        <div className="flex items-center gap-2 mb-3">
+          <h2 className="text-sm font-semibold text-slate-700">{t('discover.conversations')}</h2>
+          <span className="text-[10px] font-semibold uppercase tracking-wide bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 rounded-full">
+            {t('discover.sampleData')}
+          </span>
+        </div>
         <div className="grid grid-cols-2 gap-4">
           {AGENT_CONVERSATIONS.map((conv, i) => (
             <AgentConversationCard
