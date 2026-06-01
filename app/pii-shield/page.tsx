@@ -12,7 +12,7 @@ import { MappingPanel } from '@/components/pii-shield/mapping-panel'
 import { cn } from '@/lib/utils'
 import { useT } from '@/lib/i18n/provider'
 
-const CHAT_DEMO_URL = process.env.NEXT_PUBLIC_CHAT_DEMO_URL ?? ''
+const CHAT_DEMO_URL = process.env.NEXT_PUBLIC_CHAT_DEMO_URL ?? 'https://demo-chat.promptshields.com'
 
 interface Result {
   matches: PiiMatch[]
