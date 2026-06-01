@@ -3,8 +3,8 @@ export const nav = {
   discover: 'Oppdag',
   register: 'Register',
   owners: 'Eiere',
-  comply: 'Etterlevelse',
-  policies: 'Retningslinjer',
+  comply: 'Samsvar',
+  policies: 'Policyer',
   adoption: 'Adopsjon',
-  piiShield: 'PII-skjold-demo',
+  piiShield: 'PII Shield',
 }
