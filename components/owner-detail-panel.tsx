@@ -1,6 +1,7 @@
 'use client'
 import { X } from 'lucide-react'
 import type { Person, UseCase } from '@/lib/aimaps-types'
+import { useT } from '@/lib/i18n/provider'
 
 interface OwnerDetailPanelProps {
   person: Person
@@ -9,6 +10,7 @@ interface OwnerDetailPanelProps {
 }
 
 export function OwnerDetailPanel({ person, useCases, onClose }: OwnerDetailPanelProps) {
+  const t = useT()
   const personUseCases = useCases.filter(uc => uc.ownerId === person.id)
 
   return (
@@ -32,24 +34,24 @@ export function OwnerDetailPanel({ person, useCases, onClose }: OwnerDetailPanel
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-yellow-50 border border-yellow-100 rounded-lg p-3 text-center">
             <div className="text-xl font-bold text-yellow-600">{person.assessmentsPending}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Pending</div>
+            <div className="text-xs text-slate-500 mt-0.5">{t('ownerDetail.stats.pending')}</div>
           </div>
           <div className="bg-green-50 border border-green-100 rounded-lg p-3 text-center">
             <div className="text-xl font-bold text-green-600">{person.assessmentsComplete}</div>
-            <div className="text-xs text-slate-500 mt-0.5">Completed</div>
+            <div className="text-xs text-slate-500 mt-0.5">{t('ownerDetail.stats.completed')}</div>
           </div>
         </div>
 
         <div>
           <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
-            Use Cases ({personUseCases.length})
+            {t('ownerDetail.useCases.heading', { count: personUseCases.length })}
           </div>
           <div className="space-y-2">
             {personUseCases.map(uc => (
               <div key={uc.id} className="border border-slate-100 rounded-lg p-3 bg-slate-50">
                 <div className="text-sm font-medium text-slate-800">{uc.name}</div>
                 <div className="text-xs text-slate-500 mt-0.5">
-                  {uc.risks.length} risks · {uc.models.map(m => m.name).join(', ')}
+                  {t('ownerDetail.useCases.summary', { count: uc.risks.length, models: uc.models.map(m => m.name).join(', ') })}
                 </div>
               </div>
             ))}
@@ -58,7 +60,7 @@ export function OwnerDetailPanel({ person, useCases, onClose }: OwnerDetailPanel
 
         {person.assessmentsPending > 0 && (
           <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-lg transition-colors">
-            Send Assessment Reminder
+            {t('ownerDetail.actions.sendReminder')}
           </button>
         )}
       </div>

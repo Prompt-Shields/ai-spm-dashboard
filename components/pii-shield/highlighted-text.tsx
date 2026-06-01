@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react'
 import type { MappingEntry, PiiMatch, PiiType } from '@/lib/pii/types'
 import { cn } from '@/lib/utils'
+import { useT } from '@/lib/i18n/provider'
 
 const TYPE_STYLES: Record<PiiType, string> = {
   EMAIL: 'bg-blue-100 text-blue-700 border-blue-200',
@@ -14,9 +15,30 @@ const TYPE_STYLES: Record<PiiType, string> = {
   ADDRESS: 'bg-teal-100 text-teal-700 border-teal-200',
 }
 
-export const PII_TYPE_LABEL: Record<PiiType, string> = {
-  EMAIL: 'email', PHONE: 'phone', SSN: 'SSN', CREDIT_CARD: 'card',
-  IP: 'IP', API_KEY: 'API key', PERSON: 'name', ADDRESS: 'address',
+const PII_TYPE_KEY: Record<PiiType, string> = {
+  EMAIL: 'email',
+  PHONE: 'phone',
+  SSN: 'ssn',
+  CREDIT_CARD: 'creditCard',
+  IP: 'ip',
+  API_KEY: 'apiKey',
+  PERSON: 'person',
+  ADDRESS: 'address',
+}
+
+/** Returns a localized label map for `PiiType` values. */
+export function usePiiTypeLabel(): Record<PiiType, string> {
+  const t = useT()
+  return {
+    EMAIL: t(`piiShield.types.${PII_TYPE_KEY.EMAIL}`),
+    PHONE: t(`piiShield.types.${PII_TYPE_KEY.PHONE}`),
+    SSN: t(`piiShield.types.${PII_TYPE_KEY.SSN}`),
+    CREDIT_CARD: t(`piiShield.types.${PII_TYPE_KEY.CREDIT_CARD}`),
+    IP: t(`piiShield.types.${PII_TYPE_KEY.IP}`),
+    API_KEY: t(`piiShield.types.${PII_TYPE_KEY.API_KEY}`),
+    PERSON: t(`piiShield.types.${PII_TYPE_KEY.PERSON}`),
+    ADDRESS: t(`piiShield.types.${PII_TYPE_KEY.ADDRESS}`),
+  }
 }
 
 function Chip({ type, mono, children }: { type: PiiType; mono?: boolean; children: ReactNode }) {

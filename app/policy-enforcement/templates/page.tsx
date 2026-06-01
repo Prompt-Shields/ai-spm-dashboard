@@ -8,26 +8,26 @@ import {
   POLICY_CATEGORIES_META
 } from "@/lib/policy-templates/templates"
 import { TemplateLibraryClient } from "./client"
+import { getT } from "@/lib/i18n/server"
 
 export const dynamic = "force-static"
 
-export default function TemplateLibraryPage() {
+export default async function TemplateLibraryPage() {
+  const t = await getT()
   return (
     <div className="space-y-6">
       <Link
         href="/policy-enforcement"
         className="text-xs text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
       >
-        ← All policies
+        {t('policyEnforcement.backToPolicies')}
       </Link>
 
       <div className="flex items-baseline justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Template library</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t('policyEnforcement.templates.title')}</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {POLICY_TEMPLATES.length} starter policies covering OWASP LLM Top 10,
-            EU AI Act, GDPR, industry regulations, shadow AI, and content safety.
-            Clone to start observing — admins decide when to promote to Strict.
+            {t('policyEnforcement.templates.subtitle', { count: POLICY_TEMPLATES.length })}
           </p>
         </div>
       </div>
