@@ -9,10 +9,13 @@ import { comply } from './nb/comply'
 import { aiGovernance } from './nb/aiGovernance'
 import { aiVisibility } from './nb/aiVisibility'
 import { modelRisk } from './nb/modelRisk'
+import { piiShield } from './nb/piiShield'
 import { ardoq } from './nb/ardoq'
 import { policyEnforcement } from './nb/policyEnforcement'
-import { demoJourney } from './nb/demoJourney'
+import { useCaseDetail } from './nb/useCaseDetail'
+import { ownerDetail } from './nb/ownerDetail'
 import { agentConversation } from './nb/agentConversation'
+import { demoJourney } from './nb/demoJourney'
 
 // Norwegian Bokmål. Each namespace lives in its own file under ./nb/ and is
 // translated per-page in Phase B. Typed as Messages so any shape drift from en
@@ -28,8 +31,11 @@ export const nb: Messages = {
   aiGovernance,
   aiVisibility,
   modelRisk,
+  piiShield,
   ardoq,
   policyEnforcement,
-  demoJourney,
+  useCaseDetail,
+  ownerDetail,
   agentConversation,
+  demoJourney,
 }

@@ -204,4 +204,96 @@ export const policyEnforcement = {
     cloning: 'Clonage…',
     cloneAction: 'Cloner et personnaliser →',
   },
+  dashboard: {
+    kpi: {
+      strict: 'Strict',
+      guideline: 'Souple',
+      coverage: 'Couverture',
+      blocks30d: 'Blocages · 30j',
+      promotionsReady: 'Promotions prêtes',
+      delta: '{value} vs 30j précédents',
+      ofApps: 'sur {count} applis',
+    },
+    violations: {
+      heading: 'Violations',
+      chart: {
+        title: '30 derniers jours · empilé par mode',
+        blocks: 'Blocages',
+        wouldBlock: 'Aurait bloqué',
+        empty: 'Aucune activité ces 30 derniers jours.',
+      },
+      topPolicies: {
+        heading: 'Politiques les plus déclenchées',
+        hitsLabel: '{count} déclenchements',
+        empty: 'Aucun déclenchement ces 30 derniers jours.',
+      },
+      topApps: {
+        heading: 'Applications les plus impactées',
+        empty: "Pas encore d'activité d'application.",
+        topPolicyLabel: 'Top : {name}',
+        hitsLabel: '{count} déclenchements',
+      },
+      recent: {
+        heading: 'Événements récents',
+        empty: 'Aucun événement récent.',
+        actionBlock: 'Bloqué',
+        actionFlag: 'Aurait bloqué',
+        actionAllow: 'Autorisé',
+        actionRedact: 'Anonymisé',
+        justNow: 'à l’instant',
+        minutesAgo: 'il y a {count} min',
+        hoursAgo: 'il y a {count} h',
+        daysAgo: 'il y a {count} j',
+      },
+    },
+    promotionQueue: {
+      heading: 'File de promotion',
+      subtitle: 'Politiques souples mûres pour être promues en Strict.', // TODO(i18n): native review
+      empty: 'Aucune politique prête pour promotion.',
+      ageLabel: '{days}j en Souple',
+      hitsLabel: '{count} déclenchements / 30j',
+      fpRateLabel: '{rate}% FP',
+      eligible: 'Éligible',
+      daysToGo: '{days}j restants',
+    },
+    panels: {
+      strict: {
+        heading: 'Strict — Application',
+        subtitle: 'Politiques bloquant ou anonymisant le trafic activement.',
+        empty: 'Aucune politique Stricte. Promouvez une candidate depuis la file ci-dessus.', // TODO(i18n): native review
+        modeBadge: 'EN APPLICATION',
+        blocksHeader: 'Blocages',
+      },
+      guideline: {
+        heading: 'Souple — Observation',
+        subtitle: "Politiques en mode observation. Journalisation seule, trafic non modifié.",
+        empty: 'Aucune politique Souple. Clonez un modèle pour commencer.',
+        modeBadge: 'EN OBSERVATION',
+        blocksHeader: 'Aurait bloqué',
+      },
+      row: {
+        appsLabel: 'Applis : {value}',
+        lastHitLabel: 'Dernier déclenchement : {when}',
+        fpLabel: 'FP {rate}%',
+        neverTriggered: '—',
+      },
+    },
+    actions: {
+      promote: 'Promouvoir',
+      demote: 'Rétrograder',
+      pause: 'Pause',
+      resume: 'Reprendre',
+      confirm: 'Confirmer',
+      cancel: 'Annuler',
+      working: 'En cours…',
+      promoteTitle: 'Promouvoir en Strict ?',
+      promoteBody: 'Cette politique commencera à appliquer immédiatement.', // TODO(i18n): native review
+      demoteTitle: 'Rétrograder en Souple ?',
+      demoteBody: 'Le trafic ne sera plus bloqué. La politique continuera à observer.', // TODO(i18n): native review
+      pauseTitle: 'Mettre la politique en pause ?',
+      pauseBody: "Les évaluations s'arrêtent jusqu'à la reprise.",
+      resumeTitle: 'Reprendre la politique ?',
+      resumeBody: 'Les évaluations reprennent immédiatement.',
+    },
+  },
 }

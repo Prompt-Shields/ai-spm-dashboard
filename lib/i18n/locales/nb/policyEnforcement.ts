@@ -199,4 +199,96 @@ export const policyEnforcement = {
     cloning: 'Kloner…',
     cloneAction: 'Klon og tilpass →',
   },
+  dashboard: {
+    kpi: {
+      strict: 'Streng',
+      guideline: 'Løs',
+      coverage: 'Dekning',
+      blocks30d: 'Blokkeringer · 30d',
+      promotionsReady: 'Klar for opprykk',
+      delta: '{value} vs forrige 30d',
+      ofApps: 'av {count} apper',
+    },
+    violations: {
+      heading: 'Brudd',
+      chart: {
+        title: 'Siste 30 dager · stablet etter modus',
+        blocks: 'Blokkeringer',
+        wouldBlock: 'Ville blokkert',
+        empty: 'Ingen aktivitet siste 30 dager.',
+      },
+      topPolicies: {
+        heading: 'Mest aktive retningslinjer',
+        hitsLabel: '{count} treff',
+        empty: 'Ingen treff siste 30 dager.',
+      },
+      topApps: {
+        heading: 'Mest påvirkede applikasjoner',
+        empty: 'Ingen applikasjonsaktivitet enda.',
+        topPolicyLabel: 'Topp: {name}',
+        hitsLabel: '{count} treff',
+      },
+      recent: {
+        heading: 'Nylige hendelser',
+        empty: 'Ingen nylige hendelser.',
+        actionBlock: 'Blokkert',
+        actionFlag: 'Ville blokkert',
+        actionAllow: 'Tillatt',
+        actionRedact: 'Maskert',
+        justNow: 'akkurat nå',
+        minutesAgo: 'for {count} min siden',
+        hoursAgo: 'for {count} t siden',
+        daysAgo: 'for {count} d siden',
+      },
+    },
+    promotionQueue: {
+      heading: 'Opprykk-kø',
+      subtitle: 'Løse retningslinjer som har modnet nok til å vurdere opprykk til Streng.', // TODO(i18n): native review
+      empty: 'Ingen retningslinjer er klare for opprykk.',
+      ageLabel: '{days}d som Løs',
+      hitsLabel: '{count} treff / 30d',
+      fpRateLabel: '{rate}% FP',
+      eligible: 'Kvalifisert',
+      daysToGo: '{days}d igjen',
+    },
+    panels: {
+      strict: {
+        heading: 'Streng — Håndhever',
+        subtitle: 'Retningslinjer som aktivt blokkerer eller maskerer trafikk.',
+        empty: 'Ingen Strenge retningslinjer enda. Forfremm en kandidat fra køen over.', // TODO(i18n): native review
+        modeBadge: 'HÅNDHEVER',
+        blocksHeader: 'Blokkeringer',
+      },
+      guideline: {
+        heading: 'Løs — Observerer',
+        subtitle: 'Retningslinjer i observasjonsmodus. Kun logging, trafikk endres ikke.',
+        empty: 'Ingen Løse retningslinjer enda. Klon en mal for å komme i gang.',
+        modeBadge: 'OBSERVERER',
+        blocksHeader: 'Ville blokkert',
+      },
+      row: {
+        appsLabel: 'Apper: {value}',
+        lastHitLabel: 'Siste treff: {when}',
+        fpLabel: 'FP {rate}%',
+        neverTriggered: '—',
+      },
+    },
+    actions: {
+      promote: 'Forfremm',
+      demote: 'Degrader',
+      pause: 'Pause',
+      resume: 'Gjenoppta',
+      confirm: 'Bekreft',
+      cancel: 'Avbryt',
+      working: 'Arbeider…',
+      promoteTitle: 'Forfremme til Streng?',
+      promoteBody: 'Denne retningslinjen vil begynne å håndheve trafikk umiddelbart.', // TODO(i18n): native review
+      demoteTitle: 'Degradere til Løs?',
+      demoteBody: 'Trafikk vil ikke lenger blokkeres. Retningslinjen fortsetter å observere.', // TODO(i18n): native review
+      pauseTitle: 'Pause retningslinje?',
+      pauseBody: 'Evalueringer stopper til du gjenopptar.',
+      resumeTitle: 'Gjenoppta retningslinje?',
+      resumeBody: 'Evalueringer starter umiddelbart.',
+    },
+  },
 }

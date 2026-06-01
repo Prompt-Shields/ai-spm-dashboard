@@ -4,6 +4,10 @@ export const common = {
   startDemo: 'Start demo',
   criticalRisks: '{count} kritiske risikoer',
   vsLastQuarter: 'vs. forrige kvartal',
+  openMenu: 'Åpne meny',
+  closeMenu: 'Lukk meny',
+  expandSidebar: 'Utvid sidemeny',
+  collapseSidebar: 'Skjul sidemeny',
   metaTitle: 'Atlas AI — Kartlegging av KI-bruksområder og risiko',
   metaDescription:
     'Kartlegg organisasjonens KI-bruksområder mot risiko, eiere og samsvarsrammeverk',

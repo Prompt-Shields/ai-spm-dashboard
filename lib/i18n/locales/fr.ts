@@ -9,10 +9,13 @@ import { comply } from './fr/comply'
 import { aiGovernance } from './fr/aiGovernance'
 import { aiVisibility } from './fr/aiVisibility'
 import { modelRisk } from './fr/modelRisk'
+import { piiShield } from './fr/piiShield'
 import { ardoq } from './fr/ardoq'
 import { policyEnforcement } from './fr/policyEnforcement'
-import { demoJourney } from './fr/demoJourney'
+import { useCaseDetail } from './fr/useCaseDetail'
+import { ownerDetail } from './fr/ownerDetail'
 import { agentConversation } from './fr/agentConversation'
+import { demoJourney } from './fr/demoJourney'
 
 // French. Each namespace lives in its own file under ./fr/ and is translated
 // per-page in Phase B. Typed as Messages so any shape drift from en is a
@@ -28,8 +31,11 @@ export const fr: Messages = {
   aiGovernance,
   aiVisibility,
   modelRisk,
+  piiShield,
   ardoq,
   policyEnforcement,
-  demoJourney,
+  useCaseDetail,
+  ownerDetail,
   agentConversation,
+  demoJourney,
 }
