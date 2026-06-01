@@ -53,6 +53,10 @@ export type ActionType =
   | "rewrite"
   | "notify"
   | "require_review"
+  // Promptly-emitted "no-op" tick. Fires for every prompt that ran the
+  // PEP and matched no policy. Gives the dashboard a denominator for
+  // false-positive rates (totalEvaluations vs totalHits).
+  | "evaluated"
 
 export interface Action {
   type: ActionType
@@ -256,6 +260,7 @@ export interface PolicyViolation {
     detectorOutput: string
     matchedPattern?: string
     confidence?: number
+    urlHost?: string
   }
   reviewed: boolean
   reviewedBy?: string

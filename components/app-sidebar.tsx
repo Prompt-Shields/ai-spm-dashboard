@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   Shield,
   EyeOff,
+  TrendingUp,
   ChevronLeft,
   ChevronRight,
   X,
@@ -26,6 +27,7 @@ const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
   { href: '/owners', key: 'owners', Icon: Users },
   { href: '/comply', key: 'comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', key: 'policies', Icon: Shield },
+  { href: '/adoption', key: 'adoption', Icon: TrendingUp },
   { href: '/pii-shield', key: 'piiShield', Icon: EyeOff },
 ]
 

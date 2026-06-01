@@ -5,5 +5,6 @@ export const nav = {
   owners: 'Eiere',
   comply: 'Etterlevelse',
   policies: 'Retningslinjer',
+  adoption: 'Adopsjon',
   piiShield: 'PII-skjold-demo',
 }

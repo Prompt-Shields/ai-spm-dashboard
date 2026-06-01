@@ -1,7 +1,8 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { AlertTriangle, Play, Menu } from 'lucide-react'
+import { Play, Menu } from 'lucide-react'
 import { LanguageSwitcher } from '@/components/language-switcher'
+import { LiveViolationPill } from '@/components/live-violation-pill'
 import { useT } from '@/lib/i18n/provider'
 import { useSidebar } from './sidebar-provider'
 
@@ -15,6 +16,7 @@ const ROUTE_TO_NAV_KEY: { prefix: string; key: string }[] = [
   { prefix: '/register', key: 'register' },
   { prefix: '/owners', key: 'owners' },
   { prefix: '/comply', key: 'comply' },
+  { prefix: '/adoption', key: 'adoption' },
   { prefix: '/', key: 'map' },
 ]
 
@@ -58,9 +60,8 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
         {/* Right cluster */}
         <div className="ml-auto flex items-center gap-3">
           <LanguageSwitcher />
-          <div className="hidden sm:flex items-center gap-1.5 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-red-600">
-            <AlertTriangle size={12} />
-            {t('common.criticalRisks', { count: 12 })}
+          <div className="hidden sm:flex">
+            <LiveViolationPill />
           </div>
           <button
             onClick={onStartDemo}
