@@ -1,5 +1,14 @@
 export const piiShield = {
   title: 'Démo PII Shield',
+  tab: {
+    live: 'Démo en direct',
+    howItWorks: 'Comment ça marche',
+  },
+  openInNewTab: 'Ouvrir dans un nouvel onglet',
+  notConfigured: {
+    title: "La démo chat n'est pas encore déployée",
+    body: "Définissez la variable d'environnement ci-dessous pour activer l'intégration de la démo en direct.",
+  },
   intro:
     "Envoyez une requête à ChatGPT — même une remplie de données personnelles. Le Shield détecte les PII localement, les remplace par des marqueurs avant que quoi que ce soit ne quitte votre navigateur, et ne restaure les vraies valeurs que dans la réponse que vous voyez. ChatGPT ne reçoit jamais les données sensibles.", // TODO(i18n): native review
   tryExample: 'Essayez un exemple :',

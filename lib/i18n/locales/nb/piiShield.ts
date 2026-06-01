@@ -1,5 +1,14 @@
 export const piiShield = {
   title: 'PII Shield-demo',
+  tab: {
+    live: 'Live-demo',
+    howItWorks: 'Slik fungerer det',
+  },
+  openInNewTab: 'Åpne i ny fane',
+  notConfigured: {
+    title: 'Chat-demoen er ikke distribuert ennå',
+    body: 'Angi miljøvariabelen nedenfor for å aktivere live-demo-innbyggingen.',
+  },
   intro:
     'Send en forespørsel til ChatGPT — selv en full av personopplysninger. Shield oppdager PII lokalt, bytter den ut med plassholdere før noe forlater nettleseren din, og gjenoppretter de virkelige verdiene kun i svaret du ser. ChatGPT mottar aldri de sensitive dataene.', // TODO(i18n): native review
   tryExample: 'Prøv et eksempel:',
