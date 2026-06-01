@@ -20,6 +20,7 @@ import { modelRisk } from './en/modelRisk'
 import { ardoq } from './en/ardoq'
 import { policyEnforcement } from './en/policyEnforcement'
 import { demoJourney } from './en/demoJourney'
+import { agentConversation } from './en/agentConversation'
 
 export const en = {
   common,
@@ -35,4 +36,5 @@ export const en = {
   ardoq,
   policyEnforcement,
   demoJourney,
+  agentConversation,
 }

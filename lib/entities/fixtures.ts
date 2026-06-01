@@ -18,6 +18,9 @@ import { technicalCapabilitiesStore } from "./technical-capabilities-store"
 import { technologyProductsStore } from "./technology-products-store"
 import { technologyServicesStore } from "./technology-services-store"
 import { complianceAssessmentsStore } from "./compliance-assessments-store"
+import { upsertUsageEvent } from "./usage-events-store"
+import { upsertTourEngagement } from "./tour-engagement-store"
+import { recordViolation } from "../policy-engine/server/store"
 import { DEFAULT_TENANT_ID, nowIso } from "./types"
 
 let seeded = false
@@ -260,5 +263,137 @@ export function ensureFixturesSeeded(): void {
   ]
   for (const r of references) {
     referencesStore.upsert({ ...r, tenantId: t, createdAt: now, updatedAt: now })
+  }
+
+  // ─── Adoption: usage events (last 30 days) ────────────────────────
+  // Five apps, four users, realistic daily prompt volumes with some
+  // blocked/redacted/flagged counts mixed in.
+  const APPS: Array<{
+    id: string
+    dailyBase: number
+    blockRate: number
+    redactRate: number
+    flagRate: number
+  }> = [
+    { id: "chatgpt",    dailyBase: 420, blockRate: 0.01, redactRate: 0.03, flagRate: 0.05 },
+    { id: "copilot",    dailyBase: 310, blockRate: 0.005, redactRate: 0.015, flagRate: 0.02 },
+    { id: "claude",     dailyBase: 185, blockRate: 0.008, redactRate: 0.02, flagRate: 0.03 },
+    { id: "gemini",     dailyBase:  90, blockRate: 0.012, redactRate: 0.025, flagRate: 0.04 },
+    { id: "perplexity", dailyBase:  55, blockRate: 0.003, redactRate: 0.01, flagRate: 0.015 },
+  ]
+  const USERS = ["auth0|u-sarah", "auth0|u-james", "auth0|u-mei", "auth0|u-alex"]
+  // Seeded with a simple deterministic pseudo-random to keep fixtures stable.
+  let rng = 42
+  function rand(): number {
+    rng = (rng * 1664525 + 1013904223) & 0x7fffffff
+    return rng / 0x7fffffff
+  }
+  const today = new Date()
+  for (let d = 29; d >= 0; d--) {
+    const date = new Date(today)
+    date.setDate(today.getDate() - d)
+    const day = date.toISOString().slice(0, 10)
+    const dayTs = `${day}T09:00:00Z`
+    for (const app of APPS) {
+      // Not every user uses every app every day
+      for (const sub of USERS) {
+        if (rand() > 0.6) continue // ~40% chance of activity
+        const prompts = Math.max(1, Math.round(app.dailyBase / USERS.length * (0.5 + rand())))
+        upsertUsageEvent({
+          tenantId: t,
+          day,
+          auth0Sub: sub,
+          promptlyAppId: app.id,
+          promptCount: prompts,
+          blockedCount: Math.round(prompts * app.blockRate * rand() * 2),
+          redactedCount: Math.round(prompts * app.redactRate * rand() * 2),
+          flaggedCount: Math.round(prompts * app.flagRate * rand() * 2),
+          firstSeen: dayTs,
+          lastSeen: `${day}T18:${Math.floor(rand() * 59).toString().padStart(2, "0")}:00Z`,
+        })
+      }
+    }
+  }
+
+  // ─── Adoption: policy violations (risk-by-app breakdown) ─────────
+  const violationApps = ["chatgpt", "claude", "gemini", "copilot"]
+  const actions = ["redact", "flag", "block", "log", "evaluated"] as const
+  const actionWeights = [0.35, 0.30, 0.10, 0.15, 0.10]
+  for (let d = 29; d >= 0; d--) {
+    const date = new Date(today)
+    date.setDate(today.getDate() - d)
+    const day = date.toISOString().slice(0, 10)
+    const violationsPerDay = Math.round(8 + rand() * 12)
+    for (let v = 0; v < violationsPerDay; v++) {
+      const appId = violationApps[Math.floor(rand() * violationApps.length)]
+      const roll = rand()
+      let cumulative = 0
+      let action = actions[0]
+      for (let a = 0; a < actions.length; a++) {
+        cumulative += actionWeights[a]
+        if (roll < cumulative) { action = actions[a]; break }
+      }
+      recordViolation({
+        id: `fix-v-${d}-${v}-${appId}`,
+        policyInstanceId: action === "block" ? "seed-injection-block"
+          : action === "redact" ? "seed-pii-redact" : "seed-secrets-flag",
+        applicationId: appId,
+        timestamp: `${day}T${(9 + Math.floor(rand() * 9)).toString().padStart(2, "0")}:00:00Z`,
+        actionTaken: action,
+        severity: action === "block" ? "critical" : action === "redact" ? "high" : "medium",
+        detectorId: action === "block" ? "injection-classifier" : "pii-detector",
+        promptHash: `hash-${d}-${v}`,
+        evidence: { detectorOutput: "fixture", confidence: 0.7 + rand() * 0.3 },
+        reviewed: rand() > 0.7,
+      })
+    }
+  }
+
+  // ─── Adoption: tour engagement ─────────────────────────────────────
+  const TOURS: Array<{
+    id: string
+    startBase: number
+    completionRate: number
+    avgDurationSec: number
+  }> = [
+    { id: "dashboard-intro",     startBase: 18, completionRate: 0.62, avgDurationSec: 145 },
+    { id: "chat-intro",          startBase: 12, completionRate: 0.55, avgDurationSec: 90  },
+    { id: "policy-compliance",   startBase:  7, completionRate: 0.40, avgDurationSec: 210 },
+  ]
+  for (let d = 29; d >= 0; d--) {
+    const date = new Date(today)
+    date.setDate(today.getDate() - d)
+    const day = date.toISOString().slice(0, 10)
+    const dayTs = `${day}T10:00:00Z`
+    for (const tour of TOURS) {
+      if (rand() > 0.7) continue // not every tour runs every day
+      const starts = Math.max(1, Math.round(tour.startBase * (0.4 + rand() * 1.2)))
+      const completions = Math.round(starts * tour.completionRate * (0.6 + rand() * 0.8))
+      const dismissals = starts - completions
+      upsertTourEngagement({
+        tenantId: t,
+        day,
+        auth0Sub: null, // aggregate row — no per-user breakdown needed for demo
+        tourId: tour.id,
+        startCount: starts,
+        completionCount: Math.min(completions, starts),
+        dismissalCounts: dismissals > 0 ? {
+          skip_button: Math.round(dismissals * 0.6),
+          esc: Math.round(dismissals * 0.25),
+          click_outside: dismissals - Math.round(dismissals * 0.6) - Math.round(dismissals * 0.25),
+        } : {},
+        totalDurationSec: Math.round(completions * tour.avgDurationSec * (0.8 + rand() * 0.4)),
+        stepDismissalCounts: dismissals > 0 ? {
+          "0": Math.round(dismissals * 0.15),
+          "1": Math.round(dismissals * 0.30),
+          "2": Math.round(dismissals * 0.25),
+          "3": Math.round(dismissals * 0.20),
+          "4": dismissals - Math.round(dismissals * 0.15) - Math.round(dismissals * 0.30)
+                - Math.round(dismissals * 0.25) - Math.round(dismissals * 0.20),
+        } : {},
+        firstSeen: dayTs,
+        lastSeen: `${day}T17:00:00Z`,
+      })
+    }
   }
 }

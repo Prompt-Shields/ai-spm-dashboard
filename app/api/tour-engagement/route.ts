@@ -20,6 +20,7 @@ import {
   upsertTourEngagement,
   type ListTourEngagementFilter
 } from "@/lib/entities/tour-engagement-store"
+import { ensureFixturesSeeded } from "@/lib/entities/fixtures"
 
 export const dynamic = "force-dynamic"
 
@@ -80,6 +81,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  ensureFixturesSeeded()
   const params = request.nextUrl.searchParams
   const filter: ListTourEngagementFilter = {
     fromDay: params.get("fromDay") ?? undefined,

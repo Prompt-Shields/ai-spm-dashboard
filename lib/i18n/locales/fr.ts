@@ -12,6 +12,7 @@ import { modelRisk } from './fr/modelRisk'
 import { ardoq } from './fr/ardoq'
 import { policyEnforcement } from './fr/policyEnforcement'
 import { demoJourney } from './fr/demoJourney'
+import { agentConversation } from './fr/agentConversation'
 
 // French. Each namespace lives in its own file under ./fr/ and is translated
 // per-page in Phase B. Typed as Messages so any shape drift from en is a
@@ -30,4 +31,5 @@ export const fr: Messages = {
   ardoq,
   policyEnforcement,
   demoJourney,
+  agentConversation,
 }

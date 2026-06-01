@@ -17,6 +17,7 @@ import { NextResponse, type NextRequest } from "next/server"
 import { listUsageEvents, type UsageEvent } from "@/lib/entities/usage-events-store"
 import { listViolations } from "@/lib/policy-engine/server/store"
 import type { PolicyViolation, ActionType } from "@/lib/policy-templates/types"
+import { ensureFixturesSeeded } from "@/lib/entities/fixtures"
 
 export const dynamic = "force-dynamic"
 
@@ -59,6 +60,7 @@ interface SummaryResponse {
 }
 
 export async function GET(request: NextRequest) {
+  ensureFixturesSeeded()
   const params = request.nextUrl.searchParams
   const today = new Date()
   const toDay = params.get("toDay") ?? today.toISOString().slice(0, 10)
