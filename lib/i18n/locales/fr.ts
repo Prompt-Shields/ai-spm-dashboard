@@ -9,7 +9,6 @@ import { comply } from './fr/comply'
 import { aiGovernance } from './fr/aiGovernance'
 import { aiVisibility } from './fr/aiVisibility'
 import { modelRisk } from './fr/modelRisk'
-import { piiShield } from './fr/piiShield'
 import { ardoq } from './fr/ardoq'
 import { policyEnforcement } from './fr/policyEnforcement'
 import { demoJourney } from './fr/demoJourney'
@@ -28,7 +27,6 @@ export const fr: Messages = {
   aiGovernance,
   aiVisibility,
   modelRisk,
-  piiShield,
   ardoq,
   policyEnforcement,
   demoJourney,
