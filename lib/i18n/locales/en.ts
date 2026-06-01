@@ -20,6 +20,7 @@ import { modelRisk } from './en/modelRisk'
 import { piiShield } from './en/piiShield'
 import { ardoq } from './en/ardoq'
 import { policyEnforcement } from './en/policyEnforcement'
+import { demoJourney } from './en/demoJourney'
 
 export const en = {
   common,
@@ -35,4 +36,5 @@ export const en = {
   piiShield,
   ardoq,
   policyEnforcement,
+  demoJourney,
 }

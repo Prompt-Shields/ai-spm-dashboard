@@ -12,6 +12,7 @@ import { modelRisk } from './nb/modelRisk'
 import { piiShield } from './nb/piiShield'
 import { ardoq } from './nb/ardoq'
 import { policyEnforcement } from './nb/policyEnforcement'
+import { demoJourney } from './nb/demoJourney'
 
 // Norwegian Bokmål. Each namespace lives in its own file under ./nb/ and is
 // translated per-page in Phase B. Typed as Messages so any shape drift from en
@@ -30,4 +31,5 @@ export const nb: Messages = {
   piiShield,
   ardoq,
   policyEnforcement,
+  demoJourney,
 }

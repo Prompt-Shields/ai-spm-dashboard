@@ -31,7 +31,7 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
     <header className="bg-white border-b border-slate-200 sticky top-0 z-40">
       <div className="max-w-screen-xl mx-auto px-6 flex items-center gap-6 h-14">
         {/* Logo */}
-        <div className="flex items-center gap-2 pr-6 border-r border-slate-100">
+        <div className="flex-shrink-0 flex items-center gap-2 pr-6 border-r border-slate-100">
           <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
             <span className="text-white text-xs font-bold">AI</span>
           </div>
@@ -42,13 +42,13 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
         </div>
 
         {/* Nav */}
-        <nav className="flex items-center gap-1 flex-1">
+        <nav className="flex items-center gap-1 flex-1 min-w-0 overflow-x-auto">
           {NAV.map(({ href, key, Icon }) => (
             <Link
               key={href}
               href={href}
               className={cn(
-                'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors',
+                'flex flex-shrink-0 items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors whitespace-nowrap',
                 pathname === href
                   ? 'bg-indigo-50 text-indigo-600 font-medium'
                   : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
@@ -61,7 +61,7 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
         </nav>
 
         {/* Right side */}
-        <div className="flex items-center gap-3">
+        <div className="flex-shrink-0 flex items-center gap-3">
           <LanguageSwitcher />
           <LiveViolationPill />
           <button

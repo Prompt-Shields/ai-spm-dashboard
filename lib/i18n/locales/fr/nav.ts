@@ -2,9 +2,9 @@ export const nav = {
   map: 'Carte',
   discover: 'Découvrir',
   register: 'Registre',
-  owners: 'Propriétaires',
+  owners: 'Référents',
   comply: 'Conformité',
   policies: 'Politiques',
   adoption: 'Adoption',
-  piiShield: 'Démo bouclier PII',
+  piiShield: 'PII Shield',
 }
