@@ -5,7 +5,7 @@ export const policyEnforcement = {
   list: {
     title: 'Håndheving av retningslinjer',
     subtitle:
-      'Forfrem retningslinjer fra veiledende til streng når du stoler på andelen falske positive.', // TODO(i18n): native review
+      'Hev retningslinjer fra veiledende til streng når du stoler på andelen falske positive.', // TODO(i18n): native review
     newFromTemplate: '+ Ny fra mal',
     summary: {
       strictlyEnforced: 'Strengt håndhevet',
@@ -17,7 +17,7 @@ export const policyEnforcement = {
       title: '🛡️ Strengt håndhevet',
       subtitle: 'Aktive retningslinjer som blokkerer eller redigerer trafikk i sanntid.',
       empty:
-        'Ingen strenge retningslinjer ennå. Forfrem en veiledende retningslinje når den har vist seg verdt det.', // TODO(i18n): native review
+        'Ingen strenge retningslinjer ennå. Hev en veiledende retningslinje når den har vist seg verdt det.', // TODO(i18n): native review
     },
     guidelineSection: {
       title: '📘 Veiledende',
@@ -31,8 +31,8 @@ export const policyEnforcement = {
       appsAll: 'alle',
       hits30dLabel: 'Treff/30d:',
       fpRateLabel: 'FP-andel:',
-      eligibleToPromote: 'Kvalifisert for forfremmelse',
-      promoteInDays: 'Forfrem om {days}d',
+      eligibleToPromote: 'Kvalifisert for heving',
+      promoteInDays: 'Hev om {days}d',
       notYetEligible: 'Ikke kvalifisert ennå',
       view: 'Vis →',
     },
@@ -40,7 +40,7 @@ export const policyEnforcement = {
   templates: {
     title: 'Malbibliotek',
     subtitle:
-      '{count} startretningslinjer som dekker OWASP LLM Top 10, EU AI Act, GDPR, bransjereguleringer, skygge-KI og innholdssikkerhet. Klon for å begynne å overvåke – administratorer bestemmer når de skal forfremmes til streng.', // TODO(i18n): native review
+      '{count} startretningslinjer som dekker OWASP LLM Top 10, EU AI Act, GDPR, bransjereguleringer, skygge-KI og innholdssikkerhet. Klon for å begynne å overvåke – administratorer bestemmer når de skal heves til streng.', // TODO(i18n): native review
   },
   templateDetail: {
     rationale: 'Begrunnelse',
@@ -53,13 +53,13 @@ export const policyEnforcement = {
     locked: '🔒 låst',
     defaultPrefix: 'Standard:',
     regulatoryReferences: 'Regulatoriske referanser',
-    defaultsHeading: 'Malstandarder (foreslått mål etter forfremmelse)',
+    defaultsHeading: 'Malstandarder (foreslått mål etter heving)',
     suggestedMode: 'Foreslått modus',
     riskTiers: 'Risikonivåer',
     dataClassifications: 'Dataklassifiseringer',
     departments: 'Avdelinger',
     defaultsNote:
-      'Klonede retningslinjer starter i veiledende modus. Bruk forfremmelsesveiviseren for å bytte til streng når du stoler på andelen falske positive.', // TODO(i18n): native review
+      'Klonede retningslinjer starter i veiledende modus. Bruk hevingsveiviseren for å bytte til streng når du stoler på andelen falske positive.', // TODO(i18n): native review
   },
   // Shared across the detail/templates clients
   shared: {
@@ -78,14 +78,14 @@ export const policyEnforcement = {
   },
   policyDetailClient: {
     errors: {
-      promotionFailed: 'Forespørsel om forfremmelse mislyktes',
+      promotionFailed: 'Forespørsel om heving mislyktes',
       approvalFailed: 'Godkjenning mislyktes',
       demotionFailed: 'Nedgradering mislyktes',
       testFailed: 'Test mislyktes',
     },
     toasts: {
-      promotionSubmitted: 'Forespørsel om forfremmelse sendt – avventer godkjenninger',
-      promotedAllCollected: '✓ Forfremmet til streng – alle godkjenninger innhentet',
+      promotionSubmitted: 'Forespørsel om heving sendt – avventer godkjenninger',
+      promotedAllCollected: '✓ Hevet til streng – alle godkjenninger innhentet',
       rejectedStaysGuideline: 'Avvist – retningslinjen forblir veiledende',
       recordedRemaining: 'Registrert. {count} godkjenning(er) gjenstår.',
       demotedToGuideline: 'Nedgradert til veiledende',
@@ -98,7 +98,7 @@ export const policyEnforcement = {
       history: 'historikk',
     },
     pendingApprovals: {
-      heading: 'Forfremmelse pågår – avventer godkjenninger',
+      heading: 'Heving pågår – avventer godkjenninger',
       demoNote:
         'Demomodus: enhver besøkende kan godkjenne. I produksjon kan kun innloggede brukere med den oppførte rollen godkjenne.', // TODO(i18n): native review
     },
@@ -123,12 +123,12 @@ export const policyEnforcement = {
       none: 'ingen',
     },
     approvals: {
-      requiredHeading: 'Påkrevde godkjennere for forfremmelse',
+      requiredHeading: 'Påkrevde godkjennere for heving',
       requiredBody:
-        'Forfremmelse av denne retningslinjen fra veiledende til streng krever godkjenning fra disse rollene (bestemt av malkategori: {category}).', // TODO(i18n): native review
+        'Heving av denne retningslinjen fra veiledende til streng krever godkjenning fra disse rollene (bestemt av malkategori: {category}).', // TODO(i18n): native review
     },
     history: {
-      heading: 'Historikk for forfremmelse',
+      heading: 'Historikk for heving',
       empty:
         'Ingen modusendringer ennå. Denne retningslinjen har vært i veiledende modus siden opprettelsen.', // TODO(i18n): native review
       byUser: '{time} av {user}',
@@ -153,7 +153,7 @@ export const policyEnforcement = {
       actionLabel: 'Handling: {action}',
       guidelineNotePrefix: 'I veiledende modus ville dette kun bli ',
       guidelineNoteLogged: 'logget',
-      guidelineNoteMiddle: '. Etter forfremmelse til streng blir handlingen ',
+      guidelineNoteMiddle: '. Etter heving til streng blir handlingen ',
       guidelineNoteSuffix: '.',
       confidence: 'konf {value}',
       matchLabel: 'Treff: {value}',
@@ -185,7 +185,7 @@ export const policyEnforcement = {
   templateDetailClient: {
     heading: 'Klon og start å observere',
     description:
-      'Oppretter en veiledende retningslinje. Kun observasjon – ingenting blokkeres før du forfremmer til streng.', // TODO(i18n): native review
+      'Oppretter en veiledende retningslinje. Kun observasjon – ingenting blokkeres før du hever til streng.', // TODO(i18n): native review
     modeOnClone: 'Modus ved kloning:',
     cloneFailed: 'Kloning mislyktes',
     policyNameLabel: 'Retningslinjenavn',
@@ -218,7 +218,7 @@ export const policyEnforcement = {
         empty: 'Ingen aktivitet siste 30 dager.',
       },
       topPolicies: {
-        heading: 'Mest aktive retningslinjer',
+        heading: 'Retningslinjer med flest utslag',
         hitsLabel: '{count} treff',
         empty: 'Ingen treff siste 30 dager.',
       },
@@ -255,7 +255,7 @@ export const policyEnforcement = {
       strict: {
         heading: 'Streng — Håndhever',
         subtitle: 'Retningslinjer som aktivt blokkerer eller maskerer trafikk.',
-        empty: 'Ingen Strenge retningslinjer enda. Forfremm en kandidat fra køen over.', // TODO(i18n): native review
+        empty: 'Ingen Strenge retningslinjer enda. Hev en kandidat fra køen over.', // TODO(i18n): native review
         modeBadge: 'HÅNDHEVER',
         blocksHeader: 'Blokkeringer',
       },
@@ -274,14 +274,14 @@ export const policyEnforcement = {
       },
     },
     actions: {
-      promote: 'Forfremm',
+      promote: 'Hev',
       demote: 'Degrader',
       pause: 'Pause',
       resume: 'Gjenoppta',
       confirm: 'Bekreft',
       cancel: 'Avbryt',
       working: 'Arbeider…',
-      promoteTitle: 'Forfremme til Streng?',
+      promoteTitle: 'Heve til Streng?',
       promoteBody: 'Denne retningslinjen vil begynne å håndheve trafikk umiddelbart.', // TODO(i18n): native review
       demoteTitle: 'Degradere til Løs?',
       demoteBody: 'Trafikk vil ikke lenger blokkeres. Retningslinjen fortsetter å observere.', // TODO(i18n): native review

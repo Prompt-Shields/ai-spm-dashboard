@@ -30,4 +30,5 @@ export const discover = {
     shadowAiDetected: 'Skygge-KI oppdaget',
   },
   conversations: 'Agentsamtaler',
+  sampleData: 'Eksempeldata',
 }

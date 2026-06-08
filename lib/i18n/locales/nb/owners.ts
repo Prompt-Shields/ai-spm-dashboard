@@ -3,16 +3,16 @@ export const owners = {
   subtitle: 'Personer som er ansvarlige for KI-bruksområder i hele organisasjonen', // TODO(i18n): native review
   kpi: {
     owners: 'Eiere',
-    pendingAssessments: 'Ventende vurderinger',
+    pendingAssessments: 'Manglende vurderinger',
     completed: 'Fullført',
     unownedUseCases: 'Bruksområder uten eier',
   },
-  notifyAll: 'Varsle alle ventende eiere via KI-agent', // TODO(i18n): native review
+  notifyAll: 'Varsle alle eiere med manglende vurderinger via KI-agent',
   table: {
     owner: 'Eier',
     department: 'Avdeling',
     useCases: 'Bruksområder',
-    pending: 'Venter',
+    pending: 'Mangler',
     completed: 'Fullført',
     view: 'Vis →',
   },
