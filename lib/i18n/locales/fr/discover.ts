@@ -30,4 +30,5 @@ export const discover = {
     shadowAiDetected: 'IA fantôme détectée',
   },
   conversations: 'Conversations des agents',
+  sampleData: 'Données de démonstration',
 }
