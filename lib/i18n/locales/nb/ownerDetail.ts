@@ -1,6 +1,6 @@
 export const ownerDetail = {
   stats: {
-    pending: 'Venter',
+    pending: 'Mangler',
     completed: 'Fullført',
   },
   useCases: {
