@@ -16,7 +16,7 @@ export const discover = {
       action: 'Copier le lien',
     },
     autoDetect: {
-      title: 'Détection automatique via Okta',
+      title: 'Détection automatique via Entra-ID',
       description:
         '12 nouveaux outils IA détectés dans votre parc SaaS cette semaine. Examinez et déclenchez des agents de prise en charge pour les outils non gouvernés.', // TODO(i18n): native review
       action: 'Examiner les alertes',

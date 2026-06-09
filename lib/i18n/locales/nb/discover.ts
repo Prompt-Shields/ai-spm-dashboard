@@ -16,7 +16,7 @@ export const discover = {
       action: 'Kopier lenke',
     },
     autoDetect: {
-      title: 'Automatisk oppdaging via Okta',
+      title: 'Automatisk oppdaging via Entra-ID',
       description:
         '12 nye KI-verktøy oppdaget i SaaS-miljøet ditt denne uken. Gjennomgå og utløs inntaksagenter for ustyrte verktøy.', // TODO(i18n): native review
       action: 'Gjennomgå varsler',

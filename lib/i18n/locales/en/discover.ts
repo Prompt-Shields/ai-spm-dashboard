@@ -16,7 +16,7 @@ export const discover = {
       action: 'Copy Link',
     },
     autoDetect: {
-      title: 'Auto-Detect via Okta',
+      title: 'Auto-Detect via Entra-ID',
       description:
         '12 new AI tools detected in your SaaS estate this week. Review and trigger intake agents for ungoverned tools.',
       action: 'Review Alerts',
