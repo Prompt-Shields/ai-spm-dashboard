@@ -260,6 +260,9 @@ export interface PolicyViolation {
     detectorOutput: string
     matchedPattern?: string
     confidence?: number
+    /// Optional URL host when the prompt was observed inside a browser
+    /// tab. Lets the dashboard scope per-domain rules and shows up in
+    /// the Ardoq export's "where" column.
     urlHost?: string
   }
   reviewed: boolean
