@@ -1,8 +1,10 @@
 'use client'
-import { useState } from 'react'
-import { Satellite, Link2, ScanSearch } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Satellite, Link2, ScanSearch, Radar } from 'lucide-react'
 import { AGENT_CONVERSATIONS, DISCOVERY_STATS } from '@/lib/aimaps-data'
 import { AgentConversationCard } from '@/components/agent-conversation-card'
+import { getRunSummary, type RunSummary } from '@/lib/agent-discovery/store'
 import { useT } from '@/lib/i18n/provider'
 import type { LucideIcon } from 'lucide-react'
 
@@ -33,6 +35,12 @@ const ENTRY_CARDS: {
 export default function DiscoverPage() {
   const t = useT()
   const [campaignLaunched, setCampaignLaunched] = useState(false)
+  // Client-only: read the latest Agent Discovery sweep summary after mount to
+  // avoid an SSR/hydration mismatch (localStorage is unavailable on the server).
+  const [runSummary, setRunSummary] = useState<RunSummary | null>(null)
+  useEffect(() => {
+    setRunSummary(getRunSummary())
+  }, [])
 
   return (
     <div>
@@ -40,6 +48,18 @@ export default function DiscoverPage() {
         <h1 className="text-xl font-bold text-slate-900">{t('discover.title')}</h1>
         <p className="text-sm text-slate-500 mt-0.5">{t('discover.subtitle')}</p>
       </div>
+
+      {/* Shadow-findings banner from the latest Agent Discovery sweep (additive) */}
+      {runSummary && runSummary.shadowCount > 0 && (
+        <Link
+          href="/agent-discovery"
+          className="flex items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 text-amber-800 px-4 py-2.5 text-sm mb-6 hover:bg-amber-100 transition-colors"
+        >
+          <Radar size={16} className="flex-shrink-0" />
+          <span className="flex-1">{t('agentDiscovery.banner.text', { count: runSummary.shadowCount })}</span>
+          <span className="font-semibold whitespace-nowrap">{t('agentDiscovery.banner.cta')} →</span>
+        </Link>
+      )}
 
       {/* Entry point cards */}
       <div className="grid grid-cols-3 gap-4 mb-8">

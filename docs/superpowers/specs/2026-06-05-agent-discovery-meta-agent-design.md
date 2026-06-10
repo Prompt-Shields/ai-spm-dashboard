@@ -146,6 +146,7 @@ interface DiscoveredAgent {
   owner: string
   protocol: 'mcp' | 'a2a' | 'none'
   purpose: string
+  approvalState: ApprovalState  // 'approved' | 'pending' | 'unregistered'; unregistered = shadow
   dataClassification: 'public' | 'internal' | 'confidential' | 'restricted'
   regulatoryScope: string[]   // e.g. ['SOC2'], ['HIPAA','PCI-DSS'], ['GDPR']
   region: string              // e.g. 'eu-west-1', 'westeurope', 'europe-west4'
@@ -192,9 +193,10 @@ Keyed `localStorage`, versioned (`aispm.agentDiscovery.v1`):
   Send-to-Register). `getRunSummary()` returns it or `null`.
 - **Send N shadow agents to Register:** for each selected shadow agent, build a `UseCase`
   (`status: 'discovered'`, `discoveryMethod: 'auto-detect'`, `dataClassification` from the
-  agent, `ownerId: null`, `complianceStatus` all-`gap`, models `[]`, risks seeded
-  `'shadow-ai'` category) and append to a stored array. (Same `UseCase` shape verified in
-  `lib/aimaps-types.ts`.)
+  agent, `ownerId: null`, `complianceStatus: { euAiAct:'gap', nistAiRmf:'gap',
+  owaspLlm:'gap', iso42001:'gap' }` (all four required keys), `models: []`, a seeded
+  `'shadow-ai'`-category `Risk` with `mitigations: []`, `createdAt`/`lastReviewedAt` now)
+  and append to a stored array. (Same `UseCase` shape verified in `lib/aimaps-types.ts`.)
 - **`/discover` banner:** Discover reads `getRunSummary()` in a client-only effect and, if
   present, renders a small banner: "Meta-agent found {shadowCount} shadow agents across
   clouds — review." Clicking links back to `/agent-discovery`. This is **additive**; it does

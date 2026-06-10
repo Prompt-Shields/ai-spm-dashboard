@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import {
   Map,
   Radio,
+  Radar,
   ClipboardList,
   Users,
   ShieldCheck,
@@ -23,6 +24,7 @@ import { useSidebar } from './sidebar-provider'
 const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
   { href: '/', key: 'map', Icon: Map },
   { href: '/discover', key: 'discover', Icon: Radio },
+  { href: '/agent-discovery', key: 'agentDiscovery', Icon: Radar },
   { href: '/register', key: 'register', Icon: ClipboardList },
   { href: '/owners', key: 'owners', Icon: Users },
   { href: '/comply', key: 'comply', Icon: ShieldCheck },

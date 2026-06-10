@@ -3,6 +3,7 @@ import { common } from './nb/common'
 import { nav } from './nb/nav'
 import { map } from './nb/map'
 import { discover } from './nb/discover'
+import { agentDiscovery } from './nb/agentDiscovery'
 import { register } from './nb/register'
 import { owners } from './nb/owners'
 import { comply } from './nb/comply'
@@ -25,6 +26,7 @@ export const nb: Messages = {
   nav,
   map,
   discover,
+  agentDiscovery,
   register,
   owners,
   comply,

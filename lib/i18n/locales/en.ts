@@ -11,6 +11,7 @@ import { common } from './en/common'
 import { nav } from './en/nav'
 import { map } from './en/map'
 import { discover } from './en/discover'
+import { agentDiscovery } from './en/agentDiscovery'
 import { register } from './en/register'
 import { owners } from './en/owners'
 import { comply } from './en/comply'
@@ -30,6 +31,7 @@ export const en = {
   nav,
   map,
   discover,
+  agentDiscovery,
   register,
   owners,
   comply,
