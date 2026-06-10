@@ -1,6 +1,7 @@
 export const nav = {
   map: 'Kart',
   discover: 'Oppdag',
+  agentDiscovery: 'Agentoppdaging',
   register: 'Register',
   owners: 'Eiere',
   comply: 'Etterlevelse',

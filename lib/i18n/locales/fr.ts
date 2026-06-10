@@ -3,6 +3,7 @@ import { common } from './fr/common'
 import { nav } from './fr/nav'
 import { map } from './fr/map'
 import { discover } from './fr/discover'
+import { agentDiscovery } from './fr/agentDiscovery'
 import { register } from './fr/register'
 import { owners } from './fr/owners'
 import { comply } from './fr/comply'
@@ -25,6 +26,7 @@ export const fr: Messages = {
   nav,
   map,
   discover,
+  agentDiscovery,
   register,
   owners,
   comply,
