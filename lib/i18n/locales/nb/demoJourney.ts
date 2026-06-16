@@ -4,19 +4,19 @@ export const demoJourney = {
     s1: {
       title: 'Organisasjonen din har ennå ikke noe KI-kart',
       // TODO(i18n): native review
-      body: 'Du starter fra null — slik enhver CISO gjør. La oss finne ut hvilken KI organisasjonen din faktisk bruker.',
+      body: 'Du starter fra null. Enten du er CISO, CIO, GRC-ansvarlig eller KI-ansvarlig — det er her styringen begynner. La oss finne ut hvilken KI organisasjonen din faktisk bruker.',
       cta: 'Start oppdagelsesagenten →',
     },
     s2: {
-      title: 'KI-agenten intervjuer de ansatte',
+      title: 'Oppdagelsen pågår',
       // TODO(i18n): native review
-      body: 'Agenter tar kontakt via Slack og e-post. Se hvordan de henter ut bruksområder fra naturlige samtaler — uten skjemaer eller spørreundersøkelser.',
+      body: 'Agentisk overvåking på endepunkter, agenter som intervjuer ansatte gjentatte ganger, ansatte som selvregistrerer, og SaaS-miljøet ditt som skannes automatisk. Hver metode mater det samme kartet.',
       cta: 'Se kartet fylles ut →',
     },
     s3: {
       title: '47 bruksområder kartlagt. 12 kritiske risikoer identifisert.',
       // TODO(i18n): native review
-      body: 'Alt fra agentsamtaler. Ingen manuell registrering. Klikk på en node for å utforske hele risikobildet for det bruksområdet.',
+      body: 'Ingen regneark, ingen manuell datainnsamling, ingen delvise oversikter. Hvert KI-bruksområde i hver avdeling — automatisk avdekket og samlet i ett kart. Klikk på en node for å utforske hele risikobildet.',
       cta: 'Tildel eierskap →',
     },
     s4: {
@@ -26,9 +26,9 @@ export const demoJourney = {
       cta: 'Se compliance-dekning →',
     },
     s5: {
-      title: 'Fra 0 % til 73 % EU AI Act-dekning — i løpet av denne økten.',
+      title: 'Fra null til kartlagt — på tvers av EU AI Act, NIS2, ISO 42001 og mer',
       // TODO(i18n): native review
-      body: 'Hvert bruksområde kobles til rammeverkene som betyr noe. Avvik er synlige. Tiltak er ett klikk unna. KI-en din er nå styrt.',
+      body: 'Hvert bruksområde kobles til regelverkene og rammeverkene som betyr noe for organisasjonen din. Avvik er synlige. Tiltak er ett klikk unna.',
       cta: 'Fullfør demo',
     },
   },

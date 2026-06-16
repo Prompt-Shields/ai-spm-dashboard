@@ -265,9 +265,12 @@ export function ensureFixturesSeeded(): void {
     referencesStore.upsert({ ...r, tenantId: t, createdAt: now, updatedAt: now })
   }
 
-  // ─── Adoption: usage events (last 30 days) ────────────────────────
+  // ─── Adoption: usage events (last 60 days) ────────────────────────
   // Five apps, four users, realistic daily prompt volumes with some
-  // blocked/redacted/flagged counts mixed in.
+  // blocked/redacted/flagged counts mixed in. Seeded across 60 days so
+  // the /adoption hero band can compare the recent window against the
+  // immediately preceding one. A gentle deterministic trend (volume up,
+  // risk rate down over time) gives the comparison a credible story.
   const APPS: Array<{
     id: string
     dailyBase: number
@@ -288,26 +291,35 @@ export function ensureFixturesSeeded(): void {
     rng = (rng * 1664525 + 1013904223) & 0x7fffffff
     return rng / 0x7fffffff
   }
+  const USAGE_DAYS = 60
   const today = new Date()
-  for (let d = 29; d >= 0; d--) {
+  for (let d = USAGE_DAYS - 1; d >= 0; d--) {
     const date = new Date(today)
     date.setDate(today.getDate() - d)
     const day = date.toISOString().slice(0, 10)
     const dayTs = `${day}T09:00:00Z`
+    // progress: 0 on the oldest day → 1 today. Volume grows, risk-rate
+    // shrinks across the window so adoption trends up and risk trends down.
+    const progress = (USAGE_DAYS - 1 - d) / (USAGE_DAYS - 1)
+    const volumeMult = 0.8 + 0.4 * progress
+    const riskMult = 1.3 - 0.6 * progress
     for (const app of APPS) {
       // Not every user uses every app every day
       for (const sub of USERS) {
         if (rand() > 0.6) continue // ~40% chance of activity
-        const prompts = Math.max(1, Math.round(app.dailyBase / USERS.length * (0.5 + rand())))
+        const prompts = Math.max(
+          1,
+          Math.round(app.dailyBase / USERS.length * (0.5 + rand()) * volumeMult)
+        )
         upsertUsageEvent({
           tenantId: t,
           day,
           auth0Sub: sub,
           promptlyAppId: app.id,
           promptCount: prompts,
-          blockedCount: Math.round(prompts * app.blockRate * rand() * 2),
-          redactedCount: Math.round(prompts * app.redactRate * rand() * 2),
-          flaggedCount: Math.round(prompts * app.flagRate * rand() * 2),
+          blockedCount: Math.round(prompts * app.blockRate * rand() * 2 * riskMult),
+          redactedCount: Math.round(prompts * app.redactRate * rand() * 2 * riskMult),
+          flaggedCount: Math.round(prompts * app.flagRate * rand() * 2 * riskMult),
           firstSeen: dayTs,
           lastSeen: `${day}T18:${Math.floor(rand() * 59).toString().padStart(2, "0")}:00Z`,
         })
@@ -319,7 +331,7 @@ export function ensureFixturesSeeded(): void {
   const violationApps = ["chatgpt", "claude", "gemini", "copilot"]
   const actions = ["redact", "flag", "block", "log", "evaluated"] as const
   const actionWeights = [0.35, 0.30, 0.10, 0.15, 0.10]
-  for (let d = 29; d >= 0; d--) {
+  for (let d = USAGE_DAYS - 1; d >= 0; d--) {
     const date = new Date(today)
     date.setDate(today.getDate() - d)
     const day = date.toISOString().slice(0, 10)

@@ -3,17 +3,17 @@ export const demoJourney = {
   steps: {
     s1: {
       title: 'Your org has no AI map yet',
-      body: "You're starting from zero — like every CISO does. Let's find out what AI your organisation is actually using.",
+      body: "You're starting from zero. Whether you're the CISO, CIO, Head of GRC, or Head of AI — this is where governance begins. Let's find out what AI your organisation is actually using.",
       cta: 'Launch Discovery Agent →',
     },
     s2: {
-      title: 'AI Agent is interviewing your employees',
-      body: 'Agents are reaching out across Slack and email. Watch as they extract use cases from natural conversations — no forms, no surveys.',
+      title: 'Discovery is running',
+      body: 'Agentic monitoring on endpoints, agents interviewing employees on a repeated basis, employees self-registering, and your SaaS estate scanned automatically. Every method feeds the same map.',
       cta: 'See the map populate →',
     },
     s3: {
       title: '47 use cases mapped. 12 critical risks identified.',
-      body: 'All from agent conversations. No manual entry. Click any node to explore the full risk picture for that use case.',
+      body: 'No spreadsheets, no manual data collection, no partial views. Every AI use case across every department — automatically surfaced and centralised in one map. Click any node to explore the full risk picture.',
       cta: 'Assign ownership →',
     },
     s4: {
@@ -22,8 +22,8 @@ export const demoJourney = {
       cta: 'See compliance coverage →',
     },
     s5: {
-      title: 'From 0% to 73% EU AI Act coverage — this session.',
-      body: 'Every use case is mapped to the frameworks that matter. Gaps are visible. Remediations are one click away. Your AI is now governed.',
+      title: 'From zero to mapped — across EU AI Act, NIS2, ISO 42001 and more',
+      body: 'Every use case is mapped to the regulations and frameworks that matter to your organisation. Gaps are visible. Remediations are one click away.',
       cta: 'Finish demo',
     },
   },

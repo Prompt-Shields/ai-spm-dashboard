@@ -13,7 +13,18 @@
 import { useEffect, useMemo, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Activity, Users, Calendar, Loader2, AlertCircle, Sparkles } from "lucide-react"
+import {
+  Activity,
+  Users,
+  Calendar,
+  Loader2,
+  AlertCircle,
+  Sparkles,
+  ArrowUpRight,
+  ArrowDownRight,
+  ShieldCheck,
+  ShieldAlert
+} from "lucide-react"
 
 type Range = "7d" | "30d" | "90d"
 
@@ -67,27 +78,77 @@ interface SummaryResponse {
   }>
 }
 
+// UTC day key (matches the API, which slices ISO strings).
+function isoDay(d: Date): string {
+  return d.toISOString().slice(0, 10)
+}
+
+// The current window (ending today) plus the equal-length window that
+// immediately precedes it, used for the "vs prior N days" comparison.
+function buildWindows(days: number): {
+  current: { fromDay: string; toDay: string }
+  prior: { fromDay: string; toDay: string }
+} {
+  const today = new Date()
+  const curTo = new Date(today)
+  const curFrom = new Date(today)
+  curFrom.setDate(today.getDate() - (days - 1))
+  const priTo = new Date(curFrom)
+  priTo.setDate(curFrom.getDate() - 1)
+  const priFrom = new Date(priTo)
+  priFrom.setDate(priTo.getDate() - (days - 1))
+  return {
+    current: { fromDay: isoDay(curFrom), toDay: isoDay(curTo) },
+    prior: { fromDay: isoDay(priFrom), toDay: isoDay(priTo) }
+  }
+}
+
+// Pull the two headline numbers off an overview block.
+function heroFigures(overview: SummaryResponse["overview"]): {
+  successful: number
+  risky: number
+} {
+  // "Risky" = prompts that tripped a policy (blocked / redacted / flagged).
+  // totalEvaluations = totalPrompts + those three counters, so the
+  // difference isolates the risky ones without re-summing per app.
+  return {
+    successful: overview.totalPrompts,
+    risky: Math.max(0, overview.totalEvaluations - overview.totalPrompts)
+  }
+}
+
 export function AdoptionSummarySection() {
   const [range, setRange] = useState<Range>("30d")
   const [data, setData] = useState<SummaryResponse | null>(null)
+  const [prior, setPrior] = useState<SummaryResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const queryString = useMemo(
-    () => new URLSearchParams({ days: String(RANGE_DAYS[range]) }).toString(),
-    [range]
-  )
+  const windows = useMemo(() => buildWindows(RANGE_DAYS[range]), [range])
 
   useEffect(() => {
     let cancelled = false
     setLoading(true)
     setError(null)
-    fetch(`/api/adoption/summary?${queryString}`)
-      .then(async (r) => {
+    const url = (w: { fromDay: string; toDay: string }) =>
+      `/api/adoption/summary?${new URLSearchParams({
+        fromDay: w.fromDay,
+        toDay: w.toDay
+      }).toString()}`
+    Promise.all([
+      fetch(url(windows.current)).then(async (r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        const json = (await r.json()) as SummaryResponse
+        return (await r.json()) as SummaryResponse
+      }),
+      fetch(url(windows.prior)).then(async (r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return (await r.json()) as SummaryResponse
+      })
+    ])
+      .then(([current, previous]) => {
         if (!cancelled) {
-          setData(json)
+          setData(current)
+          setPrior(previous)
           setLoading(false)
         }
       })
@@ -100,10 +161,18 @@ export function AdoptionSummarySection() {
     return () => {
       cancelled = true
     }
-  }, [queryString])
+  }, [windows])
 
   return (
     <div className="space-y-4">
+      {!loading && !error && data && (
+        <HeroMetrics
+          current={heroFigures(data.overview)}
+          prior={prior ? heroFigures(prior.overview) : null}
+          days={RANGE_DAYS[range]}
+        />
+      )}
+
       <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-base font-semibold text-slate-900 flex items-center gap-2">
@@ -130,6 +199,126 @@ export function AdoptionSummarySection() {
         </>
       )}
     </div>
+  )
+}
+
+// ─── Hero metrics band ──────────────────────────────────────────────────
+// The two numbers the pitch hangs on: productivity (successful prompts,
+// up is good) and risk (risky prompts, down is good). Each shows the
+// delta against the immediately preceding window of equal length.
+
+function HeroMetrics({
+  current,
+  prior,
+  days
+}: {
+  current: { successful: number; risky: number }
+  prior: { successful: number; risky: number } | null
+  days: number
+}) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <HeroStat
+        icon={ShieldCheck}
+        tone="positive"
+        label="Successful prompts"
+        sub="protected and completed"
+        value={current.successful}
+        prior={prior?.successful ?? null}
+        goodDirection="up"
+        days={days}
+      />
+      <HeroStat
+        icon={ShieldAlert}
+        tone="negative"
+        label="Risky prompts"
+        sub="blocked, redacted or flagged"
+        value={current.risky}
+        prior={prior?.risky ?? null}
+        goodDirection="down"
+        days={days}
+      />
+    </div>
+  )
+}
+
+function HeroStat({
+  icon: Icon,
+  tone,
+  label,
+  sub,
+  value,
+  prior,
+  goodDirection,
+  days
+}: {
+  icon: React.ComponentType<{ size?: number; className?: string }>
+  tone: "positive" | "negative"
+  label: string
+  sub: string
+  value: number
+  prior: number | null
+  goodDirection: "up" | "down"
+  days: number
+}) {
+  const pct =
+    prior !== null && prior > 0 ? ((value - prior) / prior) * 100 : null
+  const isUp = pct !== null && pct > 0
+  const isGood =
+    pct === null
+      ? false
+      : goodDirection === "up"
+        ? pct > 0
+        : pct < 0
+  const deltaColor =
+    pct === null || pct === 0
+      ? "text-slate-400"
+      : isGood
+        ? "text-emerald-600"
+        : "text-red-500"
+  const Arrow = isUp ? ArrowUpRight : ArrowDownRight
+
+  return (
+    <Card
+      className={
+        tone === "positive"
+          ? "border-emerald-100 bg-gradient-to-br from-emerald-50/70 to-white"
+          : "border-amber-100 bg-gradient-to-br from-amber-50/60 to-white"
+      }
+    >
+      <CardContent className="py-5 px-6">
+        <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+          <Icon
+            size={15}
+            className={tone === "positive" ? "text-emerald-500" : "text-amber-500"}
+          />
+          {label}
+        </div>
+        <div className="mt-1.5 flex items-baseline gap-3">
+          <span className="text-3xl font-bold text-slate-900 tabular-nums">
+            {value.toLocaleString()}
+          </span>
+          {pct !== null && (
+            <span
+              className={`flex items-center gap-0.5 text-sm font-semibold ${deltaColor}`}
+            >
+              <Arrow size={15} />
+              {Math.abs(pct).toFixed(0)}%
+            </span>
+          )}
+        </div>
+        <div className="mt-1 text-xs text-slate-500">
+          {sub}
+          {pct !== null && (
+            <span className="text-slate-400">
+              {" · "}
+              {goodDirection === "down" && pct < 0 ? "reduction " : ""}vs prior{" "}
+              {days} days
+            </span>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 

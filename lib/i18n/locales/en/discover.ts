@@ -1,13 +1,19 @@
 export const discover = {
   title: 'Discover',
   subtitle:
-    'AI agents interview employees to map AI use cases — no forms, no manual entry',
+    'Four ways to discover AI use cases across your organisation — use one or combine them',
   cards: {
     cisoCampaign: {
-      title: 'CISO Discovery Campaign',
+      title: 'AI Discovery Campaign',
       description:
-        'Send AI agents to interview all departments. Agents ask about AI tool usage, data handling, and risk exposure.',
+        'Send AI agents to interview every department. Agents ask about AI tool usage, data handling, and risk exposure.',
       action: 'Launch Campaign',
+    },
+    agenticMonitoring: {
+      title: 'Agentic Monitoring',
+      description:
+        'Always-on agents on endpoints, desktop apps and the browser extension. AI usage is observed in real time and use cases surface automatically — no outreach, no waiting.',
+      action: 'View Activity',
     },
     selfRegistration: {
       title: 'Employee Self-Registration',
@@ -16,9 +22,9 @@ export const discover = {
       action: 'Copy Link',
     },
     autoDetect: {
-      title: 'Auto-Detect via Entra-ID',
+      title: 'Integrations',
       description:
-        '12 new AI tools detected in your SaaS estate this week. Review and trigger intake agents for ungoverned tools.',
+        'Connect to your existing systems — Entra-ID, your SaaS estate and CASB — to auto-detect ungoverned AI tools the moment they appear.',
       action: 'Review Alerts',
       badge: '{count} new',
     },
