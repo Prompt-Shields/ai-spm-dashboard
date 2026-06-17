@@ -1128,8 +1128,8 @@ export const AGENT_CONVERSATIONS: AgentConversation[] = [
 ]
 
 export const DISCOVERY_STATS = {
-  outreachSent: 142,
-  responded: 89,
+  toolsDiscovered: 38,
+  vendorsInUse: 17,
   useCasesFound: 47,
   shadowAiFound: 12,
   percentComplete: 100,

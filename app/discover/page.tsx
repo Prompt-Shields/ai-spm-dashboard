@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Satellite, Link2, ScanSearch, Radar } from 'lucide-react'
+import { Satellite, Link2, ScanSearch, Radar, MonitorDot } from 'lucide-react'
 import { AGENT_CONVERSATIONS, DISCOVERY_STATS } from '@/lib/aimaps-data'
 import { AgentConversationCard } from '@/components/agent-conversation-card'
 import { getRunSummary, type RunSummary } from '@/lib/agent-discovery/store'
@@ -10,10 +10,21 @@ import type { LucideIcon } from 'lucide-react'
 
 const ENTRY_CARDS: {
   Icon: LucideIcon
-  id: 'cisoCampaign' | 'selfRegistration' | 'autoDetect'
-  color: 'indigo' | 'sky' | 'amber'
+  id: 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect'
+  color: 'indigo' | 'emerald' | 'sky' | 'amber'
   badgeCount?: number
 }[] = [
+  {
+    Icon: ScanSearch,
+    id: 'autoDetect',
+    color: 'amber',
+    badgeCount: 12,
+  },
+  {
+    Icon: MonitorDot,
+    id: 'agenticMonitoring',
+    color: 'emerald',
+  },
   {
     Icon: Satellite,
     id: 'cisoCampaign',
@@ -23,12 +34,6 @@ const ENTRY_CARDS: {
     Icon: Link2,
     id: 'selfRegistration',
     color: 'sky',
-  },
-  {
-    Icon: ScanSearch,
-    id: 'autoDetect',
-    color: 'amber',
-    badgeCount: 12,
   },
 ]
 
@@ -62,13 +67,14 @@ export default function DiscoverPage() {
       )}
 
       {/* Entry point cards */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-4 mb-8">
         {ENTRY_CARDS.map(card => {
           const onClick = card.id === 'cisoCampaign' ? () => setCampaignLaunched(true) : undefined
           return (
             <div key={card.id} className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
               <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 ${
                 card.color === 'indigo' ? 'bg-indigo-50 text-indigo-600' :
+                card.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
                 card.color === 'sky' ? 'bg-sky-50 text-sky-600' :
                 'bg-amber-50 text-amber-600'
               }`}>
@@ -81,6 +87,7 @@ export default function DiscoverPage() {
                   onClick={onClick}
                   className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
                     card.color === 'indigo' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' :
+                    card.color === 'emerald' ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700' :
                     card.color === 'sky' ? 'bg-sky-100 hover:bg-sky-200 text-sky-700' :
                     'bg-amber-100 hover:bg-amber-200 text-amber-700'
                   }`}
@@ -99,8 +106,8 @@ export default function DiscoverPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3 mb-6">
         {[
-          { label: t('discover.stats.outreachSent'), value: DISCOVERY_STATS.outreachSent, color: 'text-slate-800' },
-          { label: t('discover.stats.responded'), value: DISCOVERY_STATS.responded, color: 'text-sky-600' },
+          { label: t('discover.stats.toolsDiscovered'), value: DISCOVERY_STATS.toolsDiscovered, color: 'text-slate-800' },
+          { label: t('discover.stats.vendorsInUse'), value: DISCOVERY_STATS.vendorsInUse, color: 'text-sky-600' },
           { label: t('discover.stats.useCasesIdentified'), value: DISCOVERY_STATS.useCasesFound, color: 'text-indigo-600' },
           { label: t('discover.stats.shadowAiDetected'), value: DISCOVERY_STATS.shadowAiFound, color: 'text-red-500' },
         ].map(s => (

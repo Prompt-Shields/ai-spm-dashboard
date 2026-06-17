@@ -1,13 +1,19 @@
 export const discover = {
   title: 'Oppdag',
   subtitle:
-    'KI-agenter intervjuer ansatte for å kartlegge KI-bruksområder — ingen skjemaer, ingen manuell registrering', // TODO(i18n): native review
+    'Fire måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
   cards: {
     cisoCampaign: {
-      title: 'CISO-oppdagelseskampanje',
+      title: 'KI-oppdagelseskampanje',
       description:
         'Send KI-agenter for å intervjue alle avdelinger. Agentene spør om bruk av KI-verktøy, databehandling og risikoeksponering.', // TODO(i18n): native review
       action: 'Start kampanje',
+    },
+    agenticMonitoring: {
+      title: 'Agentisk overvåking',
+      description:
+        'Alltid-på-agenter på endepunkter, skrivebordsapper og nettleserutvidelsen. KI-bruk observeres i sanntid og bruksområder dukker opp automatisk — uten henvendelser, uten venting.', // TODO(i18n): native review
+      action: 'Se aktivitet',
     },
     selfRegistration: {
       title: 'Selvregistrering for ansatte',
@@ -16,16 +22,16 @@ export const discover = {
       action: 'Kopier lenke',
     },
     autoDetect: {
-      title: 'Automatisk oppdaging via Entra-ID',
+      title: 'Integrasjoner',
       description:
-        '12 nye KI-verktøy oppdaget i SaaS-miljøet ditt denne uken. Gjennomgå og utløs inntaksagenter for ustyrte verktøy.', // TODO(i18n): native review
+        'Koble til systemene du allerede har — Entra-ID, SaaS-miljøet ditt og CASB — for å automatisk oppdage ustyrte KI-verktøy i det de dukker opp.', // TODO(i18n): native review
       action: 'Gjennomgå varsler',
       badge: '{count} nye',
     },
   },
   stats: {
-    outreachSent: 'Henvendelser sendt',
-    responded: 'Svart',
+    toolsDiscovered: 'KI-verktøy oppdaget',
+    vendorsInUse: 'Leverandører i bruk',
     useCasesIdentified: 'Bruksområder identifisert',
     shadowAiDetected: 'Skygge-KI oppdaget',
   },
