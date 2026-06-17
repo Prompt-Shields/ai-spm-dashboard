@@ -1,7 +1,7 @@
 export const piiShield = {
   title: 'PII Shield-demo',
   intro:
-    'Send en forespørsel til ChatGPT — selv en full av personopplysninger. Shield oppdager PII lokalt, bytter den ut med plassholdere før noe forlater nettleseren din, og gjenoppretter de virkelige verdiene kun i svaret du ser. ChatGPT mottar aldri de sensitive dataene.', // TODO(i18n): native review
+    'Send en melding til ChatGPT – selv en som inneholder personopplysninger. Skjoldet oppdager personopplysninger lokalt, erstatter dem med plassholdere før noe forlater nettleseren din, og gjenoppretter de reelle verdiene kun i svaret du ser. ChatGPT mottar aldri de sensitive dataene.',
   tryExample: 'Prøv et eksempel:',
   inputPlaceholder:
     'f.eks. Skriv en e-post til Sarah Chen på sarah.chen@acme.com om hennes forfalte faktura…', // TODO(i18n): native review

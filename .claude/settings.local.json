@@ -47,7 +47,10 @@
       "Bash(sed -n '23,50p' \"app/policy-enforcement/policies/[id]/page.tsx\")",
       "Bash(xargs -n1 basename)",
       "Bash(grep -rnoE '>[A-Z][a-zA-Z][a-zA-Z ]{2,}<|\"[A-Z][a-z]+ [A-Za-z ]{3,}\"|placeholder=\"[^\"]+\"' components/use-case-detail-panel.tsx components/owner-detail-panel.tsx components/agent-conversation-card.tsx components/compliance-coverage-card.tsx components/kpi-card.tsx components/demo-journey.tsx)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(grep -nA 30 \"PolicyInstance\" lib/policy-templates/types.ts)",
+      "Bash(grep -nB 1 -A 10 \"policyClassIcon\\\\|policyClassLabel\" lib/policy-engine/promotion.ts)",
+      "Bash(grep -nA 25 \"export function ensureDemoStats\" lib/policy-engine/server/store.ts)"
     ]
   }
 }
