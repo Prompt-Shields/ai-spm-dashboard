@@ -1,5 +1,5 @@
 export const comply = {
-  title: 'Comply',
+  title: 'AI Compliance',
   subtitle: 'Framework coverage across all AI use cases',
   exportReport: 'Export Compliance Report',
   coverageGaps: '{count} gaps remaining',

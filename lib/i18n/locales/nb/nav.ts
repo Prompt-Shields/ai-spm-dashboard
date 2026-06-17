@@ -4,7 +4,7 @@ export const nav = {
   agentDiscovery: 'Agentoppdaging',
   register: 'Register',
   owners: 'Eiere',
-  comply: 'Etterlevelse',
+  comply: 'KI-etterlevelse',
   policies: 'Retningslinjer',
   adoption: 'Adopsjon',
   piiShield: 'PII-skjold-demo',
