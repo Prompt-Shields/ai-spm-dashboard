@@ -5,7 +5,7 @@ import { useT } from '@/lib/i18n/provider'
 
 const FRAMEWORKS = [
   { key: 'euAiAct', name: 'EU AI Act', percentage: 73, gapCount: 13, color: '#22c55e' },
-  { key: 'nistAiRmf', name: 'NIST AI RMF', percentage: 61, gapCount: 18, color: '#0ea5e9' },
+  { key: 'nistAiRmf', name: 'NIST AI RMF 2.0', percentage: 61, gapCount: 18, color: '#0ea5e9' },
   { key: 'owaspLlm', name: 'OWASP LLM Top 10', percentage: 48, gapCount: 24, color: '#f59e0b' },
   { key: 'iso42001', name: 'ISO 42001', percentage: 55, gapCount: 21, color: '#8b5cf6' },
 ] as const

@@ -4,7 +4,7 @@ export const nav = {
   agentDiscovery: 'Découverte d’agents',
   register: 'Registre',
   owners: 'Propriétaires',
-  comply: 'Conformité',
+  comply: 'Conformité IA',
   policies: 'Politiques',
   adoption: 'Adoption',
   piiShield: 'Démo bouclier PII',

@@ -1,35 +1,9 @@
 'use client'
-import { usePathname } from 'next/navigation'
 import { Play, Menu } from 'lucide-react'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { LiveViolationPill } from '@/components/live-violation-pill'
 import { useT } from '@/lib/i18n/provider'
 import { useSidebar } from './sidebar-provider'
-
-// Longest-prefix-first route → nav-key map for deriving the top-bar title.
-// Mirrors AppSidebar's NAV. Routes outside this list render no title (the page's
-// own <h1> is the source of truth there).
-const ROUTE_TO_NAV_KEY: { prefix: string; key: string }[] = [
-  { prefix: '/policy-enforcement', key: 'policies' },
-  { prefix: '/pii-shield', key: 'piiShield' },
-  { prefix: '/discover', key: 'discover' },
-  { prefix: '/register', key: 'register' },
-  { prefix: '/owners', key: 'owners' },
-  { prefix: '/comply', key: 'comply' },
-  { prefix: '/adoption', key: 'adoption' },
-  { prefix: '/', key: 'map' },
-]
-
-function pageTitleKey(pathname: string): string | null {
-  for (const { prefix, key } of ROUTE_TO_NAV_KEY) {
-    if (prefix === '/') {
-      if (pathname === '/') return key
-      continue
-    }
-    if (pathname === prefix || pathname.startsWith(prefix + '/')) return key
-  }
-  return null
-}
 
 interface AppHeaderProps {
   onStartDemo?: () => void
@@ -37,10 +11,7 @@ interface AppHeaderProps {
 
 export function AppHeader({ onStartDemo }: AppHeaderProps) {
   const t = useT()
-  const pathname = usePathname()
   const { setMobileOpen } = useSidebar()
-  const titleKey = pageTitleKey(pathname)
-  const title = titleKey ? t(`nav.${titleKey}`) : ''
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-30">
@@ -53,9 +24,6 @@ export function AppHeader({ onStartDemo }: AppHeaderProps) {
         >
           <Menu size={18} />
         </button>
-
-        {/* Page title (derived from active route). Empty on non-nav routes. */}
-        {title && <h1 className="text-sm font-semibold text-slate-800 truncate">{title}</h1>}
 
         {/* Right cluster */}
         <div className="ml-auto flex items-center gap-3">
