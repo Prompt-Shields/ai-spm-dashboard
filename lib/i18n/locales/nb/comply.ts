@@ -1,5 +1,5 @@
 export const comply = {
-  title: 'Samsvar',
+  title: 'KI-etterlevelse',
   subtitle: 'Rammeverkdekning på tvers av alle KI-bruksområder',
   exportReport: 'Eksporter samsvarsrapport',
   coverageGaps: '{count} gjenstående mangler',
