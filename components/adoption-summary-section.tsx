@@ -180,8 +180,8 @@ export function AdoptionSummarySection() {
             Adoption overview
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
-            Active users and which AI tools they're reaching for. Driven by the
-            same Promptly usage-event feed.
+            Active usage and which AI tools and vendors are being reached for,
+            from the same Promptly usage-event feed.
           </p>
         </div>
         <RangeFilter value={range} onChange={setRange} />

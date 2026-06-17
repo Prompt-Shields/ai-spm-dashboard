@@ -19,9 +19,9 @@ export default function AdoptionPage() {
       <div>
         <h1 className="text-xl font-bold text-slate-900">Adoption</h1>
         <p className="text-sm text-slate-500 mt-0.5">
-          Engagement signals from Promptly's on-device telemetry. Used to
-          measure whether employees actually work through the guidance the
-          app puts in front of them.
+          Real-world usage of AI tools across your organisation — which
+          vendors employees reach for, and how safely. Drawn from Promptly's
+          on-device telemetry.
         </p>
       </div>
 

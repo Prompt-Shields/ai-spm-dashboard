@@ -1,7 +1,7 @@
 export const discover = {
   title: 'Découvrir',
   subtitle:
-    "Quatre façons de découvrir les cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
+    "Quatre façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
   cards: {
     cisoCampaign: {
       title: 'Campagne de découverte IA',
@@ -30,8 +30,8 @@ export const discover = {
     },
   },
   stats: {
-    outreachSent: 'Sollicitations envoyées',
-    responded: 'Répondu',
+    toolsDiscovered: "Outils d'IA découverts",
+    vendorsInUse: 'Fournisseurs utilisés',
     useCasesIdentified: "Cas d'usage identifiés",
     shadowAiDetected: 'IA fantôme détectée',
   },
