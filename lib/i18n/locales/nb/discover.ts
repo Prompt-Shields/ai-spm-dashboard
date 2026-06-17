@@ -1,7 +1,7 @@
 export const discover = {
   title: 'Oppdag',
   subtitle:
-    'Fire måter å oppdage KI-bruksområder på i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
+    'Fire måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
   cards: {
     cisoCampaign: {
       title: 'KI-oppdagelseskampanje',
@@ -30,8 +30,8 @@ export const discover = {
     },
   },
   stats: {
-    outreachSent: 'Henvendelser sendt',
-    responded: 'Svart',
+    toolsDiscovered: 'KI-verktøy oppdaget',
+    vendorsInUse: 'Leverandører i bruk',
     useCasesIdentified: 'Bruksområder identifisert',
     shadowAiDetected: 'Skygge-KI oppdaget',
   },

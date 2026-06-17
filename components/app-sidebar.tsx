@@ -22,6 +22,7 @@ import { useSidebar } from './sidebar-provider'
 
 // Same items as the previous top-nav. `key` resolves to the nav.* translation.
 const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
+  { href: '/adoption', key: 'adoption', Icon: TrendingUp },
   { href: '/', key: 'map', Icon: Map },
   { href: '/discover', key: 'discover', Icon: Radio },
   { href: '/agent-discovery', key: 'agentDiscovery', Icon: Radar },
@@ -29,7 +30,6 @@ const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
   { href: '/owners', key: 'owners', Icon: Users },
   { href: '/comply', key: 'comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', key: 'policies', Icon: Shield },
-  { href: '/adoption', key: 'adoption', Icon: TrendingUp },
   { href: '/pii-shield', key: 'piiShield', Icon: EyeOff },
 ]
 

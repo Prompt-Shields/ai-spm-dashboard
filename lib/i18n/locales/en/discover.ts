@@ -1,7 +1,7 @@
 export const discover = {
   title: 'Discover',
   subtitle:
-    'Four ways to discover AI use cases across your organisation — use one or combine them',
+    'Four ways to discover the AI tools and use cases across your organisation — use one or combine them',
   cards: {
     cisoCampaign: {
       title: 'AI Discovery Campaign',
@@ -30,8 +30,8 @@ export const discover = {
     },
   },
   stats: {
-    outreachSent: 'Outreach Sent',
-    responded: 'Responded',
+    toolsDiscovered: 'AI Tools Discovered',
+    vendorsInUse: 'Vendors in Use',
     useCasesIdentified: 'Use Cases Identified',
     shadowAiDetected: 'Shadow AI Detected',
   },

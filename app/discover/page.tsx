@@ -15,9 +15,10 @@ const ENTRY_CARDS: {
   badgeCount?: number
 }[] = [
   {
-    Icon: Satellite,
-    id: 'cisoCampaign',
-    color: 'indigo',
+    Icon: ScanSearch,
+    id: 'autoDetect',
+    color: 'amber',
+    badgeCount: 12,
   },
   {
     Icon: MonitorDot,
@@ -25,15 +26,14 @@ const ENTRY_CARDS: {
     color: 'emerald',
   },
   {
+    Icon: Satellite,
+    id: 'cisoCampaign',
+    color: 'indigo',
+  },
+  {
     Icon: Link2,
     id: 'selfRegistration',
     color: 'sky',
-  },
-  {
-    Icon: ScanSearch,
-    id: 'autoDetect',
-    color: 'amber',
-    badgeCount: 12,
   },
 ]
 
@@ -106,8 +106,8 @@ export default function DiscoverPage() {
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3 mb-6">
         {[
-          { label: t('discover.stats.outreachSent'), value: DISCOVERY_STATS.outreachSent, color: 'text-slate-800' },
-          { label: t('discover.stats.responded'), value: DISCOVERY_STATS.responded, color: 'text-sky-600' },
+          { label: t('discover.stats.toolsDiscovered'), value: DISCOVERY_STATS.toolsDiscovered, color: 'text-slate-800' },
+          { label: t('discover.stats.vendorsInUse'), value: DISCOVERY_STATS.vendorsInUse, color: 'text-sky-600' },
           { label: t('discover.stats.useCasesIdentified'), value: DISCOVERY_STATS.useCasesFound, color: 'text-indigo-600' },
           { label: t('discover.stats.shadowAiDetected'), value: DISCOVERY_STATS.shadowAiFound, color: 'text-red-500' },
         ].map(s => (
