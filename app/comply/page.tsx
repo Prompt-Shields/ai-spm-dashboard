@@ -1,7 +1,17 @@
 'use client'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { USE_CASES } from '@/lib/aimaps-data'
 import { ComplianceCoverageCard } from '@/components/compliance-coverage-card'
 import { useT } from '@/lib/i18n/provider'
+import {
+  ISO42001_STEP_COUNT,
+  computeCoverage,
+  computeGapCount,
+  isCertificationReady,
+  readCompletedSteps,
+} from '@/lib/iso42001-journey'
 
 const FRAMEWORKS = [
   { key: 'euAiAct', name: 'EU AI Act', percentage: 73, gapCount: 13, color: '#22c55e' },
@@ -18,6 +28,29 @@ const LEVEL_BADGE: Record<string, string> = {
 
 export default function ComplyPage() {
   const t = useT()
+
+  // ISO 42001 coverage climbs as the guided journey is completed
+  // (persisted to localStorage). Hydrated after mount to avoid SSR drift.
+  const [isoCompleted, setIsoCompleted] = useState(0)
+  useEffect(() => {
+    setIsoCompleted(readCompletedSteps().length)
+    const onFocus = () => setIsoCompleted(readCompletedSteps().length)
+    window.addEventListener('focus', onFocus)
+    return () => window.removeEventListener('focus', onFocus)
+  }, [])
+  const isoReady = isCertificationReady(isoCompleted)
+
+  // Top framework cards, with ISO 42001 reflecting journey progress.
+  const frameworkCards = FRAMEWORKS.map(fw =>
+    fw.key === 'iso42001'
+      ? {
+          ...fw,
+          percentage: computeCoverage(isoCompleted),
+          gapCount: computeGapCount(isoCompleted),
+        }
+      : fw,
+  )
+
   const gapUseCases = USE_CASES.filter(uc =>
     uc.complianceStatus.euAiAct === 'gap' ||
     uc.complianceStatus.nistAiRmf === 'gap' ||
@@ -37,8 +70,8 @@ export default function ComplyPage() {
       </div>
 
       {/* Framework cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {FRAMEWORKS.map(fw => (
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        {frameworkCards.map(fw => (
           <ComplianceCoverageCard
             key={fw.key}
             framework={fw}
@@ -46,6 +79,40 @@ export default function ComplyPage() {
           />
         ))}
       </div>
+
+      {/* ISO 42001 guided journey CTA */}
+      <Link
+        href="/comply/iso-42001"
+        className="group flex items-center justify-between gap-4 rounded-xl border border-violet-200 bg-gradient-to-r from-violet-50 to-white p-4 mb-8 shadow-sm hover:border-violet-300 hover:shadow transition-all"
+      >
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-wide text-violet-500">
+            {t('comply.iso42001Journey.eyebrow')}
+          </div>
+          <h3 className="text-sm font-bold text-slate-900 mt-0.5">
+            {t('comply.iso42001Journey.heading')}
+          </h3>
+          <p className="text-xs text-slate-500 mt-0.5 max-w-2xl leading-relaxed">
+            {t('comply.iso42001Journey.body')}
+          </p>
+        </div>
+        <div className="shrink-0 flex flex-col items-end gap-1.5">
+          <span className="inline-flex items-center gap-1.5 bg-violet-600 group-hover:bg-violet-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors">
+            {t(`comply.iso42001Journey.${isoCompleted > 0 && !isoReady ? 'resume' : 'cta'}`)}
+            <ArrowRight size={13} />
+          </span>
+          {isoCompleted > 0 && (
+            <span className="text-[10px] font-medium text-violet-600">
+              {isoReady
+                ? t('comply.iso42001Journey.ready')
+                : t('comply.iso42001Journey.status', {
+                    completed: isoCompleted,
+                    total: ISO42001_STEP_COUNT,
+                  })}
+            </span>
+          )}
+        </div>
+      </Link>
 
       {/* Coverage breakdown bar */}
       <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-6">

@@ -3,6 +3,15 @@ export const comply = {
   subtitle: 'Framework coverage across all AI use cases',
   exportReport: 'Export Compliance Report',
   coverageGaps: '{count} gaps remaining',
+  iso42001Journey: {
+    eyebrow: 'Guided journey',
+    heading: 'Achieve ISO/IEC 42001 compliance',
+    body: 'Walk an admin through the seven AI-management-system clauses step by step — closing gaps and raising coverage toward certification-ready.',
+    cta: 'Start ISO 42001 journey →',
+    resume: 'Resume journey →',
+    status: '{completed} of {total} clauses complete',
+    ready: 'Certification-ready',
+  },
   breakdown: {
     heading: 'Overall Coverage Breakdown',
     stats: '{covered} covered · {partial} partial · {gap} gap',
