@@ -9,10 +9,17 @@
 // localStorage (no backend) so the /comply page can reflect the climbed
 // score after the journey is run. Reset restores the 55% baseline.
 
-export const ISO42001_BASE_COVERAGE = 55
+import { getFrameworkMetrics } from './compliance-metrics'
+
+// Baseline coverage/gaps are derived from the shared compliance metrics
+// (the same source the /comply ISO 42001 card uses), so the journey starts
+// at exactly the number shown on the overview — no drift.
+const ISO_METRICS = getFrameworkMetrics('iso42001')
+
+export const ISO42001_BASE_COVERAGE = ISO_METRICS.percentage
 export const ISO42001_TARGET_COVERAGE = 100
-export const ISO42001_BASE_GAPS = 21
-export const ISO42001_COLOR = '#8b5cf6'
+export const ISO42001_BASE_GAPS = ISO_METRICS.gapCount
+export const ISO42001_COLOR = ISO_METRICS.color
 export const ISO42001_STORAGE_KEY = 'aispm.iso42001.journey'
 
 /** An Annex A control reference satisfied by a clause step. */
@@ -115,18 +122,44 @@ export const ISO42001_STEPS: Iso42001Step[] = [
 
 export const ISO42001_STEP_COUNT = ISO42001_STEPS.length
 
-/** Coverage % derived from how many clauses are complete (55% → 100%). */
-export function computeCoverage(completedCount: number): number {
-  const ratio = Math.min(completedCount, ISO42001_STEP_COUNT) / ISO42001_STEP_COUNT
-  return Math.round(
-    ISO42001_BASE_COVERAGE + ratio * (ISO42001_TARGET_COVERAGE - ISO42001_BASE_COVERAGE),
-  )
+export interface IsoCensus {
+  covered: number
+  partial: number
+  gap: number
+  total: number
+  percentage: number
 }
 
-/** Remaining gaps, shrinking from 21 to 0 as clauses complete. */
-export function computeGapCount(completedCount: number): number {
+/**
+ * Census of ISO 42001 use cases at a given journey progress. Starts at the
+ * shared baseline (covered/partial/gap from compliance-metrics) and, as
+ * clauses complete, converts partial + gap use cases to covered — reaching
+ * full coverage when all clauses are done. Coverage % is covered/total, so
+ * it matches the /comply breakdown bar exactly.
+ */
+export function isoCensus(completedCount: number): IsoCensus {
+  const total = ISO_METRICS.total
   const ratio = Math.min(completedCount, ISO42001_STEP_COUNT) / ISO42001_STEP_COUNT
-  return Math.round(ISO42001_BASE_GAPS * (1 - ratio))
+  const gap = Math.round(ISO_METRICS.gap * (1 - ratio))
+  const partial = Math.round(ISO_METRICS.partial * (1 - ratio))
+  const covered = total - gap - partial
+  return {
+    covered,
+    partial,
+    gap,
+    total,
+    percentage: total > 0 ? Math.round((covered / total) * 100) : 0,
+  }
+}
+
+/** Coverage %, census-based, climbing from the baseline toward 100%. */
+export function computeCoverage(completedCount: number): number {
+  return isoCensus(completedCount).percentage
+}
+
+/** Remaining gaps, shrinking from the baseline to 0 as clauses complete. */
+export function computeGapCount(completedCount: number): number {
+  return isoCensus(completedCount).gap
 }
 
 export function isCertificationReady(completedCount: number): boolean {

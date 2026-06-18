@@ -5,20 +5,15 @@ import { ArrowRight } from 'lucide-react'
 import { USE_CASES } from '@/lib/aimaps-data'
 import { ComplianceCoverageCard } from '@/components/compliance-coverage-card'
 import { useT } from '@/lib/i18n/provider'
+import { FRAMEWORK_METRICS } from '@/lib/compliance-metrics'
 import {
   ISO42001_STEP_COUNT,
   computeCoverage,
   computeGapCount,
   isCertificationReady,
+  isoCensus,
   readCompletedSteps,
 } from '@/lib/iso42001-journey'
-
-const FRAMEWORKS = [
-  { key: 'euAiAct', name: 'EU AI Act', percentage: 73, gapCount: 13, color: '#22c55e' },
-  { key: 'nistAiRmf', name: 'NIST AI RMF 2.0', percentage: 61, gapCount: 18, color: '#0ea5e9' },
-  { key: 'owaspLlm', name: 'OWASP LLM Top 10', percentage: 48, gapCount: 24, color: '#f59e0b' },
-  { key: 'iso42001', name: 'ISO 42001', percentage: 55, gapCount: 21, color: '#8b5cf6' },
-] as const
 
 const LEVEL_BADGE: Record<string, string> = {
   covered: 'bg-green-100 text-green-700',
@@ -40,8 +35,9 @@ export default function ComplyPage() {
   }, [])
   const isoReady = isCertificationReady(isoCompleted)
 
-  // Top framework cards, with ISO 42001 reflecting journey progress.
-  const frameworkCards = FRAMEWORKS.map(fw =>
+  // Top framework cards — all derived from the single source of truth
+  // (compliance-metrics), with ISO 42001 reflecting journey progress.
+  const frameworkCards = FRAMEWORK_METRICS.map(fw =>
     fw.key === 'iso42001'
       ? {
           ...fw,
@@ -64,9 +60,18 @@ export default function ComplyPage() {
           <h1 className="text-xl font-bold text-slate-900">{t('comply.title')}</h1>
           <p className="text-sm text-slate-500 mt-0.5">{t('comply.subtitle')}</p>
         </div>
-        <button className="text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg">
-          {t('comply.exportReport')}
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/comply/board"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg"
+          >
+            {t('comply.boardReport')}
+            <ArrowRight size={13} />
+          </Link>
+          <button className="text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg">
+            {t('comply.exportReport')}
+          </button>
+        </div>
       </div>
 
       {/* Framework cards */}
@@ -118,11 +123,10 @@ export default function ComplyPage() {
       <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-6">
         <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">{t('comply.breakdown.heading')}</div>
         <div className="space-y-3">
-          {FRAMEWORKS.map(fw => {
-            const total = USE_CASES.length
-            const covered = USE_CASES.filter(uc => uc.complianceStatus[fw.key] === 'covered').length
-            const partial = USE_CASES.filter(uc => uc.complianceStatus[fw.key] === 'partial').length
-            const gap = total - covered - partial
+          {FRAMEWORK_METRICS.map(fw => {
+            // Same source as the cards above; ISO 42001 tracks journey progress.
+            const census = fw.key === 'iso42001' ? isoCensus(isoCompleted) : fw
+            const { covered, partial, gap, total } = census
             return (
               <div key={fw.key}>
                 <div className="flex items-center justify-between mb-1">

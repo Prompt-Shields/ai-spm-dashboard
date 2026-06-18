@@ -2,6 +2,7 @@ export const comply = {
   title: 'AI Compliance',
   subtitle: 'Framework coverage across all AI use cases',
   exportReport: 'Export Compliance Report',
+  boardReport: 'Board report',
   coverageGaps: '{count} gaps remaining',
   iso42001Journey: {
     eyebrow: 'Guided journey',
