@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { Bot } from 'lucide-react'
+import Link from 'next/link'
+import { Bot, Sparkles } from 'lucide-react'
 import { PERSONS, USE_CASES } from '@/lib/aimaps-data'
 import { OwnerDetailPanel } from '@/components/owner-detail-panel'
 import type { Person } from '@/lib/aimaps-types'
@@ -15,9 +16,18 @@ export default function OwnersPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-xl font-bold text-slate-900">{t('owners.title')}</h1>
-        <p className="text-sm text-slate-500 mt-0.5">{t('owners.subtitle')}</p>
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-bold text-slate-900">{t('owners.title')}</h1>
+          <p className="text-sm text-slate-500 mt-0.5">{t('owners.subtitle')}</p>
+        </div>
+        <Link
+          href="/owners/inference"
+          className="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg"
+        >
+          <Sparkles size={13} />
+          {t('owners.ownerInference')}
+        </Link>
       </div>
 
       {/* KPIs */}
