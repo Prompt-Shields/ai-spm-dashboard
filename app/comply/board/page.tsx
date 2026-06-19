@@ -22,9 +22,16 @@ import {
   Radar,
   UserX,
   ShieldAlert,
+  Lock,
 } from 'lucide-react'
 import { FRAMEWORK_METRICS, AVERAGE_COVERAGE } from '@/lib/compliance-metrics'
-import { TOP_RISKS, BOARD_COUNTS, overallPosture, type Severity } from '@/lib/board-risks'
+import {
+  TOP_RISKS,
+  BOARD_COUNTS,
+  overallPosture,
+  RISK_APPETITE_PROFILE,
+  type Severity,
+} from '@/lib/board-risks'
 import {
   ISO42001_STEP_COUNT,
   computeCoverage,
@@ -70,6 +77,7 @@ export default function BoardReportPage() {
 
   const kpis = [
     { label: 'AI use cases', value: BOARD_COUNTS.totalUseCases, Icon: Radar },
+    { label: 'GDPR gaps', value: BOARD_COUNTS.gdprGaps, Icon: Lock },
     { label: 'High-risk', value: BOARD_COUNTS.highRisk, Icon: ShieldAlert },
     { label: 'Unowned high-risk', value: BOARD_COUNTS.unownedHighRisk, Icon: UserX },
     { label: 'Shadow AI', value: BOARD_COUNTS.shadowAi, Icon: AlertTriangle },
@@ -125,14 +133,21 @@ export default function BoardReportPage() {
               </span>
             </div>
           </div>
-          <p className="max-w-md text-sm text-slate-500 leading-relaxed">
-            Posture reflects open critical exposure and average framework coverage. The board-level
-            actions below are prioritised by severity and exposure.
-          </p>
+          <div className="max-w-md">
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-full mb-2">
+              <Lock size={11} />
+              {RISK_APPETITE_PROFILE} risk appetite
+            </span>
+            <p className="text-sm text-slate-500 leading-relaxed">
+              Top risks are ranked by fine &amp; privacy exposure — GDPR and financial-crime weighted
+              highest, operational/availability and ESG weighted down to match the organisation&apos;s
+              risk appetite.
+            </p>
+          </div>
         </div>
 
         {/* KPI strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-6">
           {kpis.map(({ label, value, Icon }) => (
             <div key={label} className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
               <div className="flex items-center gap-1.5 text-slate-400">

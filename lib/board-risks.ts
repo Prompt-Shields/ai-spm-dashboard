@@ -5,6 +5,11 @@
 // figure is computed from the same single source of truth as the rest of the
 // dashboard (see compliance-metrics.ts), so the board pack never contradicts
 // the operational views.
+//
+// Ranking is weighted by a risk-appetite profile. The default is "privacy-led"
+// (Gjensidige): fines that bite hardest — GDPR (privacy) and AML (financial
+// crime) — are weighted highest; operational/availability and ESG are weighted
+// down, matching an insurer that is privacy-first and can tolerate downtime.
 
 import { USE_CASES } from './aimaps-data'
 import type { Risk, UseCase } from './aimaps-types'
@@ -19,11 +24,34 @@ const SEVERITY_WEIGHT: Record<Severity, number> = {
   low: 1,
 }
 
+// ── Risk-appetite profile (drives ranking) ──────────────────────────────
+
+export type RiskDimension =
+  | 'privacy'
+  | 'financial-crime'
+  | 'regulatory'
+  | 'security'
+  | 'operational'
+  | 'esg'
+
+export const RISK_APPETITE_PROFILE = 'Privacy-led'
+
+/** Multipliers reflecting where the largest fines / board concern sit. */
+export const RISK_APPETITE: Record<RiskDimension, number> = {
+  privacy: 2.0,
+  'financial-crime': 1.6,
+  regulatory: 1.3,
+  security: 1.0,
+  operational: 0.5,
+  esg: 0.2,
+}
+
 export interface BoardRisk {
   id: string
   rank: number
   title: string
   severity: Severity
+  dimension: RiskDimension
   /** The single number the board sees (e.g. 12). */
   metric: number
   /** Unit/label for the metric (e.g. "unsanctioned tools"). */
@@ -60,6 +88,7 @@ const PROMPT_INJECTION = USE_CASES.filter((uc) =>
   uc.risks.some((r) => r.category === 'prompt-injection'),
 )
 
+const gdpr = getFrameworkMetrics('gdpr')
 const euAiAct = getFrameworkMetrics('euAiAct')
 const iso42001 = getFrameworkMetrics('iso42001')
 
@@ -70,52 +99,71 @@ export const BOARD_COUNTS = {
   shadowAi: SHADOW_AI.length,
   sensitiveLeakage: SENSITIVE_LEAKAGE.length,
   promptInjection: PROMPT_INJECTION.length,
+  gdprGaps: gdpr.gapCount,
   averageCoverage: AVERAGE_COVERAGE,
 }
 
-// ── Top risks (ranked by severity × exposure) ───────────────────────────
+// ── Top risks (ranked by severity × exposure × risk-appetite weight) ────
 
 const RAW_RISKS: Omit<BoardRisk, 'rank'>[] = [
+  {
+    id: 'gdpr-exposure',
+    title: 'GDPR / privacy exposure on personal data',
+    severity: 'critical',
+    dimension: 'privacy',
+    // Personal-data use cases not yet fully covered (partial + gap) — the
+    // board-level privacy exposure, not just the strict-gap subset.
+    metric: gdpr.partial + gdpr.gap,
+    unit: 'use cases handling personal data at risk',
+    detail: `${gdpr.partial + gdpr.gap} use cases process personal data without full controls (${gdpr.gapCount} with open gaps). Privacy carries the largest fine exposure — up to 4% of global turnover — and is the board’s primary concern.`,
+    frameworks: ['GDPR', 'EU AI Act'],
+    remediation: 'Enforce PII redaction + lawful-basis checks; close gaps on restricted data first.',
+    trend: 'down',
+  },
   {
     id: 'shadow-ai',
     title: 'Shadow AI processing company data unreviewed',
     severity: 'critical',
+    dimension: 'privacy',
     metric: SHADOW_AI.length,
     unit: 'unsanctioned tools',
     detail:
-      'AI tools adopted by employees without review, several handling confidential data. No owner, no risk assessment, no policy applied.',
-    frameworks: ['EU AI Act', 'ISO 42001'],
+      'AI tools adopted without review, several handling confidential data. No owner, no risk assessment, no policy applied — a direct privacy and data-residency exposure.',
+    frameworks: ['GDPR', 'EU AI Act', 'ISO 42001'],
     remediation: 'Triage in registry → assign owners → apply guardrails or sunset.',
+    trend: 'down',
+  },
+  {
+    id: 'sensitive-leakage',
+    title: 'Sensitive data exposure to external LLMs',
+    severity: 'high',
+    dimension: 'privacy',
+    metric: SENSITIVE_LEAKAGE.length,
+    unit: 'use cases',
+    detail:
+      'Use cases handling confidential or restricted data with an open data-leakage risk — PII/IP can leave the boundary, including to external API providers.',
+    frameworks: ['GDPR', 'OWASP LLM Top 10'],
+    remediation: 'Enforce PII redaction + data-minimisation before send.',
     trend: 'down',
   },
   {
     id: 'unowned-high-risk',
     title: 'High-risk AI with no accountable owner',
     severity: 'high',
+    dimension: 'regulatory',
     metric: UNOWNED_HIGH_RISK.length,
     unit: 'use cases',
     detail:
-      'High-risk use cases carrying critical or high-severity risks with no named owner — direct regulatory and audit liability.',
-    frameworks: ['EU AI Act', 'NIST AI RMF', 'ISO 42001'],
+      'High-risk use cases carrying critical or high-severity risks with no named owner — direct regulatory and audit liability under EIOPA and the EU AI Act.',
+    frameworks: ['EIOPA', 'EU AI Act', 'NIST AI RMF'],
     remediation: 'Assign owners and require sign-off within the quarter.',
     trend: 'flat',
-  },
-  {
-    id: 'sensitive-leakage',
-    title: 'Sensitive data exposure to external LLMs',
-    severity: 'high',
-    metric: SENSITIVE_LEAKAGE.length,
-    unit: 'use cases',
-    detail:
-      'Use cases handling confidential or restricted data with an open data-leakage risk — PII/IP can leave the boundary.',
-    frameworks: ['EU AI Act', 'OWASP LLM Top 10'],
-    remediation: 'Enforce PII redaction + data-minimisation before send.',
-    trend: 'down',
   },
   {
     id: 'eu-ai-act-gaps',
     title: 'EU AI Act obligations not yet met',
     severity: 'high',
+    dimension: 'regulatory',
     metric: euAiAct.gapCount,
     unit: 'open gaps',
     detail: `${euAiAct.gapCount} use cases with EU AI Act gaps against the high-risk obligations coming into force.`,
@@ -125,20 +173,10 @@ const RAW_RISKS: Omit<BoardRisk, 'rank'>[] = [
     trend: 'down',
   },
   {
-    id: 'iso-42001-readiness',
-    title: 'ISO/IEC 42001 certification gaps',
-    severity: 'medium',
-    metric: iso42001.gapCount,
-    unit: 'open gaps',
-    detail: `Currently ${iso42001.percentage}% coverage. Closing the management-system clauses takes the AIMS to certification-ready.`,
-    frameworks: ['ISO 42001'],
-    remediation: 'Run the guided ISO 42001 journey to certification-readiness.',
-    trend: 'down',
-  },
-  {
     id: 'prompt-injection',
     title: 'Prompt-injection exposure on LLM use cases',
     severity: 'medium',
+    dimension: 'security',
     metric: PROMPT_INJECTION.length,
     unit: 'use cases',
     detail:
@@ -147,32 +185,47 @@ const RAW_RISKS: Omit<BoardRisk, 'rank'>[] = [
     remediation: 'Apply prompt-injection guards; wire into red-team CI.',
     trend: 'flat',
   },
+  {
+    id: 'iso-42001-readiness',
+    title: 'ISO/IEC 42001 management-system gaps',
+    severity: 'medium',
+    dimension: 'regulatory',
+    metric: iso42001.gapCount,
+    unit: 'open gaps',
+    detail: `Currently ${iso42001.percentage}% coverage. Tracked to show governance progression — not a certification target for now.`,
+    frameworks: ['ISO 42001'],
+    remediation: 'Progress the guided ISO 42001 journey to show maturity to the board.',
+    trend: 'down',
+  },
 ]
 
-/** Top risks, ranked by severity weight × exposure (metric). */
-export const TOP_RISKS: BoardRisk[] = RAW_RISKS.map((r) => ({
-  ...r,
-  _score: SEVERITY_WEIGHT[r.severity] * Math.max(r.metric, 1),
-}))
-  .sort((a, b) => b._score - a._score)
-  .map(({ _score, ...r }, i) => ({ ...r, rank: i + 1 }))
+function score(r: Omit<BoardRisk, 'rank'>): number {
+  return SEVERITY_WEIGHT[r.severity] * Math.max(r.metric, 1) * RISK_APPETITE[r.dimension]
+}
+
+/** Top risks, ranked by severity × exposure × risk-appetite weight. */
+export const TOP_RISKS: BoardRisk[] = [...RAW_RISKS]
+  .sort((a, b) => score(b) - score(a))
+  .map((r, i) => ({ ...r, rank: i + 1 }))
 
 // ── Overall posture ─────────────────────────────────────────────────────
 
 export type Posture = 'Low' | 'Moderate' | 'Elevated' | 'High'
 
 /**
- * A single posture label derived from coverage and open critical exposure.
- * Demo heuristic, but deterministic and explainable to a board.
+ * A single posture label derived from open privacy-critical exposure and
+ * average coverage. Demo heuristic, but deterministic and explainable to a
+ * board — and weighted to privacy, matching the risk-appetite profile.
  */
 export function overallPosture(): { label: Posture; trend: 'improving' | 'stable' | 'worsening' } {
-  const criticalOpen = TOP_RISKS.filter((r) => r.severity === 'critical' && r.metric > 0).length
+  const privacyCriticalOpen = TOP_RISKS.filter(
+    (r) => r.dimension === 'privacy' && r.severity === 'critical' && r.metric > 0,
+  ).length
   const cov = AVERAGE_COVERAGE
   let label: Posture
-  if (criticalOpen > 0 || cov < 45) label = 'Elevated'
-  else if (cov < 60) label = 'Moderate'
-  else if (cov < 80) label = 'Moderate'
+  if (privacyCriticalOpen >= 2) label = 'High'
+  else if (privacyCriticalOpen === 1 || cov < 50) label = 'Elevated'
+  else if (cov < 70) label = 'Moderate'
   else label = 'Low'
-  if (criticalOpen >= 2) label = 'High'
   return { label, trend: 'improving' }
 }

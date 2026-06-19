@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import { USE_CASES } from '@/lib/aimaps-data'
 import { ComplianceCoverageCard } from '@/components/compliance-coverage-card'
 import { useT } from '@/lib/i18n/provider'
-import { FRAMEWORK_METRICS } from '@/lib/compliance-metrics'
+import { FRAMEWORK_METRICS, frameworkLevel } from '@/lib/compliance-metrics'
 import {
   ISO42001_STEP_COUNT,
   computeCoverage,
@@ -48,6 +48,7 @@ export default function ComplyPage() {
   )
 
   const gapUseCases = USE_CASES.filter(uc =>
+    frameworkLevel(uc, 'gdpr') === 'gap' ||
     uc.complianceStatus.euAiAct === 'gap' ||
     uc.complianceStatus.nistAiRmf === 'gap' ||
     uc.complianceStatus.owaspLlm === 'gap'
@@ -75,7 +76,7 @@ export default function ComplyPage() {
       </div>
 
       {/* Framework cards */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
         {frameworkCards.map(fw => (
           <ComplianceCoverageCard
             key={fw.key}
@@ -155,11 +156,12 @@ export default function ComplyPage() {
       {/* Priority Actions */}
       <div className="mb-6">
         <h2 className="text-sm font-semibold text-slate-700 mb-3">{t('comply.priority.heading')}</h2>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { key: 'euAiAct', fw: 'EU AI Act', gap: 13, urgency: 'critical' },
-            { key: 'owaspLlm', fw: 'OWASP LLM', gap: 24, urgency: 'high' },
-            { key: 'nistAiRmf', fw: 'NIST AI RMF', gap: 18, urgency: 'medium' },
+            { key: 'gdpr', fw: 'GDPR', urgency: 'critical' },
+            { key: 'euAiAct', fw: 'EU AI Act', urgency: 'high' },
+            { key: 'owaspLlm', fw: 'OWASP LLM', urgency: 'high' },
+            { key: 'nistAiRmf', fw: 'NIST AI RMF', urgency: 'medium' },
           ].map(item => (
             <div key={item.fw} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
               <div className="flex items-start justify-between mb-2">
@@ -187,7 +189,7 @@ export default function ComplyPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50">
-                {[t('comply.gapTable.columns.useCase'), t('comply.gapTable.columns.department'), 'EU AI Act', 'NIST AI RMF', 'OWASP LLM', t('comply.gapTable.columns.action')].map(h => (
+                {[t('comply.gapTable.columns.useCase'), t('comply.gapTable.columns.department'), 'GDPR', 'EU AI Act', 'NIST AI RMF', 'OWASP LLM', t('comply.gapTable.columns.action')].map(h => (
                   <th key={h} className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-4 py-3">{h}</th>
                 ))}
               </tr>
@@ -197,13 +199,16 @@ export default function ComplyPage() {
                 <tr key={uc.id} className="border-b border-slate-50 hover:bg-slate-50">
                   <td className="px-4 py-3 text-sm font-medium text-slate-900">{uc.name}</td>
                   <td className="px-4 py-3 text-xs text-slate-500">{uc.department}</td>
-                  {(['euAiAct', 'nistAiRmf', 'owaspLlm'] as const).map(fw => (
-                    <td key={fw} className="px-4 py-3">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${LEVEL_BADGE[uc.complianceStatus[fw]]}`}>
-                        {uc.complianceStatus[fw].charAt(0).toUpperCase() + uc.complianceStatus[fw].slice(1)}
-                      </span>
-                    </td>
-                  ))}
+                  {(['gdpr', 'euAiAct', 'nistAiRmf', 'owaspLlm'] as const).map(fw => {
+                    const level = frameworkLevel(uc, fw)
+                    return (
+                      <td key={fw} className="px-4 py-3">
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${LEVEL_BADGE[level]}`}>
+                          {level.charAt(0).toUpperCase() + level.slice(1)}
+                        </span>
+                      </td>
+                    )
+                  })}
                   <td className="px-4 py-3">
                     <button className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
                       {t('comply.gapTable.assignRemediation')}
