@@ -3,6 +3,7 @@ export const comply = {
   subtitle: 'Framework coverage across all AI use cases',
   exportReport: 'Export Compliance Report',
   boardReport: 'Board report',
+  frameworkRequirements: 'Framework requirements',
   coverageGaps: '{count} gaps remaining',
   iso42001Journey: {
     eyebrow: 'Guided journey',

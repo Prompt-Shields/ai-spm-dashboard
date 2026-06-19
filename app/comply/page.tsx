@@ -63,6 +63,12 @@ export default function ComplyPage() {
         </div>
         <div className="flex items-center gap-2">
           <Link
+            href="/comply/frameworks"
+            className="text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg"
+          >
+            {t('comply.frameworkRequirements')}
+          </Link>
+          <Link
             href="/comply/board"
             className="inline-flex items-center gap-1.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg"
           >
