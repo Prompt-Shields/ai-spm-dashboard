@@ -1130,7 +1130,8 @@ export const AGENT_CONVERSATIONS: AgentConversation[] = [
 export const DISCOVERY_STATS = {
   toolsDiscovered: 38,
   vendorsInUse: 17,
-  useCasesFound: 47,
-  shadowAiFound: 12,
+  // Single source of truth: the registry length, not a stale literal.
+  useCasesFound: USE_CASES.length,
+  shadowAiFound: USE_CASES.filter((uc) => uc.discoveryMethod === 'shadow-ai').length,
   percentComplete: 100,
 }

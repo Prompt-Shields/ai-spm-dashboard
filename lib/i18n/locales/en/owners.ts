@@ -1,6 +1,7 @@
 export const owners = {
   title: 'Owners',
   subtitle: 'People accountable for AI use cases across the organisation',
+  ownerInference: 'Suggest owners',
   kpi: {
     owners: 'Owners',
     pendingAssessments: 'Pending Assessments',
