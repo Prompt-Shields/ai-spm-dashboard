@@ -1,14 +1,19 @@
 'use client'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { USE_CASES } from '@/lib/aimaps-data'
 import { ComplianceCoverageCard } from '@/components/compliance-coverage-card'
 import { useT } from '@/lib/i18n/provider'
-
-const FRAMEWORKS = [
-  { key: 'euAiAct', name: 'EU AI Act', percentage: 73, gapCount: 13, color: '#22c55e' },
-  { key: 'nistAiRmf', name: 'NIST AI RMF 2.0', percentage: 61, gapCount: 18, color: '#0ea5e9' },
-  { key: 'owaspLlm', name: 'OWASP LLM Top 10', percentage: 48, gapCount: 24, color: '#f59e0b' },
-  { key: 'iso42001', name: 'ISO 42001', percentage: 55, gapCount: 21, color: '#8b5cf6' },
-] as const
+import { FRAMEWORK_METRICS, frameworkLevel } from '@/lib/compliance-metrics'
+import {
+  ISO42001_STEP_COUNT,
+  computeCoverage,
+  computeGapCount,
+  isCertificationReady,
+  isoCensus,
+  readCompletedSteps,
+} from '@/lib/iso42001-journey'
 
 const LEVEL_BADGE: Record<string, string> = {
   covered: 'bg-green-100 text-green-700',
@@ -18,7 +23,32 @@ const LEVEL_BADGE: Record<string, string> = {
 
 export default function ComplyPage() {
   const t = useT()
+
+  // ISO 42001 coverage climbs as the guided journey is completed
+  // (persisted to localStorage). Hydrated after mount to avoid SSR drift.
+  const [isoCompleted, setIsoCompleted] = useState(0)
+  useEffect(() => {
+    setIsoCompleted(readCompletedSteps().length)
+    const onFocus = () => setIsoCompleted(readCompletedSteps().length)
+    window.addEventListener('focus', onFocus)
+    return () => window.removeEventListener('focus', onFocus)
+  }, [])
+  const isoReady = isCertificationReady(isoCompleted)
+
+  // Top framework cards — all derived from the single source of truth
+  // (compliance-metrics), with ISO 42001 reflecting journey progress.
+  const frameworkCards = FRAMEWORK_METRICS.map(fw =>
+    fw.key === 'iso42001'
+      ? {
+          ...fw,
+          percentage: computeCoverage(isoCompleted),
+          gapCount: computeGapCount(isoCompleted),
+        }
+      : fw,
+  )
+
   const gapUseCases = USE_CASES.filter(uc =>
+    frameworkLevel(uc, 'gdpr') === 'gap' ||
     uc.complianceStatus.euAiAct === 'gap' ||
     uc.complianceStatus.nistAiRmf === 'gap' ||
     uc.complianceStatus.owaspLlm === 'gap'
@@ -31,14 +61,29 @@ export default function ComplyPage() {
           <h1 className="text-xl font-bold text-slate-900">{t('comply.title')}</h1>
           <p className="text-sm text-slate-500 mt-0.5">{t('comply.subtitle')}</p>
         </div>
-        <button className="text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg">
-          {t('comply.exportReport')}
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/comply/frameworks"
+            className="text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg"
+          >
+            {t('comply.frameworkRequirements')}
+          </Link>
+          <Link
+            href="/comply/board"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg"
+          >
+            {t('comply.boardReport')}
+            <ArrowRight size={13} />
+          </Link>
+          <button className="text-xs font-semibold bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg">
+            {t('comply.exportReport')}
+          </button>
+        </div>
       </div>
 
       {/* Framework cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {FRAMEWORKS.map(fw => (
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        {frameworkCards.map(fw => (
           <ComplianceCoverageCard
             key={fw.key}
             framework={fw}
@@ -47,15 +92,48 @@ export default function ComplyPage() {
         ))}
       </div>
 
+      {/* ISO 42001 guided journey CTA */}
+      <Link
+        href="/comply/iso-42001"
+        className="group flex items-center justify-between gap-4 rounded-xl border border-violet-200 bg-gradient-to-r from-violet-50 to-white p-4 mb-8 shadow-sm hover:border-violet-300 hover:shadow transition-all"
+      >
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-wide text-violet-500">
+            {t('comply.iso42001Journey.eyebrow')}
+          </div>
+          <h3 className="text-sm font-bold text-slate-900 mt-0.5">
+            {t('comply.iso42001Journey.heading')}
+          </h3>
+          <p className="text-xs text-slate-500 mt-0.5 max-w-2xl leading-relaxed">
+            {t('comply.iso42001Journey.body')}
+          </p>
+        </div>
+        <div className="shrink-0 flex flex-col items-end gap-1.5">
+          <span className="inline-flex items-center gap-1.5 bg-violet-600 group-hover:bg-violet-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors">
+            {t(`comply.iso42001Journey.${isoCompleted > 0 && !isoReady ? 'resume' : 'cta'}`)}
+            <ArrowRight size={13} />
+          </span>
+          {isoCompleted > 0 && (
+            <span className="text-[10px] font-medium text-violet-600">
+              {isoReady
+                ? t('comply.iso42001Journey.ready')
+                : t('comply.iso42001Journey.status', {
+                    completed: isoCompleted,
+                    total: ISO42001_STEP_COUNT,
+                  })}
+            </span>
+          )}
+        </div>
+      </Link>
+
       {/* Coverage breakdown bar */}
       <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-6">
         <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">{t('comply.breakdown.heading')}</div>
         <div className="space-y-3">
-          {FRAMEWORKS.map(fw => {
-            const total = USE_CASES.length
-            const covered = USE_CASES.filter(uc => uc.complianceStatus[fw.key] === 'covered').length
-            const partial = USE_CASES.filter(uc => uc.complianceStatus[fw.key] === 'partial').length
-            const gap = total - covered - partial
+          {FRAMEWORK_METRICS.map(fw => {
+            // Same source as the cards above; ISO 42001 tracks journey progress.
+            const census = fw.key === 'iso42001' ? isoCensus(isoCompleted) : fw
+            const { covered, partial, gap, total } = census
             return (
               <div key={fw.key}>
                 <div className="flex items-center justify-between mb-1">
@@ -84,11 +162,12 @@ export default function ComplyPage() {
       {/* Priority Actions */}
       <div className="mb-6">
         <h2 className="text-sm font-semibold text-slate-700 mb-3">{t('comply.priority.heading')}</h2>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { key: 'euAiAct', fw: 'EU AI Act', gap: 13, urgency: 'critical' },
-            { key: 'owaspLlm', fw: 'OWASP LLM', gap: 24, urgency: 'high' },
-            { key: 'nistAiRmf', fw: 'NIST AI RMF', gap: 18, urgency: 'medium' },
+            { key: 'gdpr', fw: 'GDPR', urgency: 'critical' },
+            { key: 'euAiAct', fw: 'EU AI Act', urgency: 'high' },
+            { key: 'owaspLlm', fw: 'OWASP LLM', urgency: 'high' },
+            { key: 'nistAiRmf', fw: 'NIST AI RMF', urgency: 'medium' },
           ].map(item => (
             <div key={item.fw} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
               <div className="flex items-start justify-between mb-2">
@@ -116,7 +195,7 @@ export default function ComplyPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50">
-                {[t('comply.gapTable.columns.useCase'), t('comply.gapTable.columns.department'), 'EU AI Act', 'NIST AI RMF', 'OWASP LLM', t('comply.gapTable.columns.action')].map(h => (
+                {[t('comply.gapTable.columns.useCase'), t('comply.gapTable.columns.department'), 'GDPR', 'EU AI Act', 'NIST AI RMF', 'OWASP LLM', t('comply.gapTable.columns.action')].map(h => (
                   <th key={h} className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-4 py-3">{h}</th>
                 ))}
               </tr>
@@ -126,13 +205,16 @@ export default function ComplyPage() {
                 <tr key={uc.id} className="border-b border-slate-50 hover:bg-slate-50">
                   <td className="px-4 py-3 text-sm font-medium text-slate-900">{uc.name}</td>
                   <td className="px-4 py-3 text-xs text-slate-500">{uc.department}</td>
-                  {(['euAiAct', 'nistAiRmf', 'owaspLlm'] as const).map(fw => (
-                    <td key={fw} className="px-4 py-3">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${LEVEL_BADGE[uc.complianceStatus[fw]]}`}>
-                        {uc.complianceStatus[fw].charAt(0).toUpperCase() + uc.complianceStatus[fw].slice(1)}
-                      </span>
-                    </td>
-                  ))}
+                  {(['gdpr', 'euAiAct', 'nistAiRmf', 'owaspLlm'] as const).map(fw => {
+                    const level = frameworkLevel(uc, fw)
+                    return (
+                      <td key={fw} className="px-4 py-3">
+                        <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${LEVEL_BADGE[level]}`}>
+                          {level.charAt(0).toUpperCase() + level.slice(1)}
+                        </span>
+                      </td>
+                    )
+                  })}
                   <td className="px-4 py-3">
                     <button className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
                       {t('comply.gapTable.assignRemediation')}
