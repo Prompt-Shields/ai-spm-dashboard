@@ -7,5 +7,6 @@ export const nav = {
   comply: 'AI Compliance',
   policies: 'Policies',
   adoption: 'Adoption',
+  aiSpend: 'AI Spend',
   piiShield: 'PII Shield Demo',
 }
