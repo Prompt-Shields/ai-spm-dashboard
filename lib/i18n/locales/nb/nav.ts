@@ -7,5 +7,6 @@ export const nav = {
   comply: 'KI-etterlevelse',
   policies: 'Retningslinjer',
   adoption: 'Adopsjon',
+  aiSpend: 'AI-forbruk',
   piiShield: 'PII-skjold-demo',
 }

@@ -7,5 +7,6 @@ export const nav = {
   comply: 'Conformité IA',
   policies: 'Politiques',
   adoption: 'Adoption',
+  aiSpend: 'Dépenses IA',
   piiShield: 'Démo bouclier PII',
 }

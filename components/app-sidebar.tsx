@@ -11,6 +11,7 @@ import {
   Shield,
   EyeOff,
   TrendingUp,
+  Coins,
   ChevronLeft,
   ChevronRight,
   X,
@@ -23,6 +24,7 @@ import { useSidebar } from './sidebar-provider'
 // Same items as the previous top-nav. `key` resolves to the nav.* translation.
 const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
   { href: '/adoption', key: 'adoption', Icon: TrendingUp },
+  { href: '/ai-spend', key: 'aiSpend', Icon: Coins },
   { href: '/', key: 'map', Icon: Map },
   { href: '/discover', key: 'discover', Icon: Radio },
   { href: '/agent-discovery', key: 'agentDiscovery', Icon: Radar },
