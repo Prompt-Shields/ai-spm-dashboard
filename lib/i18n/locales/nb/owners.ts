@@ -1,6 +1,7 @@
 export const owners = {
   title: 'Eiere',
   subtitle: 'Personer som er ansvarlige for KI-bruksområder i hele organisasjonen', // TODO(i18n): native review
+  ownerInference: 'Foreslå eiere', // TODO(i18n): native review
   kpi: {
     owners: 'Eiere',
     pendingAssessments: 'Manglende vurderinger',
