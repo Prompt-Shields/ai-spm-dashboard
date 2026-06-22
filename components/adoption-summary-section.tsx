@@ -20,9 +20,9 @@ import {
   Loader2,
   AlertCircle,
   Sparkles,
+  Clock,
   ArrowUpRight,
   ArrowDownRight,
-  ShieldCheck,
   ShieldAlert
 } from "lucide-react"
 
@@ -103,16 +103,25 @@ function buildWindows(days: number): {
   }
 }
 
-// Pull the two headline numbers off an overview block.
+// Productivity ROI assumption: average minutes of knowledge-worker time
+// saved per completed AI interaction. A deliberately conservative
+// placeholder (industry estimates run 3–10 min) until real time-savings
+// telemetry lands. Surfaced in the tile subtitle so the figure is never
+// mistaken for measured data.
+const MINUTES_SAVED_PER_PROMPT = 3
+
+// Pull the headline numbers off an overview block.
 function heroFigures(overview: SummaryResponse["overview"]): {
-  successful: number
+  activities: number
+  hoursSaved: number
   risky: number
 } {
   // "Risky" = prompts that tripped a policy (blocked / redacted / flagged).
   // totalEvaluations = totalPrompts + those three counters, so the
   // difference isolates the risky ones without re-summing per app.
   return {
-    successful: overview.totalPrompts,
+    activities: overview.totalPrompts,
+    hoursSaved: Math.round((overview.totalPrompts * MINUTES_SAVED_PER_PROMPT) / 60),
     risky: Math.max(0, overview.totalEvaluations - overview.totalPrompts)
   }
 }
@@ -203,28 +212,40 @@ export function AdoptionSummarySection() {
 }
 
 // ─── Hero metrics band ──────────────────────────────────────────────────
-// The two numbers the pitch hangs on: productivity (successful prompts,
-// up is good) and risk (risky prompts, down is good). Each shows the
-// delta against the immediately preceding window of equal length.
+// Three numbers the pitch hangs on: activity (prompt activities, context),
+// value (estimated hours saved — the ROI headline, up is good), and risk
+// (risky prompts, down is good). Each shows the delta against the
+// immediately preceding window of equal length.
 
 function HeroMetrics({
   current,
   prior,
   days
 }: {
-  current: { successful: number; risky: number }
-  prior: { successful: number; risky: number } | null
+  current: { activities: number; hoursSaved: number; risky: number }
+  prior: { activities: number; hoursSaved: number; risky: number } | null
   days: number
 }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <HeroStat
-        icon={ShieldCheck}
+        icon={Clock}
+        tone="accent"
+        label="Est. hours saved"
+        sub={`~${MINUTES_SAVED_PER_PROMPT} min saved per activity`}
+        value={current.hoursSaved}
+        unit="hrs"
+        prior={prior?.hoursSaved ?? null}
+        goodDirection="up"
+        days={days}
+      />
+      <HeroStat
+        icon={Sparkles}
         tone="positive"
-        label="Successful prompts"
-        sub="protected and completed"
-        value={current.successful}
-        prior={prior?.successful ?? null}
+        label="Prompt activities"
+        sub="completed AI interactions"
+        value={current.activities}
+        prior={prior?.activities ?? null}
         goodDirection="up"
         days={days}
       />
@@ -248,15 +269,17 @@ function HeroStat({
   label,
   sub,
   value,
+  unit,
   prior,
   goodDirection,
   days
 }: {
   icon: React.ComponentType<{ size?: number; className?: string }>
-  tone: "positive" | "negative"
+  tone: "positive" | "negative" | "accent"
   label: string
   sub: string
   value: number
+  unit?: string
   prior: number | null
   goodDirection: "up" | "down"
   days: number
@@ -278,25 +301,30 @@ function HeroStat({
         : "text-red-500"
   const Arrow = isUp ? ArrowUpRight : ArrowDownRight
 
+  const cardTone =
+    tone === "positive"
+      ? "border-emerald-100 bg-gradient-to-br from-emerald-50/70 to-white"
+      : tone === "accent"
+        ? "border-indigo-100 bg-gradient-to-br from-indigo-50/70 to-white"
+        : "border-amber-100 bg-gradient-to-br from-amber-50/60 to-white"
+  const iconTone =
+    tone === "positive"
+      ? "text-emerald-500"
+      : tone === "accent"
+        ? "text-indigo-500"
+        : "text-amber-500"
+
   return (
-    <Card
-      className={
-        tone === "positive"
-          ? "border-emerald-100 bg-gradient-to-br from-emerald-50/70 to-white"
-          : "border-amber-100 bg-gradient-to-br from-amber-50/60 to-white"
-      }
-    >
+    <Card className={cardTone}>
       <CardContent className="py-5 px-6">
         <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-          <Icon
-            size={15}
-            className={tone === "positive" ? "text-emerald-500" : "text-amber-500"}
-          />
+          <Icon size={15} className={iconTone} />
           {label}
         </div>
         <div className="mt-1.5 flex items-baseline gap-3">
           <span className="text-3xl font-bold text-slate-900 tabular-nums">
             {value.toLocaleString()}
+            {unit && <span className="text-lg font-semibold text-slate-400 ml-1">{unit}</span>}
           </span>
           {pct !== null && (
             <span
