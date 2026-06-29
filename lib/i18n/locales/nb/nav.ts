@@ -5,6 +5,7 @@ export const nav = {
   register: 'Register',
   owners: 'Eiere',
   comply: 'KI-etterlevelse',
+  saasVendorAi: 'SaaS-leverandør-KI',
   policies: 'Retningslinjer',
   adoption: 'Adopsjon',
   aiSpend: 'AI-forbruk',
