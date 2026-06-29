@@ -25,6 +25,7 @@ import { useCaseDetail } from './en/useCaseDetail'
 import { ownerDetail } from './en/ownerDetail'
 import { agentConversation } from './en/agentConversation'
 import { demoJourney } from './en/demoJourney'
+import { vendor } from './en/vendor'
 
 export const en = {
   common,
@@ -45,4 +46,5 @@ export const en = {
   ownerDetail,
   agentConversation,
   demoJourney,
+  vendor,
 }

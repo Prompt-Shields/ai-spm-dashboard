@@ -17,6 +17,7 @@ import { useCaseDetail } from './fr/useCaseDetail'
 import { ownerDetail } from './fr/ownerDetail'
 import { agentConversation } from './fr/agentConversation'
 import { demoJourney } from './fr/demoJourney'
+import { vendor } from './fr/vendor'
 
 // French. Each namespace lives in its own file under ./fr/ and is translated
 // per-page in Phase B. Typed as Messages so any shape drift from en is a
@@ -40,4 +41,5 @@ export const fr: Messages = {
   ownerDetail,
   agentConversation,
   demoJourney,
+  vendor,
 }
