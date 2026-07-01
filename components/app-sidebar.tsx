@@ -23,14 +23,15 @@ import { useT } from '@/lib/i18n/provider'
 import { useSidebar } from './sidebar-provider'
 
 // Same items as the previous top-nav. `key` resolves to the nav.* translation.
-const NAV: { href: string; key: string; Icon: LucideIcon }[] = [
+// `beta` flags an item that's still in preview (renders a Beta badge).
+const NAV: { href: string; key: string; Icon: LucideIcon; beta?: boolean }[] = [
   { href: '/adoption', key: 'adoption', Icon: TrendingUp },
   { href: '/ai-spend', key: 'aiSpend', Icon: Coins },
   { href: '/', key: 'map', Icon: Map },
   { href: '/discover', key: 'discover', Icon: Radio },
   { href: '/agent-discovery', key: 'agentDiscovery', Icon: Radar },
   { href: '/register', key: 'register', Icon: ClipboardList },
-  { href: '/saas-vendor-ai', key: 'saasVendorAi', Icon: Boxes },
+  { href: '/saas-vendor-ai', key: 'saasVendorAi', Icon: Boxes, beta: true },
   { href: '/owners', key: 'owners', Icon: Users },
   { href: '/comply', key: 'comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', key: 'policies', Icon: Shield },
@@ -100,7 +101,7 @@ export function AppSidebar() {
 
         {/* Nav list */}
         <nav className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
-          {NAV.map(({ href, key, Icon }) => {
+          {NAV.map(({ href, key, Icon, beta }) => {
             const active = isActive(pathname, href)
             const label = t(`nav.${key}`)
             return (
@@ -109,8 +110,8 @@ export function AppSidebar() {
                 href={href}
                 onClick={() => setMobileOpen(false)}
                 // Native tooltip when collapsed — simple, a11y-friendly, no extra deps.
-                title={collapsed ? label : undefined}
-                aria-label={collapsed ? label : undefined}
+                title={collapsed ? (beta ? `${label} (Beta)` : label) : undefined}
+                aria-label={collapsed ? (beta ? `${label} (Beta)` : label) : undefined}
                 className={cn(
                   'group flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm transition-colors',
                   // In collapsed (rail) mode, center the icon; otherwise normal alignment.
@@ -124,6 +125,17 @@ export function AppSidebar() {
                 <Icon size={16} className="shrink-0" />
                 {/* Label hides only on desktop when collapsed. */}
                 <span className={cn('truncate', collapsed && 'md:hidden')}>{label}</span>
+                {/* Beta badge — hidden on desktop when collapsed (rail shows icon only). */}
+                {beta && (
+                  <span
+                    className={cn(
+                      'ml-auto shrink-0 rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700',
+                      collapsed && 'md:hidden',
+                    )}
+                  >
+                    Beta
+                  </span>
+                )}
               </Link>
             )
           })}
