@@ -1,0 +1,99 @@
+'use client'
+import { Bot, ShieldHalf } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+// Vendor brand marks for the integrations catalog, rendered on clean white
+// tiles — the way an integrations directory shows the products it connects to.
+// Marks with an official single-path glyph (Azure, Google Cloud, Splunk, Slack)
+// inline that path; Microsoft uses its four-square; ServiceNow uses its "now"
+// wordmark; Ardoq falls back to a branded monogram.
+
+// Official single-path glyphs (viewBox 0 0 24 24), sourced from the vendors'
+// brand marks. Rendered in each vendor's brand colour.
+const AZURE_D =
+  'M22.379 23.343a1.62 1.62 0 0 0 1.536-2.14v.002L17.35 1.76A1.62 1.62 0 0 0 15.816.657H8.184A1.62 1.62 0 0 0 6.65 1.76L.086 21.204a1.62 1.62 0 0 0 1.536 2.139h4.741a1.62 1.62 0 0 0 1.535-1.103l.977-2.892 4.947 3.675c.28.208.618.32.966.32m-3.084-12.531 3.624 10.739a.54.54 0 0 1-.51.713v-.001h-.03a.54.54 0 0 1-.322-.106l-9.287-6.9h4.853m6.313 7.006c.116-.326.13-.694.007-1.058L9.79 1.76a1.722 1.722 0 0 0-.007-.02h6.034a.54.54 0 0 1 .512.366l6.562 19.445a.54.54 0 0 1-.338.684'
+
+const GOOGLE_CLOUD_D =
+  'M12.19 2.38a9.344 9.344 0 0 0-9.234 6.893c.053-.02-.055.013 0 0-3.875 2.551-3.922 8.11-.247 10.941l.006-.007-.007.03a6.717 6.717 0 0 0 4.077 1.356h5.173l.03.03h5.192c6.687.053 9.376-8.605 3.835-12.35a9.365 9.365 0 0 0-2.821-4.552l-.043.043.006-.05A9.344 9.344 0 0 0 12.19 2.38zm-.358 4.146c1.244-.04 2.518.368 3.486 1.15a5.186 5.186 0 0 1 1.862 4.078v.518c3.53-.07 3.53 5.262 0 5.193h-5.193l-.008.009v-.04H6.785a2.59 2.59 0 0 1-1.067-.23h.001a2.597 2.597 0 1 1 3.437-3.437l3.013-3.012A6.747 6.747 0 0 0 8.11 8.24c.018-.01.04-.026.054-.023a5.186 5.186 0 0 1 3.67-1.69z'
+
+const SPLUNK_D =
+  'M23.348 11.911l-2.241-1.091v-.65L24 11.621v.593l-2.893 1.438v-.636zm-5.397 1.841h-.961v-5.31h.961v3.116h.102l1.28-1.481.723.31-1.23 1.316 1.453 1.809-.888.311-1.44-1.996zm-2.577-.002v-2.068a2.685 2.685 0 0 0-.026-.42.791.791 0 0 0-.09-.26c-.113-.202-.308-.304-.59-.304a.888.888 0 0 0-.461.113.673.673 0 0 0-.286.33 1.012 1.012 0 0 0-.07.263c-.012.13-.019.262-.017.395v1.95h-.961v-3.614h.961l.002.485c.185-.2.373-.348.566-.437.192-.089.418-.134.673-.134.286 0 .527.058.721.177a1.016 1.016 0 0 1 .475.665 1.972 1.972 0 0 1 .054.448c.002.1.004.22.004.358v2.053zm-4.115.002l-.002-.485a1.783 1.783 0 0 1-.565.437 1.597 1.597 0 0 1-.674.135c-.285 0-.524-.057-.72-.17a.972.972 0 0 1-.425-.504.75.75 0 0 1-.054-.167 1.918 1.918 0 0 1-.033-.199 2.033 2.033 0 0 1-.017-.258 15.516 15.516 0 0 1-.005-.355V10.13h.956v2.07c-.003.141.006.282.026.42.015.092.045.18.09.26.113.204.308.306.59.306.36 0 .606-.15.74-.449.035-.082.06-.168.074-.257.017-.134.024-.269.022-.403v-1.95h.955v3.624zM7.184 8.44h.955v5.31h-.955zM5.759 11.9c0-.396-.08-.708-.24-.937a.759.759 0 0 0-.657-.345.804.804 0 0 0-.693.366c-.171.245-.256.574-.253.99 0 .405.084.723.25.957a.796.796 0 0 0 .69.347.685.685 0 0 0 .433-.135.985.985 0 0 0 .277-.34c.071-.14.121-.292.147-.448.03-.151.043-.3.046-.455m1.01-.036c.003.266-.04.532-.129.786-.082.23-.204.441-.364.626-.31.361-.764.567-1.24.563a1.67 1.67 0 0 1-.313-.028 1.041 1.041 0 0 1-.275-.098 1.33 1.33 0 0 1-.257-.178 2.379 2.379 0 0 1-.265-.268v2.293h-.929v-5.425h.93l.004.529c.169-.212.353-.368.55-.468.197-.1.426-.15.688-.147a1.509 1.509 0 0 1 1.156.507c.148.166.259.361.33.571.08.236.12.485.115.737m-4.21.89a.946.946 0 0 1-.102.441 1.007 1.007 0 0 1-.282.345c-.13.1-.275.173-.43.22a1.8 1.8 0 0 1-.546.08 1.985 1.985 0 0 1-.637-.097 1.964 1.964 0 0 1-.563-.32l.312-.505c.15.126.284.217.405.275.115.057.24.087.368.087a.557.557 0 0 0 .373-.12.396.396 0 0 0 .14-.322.475.475 0 0 0-.12-.318 1.306 1.306 0 0 0-.187-.173 9.231 9.231 0 0 0-.308-.232 6.787 6.787 0 0 1-.281-.21 2.11 2.11 0 0 1-.252-.232 1.039 1.039 0 0 1-.18-.275.826.826 0 0 1-.069-.347.893.893 0 0 1 .094-.409.935.935 0 0 1 .255-.314 1.22 1.22 0 0 1 .39-.203c.16-.05.327-.074.494-.072.184 0 .368.026.545.076.174.05.338.123.488.219l-.282.454a1.05 1.05 0 0 0-.608-.201.504.504 0 0 0-.323.102.307.307 0 0 0-.126.253c0 .098.041.193.113.26.074.078.203.186.385.325.185.136.336.253.457.355.104.085.202.182.286.286.065.08.115.173.145.273a.808.808 0 0 1 .046.299Z'
+
+const SLACK_D =
+  'M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z'
+
+function Glyph({ d, fill }: { d: string; fill: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[58%] w-[58%]" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+      <path d={d} fill={fill} />
+    </svg>
+  )
+}
+
+function tile(children: React.ReactNode, className?: string) {
+  return (
+    <div
+      className={cn(
+        'flex shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white ring-1 ring-slate-200',
+        className,
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+// Renders the brand mark for a connector id, on a white tile sized by className.
+export function BrandLogo({ id, className }: { id: string; className?: string }) {
+  switch (id) {
+    case 'sentinel':
+      return tile(<Glyph d={AZURE_D} fill="#0078D4" />, className)
+    case 'chronicle':
+      return tile(<Glyph d={GOOGLE_CLOUD_D} fill="#4285F4" />, className)
+    case 'splunk':
+      return tile(<Glyph d={SPLUNK_D} fill="#000000" />, className)
+    case 'slack':
+      return tile(<Glyph d={SLACK_D} fill="#4A154B" />, className)
+    case 'defender':
+      // Microsoft Defender — representative blue shield.
+      return tile(<ShieldHalf className="h-[56%] w-[56%] text-[#0078D4]" strokeWidth={2} />, className)
+    case 'agent365':
+      // Microsoft Agent 365 — representative agent/bot mark.
+      return tile(<Bot className="h-[58%] w-[58%] text-[#5B5FC7]" strokeWidth={2} />, className)
+    case 'purview':
+      // Microsoft four-square.
+      return tile(
+        <svg viewBox="0 0 24 24" className="h-[56%] w-[56%]" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <rect x="1" y="1" width="10" height="10" fill="#F25022" />
+          <rect x="13" y="1" width="10" height="10" fill="#7FBA00" />
+          <rect x="1" y="13" width="10" height="10" fill="#00A4EF" />
+          <rect x="13" y="13" width="10" height="10" fill="#FFB900" />
+        </svg>,
+        className,
+      )
+    case 'servicenow':
+      // ServiceNow "now" wordmark on its signature green.
+      return (
+        <div
+          className={cn(
+            'flex shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#62D84E] to-[#1E7A5A]',
+            className,
+          )}
+        >
+          <span className="text-sm font-bold lowercase tracking-tight text-white">now</span>
+        </div>
+      )
+    case 'ardoq':
+    default:
+      return (
+        <div
+          className={cn(
+            'flex shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-fuchsia-500 to-purple-600 font-bold text-white',
+            className,
+          )}
+        >
+          <span className="text-lg">a</span>
+        </div>
+      )
+  }
+}
