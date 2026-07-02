@@ -13,6 +13,7 @@ import {
   EyeOff,
   TrendingUp,
   Coins,
+  Plug,
   ChevronLeft,
   ChevronRight,
   X,
@@ -36,6 +37,7 @@ const NAV: { href: string; key: string; Icon: LucideIcon; beta?: boolean }[] = [
   { href: '/comply', key: 'comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', key: 'policies', Icon: Shield },
   { href: '/pii-shield', key: 'piiShield', Icon: EyeOff },
+  { href: '/integrations', key: 'integrations', Icon: Plug },
 ]
 
 // Prefix match for active state so deep routes (e.g. /policy-enforcement/templates/foo)

@@ -10,4 +10,5 @@ export const nav = {
   adoption: 'Adoption',
   aiSpend: 'Dépenses IA',
   piiShield: 'Démo bouclier PII',
+  integrations: 'Intégrations',
 }

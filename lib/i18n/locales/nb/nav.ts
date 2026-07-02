@@ -10,4 +10,5 @@ export const nav = {
   adoption: 'Adopsjon',
   aiSpend: 'AI-forbruk',
   piiShield: 'PII-skjold-demo',
+  integrations: 'Integrasjoner',
 }
