@@ -417,11 +417,19 @@ export const CONNECTORS: Connector[] = [
     featured: true,
   },
   {
+    id: 'defender',
+    name: 'Microsoft Defender XDR',
+    vendor: 'Microsoft',
+    category: 'SIEM',
+    status: 'available',
+    blurb: 'Correlate AI risk signals with Defender XDR incidents & alerts.',
+  },
+  {
     id: 'splunk',
     name: 'Splunk Enterprise Security',
     vendor: 'Cisco',
     category: 'SIEM',
-    status: 'available',
+    status: 'beta',
     blurb: 'Forward events via HTTP Event Collector to Splunk ES.',
   },
   {
@@ -446,7 +454,7 @@ export const CONNECTORS: Connector[] = [
     name: 'ServiceNow',
     vendor: 'ServiceNow',
     category: 'ITSM',
-    status: 'available',
+    status: 'beta',
     blurb: 'Open incidents & IRM findings from AI risk events.',
   },
   {
@@ -454,8 +462,16 @@ export const CONNECTORS: Connector[] = [
     name: 'Microsoft Purview',
     vendor: 'Microsoft',
     category: 'DLP',
-    status: 'beta',
+    status: 'available',
     blurb: 'Share AI data-flow & PII signals with Purview DLP.',
+  },
+  {
+    id: 'agent365',
+    name: 'Microsoft Agent 365',
+    vendor: 'Microsoft',
+    category: 'GRC',
+    status: 'beta',
+    blurb: 'Govern & register AI agents alongside your Agent 365 fleet.',
   },
   {
     id: 'slack',

@@ -1,4 +1,5 @@
 'use client'
+import { Bot, ShieldHalf } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // Vendor brand marks for the integrations catalog, rendered on clean white
@@ -53,6 +54,12 @@ export function BrandLogo({ id, className }: { id: string; className?: string })
       return tile(<Glyph d={SPLUNK_D} fill="#000000" />, className)
     case 'slack':
       return tile(<Glyph d={SLACK_D} fill="#4A154B" />, className)
+    case 'defender':
+      // Microsoft Defender — representative blue shield.
+      return tile(<ShieldHalf className="h-[56%] w-[56%] text-[#0078D4]" strokeWidth={2} />, className)
+    case 'agent365':
+      // Microsoft Agent 365 — representative agent/bot mark.
+      return tile(<Bot className="h-[58%] w-[58%] text-[#5B5FC7]" strokeWidth={2} />, className)
     case 'purview':
       // Microsoft four-square.
       return tile(
