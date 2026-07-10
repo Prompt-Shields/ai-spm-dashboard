@@ -1,8 +1,14 @@
 export const discover = {
   title: 'Découvrir',
   subtitle:
-    "Quatre façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
+    "Cinq façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
   cards: {
+    voiceInterview: {
+      title: 'Entretien vocal IA',
+      description:
+        "Menez un entretien vocal avec n'importe quel employé. L'agent IA l'interroge sur ses outils IA et ses agents autonomes, et documente chaque cas d'usage directement à partir de la conversation.", // TODO(i18n): native review
+      action: "Démarrer l'entretien vocal",
+    },
     cisoCampaign: {
       title: 'Campagne de découverte IA',
       description:

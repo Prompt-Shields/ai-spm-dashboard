@@ -1,8 +1,14 @@
 export const discover = {
   title: 'Discover',
   subtitle:
-    'Four ways to discover the AI tools and use cases across your organisation — use one or combine them',
+    'Five ways to discover the AI tools and use cases across your organisation — use one or combine them',
   cards: {
+    voiceInterview: {
+      title: 'AI Voice Interview',
+      description:
+        'Voice-interview any employee. The AI agent asks about their AI tools and autonomous agents, and documents each use case straight from the conversation.',
+      action: 'Start Voice Interview',
+    },
     cisoCampaign: {
       title: 'AI Discovery Campaign',
       description:
