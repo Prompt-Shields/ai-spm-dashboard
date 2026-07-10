@@ -1,8 +1,14 @@
 export const discover = {
   title: 'Oppdag',
   subtitle:
-    'Fire måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
+    'Fem måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
   cards: {
+    voiceInterview: {
+      title: 'KI-taleintervju',
+      description:
+        'Taleintervju hvilken som helst ansatt. KI-agenten spør om KI-verktøyene og de autonome agentene deres, og dokumenterer hvert bruksområde rett fra samtalen.', // TODO(i18n): native review
+      action: 'Start taleintervju',
+    },
     cisoCampaign: {
       title: 'KI-oppdagelseskampanje',
       description:

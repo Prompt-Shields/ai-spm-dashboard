@@ -18,6 +18,7 @@ import { ownerDetail } from './nb/ownerDetail'
 import { agentConversation } from './nb/agentConversation'
 import { demoJourney } from './nb/demoJourney'
 import { vendor } from './nb/vendor'
+import { voiceInterview } from './nb/voiceInterview'
 
 // Norwegian Bokmål. Each namespace lives in its own file under ./nb/ and is
 // translated per-page in Phase B. Typed as Messages so any shape drift from en
@@ -42,4 +43,5 @@ export const nb: Messages = {
   agentConversation,
   demoJourney,
   vendor,
+  voiceInterview,
 }

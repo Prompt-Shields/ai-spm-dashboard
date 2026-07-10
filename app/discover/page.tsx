@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Satellite, Link2, ScanSearch, Radar, MonitorDot } from 'lucide-react'
+import { Satellite, Link2, ScanSearch, Radar, MonitorDot, AudioLines } from 'lucide-react'
 import { AGENT_CONVERSATIONS, DISCOVERY_STATS } from '@/lib/aimaps-data'
 import { AgentConversationCard } from '@/components/agent-conversation-card'
 import { getRunSummary, type RunSummary } from '@/lib/agent-discovery/store'
@@ -10,10 +10,19 @@ import type { LucideIcon } from 'lucide-react'
 
 const ENTRY_CARDS: {
   Icon: LucideIcon
-  id: 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect'
-  color: 'indigo' | 'emerald' | 'sky' | 'amber'
+  id: 'voiceInterview' | 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect'
+  color: 'indigo' | 'emerald' | 'sky' | 'amber' | 'violet'
   badgeCount?: number
+  href?: string
+  featured?: boolean
 }[] = [
+  {
+    Icon: AudioLines,
+    id: 'voiceInterview',
+    color: 'violet',
+    href: '/discover/voice-interview',
+    featured: true,
+  },
   {
     Icon: ScanSearch,
     id: 'autoDetect',
@@ -70,10 +79,21 @@ export default function DiscoverPage() {
       <div className="grid grid-cols-2 gap-4 mb-8">
         {ENTRY_CARDS.map(card => {
           const onClick = card.id === 'cisoCampaign' ? () => setCampaignLaunched(true) : undefined
+          const actionClass = `text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
+            card.color === 'indigo' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' :
+            card.color === 'violet' ? 'bg-violet-600 hover:bg-violet-700 text-white' :
+            card.color === 'emerald' ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700' :
+            card.color === 'sky' ? 'bg-sky-100 hover:bg-sky-200 text-sky-700' :
+            'bg-amber-100 hover:bg-amber-200 text-amber-700'
+          }`
           return (
-            <div key={card.id} className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <div
+              key={card.id}
+              className={`bg-white border border-slate-200 rounded-xl p-5 shadow-sm ${card.featured ? 'col-span-2 border-violet-200 bg-gradient-to-br from-violet-50/60 to-white' : ''}`}
+            >
               <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 ${
                 card.color === 'indigo' ? 'bg-indigo-50 text-indigo-600' :
+                card.color === 'violet' ? 'bg-violet-50 text-violet-600' :
                 card.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
                 card.color === 'sky' ? 'bg-sky-50 text-sky-600' :
                 'bg-amber-50 text-amber-600'
@@ -81,19 +101,17 @@ export default function DiscoverPage() {
                 <card.Icon size={18} />
               </div>
               <h3 className="text-sm font-semibold text-slate-900 mb-1">{t(`discover.cards.${card.id}.title`)}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed mb-4">{t(`discover.cards.${card.id}.description`)}</p>
+              <p className={`text-xs text-slate-500 leading-relaxed mb-4 ${card.featured ? 'max-w-xl' : ''}`}>{t(`discover.cards.${card.id}.description`)}</p>
               <div className="flex items-center gap-2">
-                <button
-                  onClick={onClick}
-                  className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
-                    card.color === 'indigo' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' :
-                    card.color === 'emerald' ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700' :
-                    card.color === 'sky' ? 'bg-sky-100 hover:bg-sky-200 text-sky-700' :
-                    'bg-amber-100 hover:bg-amber-200 text-amber-700'
-                  }`}
-                >
-                  {t(`discover.cards.${card.id}.action`)}
-                </button>
+                {card.href ? (
+                  <Link href={card.href} className={actionClass}>
+                    {t(`discover.cards.${card.id}.action`)}
+                  </Link>
+                ) : (
+                  <button onClick={onClick} className={actionClass}>
+                    {t(`discover.cards.${card.id}.action`)}
+                  </button>
+                )}
                 {card.badgeCount !== undefined && (
                   <span className="text-xs font-medium bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">{t('discover.cards.autoDetect.badge', { count: card.badgeCount })}</span>
                 )}

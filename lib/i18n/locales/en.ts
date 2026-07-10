@@ -26,6 +26,7 @@ import { ownerDetail } from './en/ownerDetail'
 import { agentConversation } from './en/agentConversation'
 import { demoJourney } from './en/demoJourney'
 import { vendor } from './en/vendor'
+import { voiceInterview } from './en/voiceInterview'
 
 export const en = {
   common,
@@ -47,4 +48,5 @@ export const en = {
   agentConversation,
   demoJourney,
   vendor,
+  voiceInterview,
 }
