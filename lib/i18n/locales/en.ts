@@ -15,9 +15,6 @@ import { agentDiscovery } from './en/agentDiscovery'
 import { register } from './en/register'
 import { owners } from './en/owners'
 import { comply } from './en/comply'
-import { aiGovernance } from './en/aiGovernance'
-import { aiVisibility } from './en/aiVisibility'
-import { modelRisk } from './en/modelRisk'
 import { piiShield } from './en/piiShield'
 import { ardoq } from './en/ardoq'
 import { policyEnforcement } from './en/policyEnforcement'
@@ -39,9 +36,6 @@ export const en = {
   register,
   owners,
   comply,
-  aiGovernance,
-  aiVisibility,
-  modelRisk,
   piiShield,
   ardoq,
   policyEnforcement,

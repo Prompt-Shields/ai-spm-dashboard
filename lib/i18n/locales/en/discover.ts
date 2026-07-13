@@ -28,7 +28,7 @@ export const discover = {
       action: 'Launch Campaign',
     },
     agenticMonitoring: {
-      title: 'Agentic Monitoring',
+      title: 'Applications Insights',
       description:
         'Always-on agents on endpoints, desktop apps and the browser extension. AI usage is observed in real time and use cases surface automatically — no outreach, no waiting.',
       action: 'View Activity',

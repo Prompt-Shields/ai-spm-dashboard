@@ -1,5 +1,5 @@
 // Server-side policy + violation store. Today the UI stores instances in
-// localStorage (see ../instance-store.ts). For the Promptly PEP integration
+// in-memory server store. For the Promptly PEP integration
 // we need a backend that survives across browser sessions and serves
 // every connected device.
 //

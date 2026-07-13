@@ -7,9 +7,6 @@ import { agentDiscovery } from './nb/agentDiscovery'
 import { register } from './nb/register'
 import { owners } from './nb/owners'
 import { comply } from './nb/comply'
-import { aiGovernance } from './nb/aiGovernance'
-import { aiVisibility } from './nb/aiVisibility'
-import { modelRisk } from './nb/modelRisk'
 import { piiShield } from './nb/piiShield'
 import { ardoq } from './nb/ardoq'
 import { policyEnforcement } from './nb/policyEnforcement'
@@ -34,9 +31,6 @@ export const nb: Messages = {
   register,
   owners,
   comply,
-  aiGovernance,
-  aiVisibility,
-  modelRisk,
   piiShield,
   ardoq,
   policyEnforcement,
