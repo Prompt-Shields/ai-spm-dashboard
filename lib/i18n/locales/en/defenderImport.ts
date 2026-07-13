@@ -1,0 +1,52 @@
+export const defenderImport = {
+  title: 'Defender Screenshot Import',
+  subtitle:
+    'Upload a screenshot of the discovered-apps list from Microsoft Defender for Cloud Apps. The agent extracts the shadow AI applications, enriches each one from the AI vendor catalog, and adds them to your inventory.',
+  badge: 'Simulated demo',
+  backToDiscover: 'Back to Discover',
+  upload: {
+    dropTitle: 'Drop a Defender screenshot here',
+    dropHint: 'PNG, JPG or SVG — or browse to pick a file',
+    browse: 'Browse files',
+    or: 'or',
+    sample: 'Try with sample screenshot',
+    invalidType: 'That file is not an image. Upload a screenshot (PNG, JPG or SVG).',
+  },
+  scanning: {
+    title: 'Analyzing screenshot…',
+    stage1: 'Running OCR pass…',
+    stage2: 'Detecting table structure…',
+    stage3: 'Matching rows against AI vendor catalog…',
+  },
+  review: {
+    title: 'Extracted applications',
+    subtitle: '{count} shadow AI applications found — enriched from the AI vendor catalog',
+    enriching: 'Enriching…',
+    addButton: 'Add {count} to inventory',
+    adding: 'Adding…',
+    retryButton: 'Retry failed',
+  },
+  table: {
+    app: 'Application',
+    users: 'Users',
+    traffic: 'Uploaded',
+    defenderScore: 'Defender score',
+    vendor: 'Vendor',
+    capability: 'AI capability',
+    models: 'Models',
+    trains: 'Trains on data',
+    trainsYes: 'Yes',
+    trainsNo: 'No',
+    classification: 'Classification',
+    risk: 'Risk',
+  },
+  rowStatus: {
+    added: 'Added',
+    failed: 'Failed',
+  },
+  done: {
+    title: '{count} applications added to inventory',
+    body: 'They are registered as Shadow applications. Assign an owner and a department, then promote each from Shadow after review.',
+    importAnother: 'Import another screenshot',
+  },
+}
