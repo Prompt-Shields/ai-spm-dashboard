@@ -1,8 +1,14 @@
 export const discover = {
   title: 'Oppdag',
   subtitle:
-    'Seks måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
+    'Sju måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
   cards: {
+    mcpDiscovery: {
+      title: 'MCP-serveroppdagelse',
+      description:
+        'Skann endepunktkonfigurasjoner for Model Context Protocol-servere — se hva ansatte har koblet til Claude, Cursor og VS Code, med transport, autentisering og tillatelsesrisiko.', // TODO(i18n): native review
+      action: 'Skann MCP-servere',
+    },
     voiceInterview: {
       title: 'KI-taleintervju',
       description:

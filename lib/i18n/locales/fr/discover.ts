@@ -1,8 +1,14 @@
 export const discover = {
   title: 'Découvrir',
   subtitle:
-    "Six façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
+    "Sept façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
   cards: {
+    mcpDiscovery: {
+      title: 'Découverte de serveurs MCP',
+      description:
+        'Analysez les configurations des postes pour détecter les serveurs Model Context Protocol — voyez ce que les employés ont branché sur Claude, Cursor et VS Code, avec transport, authentification et risque de permissions.', // TODO(i18n): native review
+      action: 'Analyser les serveurs MCP',
+    },
     voiceInterview: {
       title: 'Entretien vocal IA',
       description:

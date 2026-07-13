@@ -1,8 +1,14 @@
 export const discover = {
   title: 'Discover',
   subtitle:
-    'Six ways to discover the AI tools and use cases across your organisation — use one or combine them',
+    'Seven ways to discover the AI tools and use cases across your organisation — use one or combine them',
   cards: {
+    mcpDiscovery: {
+      title: 'MCP Server Discovery',
+      description:
+        'Scan endpoint configs for Model Context Protocol servers — see what employees have wired into Claude, Cursor and VS Code, with transport, auth and permission risk.',
+      action: 'Scan MCP Servers',
+    },
     voiceInterview: {
       title: 'AI Voice Interview',
       description:
