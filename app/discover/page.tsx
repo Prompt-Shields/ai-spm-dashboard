@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Satellite, Link2, ScanSearch, Radar, MonitorDot, AudioLines, Waypoints } from 'lucide-react'
+import { Satellite, Link2, ScanSearch, Radar, MonitorDot, AudioLines, Waypoints, ImageUp } from 'lucide-react'
 import { AGENT_CONVERSATIONS, DISCOVERY_STATS } from '@/lib/aimaps-data'
 import { AgentConversationCard } from '@/components/agent-conversation-card'
 import { getRunSummary, type RunSummary } from '@/lib/agent-discovery/store'
@@ -10,7 +10,7 @@ import type { LucideIcon } from 'lucide-react'
 
 const ENTRY_CARDS: {
   Icon: LucideIcon
-  id: 'voiceInterview' | 'mcpDiscovery' | 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect'
+  id: 'voiceInterview' | 'mcpDiscovery' | 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect' | 'defenderImport'
   color: 'indigo' | 'emerald' | 'sky' | 'amber' | 'violet' | 'rose'
   badgeCount?: number
   href?: string
@@ -28,6 +28,12 @@ const ENTRY_CARDS: {
     id: 'mcpDiscovery',
     color: 'rose',
     href: '/discover/mcp',
+  },
+  {
+    Icon: ImageUp,
+    id: 'defenderImport',
+    color: 'sky',
+    href: '/discover/defender-import',
   },
   {
     Icon: ScanSearch,
