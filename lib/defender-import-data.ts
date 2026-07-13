@@ -36,7 +36,7 @@ export interface DefenderEnrichment {
   dataClassification: DataClassification
   /** 0–100 platform risk score — higher means RISKIER (opposite axis to Defender's). */
   riskScore: number
-  /** One-line analyst note shown in the review table. */
+  /** One-line analyst note; surfaces as a tooltip in the review table and in the POSTed description. */
   note: string
 }
 

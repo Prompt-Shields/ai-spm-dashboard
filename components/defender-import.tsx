@@ -164,6 +164,10 @@ export function DefenderImport() {
     a => selected.has(a.slug) && rowStatus[a.slug] === 'failed'
   )
   const enrichmentDone = enrichedCount >= DEFENDER_EXTRACTED_APPS.length
+  // Rows the Add button would actually send — mirrors commit()'s filter.
+  const pendingCount = DEFENDER_EXTRACTED_APPS.filter(
+    a => selected.has(a.slug) && rowStatus[a.slug] !== 'added'
+  ).length
 
   return (
     <div>
@@ -291,7 +295,7 @@ export function DefenderImport() {
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-slate-200 text-left text-slate-400">
-                  <th className="p-3 w-8" />
+                  <th className="p-3 w-8" aria-hidden="true" />
                   <th className="p-3 font-medium">{t('defenderImport.table.app')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.defenderScore')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.users')}</th>
@@ -302,7 +306,7 @@ export function DefenderImport() {
                   <th className="p-3 font-medium">{t('defenderImport.table.trains')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.classification')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.risk')}</th>
-                  <th className="p-3 w-20" />
+                  <th className="p-3 w-20" aria-hidden="true" />
                 </tr>
               </thead>
               <tbody>
@@ -315,6 +319,7 @@ export function DefenderImport() {
                       <td className="p-3">
                         <input
                           type="checkbox"
+                          aria-label={app.name}
                           checked={selected.has(app.slug)}
                           disabled={committing || status === 'added'}
                           onChange={() => toggleRow(app.slug)}
@@ -330,7 +335,9 @@ export function DefenderImport() {
                       {enriched ? (
                         <>
                           <td className="p-3 text-slate-600">{e.vendor}</td>
-                          <td className="p-3 text-slate-600 max-w-[160px]">{e.aiCapability}</td>
+                          <td className="p-3 text-slate-600 max-w-[160px]" title={e.note}>
+                            {e.aiCapability}
+                          </td>
                           <td className="p-3 text-slate-600">{e.models.join(', ')}</td>
                           <td className="p-3">
                             <span className={e.trainsOnData ? 'text-red-600 font-semibold' : 'text-emerald-600'}>
@@ -376,12 +383,12 @@ export function DefenderImport() {
           <div className="flex items-center gap-2 mt-4">
             <button
               onClick={() => commit(false)}
-              disabled={committing || !enrichmentDone || selected.size === 0}
+              disabled={committing || !enrichmentDone || pendingCount === 0}
               className="text-xs font-semibold px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white transition-colors disabled:opacity-50 inline-flex items-center gap-1.5"
             >
               {committing && <Loader2 size={13} className="animate-spin" />}
               {t(committing ? 'defenderImport.review.adding' : 'defenderImport.review.addButton', {
-                count: selected.size,
+                count: pendingCount,
               })}
             </button>
             {anyFailed && !committing && (
