@@ -6,7 +6,7 @@ export default defineConfig({
       'lib/pii/**/*.test.ts',
       'lib/i18n/**/*.test.ts',
       'lib/agent-discovery/**/*.test.ts',
-      'lib/cost-demo.test.ts',
+      'lib/*.test.ts',
     ],
     environment: 'node',
   },
