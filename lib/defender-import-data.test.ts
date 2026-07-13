@@ -57,6 +57,16 @@ describe('extractedAppToApplication', () => {
     }
   })
 
+  it('folds certifications into the description when present', () => {
+    // Row 0 (chatgpt-personal) carries SOC 2 Type II in the seeded catalog.
+    expect(record.description).toContain('Certifications: SOC 2 Type II')
+    const uncertified = DEFENDER_EXTRACTED_APPS.find(
+      a => DEFENDER_ENRICHMENTS[a.slug].certifications.length === 0
+    )!
+    const r = extractedAppToApplication(uncertified, DEFENDER_ENRICHMENTS[uncertified.slug], NOW)
+    expect(r.description).not.toContain('Certifications:')
+  })
+
   it('leaves owner and department unset (Defender does not know them)', () => {
     expect(record.ownerPersonId).toBeUndefined()
     expect(record.organizationalUnitId).toBeUndefined()

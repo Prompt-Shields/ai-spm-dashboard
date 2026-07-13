@@ -30,6 +30,7 @@ export const defenderImport = {
     app: 'Application',
     users: 'Users',
     traffic: 'Uploaded',
+    lastSeen: 'Last seen',
     defenderScore: 'Defender score',
     vendor: 'Vendor',
     capability: 'AI capability',

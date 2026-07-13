@@ -93,7 +93,10 @@ retry.
 New `ENTRY_CARDS` item (`id: 'defenderImport'`, an upload/scan Lucide icon,
 `href: '/discover/defender-import'`). The Discover subtitle copy currently
 counts the entry points ("Five ways to discover…") — update it in all three
-locales alongside the new card.
+locales alongside the new card. (Amended: shipped as a regular card, not
+featured — a concurrently added MCP Discovery card changed the grid math,
+and a regular card keeps the 2-column layout balanced. Subtitle now counts
+seven ways, maintained jointly with that feature.)
 
 ### i18n
 
@@ -118,8 +121,10 @@ No new API endpoints. No changes to entity types or stores.
 ## Error handling
 
 - Non-image upload: inline validation message, stay on upload step.
-- POST failure: row marked failed with error text; "Retry failed" re-sends
-  only failed rows.
+- POST failure: row marked with a "Failed" badge; "Retry failed" re-sends
+  only failed rows. (Amended: a badge rather than per-row error detail —
+  sufficient for the demo.) Deselecting every failed row advances to the
+  done panel rather than stranding the review step.
 - The wizard never blocks on the image itself — extraction is simulated.
 
 ## Testing

@@ -78,6 +78,21 @@ export function DefenderImport() {
     [startScan]
   )
 
+  // Route the bundled sample through the same validation path as a real
+  // upload (spec decision #2); fall back to loading it directly if the
+  // fetch fails (e.g. offline dev server edge cases).
+  const useSample = useCallback(async () => {
+    try {
+      const res = await fetch(SAMPLE_SRC)
+      const blob = await res.blob()
+      acceptFile(
+        new File([blob], 'defender-shadow-apps.svg', { type: blob.type || 'image/svg+xml' })
+      )
+    } catch {
+      startScan(SAMPLE_SRC)
+    }
+  }, [acceptFile, startScan])
+
   // Scanning: advance through the staged status lines, then move to review.
   useEffect(() => {
     if (step !== 'scanning') return
@@ -169,6 +184,17 @@ export function DefenderImport() {
     a => selected.has(a.slug) && rowStatus[a.slug] !== 'added'
   ).length
 
+  // If the user deselects every failed row after a partial commit, nothing
+  // is left to send — advance to done rather than stranding the review step.
+  useEffect(() => {
+    if (step !== 'review' || committing) return
+    const added = DEFENDER_EXTRACTED_APPS.filter(a => rowStatus[a.slug] === 'added').length
+    if (added > 0 && pendingCount === 0) {
+      setAddedCount(added)
+      setStep('done')
+    }
+  }, [step, committing, rowStatus, pendingCount])
+
   return (
     <div>
       {/* Header */}
@@ -223,7 +249,7 @@ export function DefenderImport() {
               </button>
               <span className="text-xs text-slate-400">{t('defenderImport.upload.or')}</span>
               <button
-                onClick={() => startScan(SAMPLE_SRC)}
+                onClick={useSample}
                 className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-700 transition-colors inline-flex items-center gap-1.5"
               >
                 <FileImage size={14} />
@@ -300,6 +326,7 @@ export function DefenderImport() {
                   <th className="p-3 font-medium">{t('defenderImport.table.defenderScore')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.users')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.traffic')}</th>
+                  <th className="p-3 font-medium">{t('defenderImport.table.lastSeen')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.vendor')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.capability')}</th>
                   <th className="p-3 font-medium">{t('defenderImport.table.models')}</th>
@@ -332,9 +359,15 @@ export function DefenderImport() {
                       <td className="p-3 text-slate-600">{app.defenderScore}/10</td>
                       <td className="p-3 text-slate-600">{app.users}</td>
                       <td className="p-3 text-slate-600">{app.trafficUploaded}</td>
+                      <td className="p-3 text-slate-600">{app.lastSeen}</td>
                       {enriched ? (
                         <>
-                          <td className="p-3 text-slate-600">{e.vendor}</td>
+                          <td className="p-3 text-slate-600">
+                            <div>{e.vendor}</div>
+                            {e.certifications.length > 0 && (
+                              <div className="text-slate-400">{e.certifications.join(', ')}</div>
+                            )}
+                          </td>
                           <td className="p-3 text-slate-600 max-w-[160px]" title={e.note}>
                             {e.aiCapability}
                           </td>

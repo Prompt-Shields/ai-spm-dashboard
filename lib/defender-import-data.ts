@@ -4,7 +4,7 @@
 // screenshot's pixels are never read (no real OCR): "extraction" always
 // yields DEFENDER_EXTRACTED_APPS, shaped the way a Microsoft Defender for
 // Cloud Apps discovered-apps table presents them, and enrichment comes from
-// the seeded ENRICHMENTS catalog. Mirrors the voice-interview-data.ts
+// the seeded DEFENDER_ENRICHMENTS catalog. Mirrors the voice-interview-data.ts
 // pattern — illustrative English-only sample data; UI chrome is translated
 // via the `defenderImport` i18n namespace.
 
@@ -145,6 +145,9 @@ export function extractedAppToApplication(
   const training = enrichment.trainsOnData
     ? 'Vendor may train on submitted data.'
     : 'Vendor does not train on submitted data.'
+  const certifications = enrichment.certifications.length
+    ? `Certifications: ${enrichment.certifications.join(', ')}. `
+    : ''
   return {
     id: `app-shadow-defender-${app.slug}`,
     tenantId: DEFAULT_TENANT_ID,
@@ -152,7 +155,7 @@ export function extractedAppToApplication(
     description:
       `Imported from a Microsoft Defender for Cloud Apps screenshot: ` +
       `${app.users} users, ${app.trafficUploaded} uploaded, last seen ${app.lastSeen}. ` +
-      `${enrichment.vendor} — ${enrichment.aiCapability}. ${training} ` +
+      `${enrichment.vendor} — ${enrichment.aiCapability}. ${training} ${certifications}` +
       `${enrichment.note}. Assign an Owner / Department and promote from Shadow after review.`,
     dataClassification: enrichment.dataClassification,
     deploymentStatus: 'Shadow',

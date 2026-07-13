@@ -30,6 +30,7 @@ export const defenderImport = {
     app: 'Applikasjon',
     users: 'Brukere',
     traffic: 'Lastet opp',
+    lastSeen: 'Sist sett',
     defenderScore: 'Defender-score',
     vendor: 'Leverandør',
     capability: 'KI-kapabilitet',
