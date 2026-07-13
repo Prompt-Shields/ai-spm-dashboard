@@ -51,7 +51,7 @@ export const DEFENDER_EXTRACTED_APPS: DefenderExtractedApp[] = [
   { slug: 'quillbot', name: 'QuillBot', category: 'AI writing assistant', defenderScore: 5, users: 133, trafficUploaded: '380 MB', lastSeen: '2026-07-12' },
 ]
 
-export const ENRICHMENTS: Record<string, DefenderEnrichment> = {
+export const DEFENDER_ENRICHMENTS: Record<string, DefenderEnrichment> = {
   'chatgpt-personal': {
     vendor: 'OpenAI',
     aiCapability: 'General-purpose chat assistant',
