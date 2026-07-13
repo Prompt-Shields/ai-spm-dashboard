@@ -39,7 +39,9 @@ Shadow records.
    certifications, inferred data classification, computed 0–100 risk score.
 5. **Review & commit** — checkbox per row (all selected by default);
    "Add N to inventory" POSTs each selected row; success panel confirms
-   created/updated counts and links onward (e.g. back to Discover).
+   "N added/updated" and links onward (e.g. back to Discover). The API does
+   not distinguish created from updated (`POST` always returns 201 with the
+   upserted record), so the success copy stays aggregate.
 
 ## Components
 
@@ -74,6 +76,9 @@ Record shape produced by the mapper:
 
 Bundled mock of the Defender for Cloud Apps discovered-apps table used by
 "Try with sample screenshot". Generated in-repo (no external assets).
+SVG is an image MIME type, so it passes the same image-only validation the
+upload path enforces; the sample button loads it through the same code path
+as a user upload rather than bypassing validation.
 
 ### `app/discover/defender-import/page.tsx`
 
@@ -86,7 +91,9 @@ retry.
 ### `app/discover/page.tsx`
 
 New `ENTRY_CARDS` item (`id: 'defenderImport'`, an upload/scan Lucide icon,
-`href: '/discover/defender-import'`).
+`href: '/discover/defender-import'`). The Discover subtitle copy currently
+counts the entry points ("Five ways to discover…") — update it in all three
+locales alongside the new card.
 
 ### i18n
 
