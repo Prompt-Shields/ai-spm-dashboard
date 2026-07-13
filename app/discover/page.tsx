@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Satellite, Link2, ScanSearch, Radar, MonitorDot, AudioLines } from 'lucide-react'
+import { Satellite, Link2, ScanSearch, Radar, MonitorDot, AudioLines, Waypoints, ImageUp } from 'lucide-react'
 import { AGENT_CONVERSATIONS, DISCOVERY_STATS } from '@/lib/aimaps-data'
 import { AgentConversationCard } from '@/components/agent-conversation-card'
 import { getRunSummary, type RunSummary } from '@/lib/agent-discovery/store'
@@ -10,8 +10,8 @@ import type { LucideIcon } from 'lucide-react'
 
 const ENTRY_CARDS: {
   Icon: LucideIcon
-  id: 'voiceInterview' | 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect'
-  color: 'indigo' | 'emerald' | 'sky' | 'amber' | 'violet'
+  id: 'voiceInterview' | 'mcpDiscovery' | 'cisoCampaign' | 'agenticMonitoring' | 'selfRegistration' | 'autoDetect' | 'defenderImport'
+  color: 'indigo' | 'emerald' | 'sky' | 'amber' | 'violet' | 'rose'
   badgeCount?: number
   href?: string
   featured?: boolean
@@ -22,6 +22,18 @@ const ENTRY_CARDS: {
     color: 'violet',
     href: '/discover/voice-interview',
     featured: true,
+  },
+  {
+    Icon: Waypoints,
+    id: 'mcpDiscovery',
+    color: 'rose',
+    href: '/discover/mcp',
+  },
+  {
+    Icon: ImageUp,
+    id: 'defenderImport',
+    color: 'sky',
+    href: '/discover/defender-import',
   },
   {
     Icon: ScanSearch,
@@ -84,6 +96,7 @@ export default function DiscoverPage() {
             card.color === 'violet' ? 'bg-violet-600 hover:bg-violet-700 text-white' :
             card.color === 'emerald' ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-700' :
             card.color === 'sky' ? 'bg-sky-100 hover:bg-sky-200 text-sky-700' :
+            card.color === 'rose' ? 'bg-rose-100 hover:bg-rose-200 text-rose-700' :
             'bg-amber-100 hover:bg-amber-200 text-amber-700'
           }`
           return (
@@ -96,6 +109,7 @@ export default function DiscoverPage() {
                 card.color === 'violet' ? 'bg-violet-50 text-violet-600' :
                 card.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
                 card.color === 'sky' ? 'bg-sky-50 text-sky-600' :
+                card.color === 'rose' ? 'bg-rose-50 text-rose-600' :
                 'bg-amber-50 text-amber-600'
               }`}>
                 <card.Icon size={18} />

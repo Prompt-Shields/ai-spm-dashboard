@@ -27,6 +27,8 @@ import { agentConversation } from './en/agentConversation'
 import { demoJourney } from './en/demoJourney'
 import { vendor } from './en/vendor'
 import { voiceInterview } from './en/voiceInterview'
+import { defenderImport } from './en/defenderImport'
+import { mcpDiscovery } from './en/mcpDiscovery'
 
 export const en = {
   common,
@@ -49,4 +51,6 @@ export const en = {
   demoJourney,
   vendor,
   voiceInterview,
+  defenderImport,
+  mcpDiscovery,
 }

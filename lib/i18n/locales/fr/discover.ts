@@ -1,13 +1,25 @@
 export const discover = {
   title: 'Découvrir',
   subtitle:
-    "Cinq façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
+    "Sept façons de découvrir les outils et cas d'usage de l'IA dans votre organisation — utilisez-en une ou combinez-les", // TODO(i18n): native review
   cards: {
+    mcpDiscovery: {
+      title: 'Découverte de serveurs MCP',
+      description:
+        'Analysez les configurations des postes pour détecter les serveurs Model Context Protocol — voyez ce que les employés ont branché sur Claude, Cursor et VS Code, avec transport, authentification et risque de permissions.', // TODO(i18n): native review
+      action: 'Analyser les serveurs MCP',
+    },
     voiceInterview: {
       title: 'Entretien vocal IA',
       description:
         "Menez un entretien vocal avec n'importe quel employé. L'agent IA l'interroge sur ses outils IA et ses agents autonomes, et documente chaque cas d'usage directement à partir de la conversation.", // TODO(i18n): native review
       action: "Démarrer l'entretien vocal",
+    },
+    defenderImport: {
+      title: "Import de capture d'écran Defender",
+      description:
+        "Téléversez une capture d'écran de la liste des applications fantômes de Microsoft Defender for Cloud Apps. L'agent extrait les applications, enrichit chacune d'elles et les ajoute à votre inventaire.", // TODO(i18n): native review
+      action: "Importer une capture",
     },
     cisoCampaign: {
       title: 'Campagne de découverte IA',

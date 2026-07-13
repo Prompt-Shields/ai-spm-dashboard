@@ -1,13 +1,25 @@
 export const discover = {
   title: 'Oppdag',
   subtitle:
-    'Fem måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
+    'Sju måter å oppdage KI-verktøyene og bruksområdene i organisasjonen — bruk én eller kombiner dem', // TODO(i18n): native review
   cards: {
+    mcpDiscovery: {
+      title: 'MCP-serveroppdagelse',
+      description:
+        'Skann endepunktkonfigurasjoner for Model Context Protocol-servere — se hva ansatte har koblet til Claude, Cursor og VS Code, med transport, autentisering og tillatelsesrisiko.', // TODO(i18n): native review
+      action: 'Skann MCP-servere',
+    },
     voiceInterview: {
       title: 'KI-taleintervju',
       description:
         'Taleintervju hvilken som helst ansatt. KI-agenten spør om KI-verktøyene og de autonome agentene deres, og dokumenterer hvert bruksområde rett fra samtalen.', // TODO(i18n): native review
       action: 'Start taleintervju',
+    },
+    defenderImport: {
+      title: 'Import av Defender-skjermbilde',
+      description:
+        'Last opp et skjermbilde av skyggeapp-listen fra Microsoft Defender for Cloud Apps. Agenten trekker ut applikasjonene, beriker hver av dem og legger dem til i inventaret ditt.', // TODO(i18n): native review
+      action: 'Importer skjermbilde',
     },
     cisoCampaign: {
       title: 'KI-oppdagelseskampanje',
