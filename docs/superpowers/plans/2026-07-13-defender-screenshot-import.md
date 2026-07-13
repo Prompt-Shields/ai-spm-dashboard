@@ -64,7 +64,7 @@ Create `lib/defender-import-data.test.ts`:
 import { describe, it, expect } from 'vitest'
 import {
   DEFENDER_EXTRACTED_APPS,
-  ENRICHMENTS,
+  DEFENDER_ENRICHMENTS,
   extractedAppToApplication,
 } from './defender-import-data'
 
@@ -73,7 +73,7 @@ const NOW = '2026-07-13T00:00:00.000Z'
 describe('defender import seeded data', () => {
   it('every extracted app has a matching enrichment', () => {
     for (const app of DEFENDER_EXTRACTED_APPS) {
-      expect(ENRICHMENTS[app.slug], `missing enrichment for ${app.slug}`).toBeDefined()
+      expect(DEFENDER_ENRICHMENTS[app.slug], `missing enrichment for ${app.slug}`).toBeDefined()
     }
   })
 
@@ -83,7 +83,7 @@ describe('defender import seeded data', () => {
   })
 
   it('risk scores are within 0–100', () => {
-    for (const e of Object.values(ENRICHMENTS)) {
+    for (const e of Object.values(DEFENDER_ENRICHMENTS)) {
       expect(e.riskScore).toBeGreaterThanOrEqual(0)
       expect(e.riskScore).toBeLessThanOrEqual(100)
     }
@@ -92,7 +92,7 @@ describe('defender import seeded data', () => {
 
 describe('extractedAppToApplication', () => {
   const app = DEFENDER_EXTRACTED_APPS[0]
-  const record = extractedAppToApplication(app, ENRICHMENTS[app.slug], NOW)
+  const record = extractedAppToApplication(app, DEFENDER_ENRICHMENTS[app.slug], NOW)
 
   it('produces a stable, defender-prefixed shadow id', () => {
     expect(record.id).toBe(`app-shadow-defender-${app.slug}`)
@@ -106,8 +106,8 @@ describe('extractedAppToApplication', () => {
   })
 
   it('carries the enrichment risk score and classification', () => {
-    expect(record.riskScore).toBe(ENRICHMENTS[app.slug].riskScore)
-    expect(record.dataClassification).toBe(ENRICHMENTS[app.slug].dataClassification)
+    expect(record.riskScore).toBe(DEFENDER_ENRICHMENTS[app.slug].riskScore)
+    expect(record.dataClassification).toBe(DEFENDER_ENRICHMENTS[app.slug].dataClassification)
   })
 
   it('leaves owner and department unset (Defender does not know them)', () => {
@@ -116,7 +116,7 @@ describe('extractedAppToApplication', () => {
   })
 
   it('is deterministic given the same injected timestamp', () => {
-    expect(extractedAppToApplication(app, ENRICHMENTS[app.slug], NOW)).toEqual(record)
+    expect(extractedAppToApplication(app, DEFENDER_ENRICHMENTS[app.slug], NOW)).toEqual(record)
     expect(record.createdAt).toBe(NOW)
     expect(record.updatedAt).toBe(NOW)
   })
@@ -137,7 +137,7 @@ Expected: FAIL — cannot resolve `./defender-import-data`.
 // screenshot's pixels are never read (no real OCR): "extraction" always
 // yields DEFENDER_EXTRACTED_APPS, shaped the way a Microsoft Defender for
 // Cloud Apps discovered-apps table presents them, and enrichment comes from
-// the seeded ENRICHMENTS catalog. Mirrors the voice-interview-data.ts
+// the seeded DEFENDER_ENRICHMENTS catalog. Mirrors the voice-interview-data.ts
 // pattern — illustrative English-only sample data; UI chrome is translated
 // via the `defenderImport` i18n namespace.
 
@@ -184,7 +184,7 @@ export const DEFENDER_EXTRACTED_APPS: DefenderExtractedApp[] = [
   { slug: 'quillbot', name: 'QuillBot', category: 'AI writing assistant', defenderScore: 5, users: 133, trafficUploaded: '380 MB', lastSeen: '2026-07-12' },
 ]
 
-export const ENRICHMENTS: Record<string, DefenderEnrichment> = {
+export const DEFENDER_ENRICHMENTS: Record<string, DefenderEnrichment> = {
   'chatgpt-personal': {
     vendor: 'OpenAI',
     aiCapability: 'General-purpose chat assistant',
@@ -664,7 +664,7 @@ import {
 import { useT } from '@/lib/i18n/provider'
 import {
   DEFENDER_EXTRACTED_APPS,
-  ENRICHMENTS,
+  DEFENDER_ENRICHMENTS,
   extractedAppToApplication,
 } from '@/lib/defender-import-data'
 
@@ -771,7 +771,7 @@ export function DefenderImport() {
         try {
           const record = extractedAppToApplication(
             app,
-            ENRICHMENTS[app.slug],
+            DEFENDER_ENRICHMENTS[app.slug],
             new Date().toISOString()
           )
           const res = await fetch('/api/applications', {
@@ -958,7 +958,7 @@ export function DefenderImport() {
               <tbody>
                 {DEFENDER_EXTRACTED_APPS.map((app, i) => {
                   const enriched = i < enrichedCount
-                  const e = ENRICHMENTS[app.slug]
+                  const e = DEFENDER_ENRICHMENTS[app.slug]
                   const status = rowStatus[app.slug] ?? 'idle'
                   return (
                     <tr key={app.slug} className="border-b border-slate-100 last:border-0">
