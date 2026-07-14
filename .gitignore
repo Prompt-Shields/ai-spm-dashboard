@@ -25,6 +25,13 @@ tsconfig.tsbuildinfo
 .DS_Store
 Thumbs.db
 
+# macOS Finder duplicate folders (e.g. "folder 2")
+**/* 2/
+**/* 2
+
+# Superpowers agent artifacts
+.superpowers/
+
 # Editor
 .vscode/
 .idea/

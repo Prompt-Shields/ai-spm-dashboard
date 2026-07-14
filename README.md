@@ -148,9 +148,10 @@ ai-spm-dashboard/
 │   ├── register/page.tsx
 │   ├── owners/page.tsx
 │   ├── comply/page.tsx
-│   ├── ai-governance/page.tsx
-│   ├── ai-visibility/page.tsx
-│   └── model-risk/page.tsx
+│   ├── policy-enforcement/
+│   ├── adoption/page.tsx
+│   ├── integrations/
+│   └── discover/
 ├── components/
 │   ├── app-header.tsx
 │   ├── use-case-graph.tsx
@@ -164,9 +165,7 @@ ai-spm-dashboard/
 ├── lib/
 │   ├── aimaps-data.ts
 │   ├── aimaps-types.ts
-│   ├── ai-visibility-data.ts
-│   ├── model-risk-data.ts
-│   ├── insurance-data.ts
+│   ├── mock-data.ts
 │   └── utils.ts
 ├── public/
 │   └── screenshots/          # README screenshot assets (user-provided)

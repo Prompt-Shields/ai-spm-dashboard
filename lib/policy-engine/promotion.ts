@@ -133,7 +133,7 @@ export interface PromoteResult {
 
 /**
  * Promote a Guideline instance to Strict. Verifies eligibility and writes
- * a PromotionEvent into history. Caller persists via instance-store.
+ * a PromotionEvent into history. Caller persists via the policy store.
  */
 export function promoteToStrict(params: PromoteParams): PromoteResult {
   const { instance, template, by, approvers, rolloutStrategy } = params
