@@ -1,17 +1,28 @@
 export const mcpDiscovery = {
   title: 'MCP-serveroppdagelse',
   subtitle:
-    'Skann endepunktkonfigurasjoner og utgående trafikk for Model Context Protocol-servere, og gjennomgå transport, autentisering, utgiver og verktøytillatelser for hver av dem.', // TODO(i18n): native review
+    'Slå sammen endepunktkonfigurasjoner, utgående trafikk, kildekode og EDR-telemetri til én deduplisert oversikt over Model Context Protocol-servere, med transport, autentisering, utgiver og verktøytillatelser for hver av dem.', // TODO(i18n): native review
   badge: 'Simulert demo',
   backToDiscover: 'Tilbake til Oppdag',
   scan: {
     heading: 'Skann flåten etter MCP-servere',
     description:
-      'Gjennomsøker administrerte endepunkter etter MCP-konfigurasjon — Claude Desktop, Claude Code, Cursor og VS Code — samt utgående trafikk mot kjente MCP-endepunkter.', // TODO(i18n): native review
-    start: 'Skann etter MCP-servere',
+      'Fire innsamlere søker parallelt — endepunktkonfigurasjoner, utgående trafikk, versjonerte .mcp.json i kildekode og EDR-prosesstelemetri — deretter fletter korrelasjonen observasjonene til én oversikt.', // TODO(i18n): native review
+    start: 'Kjør oppdagelsesskann',
     skip: 'Hopp over animasjon',
     found: '{count} funnet',
+    observations: '{count} observasjoner',
+    correlate: 'Korreler og dedupliser',
+    correlateDetail: 'Flett observasjoner etter identitet, kryss mot godkjentlisten, vurder risiko', // TODO(i18n): native review
+    observedProgress: '{observed} / {total} observasjoner',
     rescan: 'Kjør skann på nytt',
+  },
+  fusion: {
+    note: '{observations} observasjoner fra {collectors} innsamlere flettet til {servers} servere. En server som bare én innsamler ser, er et skygge-MCP-signal.', // TODO(i18n): native review
+  },
+  sources: {
+    count: '{count} kilder',
+    single: 'Kun {name}',
   },
   summary: {
     totalServers: 'MCP-servere',
@@ -23,6 +34,7 @@ export const mcpDiscovery = {
     heading: 'Oppdagede MCP-servere',
     server: 'Server',
     clients: 'Klienter',
+    sources: 'Kilder',
     transport: 'Transport',
     auth: 'Aut.',
     publisher: 'Utgiver',
@@ -30,6 +42,7 @@ export const mcpDiscovery = {
     risk: 'Risiko',
   },
   detail: {
+    clients: 'Klientapper',
     permissions: 'Verktøytillatelser',
     riskFlags: 'Risikoflagg',
     noFlags: 'Ingen risikoflagg',
