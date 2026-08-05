@@ -38,6 +38,7 @@ export const discover = {
       description:
         "Partagez un lien avec le personnel. Un agent IA les interroge de manière conversationnelle et extrait automatiquement les données de cas d'usage.", // TODO(i18n): native review
       action: 'Copier le lien',
+      copied: 'Lien copié !',
     },
     autoDetect: {
       title: 'Intégrations',

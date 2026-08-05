@@ -40,11 +40,13 @@ const ENTRY_CARDS: {
     id: 'autoDetect',
     color: 'amber',
     badgeCount: 12,
+    href: '/integrations',
   },
   {
     Icon: MonitorDot,
     id: 'agenticMonitoring',
     color: 'emerald',
+    href: '/agent-discovery',
   },
   {
     Icon: Satellite,
@@ -61,6 +63,39 @@ const ENTRY_CARDS: {
 export default function DiscoverPage() {
   const t = useT()
   const [campaignLaunched, setCampaignLaunched] = useState(false)
+  const [linkCopied, setLinkCopied] = useState(false)
+
+  const copyRegistrationLink = () => {
+    const url = `${window.location.origin}/register`
+    const showCopied = () => {
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2000)
+    }
+    // execCommand fallback for contexts where the async Clipboard API is
+    // blocked (sandboxed iframes, non-secure origins).
+    const legacyCopy = () => {
+      const el = document.createElement('textarea')
+      el.value = url
+      el.style.position = 'fixed'
+      el.style.opacity = '0'
+      document.body.appendChild(el)
+      el.select()
+      try {
+        document.execCommand('copy')
+      } finally {
+        document.body.removeChild(el)
+      }
+    }
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(showCopied, () => {
+        legacyCopy()
+        showCopied()
+      })
+    } else {
+      legacyCopy()
+      showCopied()
+    }
+  }
   // Client-only: read the latest Agent Discovery sweep summary after mount to
   // avoid an SSR/hydration mismatch (localStorage is unavailable on the server).
   const [runSummary, setRunSummary] = useState<RunSummary | null>(null)
@@ -90,7 +125,16 @@ export default function DiscoverPage() {
       {/* Entry point cards */}
       <div className="grid grid-cols-2 gap-4 mb-8">
         {ENTRY_CARDS.map(card => {
-          const onClick = card.id === 'cisoCampaign' ? () => setCampaignLaunched(true) : undefined
+          const onClick =
+            card.id === 'cisoCampaign'
+              ? () => setCampaignLaunched(true)
+              : card.id === 'selfRegistration'
+                ? copyRegistrationLink
+                : undefined
+          const actionLabel =
+            card.id === 'selfRegistration' && linkCopied
+              ? t('discover.cards.selfRegistration.copied')
+              : t(`discover.cards.${card.id}.action`)
           const actionClass = `text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors ${
             card.color === 'indigo' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' :
             card.color === 'violet' ? 'bg-violet-600 hover:bg-violet-700 text-white' :
@@ -123,7 +167,7 @@ export default function DiscoverPage() {
                   </Link>
                 ) : (
                   <button onClick={onClick} className={actionClass}>
-                    {t(`discover.cards.${card.id}.action`)}
+                    {actionLabel}
                   </button>
                 )}
                 {card.badgeCount !== undefined && (

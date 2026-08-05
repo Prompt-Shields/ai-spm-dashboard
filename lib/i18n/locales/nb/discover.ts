@@ -38,6 +38,7 @@ export const discover = {
       description:
         'Del en lenke med de ansatte. En KI-agent intervjuer dem i en samtale og henter ut bruksområdedata automatisk.', // TODO(i18n): native review
       action: 'Kopier lenke',
+      copied: 'Lenke kopiert!',
     },
     autoDetect: {
       title: 'Integrasjoner',
