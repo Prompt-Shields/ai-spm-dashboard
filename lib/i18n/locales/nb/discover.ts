@@ -37,8 +37,7 @@ export const discover = {
       title: 'Selvregistrering for ansatte',
       description:
         'Del en lenke med de ansatte. En KI-agent intervjuer dem i en samtale og henter ut bruksområdedata automatisk.', // TODO(i18n): native review
-      action: 'Kopier lenke',
-      copied: 'Lenke kopiert!',
+      action: 'Åpne registrering',
     },
     autoDetect: {
       title: 'Integrasjoner',
