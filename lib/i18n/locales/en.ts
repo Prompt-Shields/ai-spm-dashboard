@@ -15,9 +15,6 @@ import { agentDiscovery } from './en/agentDiscovery'
 import { register } from './en/register'
 import { owners } from './en/owners'
 import { comply } from './en/comply'
-import { aiGovernance } from './en/aiGovernance'
-import { aiVisibility } from './en/aiVisibility'
-import { modelRisk } from './en/modelRisk'
 import { piiShield } from './en/piiShield'
 import { ardoq } from './en/ardoq'
 import { policyEnforcement } from './en/policyEnforcement'
@@ -27,6 +24,8 @@ import { agentConversation } from './en/agentConversation'
 import { demoJourney } from './en/demoJourney'
 import { vendor } from './en/vendor'
 import { voiceInterview } from './en/voiceInterview'
+import { defenderImport } from './en/defenderImport'
+import { mcpDiscovery } from './en/mcpDiscovery'
 
 export const en = {
   common,
@@ -37,9 +36,6 @@ export const en = {
   register,
   owners,
   comply,
-  aiGovernance,
-  aiVisibility,
-  modelRisk,
   piiShield,
   ardoq,
   policyEnforcement,
@@ -49,4 +45,6 @@ export const en = {
   demoJourney,
   vendor,
   voiceInterview,
+  defenderImport,
+  mcpDiscovery,
 }

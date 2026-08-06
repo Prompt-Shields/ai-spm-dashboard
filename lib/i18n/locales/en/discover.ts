@@ -1,13 +1,25 @@
 export const discover = {
   title: 'Discover',
   subtitle:
-    'Five ways to discover the AI tools and use cases across your organisation — use one or combine them',
+    'Seven ways to discover the AI tools and use cases across your organisation — use one or combine them',
   cards: {
+    mcpDiscovery: {
+      title: 'MCP Server Discovery',
+      description:
+        'Scan endpoint configs for Model Context Protocol servers — see what employees have wired into Claude, Cursor and VS Code, with transport, auth and permission risk.',
+      action: 'Scan MCP Servers',
+    },
     voiceInterview: {
       title: 'AI Voice Interview',
       description:
         'Voice-interview any employee. The AI agent asks about their AI tools and autonomous agents, and documents each use case straight from the conversation.',
       action: 'Start Voice Interview',
+    },
+    defenderImport: {
+      title: 'Defender Screenshot Import',
+      description:
+        'Upload a screenshot of the shadow-app list from Microsoft Defender for Cloud Apps. The agent extracts the applications, enriches each one, and adds them to your inventory.',
+      action: 'Import Screenshot',
     },
     cisoCampaign: {
       title: 'AI Discovery Campaign',
@@ -16,7 +28,7 @@ export const discover = {
       action: 'Launch Campaign',
     },
     agenticMonitoring: {
-      title: 'Agentic Monitoring',
+      title: 'Applications Insights',
       description:
         'Always-on agents on endpoints, desktop apps and the browser extension. AI usage is observed in real time and use cases surface automatically — no outreach, no waiting.',
       action: 'View Activity',
@@ -25,7 +37,7 @@ export const discover = {
       title: 'Employee Self-Registration',
       description:
         'Share a link with staff. An AI agent interviews them conversationally and extracts use case data automatically.',
-      action: 'Copy Link',
+      action: 'Open Registration',
     },
     autoDetect: {
       title: 'Integrations',

@@ -7,9 +7,6 @@ import { agentDiscovery } from './fr/agentDiscovery'
 import { register } from './fr/register'
 import { owners } from './fr/owners'
 import { comply } from './fr/comply'
-import { aiGovernance } from './fr/aiGovernance'
-import { aiVisibility } from './fr/aiVisibility'
-import { modelRisk } from './fr/modelRisk'
 import { piiShield } from './fr/piiShield'
 import { ardoq } from './fr/ardoq'
 import { policyEnforcement } from './fr/policyEnforcement'
@@ -19,6 +16,8 @@ import { agentConversation } from './fr/agentConversation'
 import { demoJourney } from './fr/demoJourney'
 import { vendor } from './fr/vendor'
 import { voiceInterview } from './fr/voiceInterview'
+import { defenderImport } from './fr/defenderImport'
+import { mcpDiscovery } from './fr/mcpDiscovery'
 
 // French. Each namespace lives in its own file under ./fr/ and is translated
 // per-page in Phase B. Typed as Messages so any shape drift from en is a
@@ -32,9 +31,6 @@ export const fr: Messages = {
   register,
   owners,
   comply,
-  aiGovernance,
-  aiVisibility,
-  modelRisk,
   piiShield,
   ardoq,
   policyEnforcement,
@@ -44,4 +40,6 @@ export const fr: Messages = {
   demoJourney,
   vendor,
   voiceInterview,
+  defenderImport,
+  mcpDiscovery,
 }

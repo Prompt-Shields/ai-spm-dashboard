@@ -42,9 +42,10 @@ ai-spm-dashboard/
 │   ├── register/page.tsx       # Use case registration/intake
 │   ├── owners/page.tsx         # Owner management and assignments
 │   ├── comply/page.tsx         # Compliance framework coverage
-│   ├── ai-governance/page.tsx  # AI-SPM security dashboard
-│   ├── ai-visibility/page.tsx  # Asset visibility and operational metrics
-│   └── model-risk/page.tsx     # Model risk assessment
+│   ├── policy-enforcement/     # Policy templates, violations, promotion
+│   ├── adoption/page.tsx       # Adoption telemetry dashboard
+│   ├── integrations/           # Ardoq, Sentinel integrations
+│   └── discover/               # Discovery hub (MCP, voice, Defender import)
 ├── components/                 # React components
 │   ├── ui/                     # shadcn/ui primitives (card, tabs, badge, etc.)
 │   ├── app-header.tsx          # Top navigation bar
@@ -55,17 +56,11 @@ ai-spm-dashboard/
 │   ├── compliance-coverage-card.tsx
 │   ├── demo-wrapper.tsx        # Demo mode wrapper
 │   ├── demo-journey.tsx        # Guided demo flow
-│   ├── kpi-card.tsx
-│   ├── risk-chip.tsx
-│   └── theme-provider.tsx
+│   └── risk-chip.tsx
 ├── lib/                        # Data layer and utilities
 │   ├── aimaps-types.ts         # Core TypeScript interfaces (UseCase, Risk, Person, etc.)
 │   ├── aimaps-data.ts          # Primary mock data (use cases, persons, conversations)
-│   ├── ai-visibility-data.ts   # AI visibility page data
-│   ├── model-risk-data.ts      # Model risk data
-│   ├── model-risk-page-data.ts # Model risk page data
-│   ├── insurance-data.ts       # Insurance industry mock data (risk register, network)
-│   ├── mock-data.ts            # AI-SPM metrics and asset data
+│   ├── mock-data.ts            # AI-SPM asset data for policy enforcement
 │   └── utils.ts                # cn() utility (clsx + tailwind-merge)
 ├── public/                     # Static assets (icons, screenshots)
 ├── styles/globals.css          # Additional global styles
@@ -79,10 +74,9 @@ ai-spm-dashboard/
 - **Discover**: Three discovery methods — CISO agent-driven campaigns, employee self-registration via shared link, and auto-detection via Okta SaaS estate scanning. Includes simulated AI agent conversations.
 - **Register**: AI use case registration and intake workflows.
 - **Owners**: Owner management with use case assignments and assessment completion tracking.
-- **Comply**: Compliance dashboard showing coverage percentages across EU AI Act, NIST AI RMF, OWASP LLM Top 10, and ISO 42001. Identifies gaps per use case.
-- **AI Governance**: AI-SPM security dashboard with risk scores, compliance status, incident tracking, and a network topology view.
-- **AI Visibility**: Asset visibility and operational metrics.
-- **Model Risk**: Model risk assessment and context analysis.
+- **Comply**: Compliance dashboard showing coverage percentages across EU AI Act, NIST AI RMF, OWASP LLM Top 10, and ISO 42001. Includes board report and ISO 42001 guided journey.
+- **Policy Enforcement**: Policy templates, violations, and promotion workflows.
+- **Adoption**: Telemetry dashboard for on-device AI usage.
 - **Demo Mode**: A guided demo journey wrapper (DemoWrapper + DemoJourney) for walkthrough presentations.
 
 ## 6. Setup & Configuration
@@ -136,7 +130,6 @@ No environment variables or external API keys are required. All data is simulate
 | lucide-react | Icon library |
 | react-hook-form + zod | Form handling and schema validation |
 | class-variance-authority, clsx, tailwind-merge | Styling utilities for shadcn/ui |
-| next-themes | Theme switching (dark/light) |
 | sonner | Toast notifications |
 | @vercel/analytics | Vercel usage analytics |
 
@@ -162,9 +155,11 @@ The current prototype has no backend API. All pages are client-side rendered usi
 | `/register` | Register — Use case intake |
 | `/owners` | Owners — Owner management |
 | `/comply` | Comply — Compliance framework coverage |
-| `/ai-governance` | AI Governance — AI-SPM security dashboard |
-| `/ai-visibility` | AI Visibility — Asset visibility metrics |
-| `/model-risk` | Model Risk — Model risk assessment |
+| `/comply/board` | Board-ready AI risk report |
+| `/comply/iso-42001` | ISO 42001 guided compliance journey |
+| `/policy-enforcement` | Policy templates and violations |
+| `/adoption` | Adoption — On-device telemetry dashboard |
+| `/integrations` | Integrations — Ardoq, Sentinel |
 
 ### Planned Production API (not implemented)
 

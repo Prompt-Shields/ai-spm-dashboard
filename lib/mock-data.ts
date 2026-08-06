@@ -885,26 +885,6 @@ export const aiAssets: AIAsset[] = [
   },
 ]
 
-// Derived metrics for AI-SPM
-export const aiSpmMetrics = {
-  overallRiskScore: Math.round(aiSpmAssets.reduce((sum, asset) => sum + asset.riskScore, 0) / aiSpmAssets.length),
-  complianceScore: Math.round(
-    (aiSpmAssets.filter(
-      (a) => a.gdprStatus === "Compliant" && a.euAiActStatus === "Compliant" && a.nistAiRmfStatus === "Compliant",
-    ).length /
-      aiSpmAssets.length) *
-      100,
-  ),
-  securityIncidentsYTD: securityIncidents.length,
-  shadowAICount: aiSpmAssets.filter((a) => a.thirdParty || a.owner === "Unknown").length,
-  estimatedFinancialRisk: 2450000,
-  mttdHours: 4.2,
-  mttrHours:
-    securityIncidents.filter((i) => i.status === "Resolved").reduce((sum, i) => sum + i.mttrHours, 0) /
-    securityIncidents.filter((i) => i.status === "Resolved").length,
-  riskTrendVsLastQuarter: "down" as const,
-}
-
 // Derived metrics for Asset Management
 export const assetManagementMetrics = {
   totalAssets: aiAssets.length,
