@@ -37,7 +37,7 @@ export const discover = {
       title: 'Employee Self-Registration',
       description:
         'Share a link with staff. An AI agent interviews them conversationally and extracts use case data automatically.',
-      action: 'Copy Link',
+      action: 'Open Registration',
     },
     autoDetect: {
       title: 'Integrations',

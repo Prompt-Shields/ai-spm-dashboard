@@ -40,11 +40,13 @@ const ENTRY_CARDS: {
     id: 'autoDetect',
     color: 'amber',
     badgeCount: 12,
+    href: '/integrations',
   },
   {
     Icon: MonitorDot,
     id: 'agenticMonitoring',
     color: 'emerald',
+    href: '/agent-discovery',
   },
   {
     Icon: Satellite,
@@ -55,6 +57,7 @@ const ENTRY_CARDS: {
     Icon: Link2,
     id: 'selfRegistration',
     color: 'sky',
+    href: '/register',
   },
 ]
 

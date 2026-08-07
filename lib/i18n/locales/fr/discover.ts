@@ -37,7 +37,7 @@ export const discover = {
       title: 'Auto-enregistrement des employés',
       description:
         "Partagez un lien avec le personnel. Un agent IA les interroge de manière conversationnelle et extrait automatiquement les données de cas d'usage.", // TODO(i18n): native review
-      action: 'Copier le lien',
+      action: 'Ouvrir l’enregistrement',
     },
     autoDetect: {
       title: 'Intégrations',
