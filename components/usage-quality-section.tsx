@@ -18,6 +18,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import {
   Gauge,
   Target,
@@ -38,6 +39,16 @@ import {
   Clock3,
   Ban,
   ScanSearch,
+  Zap,
+  UserCheck,
+  Users,
+  BookOpen,
+  Database,
+  Cpu,
+  Calculator,
+  Network,
+  Rocket,
+  Lightbulb,
 } from "lucide-react"
 import {
   USAGE_QUALITY,
@@ -53,6 +64,7 @@ import {
   visibilityGap,
   personalSpend,
   reviewQueue,
+  automatedStageShare,
   type ComplexityTier,
   type QualityBand,
   type ReviewStatus,
@@ -76,32 +88,80 @@ const TIER_META: Record<ComplexityTier, { label: string; color: string }> = {
   agentic: { label: "Agentic / tool-using", color: "bg-violet-600" },
 }
 
+const TABS: { value: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
+  { value: "overview", label: "Overview", icon: Gauge },
+  { value: "visibility", label: "Visibility", icon: Eye },
+  { value: "quality", label: "Quality signals", icon: Target },
+  { value: "skills", label: "Skills & governance", icon: Library },
+  { value: "guide", label: "How it works", icon: BookOpen },
+]
+
 export function UsageQualitySection() {
-  const q = USAGE_QUALITY
-
   return (
-    <div className="space-y-8">
-      <RoiBand />
-
-      <VisibilitySection />
-
-      <UseCaseSection />
-
-      <div className="space-y-4">
-        <SectionHeading
-          icon={Gauge}
-          title="Quality signals behind the number"
-          sub="What the quality discount is built from — sampled transcripts scored on a fixed rubric across three dimensions, calibrated to human labels."
-        />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <OutcomeCard />
-          <LeverageCard />
-          <TrajectoryCard />
-        </div>
+    <Tabs defaultValue="overview" className="gap-5">
+      {/* Horizontally scrollable on small screens so all five tabs stay reachable. */}
+      <div className="overflow-x-auto -mx-1 px-1">
+        <TabsList className="bg-slate-100 h-auto p-1 flex-nowrap">
+          {TABS.map(({ value, label, icon: Icon }) => (
+            <TabsTrigger
+              key={value}
+              value={value}
+              className="data-[state=active]:bg-white data-[state=active]:text-indigo-700 data-[state=active]:shadow-sm text-slate-500 gap-1.5 px-3 py-1.5 whitespace-nowrap"
+            >
+              <Icon size={14} />
+              {label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
       </div>
 
-      <LibrarySection />
+      <TabsContent value="overview" className="space-y-4">
+        <TabIntro>
+          The headline a Head of AI reports upward — value delivered, return on
+          spend, upskilling, and the quality leakage quantity-only dashboards
+          hide. Every figure is quality-weighted. Dig into any number in the
+          other tabs.
+        </TabIntro>
+        <RoiBand />
+      </TabsContent>
 
+      <TabsContent value="visibility" className="space-y-8">
+        <VisibilitySection />
+        <UseCaseSection />
+      </TabsContent>
+
+      <TabsContent value="quality">
+        <QualitySignalsSection />
+      </TabsContent>
+
+      <TabsContent value="skills">
+        <LibrarySection />
+      </TabsContent>
+
+      <TabsContent value="guide">
+        <GuideTab />
+      </TabsContent>
+    </Tabs>
+  )
+}
+
+function TabIntro({ children }: { children: React.ReactNode }) {
+  return <p className="text-sm text-slate-500 max-w-3xl">{children}</p>
+}
+
+function QualitySignalsSection() {
+  return (
+    <div className="space-y-4">
+      <SectionHeading
+        icon={Gauge}
+        title="Quality signals behind the number"
+        sub="What the quality discount is built from — sampled transcripts scored on a fixed rubric across three dimensions, calibrated to human labels."
+      />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <OutcomeCard />
+        <LeverageCard />
+        <TrajectoryCard />
+      </div>
       <PipelineStrip />
     </div>
   )
@@ -286,6 +346,64 @@ const STATUS_META: Record<
   blocked: { label: "Blocked", icon: Ban, badge: "bg-red-50 text-red-700 border-red-200", dot: "text-red-500" },
 }
 
+// The automated governance chain — Eva's manual workflow, staged. Discover →
+// summarise → reuse-match → compliance review (the human gate) → promote.
+
+function GovernanceChain() {
+  const chain = USAGE_QUALITY.governanceChain
+  const automated = automatedStageShare(chain)
+  return (
+    <Card className="border-slate-200 bg-gradient-to-br from-indigo-50/40 to-white">
+      <CardHeader className="pb-2 flex-row items-center justify-between gap-2">
+        <CardTitle className="text-sm font-semibold text-slate-900">
+          Automated governance chain
+        </CardTitle>
+        <span className="flex items-center gap-1 text-[11px] font-medium text-indigo-600">
+          <Zap size={12} />
+          {pct(automated)} automated · 1 human gate
+        </span>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <div className="grid gap-2 sm:grid-cols-5">
+          {chain.map((stage, i) => (
+            <div key={stage.key} className="relative">
+              <div
+                className={`rounded-lg border p-2.5 h-full ${
+                  stage.automated
+                    ? "border-indigo-100 bg-white"
+                    : "border-amber-200 bg-amber-50/70"
+                }`}
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span
+                    className={`inline-flex items-center gap-1 text-[9px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded ${
+                      stage.automated
+                        ? "text-indigo-600 bg-indigo-50"
+                        : "text-amber-700 bg-amber-100"
+                    }`}
+                  >
+                    {stage.automated ? <Zap size={9} /> : <UserCheck size={9} />}
+                    {stage.automated ? "Auto" : "Human"}
+                  </span>
+                  <span className="text-sm font-bold text-slate-900 tabular-nums">{stage.count}</span>
+                </div>
+                <div className="text-xs font-semibold text-slate-800 mt-1.5">{stage.label}</div>
+                <p className="text-[10px] text-slate-500 leading-snug mt-0.5">{stage.detail}</p>
+              </div>
+              {i < chain.length - 1 && (
+                <ArrowRight
+                  size={12}
+                  className="hidden sm:block absolute -right-[7px] top-1/2 -translate-y-1/2 text-slate-300 z-10"
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 function LibrarySection() {
   const lib = USAGE_QUALITY.library
   const approved = lib.filter((s) => s.status === "approved").length
@@ -296,8 +414,11 @@ function LibrarySection() {
       <SectionHeading
         icon={Library}
         title="Skill library & governance"
-        sub="The good stuff, packaged and shareable — with a security/compliance state on every entry, and whether teams beyond the origin have actually adopted it. This is what replaces the spreadsheet."
+        sub="The manual chain — dig the analytics, email the creator, canvass teams, chase compliance — run automatically. Every step is automated except the one human gate: security sign-off."
       />
+
+      <GovernanceChain />
+
       <Card className="border-slate-200">
         <CardHeader className="pb-2 flex-row items-center justify-between gap-2">
           <CardTitle className="text-sm font-semibold text-slate-900">
@@ -331,10 +452,27 @@ function LibrarySection() {
                     <span className="text-[10px] text-slate-400">{s.sourceTeam}</span>
                   </div>
                   <p className="text-[11px] text-slate-500 leading-snug mt-0.5">{s.purpose}</p>
+                  {s.suggestedTeams.length > 0 && (
+                    <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[10px] text-slate-400 flex items-center gap-1">
+                        <Users size={10} />
+                        suggested for
+                      </span>
+                      {s.suggestedTeams.map((team) => (
+                        <span
+                          key={team}
+                          className="text-[10px] font-medium text-indigo-600 bg-indigo-50 border border-indigo-100 rounded px-1.5 py-0.5"
+                        >
+                          {team}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   {s.note && (
-                    <p className="text-[11px] text-amber-600 leading-snug mt-0.5 flex items-center gap-1">
+                    <p className="text-[11px] text-amber-600 leading-snug mt-1 flex items-center gap-1">
                       <Clock3 size={10} className={meta.dot} />
                       {s.note}
+                      {s.reviewer && <span className="text-slate-400">· with {s.reviewer}</span>}
                     </p>
                   )}
                 </div>
@@ -648,6 +786,125 @@ function PipelineStrip() {
         </div>
       </CardContent>
     </Card>
+  )
+}
+
+// ─── Guide · how we track the quality of AI ROI ─────────────────────────
+// A plain-language walkthrough of the method, so the numbers on the other
+// tabs are legible to anyone — not just whoever built the pipeline.
+
+const GUIDE_STEPS: {
+  icon: React.ComponentType<{ size?: number; className?: string }>
+  title: string
+  body: string
+  feeds: string
+}[] = [
+  {
+    icon: Database,
+    title: "Collect the signals",
+    body: "Sample a few hundred transcripts a week (not everything) alongside outcome signals — git history, send/copy events, ratings. Sampling is enough for a trustworthy trend.",
+    feeds: "Feeds every tab",
+  },
+  {
+    icon: Calculator,
+    title: "Measure what's objective — no model needed",
+    body: "Deterministic signals run continuously and cheaply: did the output survive (still shipped after 7/30 days), how much was edited, how many retries, how often a task was abandoned.",
+    feeds: "→ Quality signals",
+  },
+  {
+    icon: Cpu,
+    title: "Score the rest with an LLM judge",
+    body: "A strong grader scores each sampled transcript against a fixed rubric — goal achieved, output correct/safe — and sorts use cases into value tiers. Calibrate it against ~50 human-labelled cases before trusting it.",
+    feeds: "→ Quality signals · Visibility",
+  },
+  {
+    icon: Banknote,
+    title: "Quality-weight the ROI",
+    body: "Raw hours saved × outcome quality = the value that actually landed. Abandoned or reworked output never counts. Usage is split productive vs personal so token spend on non-work is visible, not banked as ROI.",
+    feeds: "→ Overview",
+  },
+  {
+    icon: Network,
+    title: "Cluster to find what works",
+    body: "Embed transcripts and cluster what your best users do differently — context-giving, decomposition, iteration. The behaviour clusters that correlate with high scores are the skills worth teaching.",
+    feeds: "→ Skills & governance",
+  },
+  {
+    icon: Rocket,
+    title: "Govern, then diffuse",
+    body: "Package winners into the skill library, run them through the automated governance chain (one human compliance gate), promote to the teams that would benefit, and track whether adopters' scores rise.",
+    feeds: "→ Skills & governance",
+  },
+]
+
+const GUIDE_PRINCIPLES: { title: string; body: string }[] = [
+  { title: "Sample, don't census", body: "Hundreds a week is enough for trend signal — you don't need to score everything." },
+  { title: "Calibrate the judge", body: "Check the grader against human labels before any number it produces is trusted." },
+  { title: "Govern the data", body: "Score de-identified transcripts; PII handling needs a plan before this runs." },
+]
+
+function GuideTab() {
+  return (
+    <div className="space-y-5">
+      <SectionHeading
+        icon={BookOpen}
+        title="How we track the quality of AI ROI"
+        sub="Six steps turn raw transcripts into a quality-weighted scorecard. Adoption tells you usage happened; this tells you whether it was any good — and pays back."
+      />
+
+      <Card className="border-slate-200">
+        <CardContent className="py-5 px-5 sm:px-6">
+          <ol className="relative">
+            {GUIDE_STEPS.map((s, i) => {
+              const Icon = s.icon
+              const last = i === GUIDE_STEPS.length - 1
+              return (
+                <li key={s.title} className="relative flex gap-4 pb-6 last:pb-0">
+                  {/* connector line */}
+                  {!last && (
+                    <span className="absolute left-[19px] top-10 bottom-0 w-px bg-slate-200" aria-hidden />
+                  )}
+                  <div className="relative shrink-0">
+                    <div className="h-10 w-10 rounded-full bg-indigo-50 border border-indigo-100 grid place-items-center text-indigo-600">
+                      <Icon size={17} />
+                    </div>
+                    <span className="absolute -top-1 -left-1 h-4 w-4 rounded-full bg-indigo-600 text-white text-[9px] font-bold grid place-items-center">
+                      {i + 1}
+                    </span>
+                  </div>
+                  <div className="min-w-0 pt-0.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="text-sm font-semibold text-slate-900">{s.title}</h4>
+                      <span className="text-[10px] font-medium text-indigo-600 bg-indigo-50 border border-indigo-100 rounded px-1.5 py-0.5">
+                        {s.feeds}
+                      </span>
+                    </div>
+                    <p className="text-[13px] text-slate-500 leading-relaxed mt-1 max-w-2xl">{s.body}</p>
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
+        </CardContent>
+      </Card>
+
+      <Card className="border-indigo-100 bg-gradient-to-br from-indigo-50/50 to-white">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+            <Lightbulb size={15} className="text-indigo-500" />
+            Three rules that keep it honest
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0 grid gap-3 sm:grid-cols-3">
+          {GUIDE_PRINCIPLES.map((p) => (
+            <div key={p.title} className="rounded-lg bg-white/70 border border-indigo-100/70 p-3">
+              <div className="text-xs font-semibold text-slate-800">{p.title}</div>
+              <p className="text-[11px] text-slate-500 leading-snug mt-1">{p.body}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 
