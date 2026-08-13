@@ -13,6 +13,7 @@ import {
   visibilityGap,
   personalSpend,
   reviewQueue,
+  automatedStageShare,
 } from "./usage-quality-data"
 
 describe("usage-quality derivations", () => {
@@ -76,5 +77,14 @@ describe("usage-quality derivations", () => {
 
   it("reviewQueue counts skills awaiting a compliance decision", () => {
     expect(reviewQueue(USAGE_QUALITY.library)).toBe(1)
+  })
+
+  it("automatedStageShare leaves only the compliance gate manual", () => {
+    // 4 of 5 stages automated; the review step is the human gate.
+    expect(automatedStageShare(USAGE_QUALITY.governanceChain)).toBeCloseTo(4 / 5, 5)
+    const manual = USAGE_QUALITY.governanceChain.filter((s) => !s.automated)
+    expect(manual).toHaveLength(1)
+    expect(manual[0].key).toBe("review")
+    expect(automatedStageShare([])).toBe(0)
   })
 })

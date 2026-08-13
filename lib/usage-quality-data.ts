@@ -122,7 +122,21 @@ export interface LibrarySkill {
   adopters: number
   reachable: number
   reuseTeams: number // teams beyond the origin already using it
+  suggestedTeams: string[] // auto-matched teams that would benefit — the "who else" Eva emails around to find
+  reviewer?: string // who holds the compliance gate (e.g. Davy) when in review / blocked
   note?: string // compliance / review note when not yet approved
+}
+
+// The governance chain — the manual workflow Eva runs today, automated. Each
+// skill flows Discover → Summarise → Reuse-match → Compliance review → Promote.
+// Only the compliance step needs a human (Davy); the rest is automated, which
+// is exactly the "chain of governance" she asked to stop doing by hand.
+export interface GovernanceStage {
+  key: string
+  label: string
+  automated: boolean // true = no human effort; false = human gate
+  count: number // skills currently at or past this stage
+  detail: string // what happens here, and what it replaces
 }
 
 export interface UsageQuality {
@@ -132,6 +146,7 @@ export interface UsageQuality {
   usageSplit: UsageSplit
   useCases: UseCaseShare[]
   library: LibrarySkill[]
+  governanceChain: GovernanceStage[]
   outcome: OutcomeQuality
   leverage: Leverage
   trajectory: TrajectoryHealth
@@ -181,6 +196,7 @@ export const USAGE_QUALITY: UsageQuality = {
       adopters: 96,
       reachable: 140,
       reuseTeams: 4,
+      suggestedTeams: ["Legal", "Motor claims · Ghent"],
     },
     {
       id: "policy-qa",
@@ -191,6 +207,7 @@ export const USAGE_QUALITY: UsageQuality = {
       adopters: 71,
       reachable: 120,
       reuseTeams: 3,
+      suggestedTeams: ["Broker desk", "Claims · Antwerp"],
     },
     {
       id: "broker-reply",
@@ -201,6 +218,8 @@ export const USAGE_QUALITY: UsageQuality = {
       adopters: 12,
       reachable: 90,
       reuseTeams: 1,
+      suggestedTeams: ["Distribution · Antwerp", "Customer service"],
+      reviewer: "Davy · Security & Compliance",
       note: "Pending DLP check — pulls from broker CRM export",
     },
     {
@@ -212,7 +231,46 @@ export const USAGE_QUALITY: UsageQuality = {
       adopters: 3,
       reachable: 20,
       reuseTeams: 0,
+      suggestedTeams: [],
+      reviewer: "Davy · Security & Compliance",
       note: "Blocked — automated profiling of candidates (GDPR Art. 22)",
+    },
+  ],
+  governanceChain: [
+    {
+      key: "discover",
+      label: "Discovered",
+      automated: true,
+      count: 84,
+      detail: "Skills & artifacts auto-detected across the org — no champion round-up.",
+    },
+    {
+      key: "summarise",
+      label: "Purpose summarised",
+      automated: true,
+      count: 61,
+      detail: "AI writes what each does and where it applies — replaces emailing the creator.",
+    },
+    {
+      key: "match",
+      label: "Reuse matched",
+      automated: true,
+      count: 37,
+      detail: "Suggests which other teams would benefit — replaces canvassing around.",
+    },
+    {
+      key: "review",
+      label: "Compliance review",
+      automated: false,
+      count: 14,
+      detail: "The one human gate: security/compliance sign-off (Davy) before org-wide sharing.",
+    },
+    {
+      key: "promote",
+      label: "Promoted & adopted",
+      automated: true,
+      count: 8,
+      detail: "Pushed to the matched teams; discovery and adoption tracked automatically.",
     },
   ],
   outcome: {
@@ -324,7 +382,8 @@ export function leverageShift(l: Leverage): number {
   return leverageIndex(l.tierMix) - leverageIndex(l.priorTierMix)
 }
 
-export function adoptionRate(s: DiffusedSkill): number {
+// Works for any adopters/reachable pair — mined behaviours and library skills alike.
+export function adoptionRate(s: { adopters: number; reachable: number }): number {
   return s.reachable === 0 ? 0 : s.adopters / s.reachable
 }
 
@@ -373,4 +432,12 @@ export function personalSpend(r: RoiHeadline, s: UsageSplit): number {
 /** Count of library skills waiting on a security/compliance decision. */
 export function reviewQueue(lib: LibrarySkill[]): number {
   return lib.filter((s) => s.status === "in_review").length
+}
+
+/**
+ * Share of the governance chain that runs without human effort. The point Eva
+ * cares about: everything but the compliance gate is automated.
+ */
+export function automatedStageShare(chain: GovernanceStage[]): number {
+  return chain.length === 0 ? 0 : chain.filter((s) => s.automated).length / chain.length
 }
