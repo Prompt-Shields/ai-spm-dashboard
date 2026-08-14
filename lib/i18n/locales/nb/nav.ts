@@ -2,6 +2,7 @@ export const nav = {
   map: 'Kart',
   discover: 'Oppdag',
   agentDiscovery: 'Agentoppdaging',
+  agentControl: 'Agent-kontrollpanel',
   register: 'Register',
   owners: 'Eiere',
   comply: 'KI-etterlevelse',

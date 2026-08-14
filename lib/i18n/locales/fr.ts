@@ -4,6 +4,7 @@ import { nav } from './fr/nav'
 import { map } from './fr/map'
 import { discover } from './fr/discover'
 import { agentDiscovery } from './fr/agentDiscovery'
+import { agentControl } from './fr/agentControl'
 import { register } from './fr/register'
 import { owners } from './fr/owners'
 import { comply } from './fr/comply'
@@ -28,6 +29,7 @@ export const fr: Messages = {
   map,
   discover,
   agentDiscovery,
+  agentControl,
   register,
   owners,
   comply,

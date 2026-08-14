@@ -2,6 +2,7 @@ export const nav = {
   map: 'Carte',
   discover: 'Découvrir',
   agentDiscovery: 'Découverte d’agents',
+  agentControl: 'Panneau de contrôle des agents',
   register: 'Registre',
   owners: 'Propriétaires',
   comply: 'Conformité IA',

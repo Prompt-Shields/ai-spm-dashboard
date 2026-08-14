@@ -12,6 +12,7 @@ import { nav } from './en/nav'
 import { map } from './en/map'
 import { discover } from './en/discover'
 import { agentDiscovery } from './en/agentDiscovery'
+import { agentControl } from './en/agentControl'
 import { register } from './en/register'
 import { owners } from './en/owners'
 import { comply } from './en/comply'
@@ -33,6 +34,7 @@ export const en = {
   map,
   discover,
   agentDiscovery,
+  agentControl,
   register,
   owners,
   comply,

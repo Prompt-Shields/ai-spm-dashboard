@@ -2,6 +2,7 @@ export const nav = {
   map: 'Map',
   discover: 'Discover',
   agentDiscovery: 'Agent Discovery',
+  agentControl: 'Agents Control Panel',
   register: 'Register',
   owners: 'Owners',
   comply: 'AI Compliance',
