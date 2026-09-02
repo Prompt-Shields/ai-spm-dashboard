@@ -7,13 +7,13 @@ import {
   Radar,
   SlidersHorizontal,
   ClipboardList,
-  Boxes,
   Users,
   ShieldCheck,
   Shield,
   EyeOff,
   TrendingUp,
   Coins,
+  Store,
   Plug,
   ChevronLeft,
   ChevronRight,
@@ -26,15 +26,19 @@ import { useSidebar } from './sidebar-provider'
 
 // Same items as the previous top-nav. `key` resolves to the nav.* translation.
 // `beta` flags an item that's still in preview (renders a Beta badge).
+//
+// /saas-vendor-ai is intentionally absent: the route and its nav.saasVendorAi
+// translations are still in place and work if visited directly, it is just not
+// surfaced in the sidebar.
 const NAV: { href: string; key: string; Icon: LucideIcon; beta?: boolean }[] = [
   { href: '/adoption', key: 'adoption', Icon: TrendingUp },
   { href: '/ai-spend', key: 'aiSpend', Icon: Coins },
+  { href: '/marketplace', key: 'marketplace', Icon: Store, beta: true },
   { href: '/', key: 'map', Icon: Map },
   { href: '/discover', key: 'discover', Icon: Radio },
   { href: '/agent-discovery', key: 'agentDiscovery', Icon: Radar },
   { href: '/agent-control', key: 'agentControl', Icon: SlidersHorizontal, beta: true },
   { href: '/register', key: 'register', Icon: ClipboardList },
-  { href: '/saas-vendor-ai', key: 'saasVendorAi', Icon: Boxes, beta: true },
   { href: '/owners', key: 'owners', Icon: Users },
   { href: '/comply', key: 'comply', Icon: ShieldCheck },
   { href: '/policy-enforcement', key: 'policies', Icon: Shield },

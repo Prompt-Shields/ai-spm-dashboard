@@ -10,6 +10,7 @@ export const nav = {
   policies: 'Retningslinjer',
   adoption: 'Adopsjon',
   aiSpend: 'AI-forbruk',
+  marketplace: 'Ferdighetsmarked',
   piiShield: 'PII-skjold-demo',
   integrations: 'Integrasjoner',
 }

@@ -10,6 +10,7 @@ export const nav = {
   policies: 'Policies',
   adoption: 'Adoption',
   aiSpend: 'AI Spend',
+  marketplace: 'Skill Marketplace',
   piiShield: 'PII Shield Demo',
   integrations: 'Integrations',
 }
