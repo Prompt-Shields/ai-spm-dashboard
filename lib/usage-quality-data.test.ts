@@ -76,7 +76,11 @@ describe("usage-quality derivations", () => {
   })
 
   it("reviewQueue counts skills awaiting a compliance decision", () => {
-    expect(reviewQueue(USAGE_QUALITY.library)).toBe(1)
+    // The library is now projected from the marketplace catalogue, so this
+    // derives rather than pinning a literal — see marketplace/library.ts.
+    const awaiting = USAGE_QUALITY.library.filter((s) => s.status === "in_review")
+    expect(reviewQueue(USAGE_QUALITY.library)).toBe(awaiting.length)
+    expect(awaiting.length).toBeGreaterThan(0)
   })
 
   it("automatedStageShare leaves only the compliance gate manual", () => {

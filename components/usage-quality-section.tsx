@@ -16,6 +16,7 @@
 
 "use client"
 
+import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
@@ -49,6 +50,7 @@ import {
   Network,
   Rocket,
   Lightbulb,
+  Store,
 } from "lucide-react"
 import {
   USAGE_QUALITY,
@@ -411,11 +413,23 @@ function LibrarySection() {
 
   return (
     <div className="space-y-4">
-      <SectionHeading
-        icon={Library}
-        title="Skill library & governance"
-        sub="The manual chain — dig the analytics, email the creator, canvass teams, chase compliance — run automatically. Every step is automated except the one human gate: security sign-off."
-      />
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <SectionHeading
+          icon={Library}
+          title="Skill library & governance"
+          sub="The manual chain — dig the analytics, email the creator, canvass teams, chase compliance — run automatically. Every step is automated except the one human gate: security sign-off."
+        />
+        {/* This tab is the rollup; the marketplace is where the skills actually
+            get browsed, submitted and reviewed. Same catalogue either way. */}
+        <Link
+          href="/marketplace"
+          className="shrink-0 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+        >
+          <Store size={13} />
+          Open marketplace
+          <ArrowRight size={12} />
+        </Link>
+      </div>
 
       <GovernanceChain />
 

@@ -7,6 +7,7 @@ export default defineConfig({
       'lib/i18n/**/*.test.ts',
       'lib/agent-discovery/**/*.test.ts',
       'lib/agent-control/**/*.test.ts',
+      'lib/marketplace/**/*.test.ts',
       'lib/*.test.ts',
     ],
     environment: 'node',

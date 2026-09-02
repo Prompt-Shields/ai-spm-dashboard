@@ -15,6 +15,9 @@
 // numbers here (not in the component) mirrors the rest of lib/ and keeps the
 // derivations (percentages, lift) unit-testable.
 
+import { deriveChainCounts, deriveLibrary } from "./marketplace/library"
+import type { ReviewStatus } from "./marketplace/types"
+
 export type QualityBand = "excellent" | "good" | "adequate" | "poor"
 
 // Q1 — a weekly LLM-as-judge sample scored against a fixed rubric, bucketed.
@@ -111,7 +114,12 @@ export interface UsageSplit {
 // Every entry carries a review status so "can we allow this org-wide?" is a
 // state, not a research project; reuseTeams + adoption answer "is anyone
 // actually finding and using it once approved?".
-export type ReviewStatus = "approved" | "in_review" | "blocked"
+//
+// The rows themselves now live in lib/marketplace/data.ts — the marketplace is
+// the single source of truth for skills, and this tab renders a projection of
+// it (see marketplace/library.ts). LibrarySkill stays here because this is the
+// shape the Adoption tab consumes.
+export type { ReviewStatus } from "./marketplace/types"
 
 export interface LibrarySkill {
   id: string
@@ -153,6 +161,12 @@ export interface UsageQuality {
   diffusion: DiffusedSkill[]
 }
 
+// The last two stages count what reached them, derived from the catalogue —
+// the earlier three stay seeded, since org-wide detection sees more than the
+// 16 skills catalogued for sharing. Keeping the funnel monotonic is asserted
+// in marketplace/library.test.ts.
+const CHAIN = deriveChainCounts()
+
 export const USAGE_QUALITY: UsageQuality = {
   roi: {
     qualityHoursSaved: 2180,
@@ -186,56 +200,11 @@ export const USAGE_QUALITY: UsageQuality = {
     { name: "Underwriting research", share: 0.12, productive: true },
     { name: "Personal / non-work", share: 0.12, productive: false },
   ],
-  library: [
-    {
-      id: "claims-summary",
-      name: "Claims file summariser",
-      purpose: "Turns a claims folder into a structured 1-page summary",
-      sourceTeam: "Claims · Antwerp",
-      status: "approved",
-      adopters: 96,
-      reachable: 140,
-      reuseTeams: 4,
-      suggestedTeams: ["Legal", "Motor claims · Ghent"],
-    },
-    {
-      id: "policy-qa",
-      name: "Policy wording Q&A",
-      purpose: "Answers coverage questions against the policy library",
-      sourceTeam: "Underwriting",
-      status: "approved",
-      adopters: 71,
-      reachable: 120,
-      reuseTeams: 3,
-      suggestedTeams: ["Broker desk", "Claims · Antwerp"],
-    },
-    {
-      id: "broker-reply",
-      name: "Broker reply drafter",
-      purpose: "Drafts broker correspondence in house tone",
-      sourceTeam: "Distribution · Ghent",
-      status: "in_review",
-      adopters: 12,
-      reachable: 90,
-      reuseTeams: 1,
-      suggestedTeams: ["Distribution · Antwerp", "Customer service"],
-      reviewer: "Davy · Security & Compliance",
-      note: "Pending DLP check — pulls from broker CRM export",
-    },
-    {
-      id: "hr-screening",
-      name: "CV screening assistant",
-      purpose: "Ranks candidates against a role brief",
-      sourceTeam: "HR",
-      status: "blocked",
-      adopters: 3,
-      reachable: 20,
-      reuseTeams: 0,
-      suggestedTeams: [],
-      reviewer: "Davy · Security & Compliance",
-      note: "Blocked — automated profiling of candidates (GDPR Art. 22)",
-    },
-  ],
+  // Projected from MARKETPLACE_SKILLS — 16 skills, of which the original four
+  // (claims-summary, policy-qa, broker-reply, hr-screening) are carried over
+  // unchanged. Baseline only: never the localStorage-folded view, since this
+  // const is evaluated during SSR.
+  library: deriveLibrary(),
   governanceChain: [
     {
       key: "discover",
@@ -262,14 +231,14 @@ export const USAGE_QUALITY: UsageQuality = {
       key: "review",
       label: "Compliance review",
       automated: false,
-      count: 14,
+      count: CHAIN.review,
       detail: "The one human gate: security/compliance sign-off (Davy) before org-wide sharing.",
     },
     {
       key: "promote",
       label: "Promoted & adopted",
       automated: true,
-      count: 8,
+      count: CHAIN.promote,
       detail: "Pushed to the matched teams; discovery and adoption tracked automatically.",
     },
   ],
