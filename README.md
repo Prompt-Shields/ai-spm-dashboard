@@ -233,4 +233,7 @@ Planned enhancements:
 
 ## Licence
 
-Released under the MIT Licence. Usage, modification, and distribution are permitted.
+Released under the [Apache License 2.0](LICENSE), in line with the rest of the Prompt Shields toolkit.
+
+The `competitors/` directory is excluded: it holds third-party screenshots and saved web pages kept for
+reference, which remain the property of their owners and are not covered by this licence.
